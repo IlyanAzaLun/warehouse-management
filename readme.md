@@ -1,8 +1,6 @@
-###################
-Installation
-###################
+##Installation
 
-Download repository `link <https://github.com/IlyanAzaLun/inventory-management/archive/refs/heads/main.zip>`, 
+Download repository <a href="<https://github.com/IlyanAzaLun/inventory-management/archive/refs/heads/main.zip>">link</a>, 
 jika sudah simpan dan extrak di folder ``.../htdocs/``,<br>
 jalankan sever, <br>
 buat database dengan nama ``db_inventory``, import file ``inventory-management/db_inventory.sql`` <br>
