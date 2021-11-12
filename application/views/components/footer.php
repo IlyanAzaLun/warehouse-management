@@ -1,21 +1,3 @@
-
-  <footer class="main-footer">
-    <div class="float-right d-none d-sm-block">
-      <b>Version</b> 3.0.5
-    </div>
-    <strong>Copyright &copy; <?=date('Y')?> <a href="http://adminlte.io">AdminLTE.io</a> | <a href="https://ilyanazalun.github.io">Ilyan Aza-lun</a>.</strong> All rights
-    reserved.
-  </footer>
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-    <?$this->load->view('components/sidebar_config')?>
-  </aside>
-  <!-- /.control-sidebar -->
-</div>
-<!-- ./wrapper -->
-
 <div class="modal fade" id="modal-logout">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -44,10 +26,10 @@
 <script src="<?=base_url()?>assets/AdminLTE-3.0.5/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <?
 if (isset($plugins['js'])) {
-      foreach ($plugins['js'] as $key => $value) {
-          ?><script src="<?= $value ?>"></script><?
-      }
+  foreach ($plugins['js'] as $key => $value) {
+    ?><script src="<?= $value ?>"></script><?
   }
+}
 ?>
 <!-- overlayScrollbars -->
 <script src="<?=base_url()?>assets/AdminLTE-3.0.5/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
@@ -64,10 +46,10 @@ if (isset($plugins['js'])) {
 <script src="<?=base_url()?>assets/utility/attrib.js"></script>
 <?
 if (isset($plugins['module'])) {
-      foreach ($plugins['module'] as $key => $value) {
-          ?><script type="module" src="<?= $value ?>"></script><?
-      }
+  foreach ($plugins['module'] as $key => $value) {
+    ?><script type="module" src="<?= $value ?>"></script><?
   }
+}
 ?>
 <!-- page script -->
 </body>

@@ -44,8 +44,15 @@ class Menu extends CI_Controller {
 		$this->form_validation->set_rules('url', 'Url menu', 'required|trim');
 		$this->form_validation->set_rules('icon', 'Icon menu', 'required|trim');
 		if ($this->form_validation->run() == false) {
+			
+			$this->load->view('components/header', $this->data);
+		    $this->load->view('components/navbar');
+		    $this->load->view('components/sidebar', $this->data);
+			$this->load->view('components/breadcrumb', $this->data);
 			$this->load->view('configuration/menu/index', $this->data);
 			$this->load->view('configuration/menu/modals');
+			$this->load->view('components/sidebar_config');
+			$this->load->view('components/footer', $this->data);
 		}else{
 			$this->data = [
 				'title' => htmlspecialchars($this->input->post('menu', true)),

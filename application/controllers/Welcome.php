@@ -40,6 +40,12 @@ class Welcome extends CI_Controller {
 		);
 		$this->data['title'] = 'Dashboard';
 		$this->data['user'] = $this->M_users->user_select($this->session->userdata('email'));
+		$this->load->view('components/header', $this->data);
+	    $this->load->view('components/navbar');
+	    $this->load->view('components/sidebar', $this->data);
+		$this->load->view('components/breadcrumb', $this->data);
 		$this->load->view('dashboard', $this->data);
+		$this->load->view('components/sidebar_config');
+		$this->load->view('components/footer', $this->data);
 	}
 }

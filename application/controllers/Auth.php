@@ -52,7 +52,9 @@ class Auth extends CI_Controller {
 		$this->form_validation->set_rules('repassword', 'Re-password', 'required|trim|matches[password]');
 		if ($this->form_validation->run()==false) {
 			$this->data['title'] = 'Sign up';
+			$this->load->view('components/auth_header', $this->data);
 			$this->load->view('auth/signup', $this->data);
+			$this->load->view('components/auth_footer', $this->data);
 		}else{
 			$this->data = [
 				'user_fullname' => htmlspecialchars($this->input->post('name', true)),

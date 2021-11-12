@@ -1,25 +1,3 @@
-<?$this->load->view('components/header')?>
-
-<body class="hold-transition sidebar-mini layout-fixed pace-primary">
-  <!-- Site wrapper -->
-  <div class="wrapper">
-    <!-- Navbar -->
-    <?$this->load->view('components/navbar')?>
-    <!-- /.navbar -->
-
-    <!-- Main Sidebar Container -->
-    <?$this->load->view('components/sidebar')?>
-    <!-- /.Main Sidebar Container -->
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <!-- container-fluid -->
-        <?$this->load->view('components/breadcrumb')?>
-        <!-- /.container-fluid -->
-      </section>
-
       <!-- Main content -->
       <section class="content">
 
@@ -184,7 +162,3 @@
         </div>
       </section>
       <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
-    <!-- Modals -->
-    <?$this->load->view('components/footer')?>

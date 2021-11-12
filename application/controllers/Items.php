@@ -68,8 +68,14 @@ class Items extends CI_Controller {
 		$this->form_validation->set_rules('capital_price', 'Capital price', 'required|trim|integer');
 		$this->form_validation->set_rules('selling_price', 'Selling price', 'required|trim|integer|greater_than['.$this->input->post('capital_price').']');
 		if ($this->form_validation->run()==false) {
+			$this->load->view('components/header', $this->data);
+		    $this->load->view('components/navbar');
+		    $this->load->view('components/sidebar', $this->data);
+			$this->load->view('components/breadcrumb', $this->data);
 			$this->load->view('items/index', $this->data);
 			$this->load->view('items/modals');
+  			$this->load->view('components/sidebar_config');
+			$this->load->view('components/footer', $this->data);
 		}else{
 			$this->data = [
 				'item_category'      => htmlspecialchars($this->input->post('category', true)),

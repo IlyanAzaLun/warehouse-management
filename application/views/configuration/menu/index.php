@@ -1,59 +1,38 @@
-<?$this->load->view('components/header')?>
 
-<body class="hold-transition sidebar-mini layout-fixed pace-primary">
-<!-- Site wrapper -->
-<div class="wrapper">
-  <!-- Navbar -->
-  <?$this->load->view('components/navbar')?>
-  <!-- /.navbar -->
+<!-- Main content -->
+<section class="content">
 
-  <!-- Main Sidebar Container -->
-  <?$this->load->view('components/sidebar')?>
-  <!-- /.Main Sidebar Container -->
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <!-- container-fluid -->
-      <?$this->load->view('components/breadcrumb')?>
-      <!-- /.container-fluid -->
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-
-      <div class="container-fluid">
-        
-        <!-- Info boxes -->
-        <div class="row">
-          <div class="col-8">
-          <?=form_error('menu', '<div class="alert alert-danger alert-dismissible fade show" role="alert">', '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')?>
-          <!-- /.col -->          
-          <div class="card">
-              <div class="card-header">
-                <h3 class="card-title"><button class="btn btn-primary" data-toggle="modal" data-target="#modal-menu"><i class="fa fa-plus"></i></button></h3>
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-                </div>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <table id="tbl_menu" class="table table-bordered table-striped table-hover">
-                  <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Menu</th>
-                    <th>Category</th>
-                    <th>Url</th>
-                    <th>Icon</th>
-                    <th>Options</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <?php foreach ($menus as $key => $menu): ?>
-                    
+  <div class="container-fluid">
+    
+    <!-- Info boxes -->
+    <div class="row">
+      <div class="col-8">
+        <?=form_error('menu', '<div class="alert alert-danger alert-dismissible fade show" role="alert">', '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')?>
+        <!-- /.col -->          
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title"><button class="btn btn-primary" data-toggle="modal" data-target="#modal-menu"><i class="fa fa-plus"></i></button></h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <table id="tbl_menu" class="table table-bordered table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Menu</th>
+                  <th>Category</th>
+                  <th>Url</th>
+                  <th>Icon</th>
+                  <th>Options</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php foreach ($menus as $key => $menu): ?>
+                  
                   <tr>
                     <td scope="row" width="5px"><?=++$key?></td>
                     <td><?=$menu['title']?></td>
@@ -68,36 +47,36 @@
                     </td>
                   </tr>
 
-                  <?php endforeach ?>
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.card-body -->
-            </div>
-          <!-- /.col -->
+                <?php endforeach ?>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.card-body -->
         </div>
-        <div class="col-4">
-          <div class="card">
-              <div class="card-header">
-                <h3 class="card-title"><button class="btn btn-primary" data-toggle="modal" data-target="#modal-category"><i class="fa fa-plus"></i></button></h3>
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-                </div>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <table id="tbl_menu" class="table table-bordered table-striped table-hover">
-                  <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Category name</th>
-                    <th>Options</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <?php foreach ($categorys as $key => $category): ?>
-                    
+        <!-- /.col -->
+      </div>
+      <div class="col-4">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title"><button class="btn btn-primary" data-toggle="modal" data-target="#modal-category"><i class="fa fa-plus"></i></button></h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <table id="tbl_menu" class="table table-bordered table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Category name</th>
+                  <th>Options</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php foreach ($categorys as $key => $category): ?>
+                  
                   <tr>
                     <td scope="row" width="5px"><?=++$key?></td>
                     <td><?=$category['category_name']?></td>
@@ -109,20 +88,16 @@
                     </td>
                   </tr>
 
-                  <?php endforeach ?>
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.card-body -->
-            </div>
-          <!-- /.col -->
+                <?php endforeach ?>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.card-body -->
         </div>
-        </div>
-        <!-- /.row -->
+        <!-- /.col -->
       </div>
-    </section>
-    <!-- /.content -->
+    </div>
+    <!-- /.row -->
   </div>
-  <!-- /.content-wrapper -->
-  <!-- Modals -->
-<?$this->load->view('components/footer')?>
+</section>
+<!-- /.content -->
