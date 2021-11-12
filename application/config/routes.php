@@ -12,6 +12,10 @@ $route['dashboard'] = 'welcome/dashboard';
 // item
 $route['items'] = 'Items';
 $route['item/insert'] = 'Items/insert';
+$route['items/getcode'] = 'Items/getcode';
+$route['items/getitem'] = 'Items/getitem';
+$route['item/remove'] = 'Items/remove';
+$route['item/update'] = 'Items/update';
 
 
 //configuration

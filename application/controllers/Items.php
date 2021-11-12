@@ -69,6 +69,7 @@ class Items extends CI_Controller {
 		$this->form_validation->set_rules('selling_price', 'Selling price', 'required|trim|integer|greater_than['.$this->input->post('capital_price').']');
 		if ($this->form_validation->run()==false) {
 			$this->load->view('items/index', $this->data);
+			$this->load->view('items/modals');
 		}else{
 			$this->data = [
 				'item_category'      => htmlspecialchars($this->input->post('category', true)),
@@ -83,6 +84,16 @@ class Items extends CI_Controller {
 			Flasher::setFlash('info', 'success', 'Success', ' congratulation success to entry new data!');
 			redirect('items');
 		}
+	}
+
+	public function getcode()
+	{
+		echo json_encode($this->db->get_where('tbl_item', ['item_category'=>$this->input->post('data')])->num_rows());
+	}
+
+	public function getitem()
+	{
+		echo json_encode($this->db->get_where('tbl_item', ['item_code'=>$this->input->post('data')])->row_array());
 	}
 
 	public function insert()

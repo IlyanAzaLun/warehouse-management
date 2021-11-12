@@ -48,8 +48,15 @@
                           <label>Category item</label>
                           <select class="form-control select2" style="width: 100%;" name="category" id="category"  value="<?=set_value('category')?>" required>
                             <option value="" selected="selected">Select category item</option>
-                            <option value="Liquid" data-id="LQD" <?=set_select('category', 'Liquid')?>>Liquid</option>
-                            <option value="Accessories" data-id="ACC" <?=set_select('category', 'Accessories')?>>Accessories</option>
+                            <option value="ACC" data-id="ACC" <?=set_select('category', 'ACC')?>>ACC</option>
+                            <option value="ATOMIZER" data-id="ATOMIZER" <?=set_select('category', 'ATOMIZER')?>>ATOMIZER</option>
+                            <option value="BATTERY" data-id="BATTERY" <?=set_select('category', 'BATTERY')?>>BATTERY</option>
+                            <option value="CATTRIDGE & COIL" data-id="CATTRIDGE & COIL" <?=set_select('category', 'CATTRIDGE & COIL')?>>CATTRIDGE & COIL</option>
+                            <option value="COTTON" data-id="COTTON" <?=set_select('category', 'COTTON')?>>COTTON</option>
+                            <option value="DEVICE" data-id="DEVICE" <?=set_select('category', 'DEVICE')?>>DEVICE</option>
+                            <option value="LIQUID" data-id="LIQUID" <?=set_select('category', 'LIQUID')?>>LIQUID</option>
+                            <option value="PODS" data-id="PODS" <?=set_select('category', 'PODS')?>>PODS</option>
+                            <option value="WIRE" data-id="WIRE" <?=set_select('category', 'WIRE')?>>WIRE</option>
                           </select>
                         </div>
                       </div>
@@ -58,7 +65,7 @@
                         <!-- text input -->
                         <div class="form-group">
                           <label>Code item</label>
-                          <input type="text" class="form-control" name="item_code" id="item_code"  value="<?=set_value('item_code')?>" required>
+                          <input type="text" class="form-control" name="item_code" id="item_code"  value="<?=set_value('item_code')?>" required readonly>
                         </div>
                       </div>
 
@@ -136,32 +143,32 @@
                     <thead>
                       <tr>
                         <th>#</th>
+                        <th>Options</th>
                         <th>Code item</th>
                         <th>Item name</th>
                         <th>Quantity</th>
                         <th>Capital price</th>
                         <th>Selling price</th>
                         <th>Item image</th>
-                        <th>Options</th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php foreach ($items as $key => $item): ?>
 
                         <tr>
-                          <td scope="row" width="5px"><?=++$key?></td>
+                          <th scope="row" width="5px"><?=++$key?></th>
+                          <td>
+                            <div class="btn-group d-flex justify-content-center" data-id="<?=$item['item_code']?>">
+                              <button class="btn btn-default" id="update" data-toggle="modal" data-target="#modal-update"><i class="fa fa-tw fa-pencil-alt"></i></button>
+                              <button class="btn btn-default" id="delete" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-tw fa-trash-alt"></i></button>
+                            </div>
+                          </td>
                           <td><?=$item['item_code']?></td>
                           <td><?=$item['item_name']?></td>
                           <td><?=$item['quantity']?> (<?=$item['unit']?>)</td>
                           <td><?=convertToMoney((int)$item['capital_price'])?></td>
                           <td><?=convertToMoney((int)$item['selling_price'])?></td>
                           <td><?=$item['image_id']?></td>
-                          <td>
-                            <div class="btn-group">
-                              <a href="" class="btn btn-default"><i class="fa fa-tw fa-edit"></i></a>
-                              <a href="" class="btn btn-default"><i class="fa fa-tw fa-trash"></i></a>
-                            </div>
-                          </td>
                         </tr>
 
                       <?php endforeach ?>
