@@ -77,6 +77,7 @@ class Auth extends CI_Controller {
 	public function blocked()
 	{
 		$this->data['title'] = '500';
+		$this->load->view('components/header', $this->data);
 		$this->load->view('components/500', $this->data);
 	}
 }

@@ -1,5 +1,3 @@
-<?$this->load->view('components/header')?>
-
 <body class="hold-transition sidebar-mini layout-fixed pace-primary">
 	<!-- Site wrapper -->
 	<div class="wrapper">
