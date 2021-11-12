@@ -1,4 +1,3 @@
-<?$this->load->view('components/auth_header') ?>
 
 <div class="login-box">
   <div class="login-logo">
@@ -51,4 +50,3 @@
   </div>
 </div>
 <!-- /.login-box -->
-<?$this->load->view('components/auth_footer') ?>

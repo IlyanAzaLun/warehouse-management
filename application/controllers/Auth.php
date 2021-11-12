@@ -12,7 +12,10 @@ class Auth extends CI_Controller {
 		$this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email');
 		$this->form_validation->set_rules('password', 'Password', 'required|trim');
 		if ($this->form_validation->run()==false) {
+
+			$this->load->view('components/auth_header', $this->data);
 			$this->load->view('auth/signin', $this->data);
+			$this->load->view('components/auth_footer', $this->data);
 		}else{
 			$this->_validation();
 		}
