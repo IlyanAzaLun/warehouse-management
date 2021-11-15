@@ -5,7 +5,7 @@
       toast: true,
       position: 'top-end',
       showConfirmButton: false,
-      timer: 3000
+      timer: 12000
     });
     if ($('.toast').data('icon') !== '') {
       Toast.fire({

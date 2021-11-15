@@ -7,7 +7,18 @@ class M_users extends CI_Model {
 
         public function user_select($data)
         {
-                return $this->db->get_where($this->_table, ['user_email'=>$data])->row_array();
+                $this->db->select(
+                        'user.user_id
+                        ,user.user_fullname
+                        ,user.user_email
+                        ,user.user_image
+                        ,user.role_id
+                        ,user.is_active
+                        ,user.date_created
+                        ,role.role_name
+                        ');
+                $this->db->join('tbl_role role', 'user.role_id = role.id', 'left');
+                return $this->db->get_where($this->_table.' user', ['user_email'=>$data])->row_array();
         }
         public function user_insert($data)
         {

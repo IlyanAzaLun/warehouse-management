@@ -1,4 +1,4 @@
-<?$this->load->view('components/auth_header') ?>
+<?php $this->load->view('components/auth_header') ?>
 
 <div class="register-box">
   <div class="register-logo">
@@ -66,4 +66,4 @@
   </div><!-- /.card -->
 </div>
 <!-- /.register-box -->
-<?$this->load->view('components/auth_footer') ?>
+<?php $this->load->view('components/auth_footer') ?>

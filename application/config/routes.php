@@ -14,8 +14,11 @@ $route['items'] = 'Items';
 $route['item/insert'] = 'Items/insert';
 $route['items/getcode'] = 'Items/getcode';
 $route['items/getitem'] = 'Items/getitem';
-$route['item/remove'] = 'Items/remove';
+$route['item/delete'] = 'Items/delete';
 $route['item/update'] = 'Items/update';
+
+//invoice
+$route['invoice'] = 'Invoice';
 
 
 //configuration

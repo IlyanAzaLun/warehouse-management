@@ -17,3 +17,11 @@ function is_signin($controller)
 
 	}
 }
+
+function is_signout()
+{
+	$ci =& get_instance();
+	if ($ci->session->userdata('fullname')) {
+		redirect('dashboard');
+	}
+}

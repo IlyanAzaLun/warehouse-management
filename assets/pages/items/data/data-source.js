@@ -29,6 +29,7 @@ class DataSource {
 			dataType: 'JSON',
 			data: {'request': 'GET', 'data': type},
 			success: function(result){
+
 				$('input#item_code')
 				.val(`${$('.category')
 					.find(':selected').data('id')}${($('.subcategory')
@@ -44,12 +45,12 @@ class DataSource {
 			dataType: 'JSON',
 			data: {'request': 'GET', 'data': code_item},
 			success: function(result){
-				console.log(result)
 				$('#modal-update input#item_code').val(result.item_code);
 				$('#modal-update input#category').val(result.item_category); //
 				$('#modal-update input#item_name').val(result.item_name);
 				$('#modal-update input#quantity').val(result.quantity);
-				$('#modal-update input#unit').val(result.unit);
+				// $('#modal-update input#unit').val(result.unit);
+				$('#modal-update select#unit').find('option[value="'+result.unit+'"').prop('selected', true);
 				$('#modal-update input#capital_price').val(result.capital_price);
 				$('#modal-update input#selling_price').val(result.selling_price);
 			}	

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Items extends CI_Controller {
+class Invoice extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -23,7 +23,7 @@ class Items extends CI_Controller {
 		parent::__construct();
 		is_signin(get_class($this));
 		$this->load->model('M_menu');
-		$this->load->model('M_items');
+		$this->load->model('M_invoice');
 		$this->load->model('M_users');
 		$this->data['user'] = $this->M_users->user_select($this->session->userdata('email'));
 	}
@@ -38,6 +38,9 @@ class Items extends CI_Controller {
 				base_url('assets/AdminLTE-3.0.5/plugins/select2/css/select2.min.css'),
 				base_url('assets/AdminLTE-3.0.5/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css'),
 				base_url('assets/AdminLTE-3.0.5/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css'),
+				base_url('assets/AdminLTE-3.0.5/plugins/jquery-ui/jquery-ui.min.css'),
+				base_url('assets/AdminLTE-3.0.5/plugins/jquery-ui/jquery-ui.structure.min.css'),
+				base_url('assets/AdminLTE-3.0.5/plugins/jquery-ui/jquery-ui.theme.min.css'),
 			],
 			'js' => [
 				base_url('assets/AdminLTE-3.0.5/plugins/datatables/jquery.dataTables.min.js'),
@@ -51,89 +54,100 @@ class Items extends CI_Controller {
 				base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/js/dataTables.autoFill.min.js'),
 				base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/js/autoFill.bootstrap4.min.js'),
 				base_url('assets/AdminLTE-3.0.5/plugins/select2/js/select2.full.min.js'),
+				base_url('assets/AdminLTE-3.0.5/plugins/jquery-ui/jquery-ui.min.js'),
 			],
 			'module' => [
-				base_url('assets/pages/items/index.js'),
+				base_url('assets/pages/invoice/index.js'),
 			],
 		);
-		$this->data['title'] = 'Items management';
-		$this->data['items'] = $this->M_items->item_select();
+		$this->data['title'] = 'Invoice management';
+		$this->data['invoices'] = $this->M_invoice->invoice_select();
 		$this->data['categorys'] = $this->M_menu->menu_category_select();
 
-		$this->form_validation->set_rules('category', 'Category item', 'required|trim');
-		$this->form_validation->set_rules('item_code', 'Code item', 'required|trim');
-		$this->form_validation->set_rules('item_name', 'Item name', 'required|trim');
+		$this->form_validation->set_rules('category', 'Category invoice', 'required|trim');
+		$this->form_validation->set_rules('invoice_code', 'Code invoice', 'required|trim');
+		$this->form_validation->set_rules('invoice_name', 'invoice name', 'required|trim');
 		$this->form_validation->set_rules('quantity', 'Quantity', 'required|trim');
 		$this->form_validation->set_rules('unit', 'Unit', 'required|trim');
 		$this->form_validation->set_rules('capital_price', 'Capital price', 'required|trim|integer');
 		$this->form_validation->set_rules('selling_price', 'Selling price', 'required|trim|integer|greater_than['.$this->input->post('capital_price').']');
 		if ($this->form_validation->run()==false) {
-			$this->load->view('items/index', $this->data);
-			$this->load->view('items/modals');
+			$this->load->view('invoice/index', $this->data);
+			$this->load->view('invoice/modals');
 		}else{
 			$this->data = [
-				'item_category'      => htmlspecialchars($this->input->post('category', true)),
-				'item_code'     => htmlspecialchars($this->input->post('item_code', true)),
-				'item_name'     => htmlspecialchars($this->input->post('item_name', true)),
+				'invoice_category'      => htmlspecialchars($this->input->post('category', true)),
+				'invoice_code'     => htmlspecialchars($this->input->post('invoice_code', true)),
+				'invoice_name'     => htmlspecialchars($this->input->post('invoice_name', true)),
 				'quantity'      => htmlspecialchars($this->input->post('quantity', true)),
 				'unit'          => htmlspecialchars($this->input->post('unit', true)),
 				'capital_price' => htmlspecialchars($this->input->post('capital_price', true)),
 				'selling_price' => htmlspecialchars($this->input->post('selling_price', true)),
 			];
-			$this->M_items->item_insert($this->data);
+			$this->M_invoice->invoice_insert($this->data);
 			Flasher::setFlash('info', 'success', 'Success', ' congratulation success to entry new data!');
-			redirect('items');
+			redirect('invoice');
 		}
 	}
 
-	public function getcode()
+	public function customer()
 	{
-		echo json_encode($this->db->get_where('tbl_item', ['item_category'=>$this->input->post('data')])->num_rows());
-	}
-
-	public function getitem()
-	{
-		echo json_encode($this->db->get_where('tbl_item', ['item_code'=>$this->input->post('data')])->row_array());
+		if ($this->input->post('request')) {
+			if ($this->input->post('data')) {
+				$this->data = $this->db->get_where('tbl_customer', array('customer_fullname' => $this->input->post('data')))->row_array();
+				if ($this->data) {
+					echo json_encode($this->data);
+				}else{
+					echo json_encode($data = array(
+						'customer_id' => '', 
+						'customer_contact_phone' => '', 
+						'customer_address' => '', 
+					));
+				}
+			}else{
+				echo json_encode($this->db->get('tbl_customer')->result_array());
+			}
+		}
 	}
 
 	public function update()
 	{
-		$this->form_validation->set_rules('item_code', 'Code item', 'required|trim');
-		$this->form_validation->set_rules('item_name', 'Item name', 'required|trim');
+		$this->form_validation->set_rules('invoice_code', 'Code invoice', 'required|trim');
+		$this->form_validation->set_rules('invoice_name', 'invoice name', 'required|trim');
 		$this->form_validation->set_rules('quantity', 'Quantity', 'required|trim');
 		$this->form_validation->set_rules('unit', 'Unit', 'required|trim');
 		$this->form_validation->set_rules('capital_price', 'Capital price', 'required|trim|integer');
 		$this->form_validation->set_rules('selling_price', 'Selling price', 'required|trim|integer|greater_than['.$this->input->post('capital_price').']', array('greater_than' => 'The %s must greater than Capital price'));
 		if ($this->form_validation->run()==false) {
 			Flasher::setFlash('info', 'error', 'Failed', ' something worng to update data! '.validation_errors());
-			redirect('items');
+			redirect('invoice');
 		}else{
 			$this->data = [
-				'item_code'     => htmlspecialchars($this->input->post('item_code', true)),
-				'item_name'     => htmlspecialchars($this->input->post('item_name', true)),
+				'invoice_code'     => htmlspecialchars($this->input->post('invoice_code', true)),
+				'invoice_name'     => htmlspecialchars($this->input->post('invoice_name', true)),
 				'quantity'      => htmlspecialchars($this->input->post('quantity', true)),
 				'unit'          => htmlspecialchars($this->input->post('unit', true)),
 				'capital_price' => htmlspecialchars($this->input->post('capital_price', true)),
 				'selling_price' => htmlspecialchars($this->input->post('selling_price', true)),
 			];
-			$this->M_items->item_update($this->data);
+			$this->M_invoice->invoice_update($this->data);
 			Flasher::setFlash('info', 'success', 'Success', ' congratulation success to update data!');
-			redirect('items');
+			redirect('invoice');
 		}
 	}
 	public function delete()
 	{
-		$this->form_validation->set_rules('item_code', 'Code item', 'required|trim');
+		$this->form_validation->set_rules('invoice_code', 'Code invoice', 'required|trim');
 		if ($this->form_validation->run()==false) {
 			Flasher::setFlash('info', 'error', 'Failed', ' something worng to delete data! '.validation_errors());
-			redirect('items');
+			redirect('invoice');
 		}else{
 			$this->data = [
-				'item_code'     => htmlspecialchars($this->input->post('item_code', true)),
+				'invoice_code'     => htmlspecialchars($this->input->post('invoice_code', true)),
 			];
-			$this->M_items->item_delete($this->data);
+			$this->M_invoice->invoice_delete($this->data);
 			Flasher::setFlash('info', 'success', 'Success', ' congratulation success to delete data!');
-			redirect('items');
+			redirect('invoice');
 		}	
 	}
 }

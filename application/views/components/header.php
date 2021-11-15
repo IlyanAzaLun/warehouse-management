@@ -12,9 +12,10 @@
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- PLugins -->
-  <?if (isset($plugins['css'])) {
+  <?php
+  if (isset($plugins['css'])) {
     foreach ($plugins['css'] as $key => $value) {
-      ?><link href="<?= $value ?>" rel="stylesheet" type="text/css"/><?
+      ?><link href="<?= $value ?>" rel="stylesheet" type="text/css"/><?php
     }
   }
   ?>
@@ -30,7 +31,3 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
-<body class="hold-transition sidebar-mini layout-fixed pace-primary">
-  <!-- Site wrapper -->
-  <div class="wrapper">
-    <!-- Navbar -->

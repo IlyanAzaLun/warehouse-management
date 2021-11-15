@@ -1,4 +1,4 @@
-<?$curent = $this->uri->segment(1)==''?'dashboard': $this->uri->segment(1);?>  
+<?php $curent = $this->uri->segment(1)==''?'dashboard': $this->uri->segment(1);?>  
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->

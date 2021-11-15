@@ -1,3 +1,25 @@
+<?php $this->load->view('components/header')?>
+
+<body class="hold-transition sidebar-mini layout-fixed pace-primary">
+  <!-- Site wrapper -->
+  <div class="wrapper">
+    <!-- Navbar -->
+    <?php $this->load->view('components/navbar')?>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <?php $this->load->view('components/sidebar')?>
+    <!-- /.Main Sidebar Container -->
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <!-- container-fluid -->
+        <?php $this->load->view('components/breadcrumb')?>
+        <!-- /.container-fluid -->
+      </section>
+
       <!-- Main content -->
       <section class="content">
 
@@ -16,7 +38,7 @@
                   </div>
                 </div>
                 <!-- /.card-header -->
-                <form action="<?=base_url('items')?>" method="post">
+                <form action="<?=base_url('items')?>" method="post" id="insert">
                   <div class="card-body">
 
                     <div class="row">
@@ -137,8 +159,8 @@
                           <th scope="row" width="5px"><?=++$key?></th>
                           <td>
                             <div class="btn-group d-flex justify-content-center" data-id="<?=$item['item_code']?>">
-                              <button class="btn btn-default" id="update" data-toggle="modal" data-target="#modal-update"><i class="fa fa-tw fa-pencil-alt"></i></button>
-                              <button class="btn btn-default" id="delete" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-tw fa-trash-alt"></i></button>
+                              <button class="btn btn-sm btn-default" id="update" data-toggle="modal" data-target="#modal-update"><i class="fa fa-tw fa-pencil-alt"></i></button>
+                              <button class="btn btn-sm btn-default" id="delete" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-tw fa-trash-alt"></i></button>
                             </div>
                           </td>
                           <td><?=$item['item_code']?></td>
@@ -162,3 +184,7 @@
         </div>
       </section>
       <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- Modals -->
+    <?php $this->load->view('components/footer')?>

@@ -1,3 +1,4 @@
+  
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -27,9 +28,9 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
-          <?$curent = $this->uri->segment(2)==''?$this->uri->segment(1): $this->uri->segment(1).'/'.$this->uri->segment(2);?>
+          <?php $curent = $this->uri->segment(2)==''?$this->uri->segment(1): $this->uri->segment(1).'/'.$this->uri->segment(2);?>
           <!--  -->
-          <?foreach (get_label_menu() as $keys => $label):?>
+          <?php foreach (get_label_menu() as $keys => $label):?>
           <li class="nav-header"><?=$label['category_name']?></li>
           <?php foreach (get_menu($label['category_id']) as $key => $menu): ?>
           <?php if (!$menu['parent_id']): ?>
@@ -40,94 +41,34 @@
               <p><?=$menu['title']?></p>
               <?=($has_submenu)?'<i class="right fas fa-angle-left"></i>':''?>
             </a>
-            <?if ($has_submenu): ?>
+            <?php if ($has_submenu): ?>
             <ul class="nav nav-treeview">
-              <?foreach (get_submenu($menu['menu_id']) as $key_sub => $sub): ?>
+              <?php foreach (get_submenu($menu['menu_id']) as $key_sub => $sub): ?>
               <li class="nav-item">
                 <a href="<?=base_url().$sub['url']?>" class="nav-link<?=($curent==$sub['url'])?' active':'';?> submenu">
                   <i class="<?=$sub['icon']?> nav-icon"></i>
                   <p><?=$sub['title']?></p>
                 </a>
               </li>
-              <?endforeach ?>
+              <?php endforeach ?>
             </ul>
-            <?endif ?>
+            <?php endif ?>
           </li>
           <?php endif ?>
           <?php endforeach ?>
-          <?endforeach;?>
-          <!--  -->
-         
-          <li class="nav-header">EXAMPLE</li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="fas fa-circle nav-icon"></i>
-              <p>Level 1</p>
-            </a>
-          </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-circle"></i>
-              <p>
-                Level 1
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Level 2</p>
-                </a>
-              </li>
-              <li class="nav-item has-treeview">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>
-                    Level 2
-                    <i class="right fas fa-angle-left"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="far fa-dot-circle nav-icon"></i>
-                      <p>Level 3</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="far fa-dot-circle nav-icon"></i>
-                      <p>Level 3</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="far fa-dot-circle nav-icon"></i>
-                      <p>Level 3</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Level 2</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="fas fa-circle nav-icon"></i>
-              <p>Level 1</p>
-            </a>
-          </li>
+          <?php endforeach;?>
           
+          <li class="nav-header">MISCELLANEOUS</li>
+          <li class="nav-item">
+            <a href="https://ilyanazalun.github.io/projects/7-inventory-management-project" target="_blank" class="nav-link active bg-danger">
+              <i class="nav-icon fas fa-file"></i>
+              <p>Documentation</p>
+            </a>
+          </li>
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
   </aside>
-    <!-- /.Main Sidebar Container -->

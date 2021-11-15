@@ -7,14 +7,14 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form action="<?=base_url('item/update')?>" method="post" id="update">
+			<form action="<?=base_url('invoice/update')?>" method="post" id="update">
 				<div class="card-body">
 
 					<div class="row">
 
 						<div class="col-sm-6">
 							<div class="form-group">
-								<label>Category item</label>
+								<label>Category invoice</label>
 								<input type="text" class="form-control" name="category" id="category"  value="<?=set_value('category')?>" required readonly>
 							</div>
 						</div>
@@ -22,16 +22,16 @@
 						<div class="col-sm-6">
 							<!-- text input -->
 							<div class="form-group">
-								<label>Code item</label>
-								<input type="text" class="form-control" name="item_code" id="item_code"  value="<?=set_value('item_code')?>" required readonly>
+								<label>Code invoice</label>
+								<input type="text" class="form-control" name="invoice_id" id="invoice_id"  value="<?=set_value('invoice_id')?>" required readonly>
 							</div>
 						</div>
 
 						<div class="col-sm-6">
 							<!-- text input -->
 							<div class="form-group">
-								<label>Name item</label>
-								<input type="text" class="form-control" name="item_name" id="item_name"  value="<?=set_value('item_name')?>" required>
+								<label>Name invoice</label>
+								<input type="text" class="form-control" name="invoice_name" id="invoice_name"  value="<?=set_value('invoice_name')?>" required>
 							</div>
 						</div>
 						<div class="col-sm-6">
@@ -89,15 +89,15 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">Delete item</h4>
+				<h4 class="modal-title">Delete invoice</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form method="post" action="<?=base_url('item/delete')?>">
+			<form method="post" action="<?=base_url('invoice/delete')?>">
 				<div class="modal-body">
-					<p>Are you sure to <b class="text-danger">Delete</b> item ?</p>
-					<input type="hidden" name="item_code" id="item_code" readonly>
+					<p>Are you sure to <b class="text-danger">Delete</b> invoice ?</p>
+					<input type="hidden" name="invoice_id" id="invoice_id" readonly>
 				</div>
 				<div class="modal-footer justify-content-between">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

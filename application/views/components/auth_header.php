@@ -21,4 +21,4 @@
 </head>
 <body class="hold-transition login-page">
 
-  <div class="toast" data-icon="<?=@Flasher::getFlash()['icon']?>" data-title="<?=@Flasher::getFlash()['title'].@Flasher::getFlash()['message']?>"><?Flasher::unsetFlash()?></div>
+  <div class="toast" data-icon="<?=@Flasher::getFlash()['icon']?>" data-title="<?=@Flasher::getFlash()['title'].@Flasher::getFlash()['message']?>"><?php Flasher::unsetFlash()?></div>

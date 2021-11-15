@@ -30,8 +30,8 @@ const main = () => {
 		}
 
 		// category code //		
-		$('input#item_code').on('focus', function(){
-			datasource.getcode($('.category').find(':selected').data('id'));
+		$('input#item_code', 'form#insert').on('focus', function(){
+			datasource.getcode($('div.category').find(':selected').data('id'));
 		})
 	});
 
