@@ -90,6 +90,12 @@ class Invoice extends CI_Controller {
 		}
 	}
 
+	public function info()
+	{
+		$this->data['title'] = 'Invoice';
+		$this->load->view('invoice/info-invoice', $this->data);
+	}
+
 	public function customer()
 	{
 		if ($this->input->post('request')) {

@@ -19,6 +19,7 @@ $route['item/update'] = 'Items/update';
 
 //invoice
 $route['invoice'] = 'Invoice';
+$route['invoice/info'] = 'Invoice/info';
 
 
 //configuration
