@@ -25,7 +25,8 @@ class Welcome extends CI_Controller {
 		$this->load->model('M_users');
 	}
 	public function index(){
-		$this->load->view('welcome_message');
+		$this->data['title'] = '404';
+		$this->load->view('components/400', $this->data);
 	}
 
 	public function dashboard()

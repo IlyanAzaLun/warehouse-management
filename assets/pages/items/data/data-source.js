@@ -34,7 +34,7 @@ class DataSource {
 				.val(`${$('.category')
 					.find(':selected').data('id')}${($('.subcategory')
 						.find(':selected').data('id'))?`-${$('.subcategory')
-					.find(':selected').data('id')}-`:`-`}${pad(result+1, 4)}`)
+					.find(':selected').val()}-`:`-`}${pad(result+1, 4)}`)
 			}
 		})
 	}

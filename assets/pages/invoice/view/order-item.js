@@ -13,7 +13,7 @@ class OrderItem extends HTMLElement{
 
           <div class="col-5">
             <div class="form-group">
-              <input type="text" name="fullname" id="fullname" class="form-control" value="">
+              <input type="text" name="item_name[]" id="item_name" class="form-control" value="">
             </div>
           </div>
 
@@ -21,9 +21,9 @@ class OrderItem extends HTMLElement{
             <!-- text input -->
             <div class="form-group">
               <div class="input-group mb-3">
-                <input type="text" class="form-control" name="quantity" id="quantity"  value="">
+                <input type="text" class="form-control" name="quantity[]" id="quantity"  value="">
                 <div class="input-group-append">
-                  <select class="input-group-text" name="unit" id="unit" required>
+                  <select class="input-group-text" name="unit[]" id="unit" required>
                     <option value="pcs">PCS</option>
                     <option value="pac">PAC</option>
                   </select>

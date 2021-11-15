@@ -14,13 +14,16 @@ const main = () => {
                         <div class="form-group">
                           <label>Subcategory item</label>
                           <select class="form-control select2" style="width: 100%;" name="subcategory" id="subcategory" required>
-                            <option value="" selected="selected">Select category item</option>
-                            <option value="LIQUID FREEBASE CREAMY" data-id="FREEBASE-CREAMY" >LIQUID FREEBASE CREAMY</option>
-                            <option value="LIQUID FREEBASE FRUITY" data-id="FREEBASE-FRUITY" >LIQUID FREEBASE FRUITY</option>
-                            <option value="LIQUID SALT CREAMY" data-id="SALT-CREAMY" >LIQUID SALT CREAMY</option>
-                            <option value="LIQUID SALT FRUITY" data-id="SALT-FRUITY" >LIQUID SALT FRUITY</option>
-                            <option value="LIQUID PODS CREAMY" data-id="PODS-CREAMY" >LIQUID PODS CREAMY</option>
-                            <option value="LIQUID PODS FRUITY" data-id="PODS-FRUITY" >LIQUID PODS FRUITY</option>
+                            <option disabled value="" selected="selected">Select category item</option>
+                            <option value="BRAND" data-id="LIQUID-BRAND" >BRAND</option>
+                            <option value="FREEBASE-CREAMY" data-id="LIQUID FREEBASE CREAMY" >LIQUID FREEBASE CREAMY</option>
+                            <option value="FREEBASE-FRUITY" data-id="LIQUID FREEBASE FRUITY" >LIQUID FREEBASE FRUITY</option>
+                            <option value="SALT-CREAMY" data-id="LIQUID SALT CREAMY" >LIQUID SALT CREAMY</option>
+                            <option value="SALT-FRUITY" data-id="LIQUID SALT FRUITY" >LIQUID SALT FRUITY</option>
+                            <option value="PODS-CREAMY" data-id="LIQUID PODS CREAMY" >LIQUID PODS CREAMY</option>
+                            <option value="PODS-FRUITY" data-id="PODS FRUITY" >LIQUID PODS FRUITY</option>
+                            <option value="ML" data-id="LIQUID-ML" >ML</option>
+                            <option value="NIKOTIN" data-id="LIQUID-NIKOTIN" >NIKOTIN</option>
                           </select>
                         </div>
                       </div>
@@ -31,7 +34,7 @@ const main = () => {
 
 		// category code //		
 		$('input#item_code', 'form#insert').on('focus', function(){
-			datasource.getcode($('div.category').find(':selected').data('id'));
+			datasource.getcode(($('div.subcategory').find(':selected').data('id'))?$('div.subcategory').find(':selected').data('id'):$('div.category').find(':selected').val());
 		})
 	});
 

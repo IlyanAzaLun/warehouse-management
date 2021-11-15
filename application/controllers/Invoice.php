@@ -64,27 +64,27 @@ class Invoice extends CI_Controller {
 		$this->data['invoices'] = $this->M_invoice->invoice_select();
 		$this->data['categorys'] = $this->M_menu->menu_category_select();
 
-		$this->form_validation->set_rules('category', 'Category invoice', 'required|trim');
-		$this->form_validation->set_rules('invoice_code', 'Code invoice', 'required|trim');
-		$this->form_validation->set_rules('invoice_name', 'invoice name', 'required|trim');
-		$this->form_validation->set_rules('quantity', 'Quantity', 'required|trim');
-		$this->form_validation->set_rules('unit', 'Unit', 'required|trim');
-		$this->form_validation->set_rules('capital_price', 'Capital price', 'required|trim|integer');
-		$this->form_validation->set_rules('selling_price', 'Selling price', 'required|trim|integer|greater_than['.$this->input->post('capital_price').']');
+		$this->form_validation->set_rules('item_name[]', 'Item name', 'required|trim');
+		$this->form_validation->set_rules('quantity[]', 'Quantity', 'required|trim');
+		$this->form_validation->set_rules('unit[]', 'Unit', 'required|trim');
 		if ($this->form_validation->run()==false) {
 			$this->load->view('invoice/index', $this->data);
 			$this->load->view('invoice/modals');
 		}else{
-			$this->data = [
-				'invoice_category'      => htmlspecialchars($this->input->post('category', true)),
-				'invoice_code'     => htmlspecialchars($this->input->post('invoice_code', true)),
-				'invoice_name'     => htmlspecialchars($this->input->post('invoice_name', true)),
-				'quantity'      => htmlspecialchars($this->input->post('quantity', true)),
-				'unit'          => htmlspecialchars($this->input->post('unit', true)),
-				'capital_price' => htmlspecialchars($this->input->post('capital_price', true)),
-				'selling_price' => htmlspecialchars($this->input->post('selling_price', true)),
-			];
-			$this->M_invoice->invoice_insert($this->data);
+			// $this->data = [
+			// 	'invoice_category'      => htmlspecialchars($this->input->post('category', true)),
+			// 	'invoice_code'     => htmlspecialchars($this->input->post('invoice_code', true)),
+			// 	'invoice_name'     => htmlspecialchars($this->input->post('invoice_name', true)),
+			// 	'quantity'      => htmlspecialchars($this->input->post('quantity', true)),
+			// 	'unit'          => htmlspecialchars($this->input->post('unit', true)),
+			// 	'capital_price' => htmlspecialchars($this->input->post('capital_price', true)),
+			// 	'selling_price' => htmlspecialchars($this->input->post('selling_price', true)),
+			// ];
+			// $this->M_invoice->invoice_insert($this->data);
+			echo "<pre>";
+			var_dump($this->input->post()); 
+			echo "<pre>";
+			die();
 			Flasher::setFlash('info', 'success', 'Success', ' congratulation success to entry new data!');
 			redirect('invoice');
 		}

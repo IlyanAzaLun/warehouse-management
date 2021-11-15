@@ -72,7 +72,9 @@ class Items extends CI_Controller {
 			$this->load->view('items/modals');
 		}else{
 			$this->data = [
-				'item_category'      => htmlspecialchars($this->input->post('category', true)),
+				'item_category' => htmlspecialchars(($this->input->post('subcategory', true))?
+					$this->input->post('category', true).'-'.$this->input->post('subcategory', true):
+					$this->input->post('category', true)),
 				'item_code'     => htmlspecialchars($this->input->post('item_code', true)),
 				'item_name'     => htmlspecialchars($this->input->post('item_name', true)),
 				'quantity'      => htmlspecialchars($this->input->post('quantity', true)),
