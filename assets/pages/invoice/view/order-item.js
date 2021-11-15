@@ -1,8 +1,8 @@
 // order-item.js
 class OrderItem extends HTMLElement{
 	constructor(){
-	    super();
-	    this.render();
+    super();
+    this.render();
 	}
 
 	render(){
@@ -10,6 +10,12 @@ class OrderItem extends HTMLElement{
 		`
 		<!-- order-item -->
         <div class="row" id="order-item">
+
+          <div class="col-12">
+            <div class="form-group">
+              <input type="text" name="item_code[]" id="item_code" class="form-control" value="" readonly>
+            </div>
+          </div>
 
           <div class="col-5">
             <div class="form-group">

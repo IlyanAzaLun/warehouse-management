@@ -32,7 +32,7 @@
               <div class="col-sm-12 col-lg-6">
                 <!-- /.col -->          
 
-                <div class="card">
+                <div class="card" id="order_item">
                   <div class="card-header">
                     <h3 class="card-title">Item information</h3>
                     <div class="card-tools">
@@ -43,7 +43,7 @@
                   <!-- /.card-header -->
                   <div class="card-body" id="order_item">
 
-                    <div class="row">
+                    <div class="row" id="order_item">
 
                       <div class="col-12">
                         <div class="form-group">
@@ -51,29 +51,12 @@
                         </div>
                       </div>
 
-                      <div class="col-5">
+                      <div class="col-10">
                         <div class="form-group">
-                          <label for="item_name">Item name</label>
-                          <input required type="text" name="item_name[]" id="item_name" class="form-control" value="<?=set_value('item_name[]')?>">
+                          <label for="item_name">Search item name...</label>
+                          <input required type="text" id="item_name" class="form-control" value="<?=set_value('item_name[]')?>" placeholder="Search items...">
                         </div>
-                          <?=form_error('item_name[]', '<small class="text-danger">','</small>')?>
-                      </div>
-
-                      <div class="col-5">
-                        <!-- text input -->
-                        <div class="form-group">
-                          <label>Quantity</label>
-                          <div class="input-group mb-3">
-                            <input required type="text" class="form-control" name="quantity[]" id="quantity"  value="<?=set_value('quantity[]')?>">
-                            <div class="input-group-append">
-                              <select class="input-group-text" name="unit[]" id="unit" required>
-                                <option value="pcs">PCS</option>
-                                <option value="pac">PAC</option>
-                              </select>
-                            </div>
-                          </div>
-                          <?=form_error('quantity[]', '<small class="text-danger">','</small>')?>
-                        </div>
+                        <?=form_error('item_name[]', '<small class="text-danger">','</small>')?>
                       </div>
                       <div class="col-2">
                         <label for="">&nbsp;</label>
@@ -82,88 +65,119 @@
 
                     </div>
 
+                    <hr>
+
                   </div>
                   <!-- /.card-body -->
                 </div>
 
               </div>
               <div class="col-sm-12 col-lg-6">
-                <!-- /.col -->          
+                <div class="col-12">
+                  <!-- /.col -->          
 
-                <div class="card">
-                  <div class="card-header">
-                    <h3 class="card-title">Customer information</h3>
-                    <div class="card-tools">
-                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                      <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                  <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title">Customer information</h3>
+                      <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                      </div>
                     </div>
-                  </div>
-                  <!-- /.card-header -->
-                  <div class="card-body">
+                    <!-- /.card-header -->
+                    <div class="card-body">
 
-                    <div class="row">
+                      <div class="row">
 
-                      <div class="col-sm-12">
-                        <div class="form-group">
-                          <input type="text" name="customer_id" id="customer_id" class="form-control" placeholder="customer_id" readonly>
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                            <input type="text" name="customer_id" id="customer_id" class="form-control" placeholder="customer_id" readonly>
+                          </div>
+                        </div>
+
+                        <div class="col-sm-12 col-lg-6">
+                          <div class="form-group">
+                            <label for="fullname">Full name</label>
+                            <input type="text" name="fullname" id="fullname" class="form-control" value="" required>
+                          </div>
+                        </div>
+
+                        <div class="col-sm-12 col-lg-6">
+                          <div class="form-group">
+                            <label for="contact_number">Contact phone <small class="text-primary">(whatsapp)</small></label>
+                            <input type="text" name="contact_number" id="contact_number" class="form-control" value="" required>
+                          </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                            <label for="address">Address or destination</label>
+                            <textarea type="text" name="address" id="address" class="form-control" value="" required></textarea>
+                          </div>
                         </div>
                       </div>
 
-                      <div class="col-sm-12 col-lg-6">
-                        <div class="form-group">
-                          <label for="fullname">Full name</label>
-                          <input type="text" name="fullname" id="fullname" class="form-control" value="">
-                        </div>
-                      </div>
-
-                      <div class="col-sm-12 col-lg-6">
-                        <div class="form-group">
-                          <label for="contact_number">Contact phone <small class="text-primary">(whatsapp)</small></label>
-                          <input type="text" name="contact_number" id="contact_number" class="form-control" value="">
-                        </div>
-                      </div>
-
-                      <div class="col-sm-12">
-                        <div class="form-group">
-                          <label for="address">Address or destination</label>
-                          <textarea type="text" name="address" id="address" class="form-control" value=""></textarea>
-                        </div>
-                      </div>
                     </div>
-
-                  </div>
-                  <!-- /.card-body -->
-                </div>
-
-              </div>
-              <div class="col-12">
-
-                <div class="card">
-                  <div class="card-header">
-                    <h3 class="card-title">Insert invoice</h3>
-                    <div class="card-tools">
-                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                      <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-                    </div>
-                  </div>
-                  <!-- /.card-header -->
-                  <div class="card-body">
-
-                    <div class="row">
-
-                    </div>
-
-                  </div>
-                  <!-- /.card-body -->
-                  <div class="card-footer">
-                    <div class="float-right">
-                      <button type="submit" class="btn btn-primary float-right">Save</button>
-                      <button type="cancel" class="btn btn-default mr-2">Cancel</button>
-                    </div>
+                    <!-- /.card-body -->
                   </div>
                 </div>
+                <div class="col-12">
 
-                <!-- /.col -->
+                  <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title">Insert invoice</h3>
+                      <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                      </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="form-group">
+                            <h6>Sub total :</h6>
+                            <input type="text" name="sub_total" id="sub_total" class="form-control" readonly>
+                          </div>
+                          <div class="row">
+                            <div class="col-lg-6 col-sm-12">
+                              <div class="form-group">
+                                <h6>Discount :</h6>
+                                <div class="input-group mb-3">
+                                  <input type="text" class="form-control">
+                                  <div class="input-group-append">
+                                    <span class="input-group-text">%</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-12">
+                              <div class="form-group">
+                                <h6>Tax :</h6>
+                                <input type="number" name="tax" class="form-control">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <h6>Grand total :</h6>
+                            <input type="text" name="grand_total" class="form-control" readonly>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                      <div class="float-right">
+                        <button type="submit" class="btn btn-primary float-right">Save</button>
+                        <button type="cancel" class="btn btn-default mr-2">Cancel</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- /.col -->
+                </div>
               </div>
             </div>
           </form>

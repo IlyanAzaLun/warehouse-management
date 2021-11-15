@@ -32,8 +32,35 @@ const main = () => {
 			
 		})
 	});
+	datasource.items(function(output){
+		let items = [];
+		$(output).each(function(index, field){
+			items.push(field.item_name);
+		})
+		$('input#item_name').autocomplete({
+			source: items
+		});
+		
+	})
 	$('button#add_order_item').on('click', function(){
-		$(this).parents().closest('div#order_item.card-body').append('<order-item></order-item>');
+
+		// $(this).parents().closest('div#order_item.card-body').append('<order-item></order-item>');
+		// datasource.items_search($(this).parents().closest('div.row#order_item').find('input#item_name').val(), function(data){
+		// 	$('order-item input#item_code').val(data.item_code);
+		// 	$('order-item input#item_name').val(data.item_name);
+		// });
+		//
+		let sub_total = 0;
+		datasource.items_search($(this).parents().closest('div.row#order_item').find('input#item_name').val(), function(output){
+			datasource.field(output);
+		});
+	});
+	$('div.card#order_item').on('focusout', function(){
+		$('#order-item input#item_name').attr('name','item_name[]').each(function(index, field){
+		    datasource.items_search(field.value, function(item){
+		    	$('input#sub_total').val(parseInt(item.selling_price)*parseInt($(field).parents().closest('div#order-item.row').find('input#quantity').val()))
+		    })
+		})
 	})
 };
 export default main;

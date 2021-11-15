@@ -71,23 +71,29 @@ class Invoice extends CI_Controller {
 			$this->load->view('invoice/index', $this->data);
 			$this->load->view('invoice/modals');
 		}else{
-			// $this->data = [
-			// 	'invoice_category'      => htmlspecialchars($this->input->post('category', true)),
-			// 	'invoice_code'     => htmlspecialchars($this->input->post('invoice_code', true)),
-			// 	'invoice_name'     => htmlspecialchars($this->input->post('invoice_name', true)),
-			// 	'quantity'      => htmlspecialchars($this->input->post('quantity', true)),
-			// 	'unit'          => htmlspecialchars($this->input->post('unit', true)),
-			// 	'capital_price' => htmlspecialchars($this->input->post('capital_price', true)),
-			// 	'selling_price' => htmlspecialchars($this->input->post('selling_price', true)),
-			// ];
-			// $this->M_invoice->invoice_insert($this->data);
-			echo "<pre>";
-			var_dump($this->input->post()); 
-			echo "<pre>";
-			die();
+			$this->_item_insert();
 			Flasher::setFlash('info', 'success', 'Success', ' congratulation success to entry new data!');
 			redirect('invoice');
 		}
+	}
+
+	private function _item_insert()
+	{
+		
+		// $this->data = [
+		// 	'invoice_category'      => htmlspecialchars($this->input->post('category', true)),
+		// 	'invoice_code'     => htmlspecialchars($this->input->post('invoice_code', true)),
+		// 	'invoice_name'     => htmlspecialchars($this->input->post('invoice_name', true)),
+		// 	'quantity'      => htmlspecialchars($this->input->post('quantity', true)),
+		// 	'unit'          => htmlspecialchars($this->input->post('unit', true)),
+		// 	'capital_price' => htmlspecialchars($this->input->post('capital_price', true)),
+		// 	'selling_price' => htmlspecialchars($this->input->post('selling_price', true)),
+		// ];
+		// $this->M_invoice->invoice_insert($this->data);
+		echo "<pre>";
+		var_dump($this->input->post()); 
+		echo "<pre>";
+		die();
 	}
 
 	public function info()
@@ -112,6 +118,26 @@ class Invoice extends CI_Controller {
 				}
 			}else{
 				echo json_encode($this->db->get('tbl_customer')->result_array());
+			}
+		}
+	}
+
+	public function items()
+	{
+		if ($this->input->post('request')) {
+			if ($this->input->post('data')) {
+				$this->data = $this->db->get_where('tbl_item', array('item_name' => $this->input->post('data')))->row_array();
+				if ($this->data) {
+					echo json_encode($this->data);
+				}else{
+					echo json_encode($data = array(
+						'customer_id' => '', 
+						'customer_contact_phone' => '', 
+						'customer_address' => '', 
+					));
+				}
+			}else{
+				echo json_encode($this->db->get('tbl_item')->result_array());
 			}
 		}
 	}
