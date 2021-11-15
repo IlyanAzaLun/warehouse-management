@@ -1,3 +1,5 @@
+application/config/database.php
+
 .DS_Store
 
 application/cache/*
@@ -29,6 +31,3 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.sublime-project
 /tests/tests/
 /tests/results/
-
-##config
-application/config/database.php
