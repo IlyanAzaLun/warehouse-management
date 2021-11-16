@@ -34,7 +34,7 @@
 
                 <div class="card" id="order_item">
                   <div class="card-header">
-                    <h3 class="card-title">Item information</h3>
+                    <h3 class="card-title">Informasi barang</h3>
                     <div class="card-tools">
                       <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
                       <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
@@ -53,8 +53,8 @@
 
                       <div class="col-10">
                         <div class="form-group">
-                          <label for="item_name">Search item name...</label>
-                          <input required type="text" id="item_name" class="form-control" value="<?=set_value('item_name[]')?>" placeholder="Search items...">
+                          <label for="item_name">Cari nama barang...</label>
+                          <input required type="text" id="item_name" class="form-control" value="<?=set_value('item_name[]')?>" placeholder="Cari barang...">
                         </div>
                         <?=form_error('item_name[]', '<small class="text-danger">','</small>')?>
                       </div>
@@ -78,7 +78,7 @@
 
                   <div class="card">
                     <div class="card-header">
-                      <h3 class="card-title">Customer information</h3>
+                      <h3 class="card-title">Informasi pelanggan</h3>
                       <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
                         <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
@@ -97,21 +97,21 @@
 
                         <div class="col-sm-12 col-lg-6">
                           <div class="form-group">
-                            <label for="fullname">Full name</label>
+                            <label for="fullname">Nama lengkap</label>
                             <input type="text" name="fullname" id="fullname" class="form-control" value="" required>
                           </div>
                         </div>
 
                         <div class="col-sm-12 col-lg-6">
                           <div class="form-group">
-                            <label for="contact_number">Contact phone <small class="text-primary">(whatsapp)</small></label>
+                            <label for="contact_number">Nomor kontak <small class="text-primary">(whatsapp)</small></label>
                             <input type="text" name="contact_number" id="contact_number" class="form-control" value="" required>
                           </div>
                         </div>
 
                         <div class="col-sm-12">
                           <div class="form-group">
-                            <label for="address">Address or destination</label>
+                            <label for="address">Alamat atau tujuan</label>
                             <textarea type="text" name="address" id="address" class="form-control" value="" required></textarea>
                           </div>
                         </div>
@@ -125,7 +125,7 @@
 
                   <div class="card">
                     <div class="card-header">
-                      <h3 class="card-title">Insert invoice</h3>
+                      <h3 class="card-title">Tambah pemesanan</h3>
                       <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
                         <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
@@ -188,7 +188,7 @@
               <!-- /.col -->          
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">List invoice</h3>
+                  <h3 class="card-title">Daftar pemesanan</h3>
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
                     <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
@@ -200,11 +200,11 @@
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>Options</th>
-                        <th>Code invoice</th>
-                        <th>Date</th>
-                        <th>Destination</th>
-                        <th>Status payment</th>
+                        <th>Opsi</th>
+                        <th>Kode pemesanan</th>
+                        <th>Tanggal</th>
+                        <th>Tujuan</th>
+                        <th>Status pembayaran</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -234,7 +234,7 @@
                               <a href="https://wa.me/<?=$invoice['customer_contact_phone']?>" target="_blank"><?=$invoice['customer_contact_phone']?></a>
                             </small>
                           </td>
-                          <td class="text-center"><?=($invoice['status_payment']=='1')?'<span class="badge badge-success">Payed</span>':'<span class="badge badge-danger">Unpayed</span>';?></td>
+                          <td class="text-center"><?=($invoice['status_payment']=='1')?'<span class="badge badge-success">Paid</span>':'<span class="badge badge-danger">Unpayed</span>';?></td>
                         </tr>
 
                       <?php endforeach ?>

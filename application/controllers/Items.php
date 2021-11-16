@@ -56,7 +56,7 @@ class Items extends CI_Controller {
 				base_url('assets/pages/items/index.js'),
 			],
 		);
-		$this->data['title'] = 'Items management';
+		$this->data['title'] = 'Manajemen barang';
 		$this->data['items'] = $this->M_items->item_select();
 		$this->data['categorys'] = $this->M_menu->menu_category_select();
 

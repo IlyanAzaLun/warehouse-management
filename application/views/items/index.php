@@ -31,7 +31,7 @@
               <!-- /.col -->          
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Insert item</h3>
+                  <h3 class="card-title">Tambah data barang</h3>
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
                     <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
@@ -47,7 +47,7 @@
                         <div class="form-group">
                           <label>Category item</label>
                           <select class="form-control select2" style="width: 100%;" name="category" id="category"  value="<?=set_value('category')?>" required>
-                            <option value="" selected="selected">Select category item</option>
+                            <option value="" selected="selected">Pilih kategori barang</option>
                             <option value="ACC" data-id="ACC" <?=set_select('category', 'ACC')?>>ACC</option>
                             <option value="ATOMIZER" data-id="ATOMIZER" <?=set_select('category', 'ATOMIZER')?>>ATOMIZER</option>
                             <option value="BATTERY" data-id="BATTERY" <?=set_select('category', 'BATTERY')?>>BATTERY</option>
@@ -64,7 +64,7 @@
                       <div class="col-sm-3">
                         <!-- text input -->
                         <div class="form-group">
-                          <label>Code item</label>
+                          <label>Kode barang</label>
                           <input type="text" class="form-control" name="item_code" id="item_code"  value="<?=set_value('item_code')?>" required readonly>
                         </div>
                       </div>
@@ -72,14 +72,14 @@
                       <div class="col-sm-3">
                         <!-- text input -->
                         <div class="form-group">
-                          <label>Name item</label>
+                          <label>Nama barang</label>
                           <input type="text" class="form-control" name="item_name" id="item_name"  value="<?=set_value('item_name')?>" required>
                         </div>
                       </div>
                       <div class="col-sm-3">
                         <!-- text input -->
                         <div class="form-group">
-                          <label>Quantity</label>
+                          <label>Jumlah</label>
                           <div class="input-group mb-3">
                             <input type="text" class="form-control" name="quantity" id="quantity"  value="<?=set_value('quantity')?>">
                             <div class="input-group-append">
@@ -96,7 +96,7 @@
                       <div class="col-sm-3">
                         <!-- text input -->
                         <div class="form-group">
-                          <label>Capital price</label>
+                          <label>Harga pokok</label>
                           <input type="number" class="form-control" name="capital_price" id="capital_price"  value="<?=set_value('capital_price')?>" required>
                           <?=form_error('capital_price', '<small class="text-danger">','</small>')?>
                         </div>
@@ -104,7 +104,7 @@
                       <div class="col-sm-3">
                         <!-- text input -->
                         <div class="form-group">
-                          <label>Selling price</label>
+                          <label>Harga jual</label>
                           <input type="number" class="form-control" name="selling_price" id="selling_price"  value="<?=set_value('selling_price')?>" required>
                           <?=form_error('selling_price', '<small class="text-danger">','</small>')?>
                         </div>
@@ -115,8 +115,8 @@
                   <!-- /.card-body -->
                   <div class="card-footer">
                     <div class="float-right">
-                      <button type="submit" class="btn btn-primary float-right">Save</button>
-                      <button type="cancel" class="btn btn-default mr-2">Cancel</button>
+                      <button type="submit" class="btn btn-primary float-right">Simpan</button>
+                      <button type="cancel" class="btn btn-default mr-2">Batal</button>
                     </div>
                   </div>
                 </form>
@@ -131,7 +131,7 @@
               <!-- /.col -->          
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">List items</h3>
+                  <h3 class="card-title">Daftar barang</h3>
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
                     <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
@@ -143,12 +143,12 @@
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>Options</th>
-                        <th>Code item</th>
-                        <th>Item name</th>
-                        <th>Quantity</th>
-                        <th>Capital price</th>
-                        <th>Selling price</th>
+                        <th>Opsi</th>
+                        <th>Kode barang</th>
+                        <th>Nama barang</th>
+                        <th>Jumlah</th>
+                        <th>Harga pokok</th>
+                        <th>Harga jual</th>
                         <th>Item image</th>
                       </tr>
                     </thead>

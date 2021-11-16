@@ -60,7 +60,7 @@ class Invoice extends CI_Controller {
 				base_url('assets/pages/invoice/index.js'),
 			],
 		);
-		$this->data['title'] = 'Invoice management';
+		$this->data['title'] = 'Manajemen pemesanan';
 		$this->data['invoices'] = $this->M_invoice->invoice_select();
 		$this->data['categorys'] = $this->M_menu->menu_category_select();
 

@@ -2,7 +2,7 @@
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">Update Modal</h4>
+				<h4 class="modal-title">Ubah data</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -14,7 +14,7 @@
 
 						<div class="col-sm-6">
 							<div class="form-group">
-								<label>Category item</label>
+								<label>Kategori barang</label>
 								<input type="text" class="form-control" name="category" id="category"  value="<?=set_value('category')?>" required readonly>
 							</div>
 						</div>
@@ -22,7 +22,7 @@
 						<div class="col-sm-6">
 							<!-- text input -->
 							<div class="form-group">
-								<label>Code item</label>
+								<label>Kode barang</label>
 								<input type="text" class="form-control" name="item_code" id="item_code"  value="<?=set_value('item_code')?>" required readonly>
 							</div>
 						</div>
@@ -30,14 +30,14 @@
 						<div class="col-sm-6">
 							<!-- text input -->
 							<div class="form-group">
-								<label>Name item</label>
+								<label>Nama barang</label>
 								<input type="text" class="form-control" name="item_name" id="item_name"  value="<?=set_value('item_name')?>" required>
 							</div>
 						</div>
 						<div class="col-sm-6">
 							<!-- text input -->
 							<div class="form-group">
-								<label>Quantity</label>
+								<label>Jumlah</label>
 								<div class="input-group mb-3">
 									<input type="text" class="form-control" name="quantity" id="quantity"  value="<?=set_value('quantity')?>">
 									<div class="input-group-append">
@@ -54,7 +54,7 @@
 						<div class="col-sm-6">
 							<!-- text input -->
 							<div class="form-group">
-								<label>Capital price</label>
+								<label>Harga pokok</label>
 								<input type="number" class="form-control" name="capital_price" id="capital_price"  value="<?=set_value('capital_price')?>" required>
 								<?=form_error('capital_price', '<small class="text-danger">','</small>')?>
 							</div>
@@ -62,7 +62,7 @@
 						<div class="col-sm-6">
 							<!-- text input -->
 							<div class="form-group">
-								<label>Selling price</label>
+								<label>Harga jual</label>
 								<input type="number" class="form-control" name="selling_price" id="selling_price"  value="<?=set_value('selling_price')?>" required>
 								<?=form_error('selling_price', '<small class="text-danger">','</small>')?>
 							</div>
@@ -73,8 +73,8 @@
 				<!-- /.card-body -->
 				<div class="card-footer">
 					<div class="float-right">
-						<button type="submit" class="btn btn-primary float-right">Save</button>
-						<button type="cancel" class="btn btn-default mr-2">Cancel</button>
+						<button type="submit" class="btn btn-primary float-right">Simpan</button>
+						<button type="cancel" class="btn btn-default mr-2">Batal</button>
 					</div>
 				</div>
 			</form>
@@ -89,19 +89,19 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">Delete item</h4>
+				<h4 class="modal-title">Hapus barang</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<form method="post" action="<?=base_url('item/delete')?>">
 				<div class="modal-body">
-					<p>Are you sure to <b class="text-danger">Delete</b> item ?</p>
+					<p>Anda yakin untuk <b class="text-danger">Menghapus</b> barang ?</p>
 					<input type="hidden" name="item_code" id="item_code" readonly>
 				</div>
 				<div class="modal-footer justify-content-between">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="submit" class="btn btn-danger">Yes do it&hellip;</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+					<button type="submit" class="btn btn-danger">Ya, saya yakin!&hellip;</button>
 				</div>
 			</form>
 		</div>

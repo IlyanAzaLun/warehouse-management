@@ -8,6 +8,7 @@ class Menu extends CI_Controller {
 		is_signin(get_class($this));
 		$this->load->model('M_users');
 		$this->load->model('M_menu');
+		$this->load->model('M_role');
 	}
 	public function index(){
 		$this->data['plugins'] = array(
@@ -38,6 +39,7 @@ class Menu extends CI_Controller {
 		$this->data['user'] = $this->M_users->user_select($this->session->userdata('email'));
 		$this->data['menus'] = $this->M_menu->menu_select();
 		$this->data['categorys'] = $this->M_menu->menu_category_select();
+		$this->data['roles'] = $this->M_role->role_select();
 
 		$this->form_validation->set_rules('menu', 'Menu name', 'required|trim');
 		$this->form_validation->set_rules('category_id', 'Category menu', 'required|trim');
@@ -45,7 +47,7 @@ class Menu extends CI_Controller {
 		$this->form_validation->set_rules('icon', 'Icon menu', 'required|trim');
 		if ($this->form_validation->run() == false) {
 			$this->load->view('configuration/menu/index', $this->data);
-			$this->load->view('configuration/menu/modals');
+			$this->load->view('configuration/menu/modals', $this->data);
 		}else{
 			$this->data = [
 				'title' => htmlspecialchars($this->input->post('menu', true)),
@@ -56,6 +58,13 @@ class Menu extends CI_Controller {
 				'icon' => htmlspecialchars($this->input->post('icon', true)),
 				'is_active' => htmlspecialchars($this->input->post('is_active', true)),
 			];
+
+			echo "<b>Information! under maintenance</b>";
+			echo "<pre>";
+			var_dump($this->input->post());
+			echo "</pre>";
+			die();
+			
 			if ($this->M_menu->menu_insert($this->data)) {
 				Flasher::setFlash('info', 'success', 'Success', ' congratulation you already added new data!');
 				redirect('configuration/menu');
@@ -73,6 +82,16 @@ class Menu extends CI_Controller {
 				'category_name' => strtoupper(htmlspecialchars($this->input->post('category_name', true))),
 			];
 			try {
+
+
+				echo "<b>Information! under maintenance</b>";
+				echo "<pre>";
+				var_dump($this->input->post());
+				echo "</pre>";
+				echo "<b>Logic</b>";
+				echo "<pre>ON tbl_user_menu_category :Only insert the category_id and category_name</pre>";
+				echo "<pre>ON tbl_user_access_menu :Looping the role id, to insert on tbl_user_access_menu with create new category_id</pre>";
+				die();
 				$this->M_menu->menu_category_insert($this->data);
 
 				Flasher::setFlash('info', 'success', 'Success', ' congratulation you already added new data!');

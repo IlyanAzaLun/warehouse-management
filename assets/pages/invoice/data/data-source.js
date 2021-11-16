@@ -72,11 +72,11 @@ class DataSource {
             <!-- text input -->
             <div class="form-group">
               <div class="input-group mb-3">
-                <input type="text" class="form-control" name="quantity[]" id="quantity"  value="" required>
+                <input type="number" class="form-control" name="quantity[]" id="quantity"  value="" required>
                 <div class="input-group-append">
-                  <select class="input-group-text" name="unit[]" id="unit" required>
-                    <option value="pcs">PCS</option>
-                    <option value="pac">PAC</option>
+                  
+                  <select class="input-group-text" name="unit[]" id="unit" required readonly disabled>
+                    <option value="${result.unit}">${(result.unit).toUpperCase()}</option>
                   </select>
                 </div>
               </div>
