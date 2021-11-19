@@ -12,28 +12,78 @@ const main = () => {
 			$('.category').after(`
                       <div class="col-sm-3 subcategory">
                         <div class="form-group">
-                          <label>Subcategory item</label>
+                          <label>Sub kategori barang</label>
                           <select class="form-control select2" style="width: 100%;" name="subcategory" id="subcategory" required>
                             <option disabled value="" selected="selected">Select category item</option>
-                            <option value="BRAND" data-id="LIQUID-BRAND" >BRAND</option>
                             <option value="FREEBASE-CREAMY" data-id="LIQUID FREEBASE CREAMY" >LIQUID FREEBASE CREAMY</option>
                             <option value="FREEBASE-FRUITY" data-id="LIQUID FREEBASE FRUITY" >LIQUID FREEBASE FRUITY</option>
                             <option value="SALT-CREAMY" data-id="LIQUID SALT CREAMY" >LIQUID SALT CREAMY</option>
                             <option value="SALT-FRUITY" data-id="LIQUID SALT FRUITY" >LIQUID SALT FRUITY</option>
                             <option value="PODS-CREAMY" data-id="LIQUID PODS CREAMY" >LIQUID PODS CREAMY</option>
                             <option value="PODS-FRUITY" data-id="PODS FRUITY" >LIQUID PODS FRUITY</option>
-                            <option value="ML" data-id="LIQUID-ML" >ML</option>
-                            <option value="NIKOTIN" data-id="LIQUID-NIKOTIN" >NIKOTIN</option>
                           </select>
                         </div>
                       </div>
-				`)
+
+                      <div class="col-sm-3 subcategory">
+                        <!-- text input -->
+                        <div class="form-group">
+                          <label>MG <small>(Nikotin)</small></label>
+                          <input type="number" class="form-control" name="MG" id="MG" required>
+                        </div>
+                      </div>
+                      <div class="col-sm-3 subcategory">
+                        <!-- text input -->
+                        <div class="form-group">
+                          <label>ML <small>(Milligram)</small></label>
+                          <input type="number" class="form-control" name="ML" id="ML" required>
+                        </div>
+                      </div>
+                      <div class="col-sm-3 subcategory">
+                        <!-- text input -->
+                        <div class="row">
+                        	<div class="col-6">
+	                        	<div class="form-group">
+		                          <label>VG</label>
+		                          <input type="number" class="form-control" name="VG" id="VG" required>
+		                        </div>
+                        	</div>
+
+                        	<div class="col-6">
+	                        	<div class="form-group">
+		                          <label>PG</label>
+		                          <input type="number" class="form-control" name="PG" id="PG" required>
+		                        </div>
+                        	</div>
+
+                        </div>
+                      </div>
+                      <div class="col-sm-3 subcategory">
+                        <!-- text input -->
+                        <div class="form-group">
+                          <label>Flavour <small>(Rasa)</small></label>
+                          <input type="text" class="form-control" name="flavour" id="flavour" required>
+                        </div>
+                      </div><div class="col-sm-3 subcategory">
+                        <!-- text input -->
+                        <div class="form-group">
+                          <label>Brand 1</label>
+                          <input type="text" class="form-control" name="brand_1" id="brand_1" required>
+                        </div>
+                      </div><div class="col-sm-3 subcategory">
+                        <!-- text input -->
+                        <div class="form-group">
+                          <label>Brand 2</label>
+                          <input type="text" class="form-control" name="brand_2" id="brand_2">
+                        </div>
+                      </div>
+				`);
 		}else{
 			$('.subcategory').remove();
 		}
 
 		// category code //		
-		$('input#item_code', 'form#insert').on('focus', function(){
+		$('input#item_name', 'form#insert').on('focus', function(){
 			datasource.getcode(($('div.subcategory').find(':selected').data('id'))?$('div.subcategory').find(':selected').data('id'):$('div.category').find(':selected').val());
 		})
 	});

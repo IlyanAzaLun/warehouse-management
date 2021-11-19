@@ -15,19 +15,19 @@ const main = () => {
 		$('#modal-delete input#invoice_id').val($(this).parent().data('id'));
 	});
 	
-	datasource.customer(function(output){
+	datasource.user_info(function(output){
 		let fullname = [];
 		$(output).each(function(index, field){
-			fullname.push(field.customer_fullname);
+			fullname.push(field.user_fullname);
 		})
 		$('input#fullname').autocomplete({
 			source: fullname
 		});
 		$('input#fullname').on('focusout', function(){
-			datasource.customer_search($(this).val(), function(data){
-				$('input#customer_id').val(data.customer_id);
-				$('input#contact_number').val(data.customer_contact_phone);
-				$('textarea#address').val(data.customer_address);
+			datasource.user_info_search($(this).val(), function(data){
+				$('input#user_id').val(data.user_id);
+				$('input#contact_number').val(data.user_contact_phone);
+				$('textarea#address').val(data.user_address);
 			});
 			
 		})

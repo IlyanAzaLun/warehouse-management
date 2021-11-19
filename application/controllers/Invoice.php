@@ -72,6 +72,7 @@ class Invoice extends CI_Controller {
 			$this->load->view('invoice/modals');
 		}else{
 			$this->_item_insert();
+			die();
 			Flasher::setFlash('info', 'success', 'Success', ' congratulation success to entry new data!');
 			redirect('invoice');
 		}
@@ -92,8 +93,11 @@ class Invoice extends CI_Controller {
 		// $this->M_invoice->invoice_insert($this->data);
 		echo "<pre>";
 		var_dump($this->input->post()); 
+
+		echo "<b>Logic</b>";
+		echo "<p><b>on quantity, decrease with value quantity on invoice.</b></p>";
+		echo "<p><b>on price must set value to tbl_order, not get from on tbl_item</b></p>";
 		echo "<pre>";
-		die();
 	}
 
 	public function info()
@@ -102,22 +106,25 @@ class Invoice extends CI_Controller {
 		$this->load->view('invoice/info-invoice', $this->data);
 	}
 
-	public function customer()
+	public function user_info()
 	{
 		if ($this->input->post('request')) {
 			if ($this->input->post('data')) {
-				$this->data = $this->db->get_where('tbl_customer', array('customer_fullname' => $this->input->post('data')))->row_array();
+				$this->db->where('id_role', '752c0ad8-4925-11ec-8cc8-1be21be013bc');
+				$this->db->where('user_fullname', $this->input->post('data'));
+				$this->data = $this->db->get('tbl_user_information')->row_array();
 				if ($this->data) {
 					echo json_encode($this->data);
 				}else{
 					echo json_encode($data = array(
-						'customer_id' => '', 
-						'customer_contact_phone' => '', 
-						'customer_address' => '', 
+						'user_id' => '', 
+						'user_contact_phone' => '', 
+						'user_address' => '', 
 					));
 				}
 			}else{
-				echo json_encode($this->db->get('tbl_customer')->result_array());
+				$this->db->where('id_role', '752c0ad8-4925-11ec-8cc8-1be21be013bc');
+				echo json_encode($this->db->get('tbl_user_information')->result_array());
 			}
 		}
 	}
@@ -131,9 +138,9 @@ class Invoice extends CI_Controller {
 					echo json_encode($this->data);
 				}else{
 					echo json_encode($data = array(
-						'customer_id' => '', 
-						'customer_contact_phone' => '', 
-						'customer_address' => '', 
+						'user_id' => '', 
+						'user_contact_phone' => '', 
+						'user_address' => '', 
 					));
 				}
 			}else{

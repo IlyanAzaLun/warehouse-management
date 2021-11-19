@@ -63,7 +63,7 @@ class Menu extends CI_Controller {
 			echo "<pre>";
 			var_dump($this->input->post());
 			echo "</pre>";
-			die();
+			// die();
 			
 			if ($this->M_menu->menu_insert($this->data)) {
 				Flasher::setFlash('info', 'success', 'Success', ' congratulation you already added new data!');

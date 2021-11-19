@@ -16,10 +16,19 @@ $route['items/getitem'] = 'Items/getitem';
 $route['item/delete'] = 'Items/delete';
 $route['item/update'] = 'Items/update';
 
+// item stock
+$route['stocks'] = 'Stock';
+$route['stocks/get-item'] = 'Stock/getitem';
+$route['stocks/get-history'] = 'Stock/gethistory';
+
 //invoice
 $route['invoice'] = 'Invoice';
 $route['invoice/info'] = 'Invoice/info';
+$route['invoice/user-info'] = 'Invoice/user_info';
 
+//USER;
+//customer
+$route['customer'] = 'Users/customer';
 
 //configuration
 // menu

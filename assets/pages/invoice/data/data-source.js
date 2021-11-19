@@ -18,9 +18,9 @@ class DataSource {
 		});
 		
 	}
-	customer(handle){
+	user_info(handle){
 		$.ajax({
-			url: this.BASEURL+'customer',
+			url: this.BASEURL+'user-info',
 			method: 'POST',
 			dataType: 'JSON',
 			data: {'request': 'GET'},
@@ -29,9 +29,9 @@ class DataSource {
 			}	
 		})
 	}
-	customer_search(request, handle){
+	user_info_search(request, handle){
 		$.ajax({
-			url: this.BASEURL+'customer',
+			url: this.BASEURL+'user-info',
 			method: 'POST',
 			dataType: 'JSON',
 			data: {'request': 'GET', 'data': request},
@@ -75,7 +75,7 @@ class DataSource {
                 <input type="number" class="form-control" name="quantity[]" id="quantity"  value="" required>
                 <div class="input-group-append">
                   
-                  <select class="input-group-text" name="unit[]" id="unit" required readonly disabled>
+                  <select class="input-group-text" name="unit[]" id="unit" required readonly>
                     <option value="${result.unit}">${(result.unit).toUpperCase()}</option>
                   </select>
                 </div>

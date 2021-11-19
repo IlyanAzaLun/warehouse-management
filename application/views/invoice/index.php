@@ -57,6 +57,8 @@
                           <input required type="text" id="item_name" class="form-control" value="<?=set_value('item_name[]')?>" placeholder="Cari barang...">
                         </div>
                         <?=form_error('item_name[]', '<small class="text-danger">','</small>')?>
+                        <?=form_error('quantity[]', '<small class="text-danger">','</small>')?>
+                        <?=form_error('unit[]', '<small class="text-danger">','</small>')?>
                       </div>
                       <div class="col-2">
                         <label for="">&nbsp;</label>
@@ -145,7 +147,7 @@
                               <div class="form-group">
                                 <h6>Discount :</h6>
                                 <div class="input-group mb-3">
-                                  <input type="text" class="form-control">
+                                  <input type="number" name="discount" class="form-control">
                                   <div class="input-group-append">
                                     <span class="input-group-text">%</span>
                                   </div>
@@ -228,10 +230,10 @@
                           <td>
                             <small>
                               <a href="<?=base_url('customer/'.$invoice['to_customer_destination'])?>">
-                                <?=$invoice['customer_fullname']?>
+                                <?=$invoice['user_fullname']?>
                               </a>
-                              <p><?=$invoice['customer_address']?></p>
-                              <a href="https://wa.me/<?=$invoice['customer_contact_phone']?>" target="_blank"><?=$invoice['customer_contact_phone']?></a>
+                              <p><?=$invoice['user_address']?></p>
+                              <a href="https://wa.me/<?=$invoice['user_contact_phone']?>" target="_blank"><?=$invoice['user_contact_phone']?></a>
                             </small>
                           </td>
                           <td class="text-center"><?=($invoice['status_payment']=='1')?'<span class="badge badge-success">Paid</span>':'<span class="badge badge-danger">Unpayed</span>';?></td>

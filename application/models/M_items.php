@@ -11,7 +11,6 @@ class M_items extends CI_Model {
         }
         public function item_insert($data)
         {
-                $data['image_id'] =  'assets/images/LQD-001.jpg';
                 return $this->db->insert('tbl_item', $data);
         }
         public function item_update($data)

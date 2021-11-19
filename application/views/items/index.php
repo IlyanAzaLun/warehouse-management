@@ -45,7 +45,7 @@
                       
                       <div class="col-sm-3 category">
                         <div class="form-group">
-                          <label>Category item</label>
+                          <label>Kategori barang</label>
                           <select class="form-control select2" style="width: 100%;" name="category" id="category"  value="<?=set_value('category')?>" required>
                             <option value="" selected="selected">Pilih kategori barang</option>
                             <option value="ACC" data-id="ACC" <?=set_select('category', 'ACC')?>>ACC</option>
@@ -81,7 +81,7 @@
                         <div class="form-group">
                           <label>Jumlah</label>
                           <div class="input-group mb-3">
-                            <input type="text" class="form-control" name="quantity" id="quantity"  value="<?=set_value('quantity')?>">
+                            <input type="text" class="form-control" name="quantity" id="quantity"  value="<?=set_value('quantity')?>" required>
                             <div class="input-group-append">
                               <select class="input-group-text" name="unit" id="unit" required>
                                 <option value="pcs">PCS</option>
@@ -108,6 +108,16 @@
                           <input type="number" class="form-control" name="selling_price" id="selling_price"  value="<?=set_value('selling_price')?>" required>
                           <?=form_error('selling_price', '<small class="text-danger">','</small>')?>
                         </div>
+                      </div>
+                      <div class="col">
+                        
+                        <!-- text input -->
+                        <div class="form-group">
+                          <label>Keterangan</label>
+                          <textarea type="text" class="form-control" name="note" id="note"><?=set_value('note')?></textarea>
+                          <?=form_error('note', '<small class="text-danger">','</small>')?>
+                        </div>
+
                       </div>
                     </div>
 
@@ -149,7 +159,6 @@
                         <th>Jumlah</th>
                         <th>Harga pokok</th>
                         <th>Harga jual</th>
-                        <th>Item image</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -168,7 +177,6 @@
                           <td><?=$item['quantity']?> (<?=$item['unit']?>)</td>
                           <td><?=convertToMoney((int)$item['capital_price'])?></td>
                           <td><?=convertToMoney((int)$item['selling_price'])?></td>
-                          <td><?=$item['image_id']?></td>
                         </tr>
 
                       <?php endforeach ?>

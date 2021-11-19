@@ -4,6 +4,7 @@ use Ramsey\Uuid\Uuid;
 class M_users extends CI_Model {
 
         private $_table = "tbl_user";
+        private $_foreign_table = "tbl_user_information";
 
         public function user_select($data)
         {
@@ -25,10 +26,26 @@ class M_users extends CI_Model {
                 $uuid = Uuid::uuid4();
                 $data['user_id']      =  $uuid;
                 $data['user_image']   =  'assets/images/default.jpg';
-                $data['role_id']      =  'c046d399-40f9-11ec-ae08-0d3b0460d819';
+                $data['role_id']      =  '752c0ad8-4925-11ec-8cc8-1be21be013bc';
                 $data['is_active']    =  1;
                 $data['date_created'] =  time();
                 return $this->db->insert('tbl_user', $data);
 
+        }
+
+        public function user_info_select($data, $type)
+        {
+                if ($data['user_id']) {
+                        // code...
+                }else{
+                        $this->db->join('tbl_role role', 'user_info.id_role = role.id', 'left');
+                        $this->db->where('role.role_name', $type);
+                        return $this->db->get($this->_foreign_table.' user_info')->result_array();
+                }
+        }
+
+        public function user_info_insert($data)
+        {
+                // code...
         }
 }

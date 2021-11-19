@@ -68,11 +68,11 @@
 					</div>
 
 					<div class="form-group">
-						<input required type="text" class="form-control" name="menu_controller" placeholder="Controller menu">
+						<input type="text" class="form-control" name="menu_controller" placeholder="Controller menu">
 					</div>
 
 					<div class="form-group">
-						<input required type="text" class="form-control" name="url" placeholder="Url menu">
+						<input type="text" class="form-control" name="url" placeholder="Url menu">
 					</div>
 
 					<div class="form-group">
