@@ -86,9 +86,8 @@
 								<input type="text" class="form-control" name="brand_2" id="brand_2" value="<?=set_value('brand_2')?>">
 							</div>
 						</div>
-
+						<!-- 
 						<div class="col-sm-6">
-							<!-- text input -->
 							<div class="form-group">
 								<label>Jumlah</label>
 								<div class="input-group mb-3">
@@ -100,10 +99,10 @@
 										</select>
 									</div>
 								</div>
-								<?=form_error('quantity', '<small class="text-danger">','</small>')?>
+								<?//=form_error('quantity', '<small class="text-danger">','</small>')?>
 							</div>
 						</div>
-
+						-->
 						<div class="col-sm-3">
 							<!-- text input -->
 							<div class="form-group">

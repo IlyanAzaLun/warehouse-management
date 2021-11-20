@@ -70,9 +70,9 @@ class DataSource {
 					const html = `
 					<tr>
 						<td>${field.item_code}</td>
+						<td>${field.previous_quantity}</td>
 						<td>${field.previous_selling_price}</td>
 						<td>${field.previous_capital_price}</td>
-						<td>${field.previous_quantity}</td>
 						<td>${dateformat(field.update_at)}</td>
 					</tr>
 					`;

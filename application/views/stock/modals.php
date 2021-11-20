@@ -115,7 +115,7 @@ modals.php<div class="modal fade" id="modal-add-stock">
 								<div class="input-group mb-3">
 									<input type="number" class="form-control" name="add_quantity" id="add_quantity"  value="0">
 									<div class="input-group-append">
-										<select class="input-group-text" name="unit" id="unit" required disabled>
+										<select class="input-group-text" name="unit" id="unit" required>
 											<option value="pcs">PCS</option>
 											<option value="pac">PAC</option>
 										</select>

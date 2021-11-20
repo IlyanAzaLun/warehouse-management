@@ -22,9 +22,13 @@ $route['stocks/get-item'] = 'Stock/getitem';
 $route['stocks/get-history'] = 'Stock/gethistory';
 
 //invoice
-$route['invoice'] = 'Invoice';
-$route['invoice/info'] = 'Invoice/info';
-$route['invoice/user-info'] = 'Invoice/user_info';
+$route['purchase'] = 'Invoices/purchasing';
+$route['purchase/info'] = 'Invoices/purchasing/info';
+$route['purchase/user-info'] = 'Invoices/purchasing/user_info';
+
+$route['sale'] = 'Invoices/selling';
+$route['sale/info'] = 'Invoices/Selling/info';
+$route['sale/user-info'] = 'Invoices/Selling/user_info';
 
 //USER;
 $route['user/delete'] = 'Users/supplier/delete';

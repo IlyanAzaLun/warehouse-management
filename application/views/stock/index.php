@@ -64,8 +64,8 @@
                           <td><?=$item['item_code']?></td>
                           <td><?=$item['item_name']?></td>
                           <td><?=$item['quantity']?> (<?=$item['unit']?>)</td>
-                          <td><?=convertToMoney((int)$item['capital_price'])?></td>
-                          <td><?=convertToMoney((int)$item['selling_price'])?></td>
+                          <td><?=$item['capital_price']?></td>
+                          <td><?=$item['selling_price']?></td>
                         </tr>
 
                       <?php endforeach ?>

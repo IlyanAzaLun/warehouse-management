@@ -76,28 +76,12 @@
                           <input type="text" class="form-control" name="item_name" id="item_name"  value="<?=set_value('item_name')?>" required>
                         </div>
                       </div>
-                      <div class="col-sm-3">
-                        <!-- text input -->
-                        <div class="form-group">
-                          <label>Jumlah</label>
-                          <div class="input-group mb-3">
-                            <input type="text" class="form-control" name="quantity" id="quantity"  value="<?=set_value('quantity')?>" required>
-                            <div class="input-group-append">
-                              <select class="input-group-text" name="unit" id="unit" required>
-                                <option value="pcs">PCS</option>
-                                <option value="pac">PAC</option>
-                              </select>
-                            </div>
-                          </div>
-                          <?=form_error('quantity', '<small class="text-danger">','</small>')?>
-                        </div>
-                      </div>
                       
                       <div class="col-sm-3">
                         <!-- text input -->
                         <div class="form-group">
                           <label>Harga pokok</label>
-                          <input type="number" class="form-control" name="capital_price" id="capital_price"  value="<?=set_value('capital_price')?>" required>
+                          <input type="text" class="form-control" name="capital_price" id="capital_price"  value="<?=set_value('capital_price')?>" required>
                           <?=form_error('capital_price', '<small class="text-danger">','</small>')?>
                         </div>
                       </div>
@@ -105,7 +89,7 @@
                         <!-- text input -->
                         <div class="form-group">
                           <label>Harga jual</label>
-                          <input type="number" class="form-control" name="selling_price" id="selling_price"  value="<?=set_value('selling_price')?>" required>
+                          <input type="text" class="form-control" name="selling_price" id="selling_price"  value="<?=set_value('selling_price')?>" required>
                           <?=form_error('selling_price', '<small class="text-danger">','</small>')?>
                         </div>
                       </div>
@@ -175,8 +159,8 @@
                           <td><?=$item['item_code']?></td>
                           <td><?=$item['item_name']?></td>
                           <td><?=$item['quantity']?> (<?=$item['unit']?>)</td>
-                          <td><?=convertToMoney((int)$item['capital_price'])?></td>
-                          <td><?=convertToMoney((int)$item['selling_price'])?></td>
+                          <td><?=$item['capital_price']?></td>
+                          <td><?=$item['selling_price']?></td>
                         </tr>
 
                       <?php endforeach ?>

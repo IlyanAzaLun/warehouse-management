@@ -22,13 +22,13 @@ abstract class User extends CI_Controller
     	$this->form_validation->set_rules('user_id', 'Code item', 'required|trim');
           if ($this->form_validation->run()==false) {
                Flasher::setFlash('info', 'error', 'Failed', ' something worng to delete data! '.validation_errors());
-               redirect('supplier');
+               redirect($_SERVER['HTTP_REFERER']);
           }else{
 
                $this->db->where('user_id', htmlspecialchars($this->input->post('user_id', true)));
                $this->db->update('tbl_user_information', $this->input->post());
                Flasher::setFlash('info', 'success', 'Success', ' congratulation success to delete data!');
-               redirect('supplier');
+               redirect($_SERVER['HTTP_REFERER']);
           }
     }
 
@@ -37,13 +37,13 @@ abstract class User extends CI_Controller
     	$this->form_validation->set_rules('user_id', 'Code item', 'required|trim');
           if ($this->form_validation->run()==false) {
                Flasher::setFlash('info', 'error', 'Failed', ' something worng to delete data! '.validation_errors());
-               redirect('supplier');
+               redirect($_SERVER['HTTP_REFERER']);
           }else{
                
                $this->db->where('user_id', htmlspecialchars($this->input->post('user_id', true)));
                $this->db->delete('tbl_user_information');
                Flasher::setFlash('info', 'success', 'Success', ' congratulation success to delete data!');
-               redirect('supplier');
+               redirect($_SERVER['HTTP_REFERER']);
           }
     }
 

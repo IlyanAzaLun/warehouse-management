@@ -58,9 +58,18 @@ const main = () => {
 	$('div.card#order_item').on('focusout', function(){
 		$('#order-item input#item_name').attr('name','item_name[]').each(function(index, field){
 		    datasource.items_search(field.value, function(item){
-		    	$('input#sub_total').val(parseInt(item.selling_price)*parseInt($(field).parents().closest('div#order-item.row').find('input#quantity').val()))
+		    	$('input#sub_total').val(parseInt(item.selling_price)*
+		    		parseInt($(field).parents().closest('div#order-item.row').find('input#quantity').val()))
 		    })
 		})
 	})
+	// format curency
+
+	// price formater
+	// $('input#capital_price, input#selling_price').focusout(function(){
+	// 	$(this).val(new Intl.NumberFormat('id-ID', { maximumSignificantDigits: 3 }).format(
+	// 	  $(this).val().replace('.','')
+	// 	));
+	// })
 };
 export default main;

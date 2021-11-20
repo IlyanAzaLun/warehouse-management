@@ -107,14 +107,14 @@
                         <div class="col-sm-12 col-lg-6">
                           <div class="form-group">
                             <label for="contact_number">Nomor kontak <small class="text-primary">(whatsapp)</small></label>
-                            <input type="text" name="contact_number" id="contact_number" class="form-control" value="" required>
+                            <input type="text" name="contact_number" id="contact_number" class="form-control" value="" required readonly>
                           </div>
                         </div>
 
                         <div class="col-sm-12">
                           <div class="form-group">
                             <label for="address">Alamat atau tujuan</label>
-                            <textarea type="text" name="address" id="address" class="form-control" value="" required></textarea>
+                            <textarea type="text" name="address" id="address" class="form-control" value="" required readonly></textarea>
                           </div>
                         </div>
                       </div>

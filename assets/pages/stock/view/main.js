@@ -16,5 +16,12 @@ const main = () => {
 	$('button#detail').on('click', function(){
 		datasource.gethistory($(this).parent().data('id'));
 	});
+
+ 	// price formater
+	$('input#capital_price, input#selling_price').focusout(function(){
+		$(this).val(new Intl.NumberFormat('id-ID', { maximumSignificantDigits: 3 }).format(
+		  $(this).val().replace('.','')
+		));
+	})
 };
 export default main;

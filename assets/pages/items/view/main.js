@@ -96,5 +96,18 @@ const main = () => {
 	$('button#delete').on('click', function(){
 		$('#modal-delete input#item_code').val($(this).parent().data('id'));
 	});
+
+  // uppercase name
+  $('input#item_name').focusout(function(){
+    $(this).val($(this).val().toUpperCase())
+  })
+
+  // price formater
+  $('input#capital_price, input#selling_price').focusout(function(){
+    $(this).val(new Intl.NumberFormat('id-ID', { maximumSignificantDigits: 3 }).format(
+      $(this).val().replace('.','')
+    ));
+  })
+
 };
 export default main;

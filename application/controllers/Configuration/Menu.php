@@ -61,7 +61,9 @@ class Menu extends CI_Controller {
 
 			echo "<b>Information! under maintenance</b>";
 			echo "<pre>";
-			var_dump($this->input->post());
+			foreach ($this->input->post('role') as $key => $role) {
+				echo $key;
+			}
 			echo "</pre>";
 			// die();
 			

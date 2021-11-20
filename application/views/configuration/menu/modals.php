@@ -13,6 +13,7 @@
 						<input type="text" class="form-control" name="category_name" placeholder="Category name" required>
 					</div>
 					<div class="form-group">
+						<small><b>Pilih peran penguna yang dapat mengakses kategori menu yang akan dibuat</b></small>
 						<?php foreach ($roles as $key => $role):?>
 						<div class="form-check">
 							<input class="form-check-input" type="checkbox" name="role[<?= $role['id'] ?>]" id="<?= $role['role_name'] ?>">

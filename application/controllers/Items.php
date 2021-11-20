@@ -63,8 +63,8 @@ class Items extends CI_Controller {
 		$this->form_validation->set_rules('category', 'Category item', 'required|trim');
 		$this->form_validation->set_rules('item_code', 'Code item', 'required|trim');
 		$this->form_validation->set_rules('item_name', 'Item name', 'required|trim');
-		$this->form_validation->set_rules('quantity', 'Quantity', 'required|trim');
-		$this->form_validation->set_rules('unit', 'Unit', 'required|trim');
+		// $this->form_validation->set_rules('quantity', 'Quantity', 'required|trim');
+		// $this->form_validation->set_rules('unit', 'Unit', 'required|trim');
 		$this->form_validation->set_rules('capital_price', 'Capital price', 'required|trim|integer');
 		$this->form_validation->set_rules('selling_price', 'Selling price', 'required|trim|integer|greater_than['.$this->input->post('capital_price').']');
 		if ($this->form_validation->run()==false) {
@@ -73,11 +73,13 @@ class Items extends CI_Controller {
 		}else{
 			$this->data = [
 				'item_category' => htmlspecialchars(($this->input->post('subcategory', true))?
-					$this->input->post('category', true).'-'.$this->input->post('subcategory', true):
+					$this->input->post('category', true).' '.$this->input->post('subcategory', true):
 					$this->input->post('category', true)),
 				'item_code'     => htmlspecialchars($this->input->post('item_code', true)),
 				'item_name'     => htmlspecialchars($this->input->post('item_name', true)),
-				'quantity'      => htmlspecialchars($this->input->post('quantity', true)),
+				// 'quantity'      => htmlspecialchars($this->input->post('quantity', true)),
+				'quantity'      => 0,
+				// 'unit'          => htmlspecialchars($this->input->post('unit', true)),
 				'MG'			=> htmlspecialchars(($this->input->post('MG', true))?$this->input->post('MG', true):''),
 				'ML'			=> htmlspecialchars(($this->input->post('ML', true))?$this->input->post('ML', true):''),
 				'VG'			=> htmlspecialchars(($this->input->post('VG', true))?$this->input->post('VG', true):''),
@@ -85,7 +87,6 @@ class Items extends CI_Controller {
 				'falvour'		=> htmlspecialchars(($this->input->post('flavour', true))?$this->input->post('flavour', true):''),
 				'brand_1'		=> htmlspecialchars(($this->input->post('brand_1', true))?$this->input->post('brand_1', true):''),
 				'brand_2'		=> htmlspecialchars(($this->input->post('brand_2', true))?$this->input->post('brand_2', true):''),
-				'unit'          => htmlspecialchars($this->input->post('unit', true)),
 				'capital_price' => htmlspecialchars($this->input->post('capital_price', true)),
 				'selling_price' => htmlspecialchars($this->input->post('selling_price', true)),
 				'note' => htmlspecialchars($this->input->post('note', true)),
@@ -110,8 +111,8 @@ class Items extends CI_Controller {
 	{
 		$this->form_validation->set_rules('item_code', 'Code item', 'required|trim');
 		$this->form_validation->set_rules('item_name', 'Item name', 'required|trim');
-		$this->form_validation->set_rules('quantity', 'Quantity', 'required|trim');
-		$this->form_validation->set_rules('unit', 'Unit', 'required|trim');
+		// $this->form_validation->set_rules('quantity', 'Quantity', 'required|trim');
+		// $this->form_validation->set_rules('unit', 'Unit', 'required|trim');
 		$this->form_validation->set_rules('capital_price', 'Capital price', 'required|trim|integer');
 		$this->form_validation->set_rules('selling_price', 'Selling price', 'required|trim|integer|greater_than['.$this->input->post('capital_price').']', array('greater_than' => 'The %s must greater than Capital price'));
 		if ($this->form_validation->run()==false) {
@@ -121,7 +122,8 @@ class Items extends CI_Controller {
 			$this->data = [
 				'item_code'     => htmlspecialchars($this->input->post('item_code', true)),
 				'item_name'     => htmlspecialchars($this->input->post('item_name', true)),
-				'quantity'      => htmlspecialchars($this->input->post('quantity', true)),
+				// 'quantity'      => htmlspecialchars($this->input->post('quantity', true)),
+				// 'unit'          => htmlspecialchars($this->input->post('unit', true)),
 				'MG'			=> htmlspecialchars(($this->input->post('MG', true))?$this->input->post('MG', true):''),
 				'ML'			=> htmlspecialchars(($this->input->post('ML', true))?$this->input->post('ML', true):''),
 				'VG'			=> htmlspecialchars(($this->input->post('VG', true))?$this->input->post('VG', true):''),
@@ -129,7 +131,6 @@ class Items extends CI_Controller {
 				'falvour'		=> htmlspecialchars(($this->input->post('falvour', true))?$this->input->post('falvour', true):''),
 				'brand_1'		=> htmlspecialchars(($this->input->post('brand_1', true))?$this->input->post('brand_1', true):''),
 				'brand_2'		=> htmlspecialchars(($this->input->post('brand_2', true))?$this->input->post('brand_2', true):''),
-				'unit'          => htmlspecialchars($this->input->post('unit', true)),
 				'capital_price' => htmlspecialchars($this->input->post('capital_price', true)),
 				'selling_price' => htmlspecialchars($this->input->post('selling_price', true)),
 			];

@@ -63,8 +63,9 @@ class Stock extends CI_Controller {
 
 		$this->form_validation->set_rules('item_code', 'Code item', 'required|trim');
 		$this->form_validation->set_rules('quantity', 'Quantity', 'required|trim');
-		$this->form_validation->set_rules('capital_price', 'Capital price', 'required|trim|integer');
-		$this->form_validation->set_rules('selling_price', 'Selling price', 'required|trim|integer|greater_than['.$this->input->post('capital_price').']');
+		$this->form_validation->set_rules('unit', 'Unit item', 'required|trim');
+		$this->form_validation->set_rules('capital_price', 'Capital price', 'required|trim');
+		$this->form_validation->set_rules('selling_price', 'Selling price', 'required|trim|greater_than['.$this->input->post('capital_price').']');
 		if ($this->form_validation->run()==false) {
 			$this->load->view('stock/index', $this->data);
 			$this->load->view('stock/modals');
@@ -86,6 +87,7 @@ class Stock extends CI_Controller {
 		$this->request['item'] = [
 			'item_code'     => htmlspecialchars($this->input->post('item_code', true)),
 			'quantity'      => htmlspecialchars((int)$this->input->post('add_quantity', true)+(int)$this->input->post('quantity', true)),
+			'unit'      	=> htmlspecialchars($this->input->post('unit', true)),
 			'capital_price' => htmlspecialchars($this->input->post('capital_price', true)),
 			'selling_price' => htmlspecialchars($this->input->post('selling_price', true)),
 		];
