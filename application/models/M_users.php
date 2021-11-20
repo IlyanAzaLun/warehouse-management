@@ -38,14 +38,17 @@ class M_users extends CI_Model {
                 if ($data['user_id']) {
                         // code...
                 }else{
-                        $this->db->join('tbl_role role', 'user_info.id_role = role.id', 'left');
+                        $this->db->join('tbl_role role', 'user_info.role_id = role.id', 'left');
                         $this->db->where('role.role_name', $type);
                         return $this->db->get($this->_foreign_table.' user_info')->result_array();
                 }
         }
 
-        public function user_info_insert($data)
+        public function user_info_insert($data, $type)
         {
-                // code...
+                $uuid = Uuid::uuid4();
+                $data['user_id']      =  $uuid;
+                $data['role_id']      =  $type;
+                return $this->db->insert($this->_foreign_table, $data);
         }
 }

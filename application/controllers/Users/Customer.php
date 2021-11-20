@@ -6,11 +6,6 @@ class Customer extends User
 {
      public function index()
      {
-          echo "ok";
-     }
 
-     public function FunctionName($value='')
-     {
-          // code...
      }
 }

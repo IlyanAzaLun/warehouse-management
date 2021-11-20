@@ -27,8 +27,15 @@ $route['invoice/info'] = 'Invoice/info';
 $route['invoice/user-info'] = 'Invoice/user_info';
 
 //USER;
+$route['user/delete'] = 'Users/supplier/delete';
+$route['user/select'] = 'Users/supplier/getuser';
+$route['user/update'] = 'Users/supplier/update';
+
 //customer
 $route['customer'] = 'Users/customer';
+
+//customer
+$route['supplier'] = 'Users/supplier';
 
 //configuration
 // menu
