@@ -21,7 +21,7 @@ class DataSource {
 
 	getuser(user_id){
 		$.ajax({
-			url: location.origin+'/user/select',
+			url: this.BASEURL+'user/select',
 			method: 'POST',
 			dataType: 'JSON',
 			data: {'request': 'GET', 'data': user_id},

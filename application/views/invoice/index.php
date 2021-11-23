@@ -26,10 +26,16 @@
         <div class="container-fluid">
 
           <!-- insert -->
-          <form action="<?=base_url('invoice')?>" method="post" id="insert">
+          <form action="<?=base_url('sale')?>" method="post" id="insert">
             <div class="row">
-
+              <div class="col-12">
+                <div class="callout callout-danger">
+                  <h5><i class="fas fa-exclamation-triangle text-danger"></i> Note:</h5>
+                  This page has under maintenance!, please handle with care, and <b>Code must be repaired, the code not readable.!</b> thanks
+                </div>
+              </div>
               <div class="col-sm-12 col-lg-6">
+
                 <!-- /.col -->          
 
                 <div class="card" id="order_item">
@@ -93,7 +99,7 @@
 
                         <div class="col-sm-12">
                           <div class="form-group">
-                            <input type="text" name="customer_id" id="customer_id" class="form-control" placeholder="customer_id" readonly>
+                            <input type="text" name="user_id" id="user_id" class="form-control" placeholder="customer_id" readonly>
                           </div>
                         </div>
 
@@ -140,30 +146,48 @@
                         <div class="col-12">
                           <div class="form-group">
                             <h6>Sub total :</h6>
-                            <input type="text" name="sub_total" id="sub_total" class="form-control" readonly>
+                            <input type="text" name="sub_total" id="sub_total" class="form-control" required>
                           </div>
                           <div class="row">
                             <div class="col-lg-6 col-sm-12">
                               <div class="form-group">
                                 <h6>Discount :</h6>
                                 <div class="input-group mb-3">
-                                  <input type="number" name="discount" class="form-control">
+                                  <input type="number" name="discount" id="discount" class="form-control" value="0" required>
                                   <div class="input-group-append">
                                     <span class="input-group-text">%</span>
                                   </div>
                                 </div>
                               </div>
                             </div>
+
+
                             <div class="col-lg-6 col-sm-12">
                               <div class="form-group">
-                                <h6>Tax :</h6>
-                                <input type="number" name="tax" class="form-control">
+                                <h6>Ongkos kirim :</h6>
+                                <input type="text" name="shipping_cost" id="shipping_cost" class="form-control" value="0" required>
                               </div>
                             </div>
+
                           </div>
+                        </div>
+
+                        <div class="col-lg-6 col-sm-12">
+                          <div class="form-group">
+                            <h6>Biaya lainnya :</h6>
+                            <input type="text" name="other_cost" id="other_cost" class="form-control" value="0" required>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
                           <div class="form-group">
                             <h6>Grand total :</h6>
-                            <input type="text" name="grand_total" class="form-control" readonly>
+                            <input type="text" name="grand_total" id="grand_total" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="col-lg col-sm-12">
+                          <div class="form-group">
+                            <label for="note">Catatan</label>
+                            <textarea name="note" id="note" class="form-control"></textarea>
                           </div>
                         </div>
                       </div>
@@ -206,6 +230,7 @@
                         <th>Kode pemesanan</th>
                         <th>Tanggal</th>
                         <th>Tujuan</th>
+                        <th>Status validasi barang</th>
                         <th>Status pembayaran</th>
                       </tr>
                     </thead>
@@ -216,12 +241,18 @@
                           <th scope="row" width="5px"><?=++$key?></th>
                           <td>
                             <div class="btn-group d-flex justify-content-center" data-id="<?=$invoice['invoice_id']?>">
-                              <a href="<?=base_url('invoice/info')?>" class="btn btn-sm btn-default" id="info" data-toggle="modal" data-target="#modal-info"><i class="fa fa-tw fa-expand-alt"></i></a>
+                              <a href="<?=base_url('sale/info')?>?id=<?=$invoice['invoice_id']?>" target="_blank" class="btn btn-sm btn-default" id="info"><i class="fa fa-tw fa-expand-alt"></i></a>
+                              
                               <button class="btn btn-sm btn-default" id="update" data-toggle="modal" data-target="#modal-update"><i class="fa fa-tw fa-pencil-alt"></i></button>
-                              <button class="btn btn-sm btn-default" id="delete" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-tw fa-trash-alt"></i></button>
+                              <button class="btn btn-sm btn-default" id="cancel" data-toggle="modal" data-target="#modal-cancel"><i class="fa fa-tw fa-ban"></i></button>
                             </div>
                           </td>
-                          <td><?=$invoice['invoice_id']?></td>
+                          <td>
+                            <p>
+                              <?=$invoice['invoice_id']?>
+                              <?=($invoice['status_active']=='0')?'<span class="right badge badge-danger">Cancel</span>':'';?>
+                            </p>
+                          </td>
                           <td>
                             <small>
                               <?=date('d F Y', $invoice['date'])?> /<br><span class="text-danger"><?=date('d F Y', $invoice['date_due'])?></span>
@@ -232,11 +263,36 @@
                               <a href="<?=base_url('customer/'.$invoice['to_customer_destination'])?>">
                                 <?=$invoice['user_fullname']?>
                               </a>
-                              <p><?=$invoice['user_address']?></p>
+                              <p><?=$invoice['user_address']?>,<?=$invoice['village']?><br><?=$invoice['sub-district']?>,<?=$invoice['district']?>,<?=$invoice['province']?>,<?=$invoice['zip']?></p>
                               <a href="https://wa.me/<?=$invoice['user_contact_phone']?>" target="_blank"><?=$invoice['user_contact_phone']?></a>
+
                             </small>
                           </td>
-                          <td class="text-center"><?=($invoice['status_payment']=='1')?'<span class="badge badge-success">Paid</span>':'<span class="badge badge-danger">Unpayed</span>';?></td>
+                          <td id="validation" class="text-center" data-id="<?=$invoice['invoice_id']?>">
+                            <?=($invoice['status_item']=='1'?
+                              '<button class="btn btn-sm btn-success m-1" id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Checked</button>': 
+                              ($invoice['status_item']=='2'?
+                                '<button class="btn btn-sm btn-warning m-1" id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Recheck on warehouse</button>': 
+                                ($invoice['status_item']=='3'?
+                                  '<button class="btn btn-sm btn-warning m-1" id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Recheck on marketing</button>':
+                                  '<button class="btn btn-sm btn-danger m-1"  id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Uncheck</button>' )));?>
+
+                            <?=($invoice['status_validation']=='1')?
+                            '<button class="btn btn-sm btn-success m-1" data-variabel="status_validation" data-toggle="modal" data-target="#modal-status">Send</button>':
+                            '<button class="btn btn-sm btn-secondary m-1" data-variabel="status_validation" data-toggle="modal" data-target="#modal-status">Hold</button>';?>
+                          </td>
+                          <td id="payment" class="text-center" data-id="<?=$invoice['invoice_id']?>">
+                            <?=($invoice['status_settlement']=='1'?
+                              '<button class="btn btn-sm btn-primary m-1" data-variabel="status_settlement" data-toggle="modal" data-target="#modal-status">Cash</button>':
+                              ($invoice['status_settlement']=='2'?
+                                '<button class="btn btn-sm btn-secondary m-1" data-variabel="status_settlement" data-toggle="modal" data-target="#modal-status">Credit</button>':
+                                ''
+                              ));?>
+
+                            <?=($invoice['status_payment']=='1')?
+                            '<button class="btn btn-sm btn-success m-1" data-variabel="status_payment" data-toggle="modal" data-target="#modal-status">Paid</button>':
+                            '<button class="btn btn-sm btn-danger m-1" data-variabel="status_payment" data-toggle="modal" data-target="#modal-status">Unpayed</button>';?>
+                          </td>
                         </tr>
 
                       <?php endforeach ?>

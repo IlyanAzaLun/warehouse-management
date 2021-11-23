@@ -59,9 +59,25 @@ class Supplier extends User
                $this->load->view('user/supplier/index', $this->data);
                $this->load->view('user/supplier/modals');
           }else{
+               $this->data = [
+                    'user_fullname'      => htmlspecialchars($this->input->post('user_fullname', true)),
+                    'user_address'       => htmlspecialchars($this->input->post('user_address', true)),
+                    'owner_name'         => htmlspecialchars($this->input->post('owner_name', true)),
+                    'user_address'       => htmlspecialchars($this->input->post('user_address', true)),
+                    'village'            => htmlspecialchars($this->input->post('village', true)),
+                    'sub-district'       => htmlspecialchars($this->input->post('sub-district', true)),
+                    'district'           => htmlspecialchars($this->input->post('district', true)),
+                    'province'           => htmlspecialchars($this->input->post('province', true)),
+                    'zip'                => htmlspecialchars($this->input->post('zip', true)),
+                    'user_contact_phone' => htmlspecialchars($this->input->post('user_contact_phone', true)),
+                    'user_contact_email' => htmlspecialchars($this->input->post('user_contact_email', true)),
+                    'type_id'            => htmlspecialchars($this->input->post('type_id', true)),
+                    'role_id'            => '5347d8a4-4925-11ec-8cc8-1be21be013bc',
+                    'note'               => htmlspecialchars($this->input->post('note', true)),
+               ];
                try {
 
-                    $this->M_users->user_info_insert($this->input->post(), '5347d8a4-4925-11ec-8cc8-1be21be013bc'); // this id for role on tbl_role
+                    $this->M_users->user_info_insert($this->data, 'Supplier'); // this id for role on tbl_role
                     Flasher::setFlash('info', 'success', 'Success', ' congratulation success to entry data!');
                     redirect('supplier');    
                } catch (Exception $e) {

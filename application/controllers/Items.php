@@ -97,14 +97,34 @@ class Items extends CI_Controller {
 		}
 	}
 
-	public function getcode()
+	public function get_code()
 	{
 		echo json_encode($this->db->get_where('tbl_item', ['item_category'=>$this->input->post('data')])->num_rows());
 	}
 
-	public function getitem()
+	public function get_item()
 	{
 		echo json_encode($this->db->get_where('tbl_item', ['item_code'=>$this->input->post('data')])->row_array());
+	}
+
+	public function get_item_invoice()
+	{
+		if ($this->input->post('request')) {
+			if ($this->input->post('data')) {
+				$this->data = $this->db->get_where('tbl_item', array('item_name' => $this->input->post('data')))->row_array();
+				if ($this->data) {
+					echo json_encode($this->data);
+				}else{
+					echo json_encode($data = array(
+						'user_id' => '', 
+						'user_contact_phone' => '', 
+						'user_address' => '', 
+					));
+				}
+			}else{
+				echo json_encode($this->db->get('tbl_item')->result_array());
+			}
+		}
 	}
 
 	public function update()

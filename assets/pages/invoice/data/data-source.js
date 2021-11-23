@@ -5,7 +5,7 @@ class DataSource {
 
 	dataTabels(){
 
-    	let self = this;
+  	let self = this;
 		$('#tbl_invoice*').dataTable({
 			'dom': `<'row'<'col-6 col-lg col-xl'><'col-6 col-lg col-xl'<'float-right'f>>>
 					<'row'<'col-12'tr>>
@@ -42,7 +42,7 @@ class DataSource {
 	}
 	items(handle){
 		$.ajax({
-			url: this.BASEURL+'items',
+			url: this.BASEURL+'items/get-data',
 			method: 'POST',
 			dataType: 'JSON',
 			data: {'request': 'GET'},
@@ -68,11 +68,18 @@ class DataSource {
             </div>
           </div>
 
-          <div class="col-5">
+          <div class="col-3">
+            <div class="form-group">
+              <input type="text" name="item_price[]" id="item_price" class="form-control" value="${result.selling_price}" placeholder="${result.selling_price}" required>
+            </div>
+          </div>
+
+
+          <div class="col-3">
             <!-- text input -->
             <div class="form-group">
               <div class="input-group mb-3">
-                <input type="number" class="form-control" name="quantity[]" id="quantity"  value="" required>
+                <input type="number" class="form-control" name="quantity[]" id="quantity"  value="1" required>
                 <div class="input-group-append">
                   
                   <select class="input-group-text" name="unit[]" id="unit" required readonly>
@@ -82,7 +89,7 @@ class DataSource {
               </div>
             </div>
           </div>
-          <div class="col-2">
+          <div class="col-1">
             <button type="button" class="btn btn-block btn-danger" id="remove_order_item"><i class="fa fa-tw fa-times"></i></button>
           </div>
 
@@ -96,7 +103,7 @@ class DataSource {
 	}
 	items_search(request, handle = false){
 		$.ajax({
-			url: this.BASEURL+'items',
+			url: this.BASEURL+'items/get-data',
 			method: 'POST',
 			dataType: 'JSON',
 			data: {'request': 'GET', 'data': request},
@@ -104,6 +111,16 @@ class DataSource {
 				handle(result);
 			}	
 		})	
+	}
+	search_order(id){
+		$.ajax({
+			url: this.BASEURL+'REST/order?id='+id,
+			method: 'GET',
+			dataType: 'JSON',
+			success: function(result){
+				console.log(result)
+			}
+		})
 	}
 }
 export default DataSource;

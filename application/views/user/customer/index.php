@@ -210,9 +210,9 @@
                           <td><?=$customer['user_fullname']?></td>
                           <td><?=$customer['owner_name']?></td>
                           <td>
-                            <p><?=$customer['user_address']?>/<?=$customer['village']?><br>
-                            <?=$customer['sub-district']?>/<?=$customer['district']?><br>
-                            <?=$customer['province']?>/<?=$customer['zip']?></p>
+                            <p><?=$customer['user_address']?>, <?=$customer['village']?><br>
+                            <?=$customer['sub-district']?>, <?=$customer['district']?><br>
+                            <?=$customer['province']?>, <?=$customer['zip']?></p>
                           </td>
                           <td>
                             <span><?=$customer['user_contact_phone']?> /<br></span>

@@ -34,7 +34,7 @@ class DataSource {
 			return result.join('');
 		}
 		$.ajax({
-			url: this.BASEURL+'getcode',
+			url: this.BASEURL+'get-item-code',
 			method: 'POST',
 			dataType: 'JSON',
 			data: {'request': 'GET', 'data': type},
@@ -48,7 +48,7 @@ class DataSource {
 	}
 	getitem(code_item){
 		$.ajax({
-			url: this.BASEURL+'getitem',
+			url: this.BASEURL+'get-item',
 			method: 'POST',
 			dataType: 'JSON',
 			data: {'request': 'GET', 'data': code_item},

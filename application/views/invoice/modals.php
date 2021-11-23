@@ -85,18 +85,18 @@
 </div>
 <!-- /.modal update-->
 
-<div class="modal fade" id="modal-delete">
+<div class="modal fade" id="modal-cancel">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">Delete invoice</h4>
+				<h4 class="modal-title">Cancel invoice</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<form method="post" action="<?=base_url('invoice/delete')?>">
 				<div class="modal-body">
-					<p>Are you sure to <b class="text-danger">Delete</b> invoice ?</p>
+					<p>Are you sure to <b class="text-danger">Cancel</b> invoice ?</p>
 					<input type="hidden" name="invoice_id" id="invoice_id" readonly>
 				</div>
 				<div class="modal-footer justify-content-between">
@@ -110,3 +110,55 @@
 	<!-- /.modal-dialog -->
 </div>
 <!-- /.modal delete -->
+
+<div class="modal fade" id="modal-status-item">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Ubah status barang</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form method="post" action="<?=base_url('invoice/delete')?>">
+				<div class="modal-body">
+					<p>Are you sure to <b class="text-danger">status-item</b> invoice ?</p>
+					<input type="hidden" name="invoice_id" id="invoice_id" readonly>
+				</div>
+				<div class="modal-footer justify-content-between">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-danger">Yes do it&hellip;</button>
+				</div>
+			</form>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal delete -->
+
+<div class="modal fade" id="modal-status" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Ubah status</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form action="" method="post">
+				<div class="modal-body">
+					<p>Are you sure to <b class="text-danger" id="status"></b> invoice ?</p>
+					<input type="hidden" name="invoice_id" id="invoice_id" readonly>
+					<span id="button">
+						
+					</span>
+				</div>
+				<div class="modal-footer justify-content-between">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- /.modal update status -->

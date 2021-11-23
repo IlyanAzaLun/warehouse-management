@@ -25,9 +25,9 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            <div class="callout callout-info">
-              <h5><i class="fas fa-info"></i> Note:</h5>
-              This page has been enhanced for printing. Click the print button at the bottom of the invoice to test.
+            <div class="callout callout-danger">
+              <h5><i class="fas fa-exclamation-triangle text-danger"></i> Note:</h5>
+              This page has under maintenance!, please handle with care, thanks
             </div>
 
 
@@ -38,7 +38,7 @@
                 <div class="col-12">
                   <h4>
                     <i class="fas fa-globe"></i> AdminLTE, Inc.
-                    <small class="float-right">Date: 2/10/2014</small>
+                    <small class="float-right">Tanggal: <?=date('d F Y', $invoice['date'])?></small>
                   </h4>
                 </div>
                 <!-- /.col -->
@@ -46,33 +46,34 @@
               <!-- info row -->
               <div class="row invoice-info">
                 <div class="col-sm-4 invoice-col">
-                  From
+                  Dari
                   <address>
-                    <strong>Admin, Inc.</strong><br>
-                    795 Folsom Ave, Suite 600<br>
-                    San Francisco, CA 94107<br>
-                    Phone: (804) 123-5432<br>
-                    Email: info@almasaeedstudio.com
+                    <strong>CV. B.E.D distribution.</strong><br>
+                    Ruko Lucky Town House, Jl. Terusan Jakarta No.30G<br>
+                    Babakan Surabaya, Kec. Kiaracondong, Kota Bandung<br>
+                    Jawa Barat 40281<br>
+                    Phone: -<br>
+                    Email: -
                   </address>
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
-                  To
+                  Dikirim ke
                   <address>
-                    <strong>John Doe</strong><br>
-                    795 Folsom Ave, Suite 600<br>
-                    San Francisco, CA 94107<br>
-                    Phone: (555) 539-1037<br>
-                    Email: john.doe@example.com
+                    <strong><?=$invoice['user_fullname']?></strong><br>
+                    <?=$invoice['user_address']?>, <?=$invoice['village']?><br>
+                    <?=$invoice['sub-district']?>, <?=$invoice['district']?><br>
+                    <?=$invoice['province']?>, <?=$invoice['zip']?><br>
+                    Phone: <?=$invoice['user_contact_phone']?><br>
+                    Email: <?=$invoice['user_contact_email']?>
                   </address>
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
-                  <b>Invoice #007612</b><br>
+                  <b>Invoice: <?=$invoice['invoice_id']?></b><br>
                   <br>
-                  <b>Order ID:</b> 4F3S8J<br>
-                  <b>Payment Due:</b> 2/22/2014<br>
-                  <b>Account:</b> 968-34567
+                  <b>Order ID:</b> <?=$invoice['invoice_order_id']?><br>
+                  <b>Tanggal jatuh tempo:</b> <?=date('d F Y', $invoice['date_due'])?><br>
                 </div>
                 <!-- /.col -->
               </div>
@@ -84,42 +85,21 @@
                   <table class="table table-striped">
                     <thead>
                     <tr>
-                      <th>Qty</th>
-                      <th>Product</th>
-                      <th>Serial #</th>
-                      <th>Description</th>
-                      <th>Subtotal</th>
+                      <th>Nama barang</th>
+                      <th>Harga barang</th>
+                      <th>Jumlah dan unit barang</th>
+                      <th>Jumlah harga total</th>
                     </tr>
                     </thead>
                     <tbody>
+                    <?php foreach ($orders as $key => $order): ?>
                     <tr>
-                      <td>1</td>
-                      <td>Call of Duty</td>
-                      <td>455-981-221</td>
-                      <td>El snort testosterone trophy driving gloves handsome</td>
-                      <td>$64.50</td>
+                      <td><?=$order['item_name']?></td>
+                      <td><?=$order['price']?></td>
+                      <td><?=$order['quantity']?> (<?=$order['unit']?>)</td>
+                      <td><?=convertToMoney((int)str_replace('.', '', $order['price'])*$order['quantity'])?></td>
                     </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>Need for Speed IV</td>
-                      <td>247-925-726</td>
-                      <td>Wes Anderson umami biodiesel</td>
-                      <td>$50.00</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>Monsters DVD</td>
-                      <td>735-845-642</td>
-                      <td>Terry Richardson helvetica tousled street art master</td>
-                      <td>$10.70</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>Grown Ups Blue Ray</td>
-                      <td>422-568-642</td>
-                      <td>Tousled lomo letterpress</td>
-                      <td>$25.99</td>
-                    </tr>
+                    <?php endforeach ?>
                     </tbody>
                   </table>
                 </div>
@@ -131,38 +111,36 @@
                 <!-- accepted payments column -->
                 <div class="col-6">
                   <p class="lead">Payment Methods:</p>
-                  <img src="../../dist/img/credit/visa.png" alt="Visa">
-                  <img src="../../dist/img/credit/mastercard.png" alt="Mastercard">
-                  <img src="../../dist/img/credit/american-express.png" alt="American Express">
-                  <img src="../../dist/img/credit/paypal2.png" alt="Paypal">
-
+                  <button class="btn btn-sm btn-primary"><?=($invoice['status_settlement'])?'Cash':'Credit';?></button>
                   <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
-                    Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem
-                    plugg
-                    dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
+                    Catatan: <?=$invoice['note']?>
                   </p>
                 </div>
                 <!-- /.col -->
                 <div class="col-6">
-                  <p class="lead">Amount Due 2/22/2014</p>
+                  <p class="lead">Tanggal jatuh tempo: <?=date('d F Y', $invoice['date_due'])?></p>
 
                   <div class="table-responsive">
                     <table class="table">
                       <tr>
                         <th style="width:50%">Subtotal:</th>
-                        <td>$250.30</td>
+                        <td class="text-right"><?=$invoice['sub_total']?></td>
                       </tr>
                       <tr>
-                        <th>Tax (9.3%)</th>
-                        <td>$10.34</td>
+                        <th>Discount:</th>
+                        <td class="text-right"><?=$invoice['discount']?>%</td>
                       </tr>
                       <tr>
                         <th>Shipping:</th>
-                        <td>$5.80</td>
+                        <td class="text-right"><?=$invoice['shipping_cost']?></td>
                       </tr>
                       <tr>
-                        <th>Total:</th>
-                        <td>$265.24</td>
+                        <th>Other cost:</th>
+                        <td class="text-right"><?=$invoice['other_cost']?></td>
+                      </tr>
+                      <tr>
+                        <th>Grand total:</th>
+                        <td class="text-right"><b><?=$invoice['grand_total']?></b></td>
                       </tr>
                     </table>
                   </div>

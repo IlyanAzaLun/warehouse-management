@@ -30,5 +30,5 @@ function get_submenu($parent)
 
 function convertToMoney($number)
 {
-	return strrev(implode('.',str_split(strrev(strval($number)),3)));
+	return strrev(implode(',',str_split(strrev(strval($number)),3)));
 }

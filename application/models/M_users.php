@@ -47,8 +47,7 @@ class M_users extends CI_Model {
         public function user_info_insert($data, $type)
         {
                 $uuid = Uuid::uuid4();
-                $data['user_id']      =  $uuid;
-                $data['role_id']      =  $type;
+                $data['user_id']      =  substr($type, 0, 1).sprintf("%04s",$this->db->get_where($this->_foreign_table, ['role_id' => $data['role_id']])->num_rows()+1);
                 return $this->db->insert($this->_foreign_table, $data);
         }
 }

@@ -43,4 +43,7 @@ class Welcome extends CI_Controller {
 		$this->data['user'] = $this->M_users->user_select($this->session->userdata('email'));
 		$this->load->view('dashboard', $this->data);
 	}
+    public function test()
+    {
+    }
 }

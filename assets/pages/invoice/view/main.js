@@ -8,7 +8,7 @@ const main = () => {
 
 	// update
 	$('button#update').on('click', function(){
-		console.log($(this).parent().data('id'))
+		datasource.search_order($(this).parent().data('id'));
 	});
 	// delete
 	$('button#delete').on('click', function(){
@@ -43,33 +43,34 @@ const main = () => {
 		
 	})
 	$('button#add_order_item').on('click', function(){
-
-		// $(this).parents().closest('div#order_item.card-body').append('<order-item></order-item>');
-		// datasource.items_search($(this).parents().closest('div.row#order_item').find('input#item_name').val(), function(data){
-		// 	$('order-item input#item_code').val(data.item_code);
-		// 	$('order-item input#item_name').val(data.item_name);
-		// });
-		//
 		let sub_total = 0;
 		datasource.items_search($(this).parents().closest('div.row#order_item').find('input#item_name').val(), function(output){
 			datasource.field(output);
 		});
 	});
-	$('div.card#order_item').on('focusout', function(){
-		$('#order-item input#item_name').attr('name','item_name[]').each(function(index, field){
-		    datasource.items_search(field.value, function(item){
-		    	$('input#sub_total').val(parseInt(item.selling_price)*
-		    		parseInt($(field).parents().closest('div#order-item.row').find('input#quantity').val()))
-		    })
-		})
-	})
-	// format curency
+	$('input#sub_total').on('focus', function(){
+		let sub_total = 0;
+		$('#order-item input#item_price').attr('name','item_price[]').each(function(index, field){
+			sub_total += parseInt(currencyToNum(field.value))*
+			parseInt($(field).parents().closest('div#order-item.row').find('input#quantity').val());
 
-	// price formater
-	// $('input#capital_price, input#selling_price').focusout(function(){
-	// 	$(this).val(new Intl.NumberFormat('id-ID', { maximumSignificantDigits: 3 }).format(
-	// 	  $(this).val().replace('.','')
-	// 	));
-	// })
+		})
+		$(this).val(currency(sub_total));
+	});
+	$('input#shipping_cost, input#other_cost').on('focusout', function(){
+		$(this).val(new Intl.NumberFormat('en-EN', { maximumSignificantDigits: 3 }).format(
+	      $(this).val().replace(/[,]|[.]/g,'')
+	    ));
+	})
+	$('input#grand_total').on('focus', function(){
+		$(this).val(
+			new Intl.NumberFormat('en-EN', { maximumSignificantDigits: 3 }).format(
+				$('input#sub_total').val().replace(/[,]|[.]/g,'')-	/*sub total*/
+				(parseInt($('input#discount').val())*parseInt($('input#sub_total').val().replace(/[,]|[.]/g,''))/100)+ /*discount*/
+				parseInt($('input#shipping_cost').val().replace(/[,]|[.]/g,''))+ /*shiping cost*/
+				parseInt($('input#other_cost').val().replace(/[,]|[.]/g,'')) /*another cost*/
+			)
+		);
+	});
 };
 export default main;

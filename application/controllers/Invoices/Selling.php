@@ -54,39 +54,11 @@ class Selling extends Invoice
                $this->load->view('invoice/index', $this->data);
                $this->load->view('invoice/modals');
           }else{
-               $this->_item_insert();
+               $this->add_invoice();
                die();
                Flasher::setFlash('info', 'success', 'Success', ' congratulation success to entry new data!');
                redirect('invoice');
           }
-     }
-
-     private function _item_insert()
-     {
-          
-          // $this->data = [
-          //   'invoice_category'      => htmlspecialchars($this->input->post('category', true)),
-          //   'invoice_code'     => htmlspecialchars($this->input->post('invoice_code', true)),
-          //   'invoice_name'     => htmlspecialchars($this->input->post('invoice_name', true)),
-          //   'quantity'      => htmlspecialchars($this->input->post('quantity', true)),
-          //   'unit'          => htmlspecialchars($this->input->post('unit', true)),
-          //   'capital_price' => htmlspecialchars($this->input->post('capital_price', true)),
-          //   'selling_price' => htmlspecialchars($this->input->post('selling_price', true)),
-          // ];
-          // $this->M_invoice->invoice_insert($this->data);
-          echo "<pre>";
-          var_dump($this->input->post()); 
-
-          echo "<b>Logic</b>";
-          echo "<p><b>on quantity, decrease with value quantity on invoice.</b></p>";
-          echo "<p><b>on price must set value to tbl_order, not get from on tbl_item</b></p>";
-          echo "<pre>";
-     }
-
-     public function info()
-     {
-          $this->data['title'] = 'Invoice';
-          $this->load->view('invoice/info-invoice', $this->data);
      }
 
      public function user_info()
@@ -171,5 +143,14 @@ class Selling extends Invoice
                Flasher::setFlash('info', 'success', 'Success', ' congratulation success to delete data!');
                redirect('invoice');
           }    
+     }
+
+     public function info_invoice()
+     {
+          $this->data['invoice'] = $this->M_invoice->invoice_select($this->input->get('id', true));
+          $this->data['orders'] = $this->M_order->order_select($this->data['invoice']['invoice_order_id']);
+          $this->data['title'] = 'Detail informasi penjualan';
+          $this->load->view('invoice/info-invoice', $this->data);
+
      }
 }
