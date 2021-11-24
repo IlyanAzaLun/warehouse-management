@@ -18,7 +18,7 @@ abstract class Invoice extends CI_Controller
     {
 		$this->db->group_by('order_id');
 		$order_id   = sprintf("Or-%010s", $this->db->get('tbl_order')->num_rows()+1);
-		$invoice_id = sprintf("Iv-%010s", $this->db->get('tbl_invoice')->num_rows()+1);
+		$invoice_id = sprintf("IV/S/%010s", $this->db->get('tbl_invoice')->num_rows()+1);
 
 		foreach ($this->input->post('item_code', true) as $key => $value) {
 			$this->request['order']['order_id'][$key]     = $order_id;

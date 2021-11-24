@@ -7,7 +7,7 @@ class DataSource {
 
   	let self = this;
 		$('#tbl_invoice*').dataTable({
-			'dom': `<'row'<'col-6 col-lg col-xl'><'col-6 col-lg col-xl'<'float-right'f>>>
+			'dom': `<'row'<'col-6 col-lg col-xl'<'float-left'f>><'col-6 col-lg col-xl'>>
 					<'row'<'col-12'tr>>
 					<'row'<'col-5 col-xs-12'i><'col-7 col-xs-12'p>>`,
 			'responsive': true,
@@ -62,9 +62,15 @@ class DataSource {
             </div>
           </div>
 
-          <div class="col-5">
+          <div class="col-12">
             <div class="form-group">
               <input type="text" name="item_name[]" id="item_name" class="form-control" value="${result.item_name}" readonly>
+            </div>
+          </div>
+
+          <div class="col-3">
+            <div class="form-group">
+              <input type="text" name="item_capital_price[]" id="item_capital_price" class="form-control" value="${result.capital_price}" placeholder="${result.capital_price}" required>
             </div>
           </div>
 
@@ -74,21 +80,25 @@ class DataSource {
             </div>
           </div>
 
-
           <div class="col-3">
             <!-- text input -->
             <div class="form-group">
               <div class="input-group mb-3">
                 <input type="number" class="form-control" name="quantity[]" id="quantity"  value="1" required>
+                <input type="hidden" class="form-control" name="unit[]" id="unit"  value="${result.unit}" required>
                 <div class="input-group-append">
-                  
-                  <select class="input-group-text" name="unit[]" id="unit" required readonly>
-                    <option value="${result.unit}">${(result.unit).toUpperCase()}</option>
-                  </select>
+                  <span class="input-group-text">${(result.unit).toUpperCase()}</span>
                 </div>
               </div>
             </div>
           </div>
+
+          <div class="col-3">
+            <div class="form-group">
+              <input type="text" name="item_total_price[]" id="item_total_price" class="form-control" value="" placeholder="" required>
+            </div>
+          </div>
+
           <div class="col-1">
             <button type="button" class="btn btn-block btn-danger" id="remove_order_item"><i class="fa fa-tw fa-times"></i></button>
           </div>
@@ -100,6 +110,10 @@ class DataSource {
 		$('button#remove_order_item').on('click', function(){
 			$(this).parents().closest('div.row#order-item').empty();
 		});
+
+		$('input#item_price, input#item_capital_price').on('focusout', function(){
+			$(this).val(new Intl.NumberFormat('en-EN', { maximumSignificantDigits: 3 }).format($(this).val().replace(/[,]|[.]/g,'')))
+		})
 	}
 	items_search(request, handle = false){
 		$.ajax({

@@ -39,60 +39,85 @@ class Purchasing extends Invoice
                     base_url('assets/AdminLTE-3.0.5/plugins/jquery-ui/jquery-ui.min.js'),
                ],
                'module' => [
-                    base_url('assets/pages/invoice/index.js'),
+                    base_url('assets/pages/invoice/purchase/index.js'),
                ],
           );
-          $this->data['title'] = 'Manajemen pemesanan';
-          $this->data['invoices'] = $this->M_invoice->invoice_select();
+          $this->data['title'] = 'Manajemen pembelian';
+          $this->data['invoices'] = $this->M_invoice->invoice_select(false, 'IV/P');
           $this->data['categorys'] = $this->M_menu->menu_category_select();
 
           $this->form_validation->set_rules('item_name[]', 'Item name', 'required|trim');
           $this->form_validation->set_rules('quantity[]', 'Quantity', 'required|trim');
           $this->form_validation->set_rules('unit[]', 'Unit', 'required|trim');
           if ($this->form_validation->run()==false) {
-               $this->load->view('invoice/index', $this->data);
-               $this->load->view('invoice/modals');
+               $this->load->view('invoice/purchasing/index', $this->data);
+               $this->load->view('invoice/purchasing/modals');
           }else{
-               $this->_item_insert();
-               die();
-               Flasher::setFlash('info', 'success', 'Success', ' congratulation success to entry new data!');
-               redirect('invoice');
+               $this->add_invoice();
           }
      }
-
-     private function _item_insert()
+     protected function add_invoice()
      {
-          
-          // $this->data = [
-          //   'invoice_category'      => htmlspecialchars($this->input->post('category', true)),
-          //   'invoice_code'     => htmlspecialchars($this->input->post('invoice_code', true)),
-          //   'invoice_name'     => htmlspecialchars($this->input->post('invoice_name', true)),
-          //   'quantity'      => htmlspecialchars($this->input->post('quantity', true)),
-          //   'unit'          => htmlspecialchars($this->input->post('unit', true)),
-          //   'capital_price' => htmlspecialchars($this->input->post('capital_price', true)),
-          //   'selling_price' => htmlspecialchars($this->input->post('selling_price', true)),
-          // ];
-          // $this->M_invoice->invoice_insert($this->data);
-          echo "<pre>";
-          var_dump($this->input->post()); 
+          $this->db->group_by('order_id');
+          $order_id   = sprintf("Or-%010s", $this->db->get('tbl_order')->num_rows()+1);
+          $invoice_id = sprintf("IV/P/%010s", $this->db->get('tbl_invoice')->num_rows()+1);
 
-          echo "<b>Logic</b>";
-          echo "<p><b>on quantity, decrease with value quantity on invoice.</b></p>";
-          echo "<p><b>on price must set value to tbl_order, not get from on tbl_item</b></p>";
-          echo "<pre>";
+          foreach ($this->input->post('item_code', true) as $key => $value) {
+               $this->request['order']['order_id'][$key]     = $order_id;
+               $this->request['order']['item_code'][$key]     = $this->input->post('item_code', true)[$key];
+               $this->request['order']['item_price'][$key]    = $this->input->post('item_price', true)[$key];
+               $this->request['order']['item_quantity'][$key] = $this->input->post('quantity', true)[$key];
+               $this->request['order']['item_unit'][$key]     = $this->input->post('unit', true)[$key];
+          }
+          $this->request['order_id']       = $order_id;
+          $this->request['user_id']        = $this->input->post('user_id', true);
+          $this->request['fullname']       = $this->input->post('fullname', true);
+          $this->request['contact_number'] = $this->input->post('contact_number', true);
+          $this->request['address']        = $this->input->post('address', true);
+          $this->request['sub_total']      = $this->input->post('sub_total', true);
+          $this->request['discount']       = $this->input->post('discount', true);
+          $this->request['shipping_cost']  = $this->input->post('shipping_cost', true);
+          $this->request['other_cost']     = $this->input->post('other_cost', true);
+          $this->request['grand_total']    = $this->input->post('grand_total', true);
+          $this->request['note']           = $this->input->post('note', true);
+
+          $this->invoice = [
+               'invoice_id'              => $invoice_id,
+               'date'                    => time(),
+               'date_due'                => time()+(7 * 24 * 60 * 60), //7 days; 24 hours; 60 mins; 60 secs
+               'to_customer_destination' => $this->request['user_id'],
+               'order_id'                => $this->request['order_id'],
+               'sub_total'               => $this->request['sub_total'],
+               'discount'                 => $this->request['discount'],
+               'shipping_cost'           => $this->request['shipping_cost'],
+               'other_cost'              => $this->request['other_cost'],
+               'grand_total'             => $this->request['grand_total'],
+               'status_active'           => 1,
+               'status_item'             => 0,
+               'status_validation'       => 0,
+               'status_payment'          => 0,
+               'status_settlement'       => 0,
+               'note'                    => $this->request['note']
+          ];
+
+          $this->M_order->order_insert($this->request['order']);
+          $this->M_invoice->invoice_insert($this->invoice);
+          
+          Flasher::setFlash('info', 'success', 'Success', ' congratulation success to entry new data!');
+          redirect($_SERVER['HTTP_REFERER']);
      }
 
      public function info()
      {
           $this->data['title'] = 'Invoice';
-          $this->load->view('invoice/info-invoice', $this->data);
+          $this->load->view('invoice/purchasing/info-invoice', $this->data);
      }
 
      public function user_info()
      {
           if ($this->input->post('request')) {
                if ($this->input->post('data')) {
-                    $this->db->where('role_id', '752c0ad8-4925-11ec-8cc8-1be21be013bc');
+                    $this->db->where('role_id', '5347d8a4-4925-11ec-8cc8-1be21be013bc');
                     $this->db->where('user_fullname', $this->input->post('data'));
                     $this->data = $this->db->get('tbl_user_information')->row_array();
                     if ($this->data) {
@@ -105,7 +130,7 @@ class Purchasing extends Invoice
                          ));
                     }
                }else{
-                    $this->db->where('role_id', '752c0ad8-4925-11ec-8cc8-1be21be013bc');
+                    $this->db->where('role_id', '5347d8a4-4925-11ec-8cc8-1be21be013bc');
                     echo json_encode($this->db->get('tbl_user_information')->result_array());
                }
           }
@@ -170,5 +195,13 @@ class Purchasing extends Invoice
                Flasher::setFlash('info', 'success', 'Success', ' congratulation success to delete data!');
                redirect('invoice');
           }    
+     }
+     public function info_invoice()
+     {
+          $this->data['invoice'] = $this->M_invoice->invoice_select($this->input->get('id', true));
+          $this->data['orders'] = $this->M_order->order_select($this->data['invoice']['invoice_order_id']);
+          $this->data['title'] = 'Detail informasi penjualan';
+          $this->load->view('invoice/purchasing/info-invoice', $this->data);
+
      }
 }

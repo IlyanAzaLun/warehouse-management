@@ -5,7 +5,7 @@ class M_invoice extends CI_Model {
 
         private $_table = "tbl_invoice";
 
-        public function invoice_select($data = false)
+        public function invoice_select($data = false, $like = false)
         {
         	if ($data) {
 	        	$this->db->select(
@@ -59,6 +59,7 @@ class M_invoice extends CI_Model {
 	        		,invoice.status_settlement
 	        		,invoice.status_payment');
 	        	$this->db->join('tbl_user_information user_info', 'invoice.to_customer_destination = user_info.user_id', 'left');
+	        	$this->db->like('invoice.invoice_id', $like, 'after');
 	            return $this->db->get($this->_table.' invoice')->result_array();
         	}
         }

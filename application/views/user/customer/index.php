@@ -46,7 +46,7 @@
                       <div class="col-sm-3">
                         <!-- text input -->
                         <div class="form-group">
-                          <label>Nama pelanggan barang</label>
+                          <label>Nama toko pelanggan</label>
                           <input type="text" class="form-control" name="user_fullname" id="user_fullname"  value="<?=set_value('user_fullname')?>" required>
                         </div>
                       </div>
@@ -54,7 +54,7 @@
                       <div class="col-sm-3">
                         <!-- text input -->
                         <div class="form-group">
-                          <label>Nama pemeilik pelanggan</label>
+                          <label>Nama pemeilik</label>
                           <input type="text" class="form-control" name="owner_name" id="owner_name"  value="<?=set_value('owner_name')?>" required>
                         </div>
                       </div>
@@ -189,7 +189,8 @@
                       <tr>
                         <th>#</th>
                         <th>Opsi</th>
-                        <th>Nama lengkap pelanggan</th>
+                        <th>Kode pelanggan</th>
+                        <th>Nama toko pelanggan</th>
                         <th>Nama pemilik pelanggan</th>
                         <th>Alamat</th>
                         <th>Kontak pelanggan</th>
@@ -207,6 +208,7 @@
                               <button class="btn btn-sm btn-default" id="delete" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-tw fa-trash-alt"></i></button>
                             </div>
                           </td>
+                          <td><?=$customer['user_id']?></td>
                           <td><?=$customer['user_fullname']?></td>
                           <td><?=$customer['owner_name']?></td>
                           <td>

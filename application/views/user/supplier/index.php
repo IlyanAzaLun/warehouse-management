@@ -46,7 +46,7 @@
                       <div class="col-sm-3">
                         <!-- text input -->
                         <div class="form-group">
-                          <label>Nama penyedia barang</label>
+                          <label>Nama toko penyedia</label>
                           <input type="text" class="form-control" name="user_fullname" id="user_fullname"  value="<?=set_value('user_fullname')?>" required>
                         </div>
                       </div>
@@ -54,7 +54,7 @@
                       <div class="col-sm-3">
                         <!-- text input -->
                         <div class="form-group">
-                          <label>Nama pemeilik penyedia</label>
+                          <label>Nama pemeilik</label>
                           <input type="text" class="form-control" name="owner_name" id="owner_name"  value="<?=set_value('owner_name')?>" required>
                         </div>
                       </div>
@@ -175,7 +175,8 @@
                       <tr>
                         <th>#</th>
                         <th>Opsi</th>
-                        <th>Nama lengkap penyedia</th>
+                        <th>Kode pemasok</th>
+                        <th>Nama toko penyedia</th>
                         <th>Nama pemilik penyedia</th>
                         <th>Alamat</th>
                         <th>Kontak penyedia</th>
@@ -192,6 +193,7 @@
                               <button class="btn btn-sm btn-default" id="delete" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-tw fa-trash-alt"></i></button>
                             </div>
                           </td>
+                          <td><?=$supplier['user_id']?></td>
                           <td><?=$supplier['user_fullname']?></td>
                           <td><?=$supplier['owner_name']?></td>
                           <td>

@@ -40,10 +40,10 @@ class Selling extends Invoice
                     base_url('assets/AdminLTE-3.0.5/plugins/jquery-ui/jquery-ui.min.js'),
                ],
                'module' => [
-                    base_url('assets/pages/invoice/index.js'),
+                    base_url('assets/pages/invoice/sale/index.js'),
                ],
           );
-          $this->data['title'] = 'Manajemen pemesanan';
+          $this->data['title'] = 'Manajemen penjualan';
           $this->data['invoices'] = $this->M_invoice->invoice_select();
           $this->data['categorys'] = $this->M_menu->menu_category_select();
 
@@ -51,13 +51,10 @@ class Selling extends Invoice
           $this->form_validation->set_rules('quantity[]', 'Quantity', 'required|trim');
           $this->form_validation->set_rules('unit[]', 'Unit', 'required|trim');
           if ($this->form_validation->run()==false) {
-               $this->load->view('invoice/index', $this->data);
-               $this->load->view('invoice/modals');
+               $this->load->view('invoice/selling/index', $this->data);
+               $this->load->view('invoice/selling/modals');
           }else{
                $this->add_invoice();
-               die();
-               Flasher::setFlash('info', 'success', 'Success', ' congratulation success to entry new data!');
-               redirect('invoice');
           }
      }
 

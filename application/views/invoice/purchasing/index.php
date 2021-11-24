@@ -26,14 +26,22 @@
         <div class="container-fluid">
 
           <!-- insert -->
-          <form action="<?=base_url('sale')?>" method="post" id="insert">
+          <form action="<?=base_url('purchase')?>" method="post" id="insert">
             <div class="row">
+
+              <!-- comment -->
               <div class="col-12">
                 <div class="callout callout-danger">
                   <h5><i class="fas fa-exclamation-triangle text-danger"></i> Note:</h5>
                   This page has under maintenance!, please handle with care, and <b>Code must be repaired, the code not readable.!</b> thanks
+                  <p></p>
+                  <code>
+                      hasil dari pembelian barang akan ditamahkan ke stok item, namun item harus terlebih dahulu ditambahkan di data master BARANG
+                  </code>
                 </div>
               </div>
+              <!-- /.comment -->
+
               <div class="col-sm-12 col-lg-6">
 
                 <!-- /.col -->          
@@ -86,7 +94,7 @@
 
                   <div class="card">
                     <div class="card-header">
-                      <h3 class="card-title">Informasi pelanggan</h3>
+                      <h3 class="card-title">Informasi pemasok</h3>
                       <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
                         <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
@@ -241,7 +249,7 @@
                           <th scope="row" width="5px"><?=++$key?></th>
                           <td>
                             <div class="btn-group d-flex justify-content-center" data-id="<?=$invoice['invoice_id']?>">
-                              <a href="<?=base_url('sale/info')?>?id=<?=$invoice['invoice_id']?>" target="_blank" class="btn btn-sm btn-default" id="info"><i class="fa fa-tw fa-expand-alt"></i></a>
+                              <a href="<?=base_url('purchase/info')?>?id=<?=$invoice['invoice_id']?>" target="_blank" class="btn btn-sm btn-default" id="info"><i class="fa fa-tw fa-expand-alt"></i></a>
                               
                               <button class="btn btn-sm btn-default" id="update" data-toggle="modal" data-target="#modal-update"><i class="fa fa-tw fa-pencil-alt"></i></button>
                               <button class="btn btn-sm btn-default" id="cancel" data-toggle="modal" data-target="#modal-cancel"><i class="fa fa-tw fa-ban"></i></button>
