@@ -56,10 +56,6 @@ class DataSource {
 		<!-- order-item -->
         <div class="row" id="order-item">
 
-          <div class="col mb-2">
-            <button type="button" class="btn btn-block btn-danger" id="remove_order_item"><i class="fa fa-tw fa-times"></i></button>
-          </div>
-
           <div class="col-12">
             <div class="form-group">
               <input type="text" name="item_code[]" id="item_code" class="form-control" value="${result.item_code}" readonly>
@@ -68,25 +64,29 @@ class DataSource {
 
           <div class="col-12">
             <div class="form-group">
+            	<small>Nama barang</small>
               <input type="text" name="item_name[]" id="item_name" class="form-control" value="${result.item_name}" readonly>
             </div>
           </div>
 
-          <div class="col-3">
+          <div class="col-2">
             <div class="form-group">
+            	<small>Harga pokok</small>
               <input type="text" name="item_capital_price[]" id="item_capital_price" class="form-control" value="${result.capital_price}" placeholder="${result.capital_price}" required>
             </div>
           </div>
 
-          <div class="col-3">
+          <div class="col-2">
             <div class="form-group">
-              <input type="text" name="item_price[]" id="item_price" class="form-control" value="${result.selling_price}" placeholder="${result.selling_price}" required>
+            	<small>Harga harga jual</small>
+              <input type="text" name="item_selling_price[]" id="item_selling_price" class="form-control" value="${result.selling_price}" placeholder="${result.selling_price}" required>
             </div>
           </div>
 
           <div class="col-3">
             <!-- text input -->
             <div class="form-group">
+            	<small>Jumlah barang</small>
               <div class="input-group mb-3">
                 <input type="number" class="form-control" name="quantity[]" id="quantity"  value="1" required>
                 <input type="hidden" class="form-control" name="unit[]" id="unit"  value="${result.unit}" required>
@@ -97,10 +97,23 @@ class DataSource {
             </div>
           </div>
 
-          <div class="col-3">
+          <div class="col-2">
             <div class="form-group">
+            	<small>Harga total</small>
               <input type="text" name="item_total_price[]" id="item_total_price" class="form-control" value="" placeholder="" required>
             </div>
+          </div>
+
+          <div class="col-2">
+            <div class="form-group">
+            	<small>Potongan harga</small>
+              <input type="text" name="rebate_price[]" id="rebate_price" class="form-control" value="0" placeholder="" required>
+            </div>
+          </div>
+
+          <div class="col-1">
+            	<small>&nbsp;</small>
+          	<button type="button" class="btn btn-block btn-danger" id="remove_order_item"><i class="fa fa-tw fa-times"></i></button>
           </div>
 
         </div>
@@ -111,12 +124,16 @@ class DataSource {
 			$(this).parents().closest('div.row#order-item').empty();
 		});
 
-		$('input#item_price, input#item_capital_price').on('focusout', function(){
+		$('input#item_selling_price, input#item_capital_price').on('focusout', function(){
 			$(this).val(new Intl.NumberFormat('en-EN', { maximumSignificantDigits: 3 }).format($(this).val().replace(/[,]|[.]/g,'')))
 		});
 
 		$('input#item_total_price').on('focus', function(){
 			$(this).val(new Intl.NumberFormat('en-EN', { maximumSignificantDigits: 3 }).format(parseInt($(this).parents().closest('#order-item').find('input#item_capital_price').val().replace(/[,]|[.]/g,''))*parseInt($(this).parents().closest('#order-item').find('input#quantity').val())))
+		});
+
+		$('input#rebate_price').on('focusout', function(){
+			$(this).val(new Intl.NumberFormat('en-EN', { maximumSignificantDigits: 3 }).format($(this).val().replace(/[,]|[.]/g,'')))
 		});
 	}
 	items_search(request, handle = false){
@@ -132,11 +149,28 @@ class DataSource {
 	}
 	search_order(id){
 		$.ajax({
-			url: this.BASEURL+'REST/order?id='+id,
+			url: this.BASEURL+'API/order?id='+id,
 			method: 'GET',
 			dataType: 'JSON',
 			success: function(result){
-				console.log(result)
+				$('#modal-update tbody#tbl_order').empty();
+				$('label[for="code_order"]').text(`Kode order: ${result[0].order_id}`)
+				$.each(result, function(index, field){
+				let html = `
+				<tr>
+					<td><input type="text" class="form-control" readonly value="${field.item_id}"></td>
+					<td><input type="text" class="form-control" readonly value="${field.item_name}"></td>
+					<td><input type="text" class="form-control" readonly value="${field.capital_price}"></td>
+					<td><input type="text" class="form-control" readonly value="${field.selling_price}"></td>
+					<td><input type="text" class="form-control" value="${field.quantity}"></td>
+					<td><input type="text" class="form-control" readonly value="${field.unit}"></td>
+					<td><input type="text" class="form-control" readonly value="${field.rabate}"></td>
+					<td><input type="text" class="form-control" readonly value="${currency((parseInt(field.capital_price.replace(/[,]|[.]/g,''))*parseInt(field.quantity))-parseInt(field.rabate.replace(/[,]|[.]/g,'')))}"></td>
+				</tr>
+				`;
+				$('#modal-update tbody#tbl_order').append(html);
+				});
+
 			}
 		})
 	}

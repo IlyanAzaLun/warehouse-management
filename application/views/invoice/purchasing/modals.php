@@ -1,5 +1,5 @@
 <div class="modal fade" id="modal-update">
-	<div class="modal-dialog modal-lg">
+	<div class="modal-dialog modal-xl">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title">Update Modal</h4>
@@ -11,62 +11,24 @@
 				<div class="card-body">
 
 					<div class="row">
+						<label for="code_order">Kode order: </label>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Kode barang</th>
+									<th>Nama barang</th>
+									<th>Harga barang pokok</th>
+									<th>Harga barang jual</th>
+									<th>Jumlah barang</th>
+									<th>Unit barang</th>
+									<th>Potongan harga barang</th>
+									<th>Total harga</th>
+								</tr>
+							</thead>
+							<tbody id="tbl_order">
 
-						<div class="col-sm-6">
-							<div class="form-group">
-								<label>Category invoice</label>
-								<input type="text" class="form-control" name="category" id="category"  value="<?=set_value('category')?>" required readonly>
-							</div>
-						</div>
-
-						<div class="col-sm-6">
-							<!-- text input -->
-							<div class="form-group">
-								<label>Code invoice</label>
-								<input type="text" class="form-control" name="invoice_id" id="invoice_id"  value="<?=set_value('invoice_id')?>" required readonly>
-							</div>
-						</div>
-
-						<div class="col-sm-6">
-							<!-- text input -->
-							<div class="form-group">
-								<label>Name invoice</label>
-								<input type="text" class="form-control" name="invoice_name" id="invoice_name"  value="<?=set_value('invoice_name')?>" required>
-							</div>
-						</div>
-						<div class="col-sm-6">
-							<!-- text input -->
-							<div class="form-group">
-								<label>Quantity</label>
-								<div class="input-group mb-3">
-									<input type="text" class="form-control" name="quantity" id="quantity"  value="<?=set_value('quantity')?>">
-									<div class="input-group-append">
-										<select class="input-group-text" name="unit" id="unit" required>
-											<option value="pcs">PCS</option>
-											<option value="pac">PAC</option>
-										</select>
-									</div>
-								</div>
-								<?=form_error('quantity', '<small class="text-danger">','</small>')?>
-							</div>
-						</div>
-
-						<div class="col-sm-6">
-							<!-- text input -->
-							<div class="form-group">
-								<label>Capital price</label>
-								<input type="number" class="form-control" name="capital_price" id="capital_price"  value="<?=set_value('capital_price')?>" required>
-								<?=form_error('capital_price', '<small class="text-danger">','</small>')?>
-							</div>
-						</div>
-						<div class="col-sm-6">
-							<!-- text input -->
-							<div class="form-group">
-								<label>Selling price</label>
-								<input type="number" class="form-control" name="selling_price" id="selling_price"  value="<?=set_value('selling_price')?>" required>
-								<?=form_error('selling_price', '<small class="text-danger">','</small>')?>
-							</div>
-						</div>
+							</tbody>
+						</table>
 					</div>
 
 				</div>

@@ -63,11 +63,13 @@ class Purchasing extends Invoice
           $invoice_id = sprintf("IV/P/%010s", $this->db->get('tbl_invoice')->num_rows()+1);
 
           foreach ($this->input->post('item_code', true) as $key => $value) {
-               $this->request['order']['order_id'][$key]     = $order_id;
+               $this->request['order']['order_id'][$key]      = $order_id;
                $this->request['order']['item_code'][$key]     = $this->input->post('item_code', true)[$key];
-               $this->request['order']['item_price'][$key]    = $this->input->post('item_price', true)[$key];
+               $this->request['order']['item_capital_price'][$key]    = $this->input->post('item_capital_price', true)[$key];
+               $this->request['order']['item_selling_price'][$key]    = $this->input->post('item_selling_price', true)[$key];
                $this->request['order']['item_quantity'][$key] = $this->input->post('quantity', true)[$key];
                $this->request['order']['item_unit'][$key]     = $this->input->post('unit', true)[$key];
+               $this->request['order']['rebate_price'][$key]  = $this->input->post('rebate_price', true)[$key];
           }
           $this->request['order_id']       = $order_id;
           $this->request['user_id']        = $this->input->post('user_id', true);
@@ -80,6 +82,7 @@ class Purchasing extends Invoice
           $this->request['other_cost']     = $this->input->post('other_cost', true);
           $this->request['grand_total']    = $this->input->post('grand_total', true);
           $this->request['note']           = $this->input->post('note', true);
+          $this->request['status_payment'] = ($this->input->post('status_payment', true))?1:0;
 
           $this->invoice = [
                'invoice_id'              => $invoice_id,
@@ -88,19 +91,18 @@ class Purchasing extends Invoice
                'to_customer_destination' => $this->request['user_id'],
                'order_id'                => $this->request['order_id'],
                'sub_total'               => $this->request['sub_total'],
-               'discount'                 => $this->request['discount'],
+               'discount'                => $this->request['discount'],
                'shipping_cost'           => $this->request['shipping_cost'],
                'other_cost'              => $this->request['other_cost'],
                'grand_total'             => $this->request['grand_total'],
                'status_active'           => 1,
                'status_item'             => 0,
                'status_validation'       => 0,
-               'status_payment'          => 0,
-               'status_settlement'       => 0,
+               'status_payment'          => $this->request['status_payment'],
+               'status_settlement'       => $this->request['status_payment'],
                'note'                    => $this->request['note']
           ];
-
-          $this->M_order->order_insert($this->request['order']);
+          $this->M_order->order_insert($this->request['order']); 
           $this->M_invoice->invoice_insert($this->invoice);
           
           Flasher::setFlash('info', 'success', 'Success', ' congratulation success to entry new data!');

@@ -34,7 +34,7 @@
                   This page has under maintenance!, please handle with care, and <b>Code must be repaired, the code not readable.!</b> thanks
                   <p></p>
                   <code>
-                      hasil dari penjualan barang akan dikurangin dari stok item, namun item harus terlebih dahulu ditambahkan di data master BARANG, dan stok nya akan ditambahkan pada purchesing.
+                    hasil dari penjualan barang akan dikurangin dari stok item, namun item harus terlebih dahulu ditambahkan di data master BARANG, dan stok nya akan ditambahkan pada purchesing.
                   </code>
                 </div>
               </div>
@@ -194,6 +194,11 @@
                             <textarea name="note" id="note" class="form-control"></textarea>
                           </div>
                         </div>
+                      </div>
+                      
+                      <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
                       </div>
 
                     </div>

@@ -1,6 +1,6 @@
 <?php $this->load->view('components/header')?>
 
-<body class="hold-transition sidebar-mini layout-fixed pace-primary">
+<body class="hold-transition sidebar-mini layout-fixed sidebar-collapse pace-primary">
   <!-- Site wrapper -->
   <div class="wrapper">
     <!-- Navbar -->
@@ -36,13 +36,14 @@
                   This page has under maintenance!, please handle with care, and <b>Code must be repaired, the code not readable.!</b> thanks
                   <p></p>
                   <code>
-                      hasil dari pembelian barang akan ditamahkan ke stok item, namun item harus terlebih dahulu ditambahkan di data master BARANG
+                    • tambahkan item terlebih dahulu di master data jika data tidak ditemukan <br>
+                    • hasil dari pembelian barang akan ditamahkan ke stok item.
                   </code>
                 </div>
               </div>
               <!-- /.comment -->
 
-              <div class="col-sm-12 col-lg-6">
+              <div class="col-sm-12 col-lg-7">
 
                 <!-- /.col -->          
 
@@ -88,7 +89,7 @@
                 </div>
 
               </div>
-              <div class="col-sm-12 col-lg-6">
+              <div class="col-sm-12 col-lg-5">
                 <div class="col-12">
                   <!-- /.col -->          
 
@@ -161,7 +162,7 @@
                               <div class="form-group">
                                 <h6>Discount :</h6>
                                 <div class="input-group mb-3">
-                                  <input type="number" name="discount" id="discount" class="form-control" value="0" required>
+                                  <input type="number" name="discount" id="discount" class="form-control" value="0" max="100" required>
                                   <div class="input-group-append">
                                     <span class="input-group-text">%</span>
                                   </div>
@@ -197,6 +198,12 @@
                             <label for="note">Catatan</label>
                             <textarea name="note" id="note" class="form-control"></textarea>
                           </div>
+                        </div>
+                      </div>
+                      <div class="col-lg">
+                        <div class="form-check float-right">
+                          <input type="checkbox" class="form-check-input" id="status_payment" name="status_payment">
+                          <label class="form-check-label" for="status_payment">Pembayaran lunas ?</label>
                         </div>
                       </div>
 
@@ -248,7 +255,7 @@
                         <tr>
                           <th scope="row" width="5px"><?=++$key?></th>
                           <td>
-                            <div class="btn-group d-flex justify-content-center" data-id="<?=$invoice['invoice_id']?>">
+                            <div class="btn-group d-flex justify-content-center" data-id="<?=$invoice['invoice_order_id']?>">
                               <a href="<?=base_url('purchase/info')?>?id=<?=$invoice['invoice_id']?>" target="_blank" class="btn btn-sm btn-default" id="info"><i class="fa fa-tw fa-expand-alt"></i></a>
                               
                               <button class="btn btn-sm btn-default" id="update" data-toggle="modal" data-target="#modal-update"><i class="fa fa-tw fa-pencil-alt"></i></button>
@@ -279,9 +286,9 @@
                           <td id="validation" class="text-center" data-id="<?=$invoice['invoice_id']?>">
                             <?=($invoice['status_item']=='1'?
                               '<button class="btn btn-sm btn-success m-1" id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Checked</button>': 
-                              ($invoice['status_item']=='2'?
+                               ($invoice['status_item']=='2'?
                                 '<button class="btn btn-sm btn-warning m-1" id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Recheck on warehouse</button>': 
-                                ($invoice['status_item']=='3'?
+                               ($invoice['status_item']=='3'?
                                   '<button class="btn btn-sm btn-warning m-1" id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Recheck on marketing</button>':
                                   '<button class="btn btn-sm btn-danger m-1"  id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Uncheck</button>' )));?>
 
@@ -291,15 +298,15 @@
                           </td>
                           <td id="payment" class="text-center" data-id="<?=$invoice['invoice_id']?>">
                             <?=($invoice['status_settlement']=='1'?
-                              '<button class="btn btn-sm btn-primary m-1" data-variabel="status_settlement" data-toggle="modal" data-target="#modal-status">Cash</button>':
+                              '<button class="btn btn-sm btn-primary m-1" data-variabel="status_settlement">Cash</button>':
                               ($invoice['status_settlement']=='2'?
-                                '<button class="btn btn-sm btn-secondary m-1" data-variabel="status_settlement" data-toggle="modal" data-target="#modal-status">Credit</button>':
+                                '<button class="btn btn-sm btn-secondary m-1" data-variabel="status_settlement">Credit</button>':
                                 ''
                               ));?>
 
                             <?=($invoice['status_payment']=='1')?
-                            '<button class="btn btn-sm btn-success m-1" data-variabel="status_payment" data-toggle="modal" data-target="#modal-status">Paid</button>':
-                            '<button class="btn btn-sm btn-danger m-1" data-variabel="status_payment" data-toggle="modal" data-target="#modal-status">Unpayed</button>';?>
+                            '<button class="btn btn-sm btn-success m-1" data-variabel="status_payment">Paid</button>':
+                            '<button class="btn btn-sm btn-danger m-1" data-variabel="status_payment">Unpayed</button>';?>
                           </td>
                         </tr>
 

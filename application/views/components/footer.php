@@ -1,7 +1,7 @@
 
   <footer class="main-footer">
     <div class="float-right d-none d-sm-block">
-      <b>Version</b> 3.0.5
+      <b>Version:</b> Alpha 0.0.1
     </div>
     <strong>Copyright &copy; <?=date('Y')?> <a href="http://adminlte.io">AdminLTE.io</a> | <a href="https://ilyanazalun.github.io">Ilyan Aza-lun</a>.</strong> All rights
     reserved.

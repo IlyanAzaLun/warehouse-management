@@ -48,21 +48,22 @@ const main = () => {
 			datasource.field(output);
 		});
 	});
-	$('input#sub_total').on('focus', function(){
+	$('input#sub_total').on('focus', function(){ /* sub-total total */
 		let sub_total = 0;
-		$('#order-item input#item_price').attr('name','item_price[]').each(function(index, field){
-			sub_total += parseInt(currencyToNum(field.value))*
-			parseInt($(field).parents().closest('div#order-item.row').find('input#quantity').val());
+		$('#order-item input#item_capital_price').attr('name','item_capital_price[]').each(function(index, field){
+			sub_total += (parseInt(currencyToNum(field.value))*
+			parseInt($(field).parents().closest('div#order-item.row').find('input#quantity').val())-
+			parseInt($(field).parents().closest('div#order-item.row').find('input#rebate_price').val().replace(/[,]|[.]/g,'')) /*rebate_price*/);
 
 		})
 		$(this).val(currency(sub_total));
 	});
-	$('input#shipping_cost, input#other_cost').on('focusout', function(){
+	$('input#shipping_cost, input#other_cost').on('focusout', function(){ /* shipping and otehr cost format */
 		$(this).val(new Intl.NumberFormat('en-EN', { maximumSignificantDigits: 3 }).format(
 	      $(this).val().replace(/[,]|[.]/g,'')
 	    ));
 	})
-	$('input#grand_total').on('focus', function(){
+	$('input#grand_total').on('focus', function(){ /* grand total */
 		$(this).val(
 			new Intl.NumberFormat('en-EN', { maximumSignificantDigits: 3 }).format(
 				$('input#sub_total').val().replace(/[,]|[.]/g,'')-	/*sub total*/

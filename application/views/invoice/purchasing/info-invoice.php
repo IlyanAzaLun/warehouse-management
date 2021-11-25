@@ -86,18 +86,20 @@
                     <thead>
                     <tr>
                       <th>Nama barang</th>
-                      <th>Harga barang</th>
-                      <th>Jumlah dan unit barang</th>
-                      <th>Jumlah harga total</th>
+                      <th class="text-right">Harga barang</th>
+                      <th class="text-center">Jumlah dan unit barang</th>
+                      <th class="text-right">Potongan harga barang</th>
+                      <th class="text-right">Jumlah harga total</th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php foreach ($orders as $key => $order): ?>
                     <tr>
                       <td><?=$order['item_name']?></td>
-                      <td><?=$order['price']?></td>
-                      <td><?=$order['quantity']?> (<?=$order['unit']?>)</td>
-                      <td><?=convertToMoney((int)str_replace('.', '', $order['price'])*$order['quantity'])?></td>
+                      <td class="text-right"><?=$order['capital_price']?></td>
+                      <td class="text-center"><?=$order['quantity']?> (<?=$order['unit']?>)</td>
+                      <td class="text-right"><?=$order['rabate']?></td>
+                      <td class="text-right"><?=convertToMoney(((int)str_replace([',', '.'], ['',''], $order['capital_price'])*(int)$order['quantity'])-(int)str_replace([',', '.'], ['',''],$order['rabate']))?></td>
                     </tr>
                     <?php endforeach ?>
                     </tbody>
