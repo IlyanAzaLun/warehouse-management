@@ -104,8 +104,8 @@ const main = () => {
 
   // price formater
   $('input#capital_price, input#selling_price').focusout(function(){
-    $(this).val(new Intl.NumberFormat('id-ID', { maximumSignificantDigits: 3 }).format(
-      $(this).val().replace('.','')
+    $(this).val(currency(
+      currencyToNum($(this).val())
     ));
   })
 

@@ -8,8 +8,9 @@ $route['translate_uri_dashes']               = FALSE;
 $route['dashboard']                          = 'welcome/dashboard';
 
 // REST API
-$route['(:any)/API/order']                  = 'REST/order';
+$route['(:any)/API/item']                   = 'REST/Items';
 $route['(:any)/API/user']                   = 'REST/User';
+$route['(:any)/API/order']                  = 'REST/order';
 $route['(:any)/API/invoice']                = 'REST/Invoice';
 
 //INVENTORY

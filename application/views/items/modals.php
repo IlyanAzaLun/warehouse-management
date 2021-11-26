@@ -39,14 +39,14 @@
 							<!-- text input -->
 							<div class="form-group">
 								<label>MG <small>(Nikotin)</small></label>
-								<input type="number" class="form-control" name="MG" id="MG" value="<?=set_value('MG')?>" required>
+								<input type="number" class="form-control" name="MG" id="MG" value="<?=set_value('MG')?>">
 							</div>
 						</div>
 						<div class="col-sm-3 subcategory">
 							<!-- text input -->
 							<div class="form-group">
 								<label>ML <small>(Milligram)</small></label>
-								<input type="number" class="form-control" name="ML" id="ML" value="<?=set_value('ML')?>" required>
+								<input type="number" class="form-control" name="ML" id="ML" value="<?=set_value('ML')?>">
 							</div>
 						</div>
 						<div class="col-sm-3 subcategory">
@@ -55,14 +55,14 @@
 								<div class="col-6">
 									<div class="form-group">
 										<label>VG</label>
-										<input type="number" class="form-control" name="VG" id="VG" value="<?=set_value('VG')?>" required>
+										<input type="number" class="form-control" name="VG" id="VG" value="<?=set_value('VG')?>">
 									</div>
 								</div>
 
 								<div class="col-6">
 									<div class="form-group">
 										<label>PG</label>
-										<input type="number" class="form-control" name="PG" id="PG" value="<?=set_value('PG')?>" required>
+										<input type="number" class="form-control" name="PG" id="PG" value="<?=set_value('PG')?>">
 									</div>
 								</div>
 							</div>
@@ -71,7 +71,7 @@
 							<!-- text input -->
 							<div class="form-group">
 								<label>Falvour <small>(Rasa)</small></label>
-								<input type="text" class="form-control" name="falvour" id="falvour" value="<?=set_value('falvour')?>" required>
+								<input type="text" class="form-control" name="falvour" id="falvour" value="<?=set_value('falvour')?>">
 							</div>
 						</div><div class="col-sm-3 subcategory">
 							<!-- text input -->
@@ -107,7 +107,7 @@
 							<!-- text input -->
 							<div class="form-group">
 								<label>Harga pokok</label>
-								<input type="number" class="form-control" name="capital_price" id="capital_price"  value="<?=set_value('capital_price')?>" required>
+								<input type="text" class="form-control" name="capital_price" id="capital_price"  value="<?=set_value('capital_price')?>" required>
 								<?=form_error('capital_price', '<small class="text-danger">','</small>')?>
 							</div>
 						</div>
@@ -115,7 +115,7 @@
 							<!-- text input -->
 							<div class="form-group">
 								<label>Harga jual</label>
-								<input type="number" class="form-control" name="selling_price" id="selling_price"  value="<?=set_value('selling_price')?>" required>
+								<input type="text" class="form-control" name="selling_price" id="selling_price"  value="<?=set_value('selling_price')?>" required>
 								<?=form_error('selling_price', '<small class="text-danger">','</small>')?>
 							</div>
 						</div>

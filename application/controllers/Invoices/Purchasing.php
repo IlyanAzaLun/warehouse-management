@@ -43,7 +43,7 @@ class Purchasing extends Invoice
                ],
           );
           $this->data['title'] = 'Manajemen pembelian';
-          $this->data['invoices'] = $this->M_invoice->invoice_select(false, 'IV/P');
+          $this->data['invoices'] = $this->M_invoice->invoice_select(false, 'INV/PUR');
           $this->data['categorys'] = $this->M_menu->menu_category_select();
 
           $this->form_validation->set_rules('item_name[]', 'Item name', 'required|trim');
@@ -59,8 +59,8 @@ class Purchasing extends Invoice
      protected function add_invoice()
      {
           $this->db->group_by('order_id');
-          $order_id   = sprintf("Or-%010s", $this->db->get('tbl_order')->num_rows()+1);
-          $invoice_id = sprintf("IV/P/%010s", $this->db->get('tbl_invoice')->num_rows()+1);
+          $order_id   = sprintf("OR/%010s", $this->db->get('tbl_order')->num_rows()+1);
+          $invoice_id = sprintf("INV/PUR/%010s", $this->db->get('tbl_invoice')->num_rows()+1);
 
           foreach ($this->input->post('item_code', true) as $key => $value) {
                $this->request['order']['order_id'][$key]      = $order_id;
@@ -168,7 +168,7 @@ class Purchasing extends Invoice
           $this->form_validation->set_rules('selling_price', 'Selling price', 'required|trim|integer|greater_than['.$this->input->post('capital_price').']', array('greater_than' => 'The %s must greater than Capital price'));
           if ($this->form_validation->run()==false) {
                Flasher::setFlash('info', 'error', 'Failed', ' something worng to update data! '.validation_errors());
-               redirect('invoice');
+               redirect('purchase');
           }else{
                $this->data = [
                     'invoice_code'     => htmlspecialchars($this->input->post('invoice_code', true)),
@@ -180,7 +180,7 @@ class Purchasing extends Invoice
                ];
                $this->M_invoice->invoice_update($this->data);
                Flasher::setFlash('info', 'success', 'Success', ' congratulation success to update data!');
-               redirect('invoice');
+               redirect('purchase');
           }
      }
      public function delete()
@@ -188,22 +188,26 @@ class Purchasing extends Invoice
           $this->form_validation->set_rules('invoice_code', 'Code invoice', 'required|trim');
           if ($this->form_validation->run()==false) {
                Flasher::setFlash('info', 'error', 'Failed', ' something worng to delete data! '.validation_errors());
-               redirect('invoice');
+               redirect('purchase');
           }else{
                $this->data = [
                     'invoice_code'     => htmlspecialchars($this->input->post('invoice_code', true)),
                ];
                $this->M_invoice->invoice_delete($this->data);
                Flasher::setFlash('info', 'success', 'Success', ' congratulation success to delete data!');
-               redirect('invoice');
+               redirect('purchase');
           }    
      }
      public function info_invoice()
      {
           $this->data['invoice'] = $this->M_invoice->invoice_select($this->input->get('id', true));
-          $this->data['orders'] = $this->M_order->order_select($this->data['invoice']['invoice_order_id']);
-          $this->data['title'] = 'Detail informasi penjualan';
-          $this->load->view('invoice/purchasing/info-invoice', $this->data);
-
+          if ($this->data['invoice']) {
+               $this->data['orders'] = $this->M_order->order_select($this->data['invoice']['invoice_order_id']);
+               $this->data['title'] = 'Detail informasi penjualan';
+               $this->load->view('invoice/purchasing/info-invoice', $this->data);
+          }else{
+               Flasher::setFlash('info', 'error', 'Failed', ' something worng to select data');
+               redirect('purchase');
+          }
      }
 }

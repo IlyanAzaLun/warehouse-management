@@ -1,6 +1,6 @@
 <?php $this->load->view('components/header')?>
 
-<body class="hold-transition sidebar-mini layout-fixed pace-primary">
+<body class="hold-transition sidebar-mini layout-fixed sidebar-collapse pace-primary">
   <!-- Site wrapper -->
   <div class="wrapper">
     <!-- Navbar -->
@@ -22,14 +22,13 @@
 
       <!-- Main content -->
       <section class="content">
-
         <div class="container-fluid">
           <!-- Info boxes -->
           <div class="row">
             <div class="col-12">
               <!-- /.col -->          
               <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-success">
                   <h3 class="card-title">Daftar barang</h3>
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>

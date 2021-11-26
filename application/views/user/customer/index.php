@@ -1,6 +1,6 @@
 <?php $this->load->view('components/header')?>
 
-<body class="hold-transition sidebar-mini layout-fixed pace-primary">
+<body class="hold-transition sidebar-mini layout-fixed sidebar-collapse pace-primary">
   <!-- Site wrapper -->
   <div class="wrapper">
     <!-- Navbar -->
@@ -30,7 +30,7 @@
             <div class="col-12">
               <!-- /.col -->          
               <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-primary">
                   <h3 class="card-title">Tambah data pelanggan barang</h3>
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
@@ -175,7 +175,7 @@
             <div class="col-12">
               <!-- /.col -->          
               <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-success">
                   <h3 class="card-title">Daftar pelanggan barang</h3>
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>

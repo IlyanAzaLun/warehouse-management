@@ -1,7 +1,7 @@
 <?php $this->load->view('components/auth_header') ?>
 <div class="login-box">
   <div class="login-logo">
-    <img src="<?=base_url()?>assets/AdminLTE-3.0.5/dist/img/AdminLTELogo.png" alt="">
+    <img src="<?=base_url()?>assets/images/logo.png" style="width: 200px;">
   </div>
   <!-- /.login-logo -->
   <div class="card">

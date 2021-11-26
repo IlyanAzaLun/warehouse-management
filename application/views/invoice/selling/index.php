@@ -1,6 +1,6 @@
 <?php $this->load->view('components/header')?>
 
-<body class="hold-transition sidebar-mini layout-fixed pace-primary">
+<body class="hold-transition sidebar-mini layout-fixed sidebar-collapse pace-primary">
   <!-- Site wrapper -->
   <div class="wrapper">
     <!-- Navbar -->
@@ -43,7 +43,7 @@
                 <!-- /.col -->          
 
                 <div class="card" id="order_item">
-                  <div class="card-header">
+                  <div class="card-header bg-primary">
                     <h3 class="card-title">Informasi barang</h3>
                     <div class="card-tools">
                       <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
@@ -89,7 +89,7 @@
                   <!-- /.col -->          
 
                   <div class="card">
-                    <div class="card-header">
+                    <div class="card-header bg-primary">
                       <h3 class="card-title">Informasi pelanggan</h3>
                       <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
@@ -136,7 +136,7 @@
                 <div class="col-12">
 
                   <div class="card">
-                    <div class="card-header">
+                    <div class="card-header bg-primary">
                       <h3 class="card-title">Tambah pemesanan</h3>
                       <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
@@ -222,7 +222,7 @@
             <div class="col-12">
               <!-- /.col -->          
               <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-success">
                   <h3 class="card-title">Daftar pemesanan</h3>
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>

@@ -65,8 +65,8 @@ class Items extends CI_Controller {
 		$this->form_validation->set_rules('item_name', 'Item name', 'required|trim');
 		// $this->form_validation->set_rules('quantity', 'Quantity', 'required|trim');
 		// $this->form_validation->set_rules('unit', 'Unit', 'required|trim');
-		$this->form_validation->set_rules('capital_price', 'Capital price', 'required|trim|integer');
-		$this->form_validation->set_rules('selling_price', 'Selling price', 'required|trim|integer|greater_than['.$this->input->post('capital_price').']');
+		$this->form_validation->set_rules('capital_price', 'Capital price', 'required|trim|callback_integer_check');
+		$this->form_validation->set_rules('selling_price', 'Selling price', 'required|trim|callback_integer_check|callback_greater_than_check['.$this->input->post('capital_price').']');
 		if ($this->form_validation->run()==false) {
 			$this->load->view('items/index', $this->data);
 			$this->load->view('items/modals');
@@ -79,7 +79,6 @@ class Items extends CI_Controller {
 				'item_name'     => htmlspecialchars($this->input->post('item_name', true)),
 				// 'quantity'      => htmlspecialchars($this->input->post('quantity', true)),
 				'quantity'      => 0,
-				// 'unit'          => htmlspecialchars($this->input->post('unit', true)),
 				'MG'			=> htmlspecialchars(($this->input->post('MG', true))?$this->input->post('MG', true):''),
 				'ML'			=> htmlspecialchars(($this->input->post('ML', true))?$this->input->post('ML', true):''),
 				'VG'			=> htmlspecialchars(($this->input->post('VG', true))?$this->input->post('VG', true):''),
@@ -95,6 +94,33 @@ class Items extends CI_Controller {
 			Flasher::setFlash('info', 'success', 'Success', ' congratulation success to entry new data!');
 			redirect('items');
 		}
+	}
+	public function integer_check($value = false) {
+		$this->form_validation->set_message('integer_check', "The {field} must numeric {$value}");
+		if (!$value) {
+			Flasher::setFlash('info', 'error', 'Failed', ' something worng to update data! '.validation_errors());
+			return FALSE;
+		}
+		if (is_numeric((int)str_replace([',', '.'], ['',''], $value))){
+			return TRUE;
+		}else{
+			return FALSE;
+		}
+	}
+	public function greater_than_check($value, $value2) {
+		$this->form_validation->set_message('greater_than_check', "The {field} field must be higher than {$value2}");
+		if (!$value) {
+			Flasher::setFlash('info', 'error', 'Failed', ' something worng to update data! '.validation_errors());
+			return FALSE;
+			redirect('items');
+		}
+		if ((int)str_replace([',', '.'], ['',''], $value) > (int)str_replace([',', '.'], ['',''], $value2)){
+			return TRUE;
+		}else{
+			return FALSE;
+		}
+		Flasher::setFlash('info', 'error', 'Failed', ' something worng to update data! '.validation_errors());
+		redirect('items');
 	}
 
 	public function get_code()
@@ -133,8 +159,8 @@ class Items extends CI_Controller {
 		$this->form_validation->set_rules('item_name', 'Item name', 'required|trim');
 		// $this->form_validation->set_rules('quantity', 'Quantity', 'required|trim');
 		// $this->form_validation->set_rules('unit', 'Unit', 'required|trim');
-		$this->form_validation->set_rules('capital_price', 'Capital price', 'required|trim|integer');
-		$this->form_validation->set_rules('selling_price', 'Selling price', 'required|trim|integer|greater_than['.$this->input->post('capital_price').']', array('greater_than' => 'The %s must greater than Capital price'));
+		$this->form_validation->set_rules('capital_price', 'Capital price', 'required|trim|callback_integer_check');
+		$this->form_validation->set_rules('selling_price', 'Selling price', 'required|trim|callback_integer_check|callback_greater_than_check['.$this->input->post('capital_price').']', array('greater_than' => 'The %s must greater than Capital price'));
 		if ($this->form_validation->run()==false) {
 			Flasher::setFlash('info', 'error', 'Failed', ' something worng to update data! '.validation_errors());
 			redirect('items');
@@ -142,17 +168,18 @@ class Items extends CI_Controller {
 			$this->data = [
 				'item_code'     => htmlspecialchars($this->input->post('item_code', true)),
 				'item_name'     => htmlspecialchars($this->input->post('item_name', true)),
-				// 'quantity'      => htmlspecialchars($this->input->post('quantity', true)),
-				// 'unit'          => htmlspecialchars($this->input->post('unit', true)),
-				'MG'			=> htmlspecialchars(($this->input->post('MG', true))?$this->input->post('MG', true):''),
-				'ML'			=> htmlspecialchars(($this->input->post('ML', true))?$this->input->post('ML', true):''),
-				'VG'			=> htmlspecialchars(($this->input->post('VG', true))?$this->input->post('VG', true):''),
-				'PG'			=> htmlspecialchars(($this->input->post('PG', true))?$this->input->post('PG', true):''),
-				'falvour'		=> htmlspecialchars(($this->input->post('falvour', true))?$this->input->post('falvour', true):''),
-				'brand_1'		=> htmlspecialchars(($this->input->post('brand_1', true))?$this->input->post('brand_1', true):''),
-				'brand_2'		=> htmlspecialchars(($this->input->post('brand_2', true))?$this->input->post('brand_2', true):''),
+				// 'quantity'   => htmlspecialchars($this->input->post('quantity', true)),
+				// 'unit'       => htmlspecialchars($this->input->post('unit', true)),
+				'MG'            => htmlspecialchars(($this->input->post('MG', true))?$this->input->post('MG', true):''),
+				'ML'            => htmlspecialchars(($this->input->post('ML', true))?$this->input->post('ML', true):''),
+				'VG'            => htmlspecialchars(($this->input->post('VG', true))?$this->input->post('VG', true):''),
+				'PG'            => htmlspecialchars(($this->input->post('PG', true))?$this->input->post('PG', true):''),
+				'falvour'       => htmlspecialchars(($this->input->post('falvour', true))?$this->input->post('falvour', true):''),
+				'brand_1'       => htmlspecialchars(($this->input->post('brand_1', true))?$this->input->post('brand_1', true):''),
+				'brand_2'       => htmlspecialchars(($this->input->post('brand_2', true))?$this->input->post('brand_2', true):''),
 				'capital_price' => htmlspecialchars($this->input->post('capital_price', true)),
 				'selling_price' => htmlspecialchars($this->input->post('selling_price', true)),
+				'note'          => htmlspecialchars($this->input->post('note', true)),
 			];
 			$this->M_items->item_update($this->data);
 			Flasher::setFlash('info', 'success', 'Success', ' congratulation success to update data!');

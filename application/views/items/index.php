@@ -1,6 +1,6 @@
 <?php $this->load->view('components/header')?>
 
-<body class="hold-transition sidebar-mini layout-fixed pace-primary">
+<body class="hold-transition sidebar-mini layout-fixed sidebar-collapse layout-navbar-fixed layout-footer-fixed pace-primary">
   <!-- Site wrapper -->
   <div class="wrapper">
     <!-- Navbar -->
@@ -30,7 +30,7 @@
             <div class="col-12">
               <!-- /.col -->          
               <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-primary">
                   <h3 class="card-title">Tambah data barang</h3>
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
@@ -61,7 +61,7 @@
                         </div>
                       </div>
 
-                      <div class="col-sm-3">
+                      <div class="col-sm-2">
                         <!-- text input -->
                         <div class="form-group">
                           <label>Kode barang</label>
@@ -77,7 +77,7 @@
                         </div>
                       </div>
                       
-                      <div class="col-sm-3">
+                      <div class="col-sm-2">
                         <!-- text input -->
                         <div class="form-group">
                           <label>Harga pokok</label>
@@ -85,7 +85,7 @@
                           <?=form_error('capital_price', '<small class="text-danger">','</small>')?>
                         </div>
                       </div>
-                      <div class="col-sm-3">
+                      <div class="col-sm-2">
                         <!-- text input -->
                         <div class="form-group">
                           <label>Harga jual</label>
@@ -124,7 +124,7 @@
             <div class="col-12">
               <!-- /.col -->          
               <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-success">
                   <h3 class="card-title">Daftar barang</h3>
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
