@@ -7,26 +7,16 @@ class M_customer extends CI_Model {
 
         public function customer_select($data = false)
         {
-        	if($data){
-                $this->db->select(
-                        'customer.customer_id
-                        ,customer.customer_fullname
-                        ,customer.customer_address
-                        ,customer.customer_contact_phone
-                        ');
-                return $this->db->get_where($this->_table.' customer', ['customer_id'=>$data])->row_array();
-            }else{
-                $this->db->select(
-                        'customer.customer_id
-                        ,customer.customer_fullname
-                        ');
-                return $this->db->get($this->_table.' customer')->result_array();
-            }
+                if($data){
+                        return $this->db->get_where($this->_table.' customer', ['customer_id'=>$data])->row_array();
+                }else{
+                        return $this->db->get($this->_table)->result_array();
+                }
         }
         public function customer_insert($data)
         {
                 $uuid = Uuid::uuid4();
-                $data['customer_id']      =  $uuid;
+                $data['customer_id'] =  $uuid;
                 return $this->db->insert('tbl_customer', $data);
 
         }

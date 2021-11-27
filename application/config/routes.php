@@ -9,7 +9,8 @@ $route['dashboard']                          = 'welcome/dashboard';
 
 // REST API
 $route['(:any)/API/item']                   = 'REST/Items';
-$route['(:any)/API/user']                   = 'REST/User';
+$route['(:any)/API/users']                  = 'REST/User';
+$route['(:any)/API/roles']                  = 'REST/Roles';
 $route['(:any)/API/order']                  = 'REST/order';
 $route['(:any)/API/invoice']                = 'REST/Invoice';
 
@@ -47,6 +48,9 @@ $route['user/delete']                        = 'Users/supplier/delete';
 $route['user/update']                        = 'Users/supplier/update';
 $route['(:any)/user/select']                 = 'Users/supplier/getuser';
 
+//users
+$route['users']                              = 'Users/users';
+
 //supplier
 $route['supplier']                           = 'Users/supplier';
 
@@ -58,3 +62,7 @@ $route['customer']                           = 'Users/customer';
 // menu
 $route['configuration/menu']                 = 'Configuration/menu';
 $route['configuration/menu/category-insert'] = 'Configuration/menu/category_insert';
+
+//role
+$route['configuration/role']                 = 'Configuration/role';
+$route['configuration/role/data']            = 'Configuration/role/data';

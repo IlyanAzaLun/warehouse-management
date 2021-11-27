@@ -5,12 +5,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 require APPPATH . '/libraries/REST_Controller.php';
 class Items extends REST_Controller
 {
-    public function __construct()
+    function __construct()
     {
         parent::__construct();
         //inisialisasi model Produk_model.php dengan nama produk
     }
-    public function index_get()
+    function index_get()
     {
        $id = $this->get('id');
         if ($id == '') {

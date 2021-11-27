@@ -64,7 +64,6 @@ class DataSource {
 				$('#modal-update input#brand_1').val(result.brand_1);
 				$('#modal-update input#brand_2').val(result.brand_2);
 				$('#modal-update input#quantity').val(result.quantity);
-				// $('#modal-update input#unit').val(result.unit);
 				$('#modal-update select#unit').find('option[value="'+result.unit+'"').prop('selected', true);
 				$('#modal-update input#capital_price').val(result.capital_price);
 				$('#modal-update input#selling_price').val(result.selling_price);

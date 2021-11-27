@@ -12,16 +12,24 @@ const main = () => {
 			$('.category').after(`
                       <div class="col-sm-3 subcategory">
                         <div class="form-group">
-                          <label>Sub kategori barang</label>
-                          <select class="form-control select2" style="width: 100%;" name="subcategory" id="subcategory" required>
-                            <option disabled value="" selected="selected">Select category item</option>
-                            <option value="FREEBASE-CREAMY" data-id="LIQUID FREEBASE CREAMY" >LIQUID FREEBASE CREAMY</option>
-                            <option value="FREEBASE-FRUITY" data-id="LIQUID FREEBASE FRUITY" >LIQUID FREEBASE FRUITY</option>
-                            <option value="SALT-CREAMY" data-id="LIQUID SALT CREAMY" >LIQUID SALT CREAMY</option>
-                            <option value="SALT-FRUITY" data-id="LIQUID SALT FRUITY" >LIQUID SALT FRUITY</option>
-                            <option value="PODS-CREAMY" data-id="LIQUID PODS CREAMY" >LIQUID PODS CREAMY</option>
-                            <option value="PODS-FRUITY" data-id="PODS FRUITY" >LIQUID PODS FRUITY</option>
-                          </select>
+                          <label>Jumlah sekarang</label>
+                          <div class="input-group mb-3">
+                            <select class="form-control select2" style="width: 100%;" name="subcategory" id="subcategory" required>
+                              <option disabled value="" selected="selected">Select category item</option>
+                              <option value="FREEBASE-CREAMY" data-id="LIQUID FREEBASE CREAMY" >LIQUID FREEBASE CREAMY</option>
+                              <option value="FREEBASE-FRUITY" data-id="LIQUID FREEBASE FRUITY" >LIQUID FREEBASE FRUITY</option>
+                              <option value="SALT-CREAMY" data-id="LIQUID SALT CREAMY" >LIQUID SALT CREAMY</option>
+                              <option value="SALT-FRUITY" data-id="LIQUID SALT FRUITY" >LIQUID SALT FRUITY</option>
+                              <option value="PODS-CREAMY" data-id="LIQUID PODS CREAMY" >LIQUID PODS CREAMY</option>
+                              <option value="PODS-FRUITY" data-id="PODS FRUITY" >LIQUID PODS FRUITY</option>
+                            </select>
+                            <div class="input-group-append">
+                              <select class="input-group-text" name="unit" id="unit" required>
+                                <option value="pcs">PCS</option>
+                                <option value="pac">PAC</option>
+                              </select>
+                            </div>
+                          </div>
                         </div>
                       </div>
 
@@ -64,13 +72,22 @@ const main = () => {
                           <label>Flavour <small>(Rasa)</small></label>
                           <input type="text" class="form-control" name="flavour" id="flavour" required>
                         </div>
-                      </div><div class="col-sm-3 subcategory">
+                      </div>
+                      <div class="col-sm-3 subcategory">
+                        <!-- text input -->
+                        <div class="form-group">
+                          <label>Customs <small>(Bea cukai)</small></label>
+                          <input type="text" class="form-control" name="customs" id="customs" data-inputmask-alias="datetime" data-inputmask-inputformat="yyyy" data-mask>
+                        </div>
+                      </div>
+                      <div class="col-sm-3 subcategory">
                         <!-- text input -->
                         <div class="form-group">
                           <label>Brand 1</label>
                           <input type="text" class="form-control" name="brand_1" id="brand_1" required>
                         </div>
-                      </div><div class="col-sm-3 subcategory">
+                      </div>
+                      <div class="col-sm-3 subcategory">
                         <!-- text input -->
                         <div class="form-group">
                           <label>Brand 2</label>
@@ -78,6 +95,7 @@ const main = () => {
                         </div>
                       </div>
 				`);
+      $('#customs').inputmask('yyyy', { 'placeholder': 'yyyy' })
 		}else{
 			$('.subcategory').remove();
 		}
@@ -103,7 +121,8 @@ const main = () => {
   })
 
   // price formater
-  $('input#capital_price, input#selling_price').focusout(function(){
+  
+  $('input#capital_price, input#selling_price').keyup(function(){
     $(this).val(currency(
       currencyToNum($(this).val())
     ));

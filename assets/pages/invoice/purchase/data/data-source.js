@@ -91,7 +91,7 @@ class DataSource {
                 <input type="number" class="form-control" name="quantity[]" id="quantity"  value="1" required>
                 <input type="hidden" class="form-control" name="unit[]" id="unit"  value="${result.unit}" required>
                 <div class="input-group-append">
-                  <span class="input-group-text">${(result.unit).toUpperCase()}</span>
+                  <span class="input-group-text">${result.unit.toUpperCase()}</span>
                 </div>
               </div>
             </div>
@@ -124,16 +124,16 @@ class DataSource {
 			$(this).parents().closest('div.row#order-item').empty();
 		});
 
-		$('input#item_selling_price, input#item_capital_price').on('focusout', function(){
-			$(this).val(new Intl.NumberFormat('en-EN', { maximumSignificantDigits: 3 }).format($(this).val().replace(/[,]|[.]/g,'')))
+		$('input#item_selling_price, input#item_capital_price').keyup(function(){
+			$(this).val(new Intl.NumberFormat('en-EN', { maximumSignificantDigits: 9 }).format($(this).val().replace(/[,]|[.]/g,'')))
 		});
 
 		$('input#item_total_price').on('focus', function(){
-			$(this).val(new Intl.NumberFormat('en-EN', { maximumSignificantDigits: 3 }).format(parseInt($(this).parents().closest('#order-item').find('input#item_capital_price').val().replace(/[,]|[.]/g,''))*parseInt($(this).parents().closest('#order-item').find('input#quantity').val())))
+			$(this).val(new Intl.NumberFormat('en-EN', { maximumSignificantDigits: 9 }).format(parseInt($(this).parents().closest('#order-item').find('input#item_capital_price').val().replace(/[,]|[.]/g,''))*parseInt($(this).parents().closest('#order-item').find('input#quantity').val())))
 		});
 
-		$('input#rebate_price').on('focusout', function(){
-			$(this).val(new Intl.NumberFormat('en-EN', { maximumSignificantDigits: 3 }).format($(this).val().replace(/[,]|[.]/g,'')))
+		$('input#rebate_price').keyup(function(){
+			$(this).val(new Intl.NumberFormat('en-EN', { maximumSignificantDigits: 9 }).format($(this).val().replace(/[,]|[.]/g,'')))
 		});
 	}
 	items_search(request, handle = false){

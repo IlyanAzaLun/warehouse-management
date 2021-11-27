@@ -11,8 +11,8 @@ class M_menu  extends CI_Model {
         	$this->db->select(
         		'menu.menu_id as menu_id
         		,menu.title as title
-                ,menu.parent_id as parent_id
-                ,menu.menu_controller as menu_controller
+                        ,menu.parent_id as parent_id
+                        ,menu.menu_controller as menu_controller
         		,menu_category.category_name as category_name
         		,menu.url as url
         		,menu.icon as icon
@@ -34,8 +34,17 @@ class M_menu  extends CI_Model {
         }
         public function menu_category_insert($data)
         {
-        	$uuid = Uuid::uuid4();
-            $data['category_id']      =  $uuid;
-            return $this->db->insert($this->_forign_table, $data);
+                $uuid = Uuid::uuid4();
+                $i = 0;
+                foreach ($data['role'] as $key => $value) {
+                        $access[$i]['category_id'] = $uuid;
+                        $access[$i]['role_id']     = $key;
+                        $this->db->set('id', 'uuid()', FALSE);
+                        $this->db->insert('tbl_user_access_menu', $access[$i]);
+                        $i++;
+                }
+                $category['category_id'] = $uuid;
+                $category['category_name'] = $data['category_name'];
+                return $this->db->insert($this->_forign_table, $category);
         }
 }

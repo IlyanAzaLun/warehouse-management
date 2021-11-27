@@ -31,8 +31,17 @@
 							<!-- text input -->
 							<div class="form-group">
 								<label>Nama barang</label>
+	                          <div class="input-group mb-3">
 								<input type="text" class="form-control" name="item_name" id="item_name"  value="<?=set_value('item_name')?>" required>
-							</div>
+	                            <div class="input-group-append">
+	                              <select class="input-group-text" name="unit" id="unit" required>
+	                                <option value="pcs">PCS</option>
+	                                <option value="pac">PAC</option>
+	                              </select>
+	                            </div>
+	                          </div>
+	                        </div>
+
 						</div>
 
 						<div class="col-sm-3 subcategory">

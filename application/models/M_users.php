@@ -6,20 +6,36 @@ class M_users extends CI_Model {
         private $_table = "tbl_user";
         private $_foreign_table = "tbl_user_information";
 
-        public function user_select($data)
+        public function user_select($data = false)
         {
-                $this->db->select(
-                        'user.user_id
-                        ,user.user_fullname
-                        ,user.user_email
-                        ,user.user_image
-                        ,user.role_id
-                        ,user.is_active
-                        ,user.date_created
-                        ,role.role_name
-                        ');
-                $this->db->join('tbl_role role', 'user.role_id = role.id', 'left');
-                return $this->db->get_where($this->_table.' user', ['user_email'=>$data])->row_array();
+                if ($data) {
+                        $this->db->select(
+                                'user.user_id
+                                ,user.user_fullname
+                                ,user.user_email
+                                ,user.user_image
+                                ,user.role_id
+                                ,user.is_active
+                                ,user.date_created
+                                ,role.role_name
+                                ');
+                        $this->db->join('tbl_role role', 'user.role_id = role.id', 'left');
+                        return $this->db->get_where($this->_table.' user', ['user_email'=>$data])->row_array();
+                }else{
+                        $this->db->select(
+                                'user.*
+                                ,role.*
+                                ');
+                        $this->db->join('tbl_role role', 'user.role_id = role.id', 'left');
+                        $result['user'] = $this->db->get($this->_table.' user')->result_array();
+                        $this->db->select(
+                                'user_info.*
+                                ,role.*
+                                ');
+                        $this->db->join('tbl_role role', 'user_info.role_id = role.id', 'left');
+                        $result['info'] = $this->db->get($this->_foreign_table.' user_info')->result_array();
+                        return $result;
+                }
         }
         public function user_insert($data)
         {

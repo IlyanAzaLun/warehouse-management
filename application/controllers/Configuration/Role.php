@@ -1,14 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Menu extends CI_Controller {
+class Role extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
-		is_signin(get_class($this));
+		// is_signin(get_class($this));
 		$this->load->model('M_users');
-		$this->load->model('M_menu');
 		$this->load->model('M_role');
+		$this->data['user'] = $this->M_users->user_select($this->session->userdata('email'));
 	}
 	public function index(){
 		$this->data['plugins'] = array(
@@ -32,46 +32,26 @@ class Menu extends CI_Controller {
 				base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/js/autoFill.bootstrap4.min.js'),
 			],
 			'module' => [
-				base_url('assets/pages/configuration/menu/index.js'),
+				base_url('assets/pages/configuration/role/index.js'),
 			],
 		);
-		$this->data['title'] = 'Menu management';
-		$this->data['user'] = $this->M_users->user_select($this->session->userdata('email'));
-		$this->data['menus'] = $this->M_menu->menu_select();
-		$this->data['categorys'] = $this->M_menu->menu_category_select();
-		$this->data['roles'] = $this->M_role->role_select();
+		$this->data['title'] = 'Role management';
+		$this->data['roles'] = $this->db->get('tbl_role')->result_array();
+		$this->load->view('configuration/role/index', $this->data);
+		$this->load->view('configuration/role/modals', $this->data);
+		
+	}
 
-		$this->form_validation->set_rules('menu', 'Menu name', 'required|trim');
-		$this->form_validation->set_rules('category_id', 'Category menu', 'required|trim');
-		$this->form_validation->set_rules('url', 'Url menu', 'required|trim');
-		$this->form_validation->set_rules('icon', 'Icon menu', 'required|trim');
-		if ($this->form_validation->run() == false) {
-			$this->load->view('configuration/menu/index', $this->data);
-			$this->load->view('configuration/menu/modals', $this->data);
-		}else{
-			$this->data = [
-				'title' => htmlspecialchars($this->input->post('menu', true)),
-				'category_id' => htmlspecialchars($this->input->post('category_id', true)),
-				'url' => htmlspecialchars($this->input->post('url', true)),
-				'parent_id' => htmlspecialchars($this->input->post('parent_id', true)),
-				'menu_controller' => htmlspecialchars($this->input->post('menu_controller', true)),
-				'icon' => htmlspecialchars($this->input->post('icon', true)),
-				'is_active' => htmlspecialchars($this->input->post('is_active', true)),
-			];
-
-			echo "<b>Information! under maintenance</b>";
-			echo "<pre>";
-			foreach ($this->input->post('role') as $key => $role) {
-				echo $key;
-			}
-			echo "</pre>";
-			// die();
-			
-			if ($this->M_menu->menu_insert($this->data)) {
-				Flasher::setFlash('info', 'success', 'Success', ' congratulation you already added new data!');
-				redirect('configuration/menu');
-			};
-		}
+	public function data()
+	{
+		$this->db->select(
+			'category.category_id category_id
+			,category.category_name
+		');
+		$this->db->where('role_id', $this->input->post('data'));
+		$this->db->join('tbl_user_menu_category category', 'category.category_id=access.category_id', 'left');
+		$this->data['information'] = $this->db->get('tbl_user_access_menu access')->result_array();
+		$this->load->view('configuration/role/data', $this->data);
 	}
 
 	public function category_insert()
@@ -82,15 +62,15 @@ class Menu extends CI_Controller {
 		}
 		if ($this->form_validation->run() == false) {
 			Flasher::setFlash('info', 'error', 'Failed', ' something worng to update data! '.validation_errors());
-            redirect('configuration/menu');
+            redirect('configuration/role');
 		}else{
 			try {
 				echo "<pre>";
-				var_dump($this->M_menu->menu_category_insert($this->input->post())); 
+				var_dump($this->M_role->role_category_insert($this->input->post())); 
 				echo "</pre>";
 				die();
 				Flasher::setFlash('info', 'success', 'Success', ' congratulation you already added new data!');
-				redirect('configuration/menu');
+				redirect('configuration/role');
 			} catch (Exception $e) {
 				var_dump($e);
 			}

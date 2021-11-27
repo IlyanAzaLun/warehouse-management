@@ -200,7 +200,7 @@
                     <tbody>
                       <?php foreach ($customers as $key => $customer): ?>
 
-                        <tr>
+                        <tr id="<?=$customer['user_id']?>">
                           <th scope="row" width="5px"><?=++$key?></th>
                           <td>
                             <div class="btn-group d-flex justify-content-center" data-id="<?=$customer['user_id']?>">

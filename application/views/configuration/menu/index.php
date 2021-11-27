@@ -28,7 +28,6 @@
           <!-- Info boxes -->
           <div class="row">
             <div class="col-8">
-              <?=form_error('menu', '<div class="alert alert-danger alert-dismissible fade show" role="alert">', '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')?>
               <!-- /.col -->          
               <div class="card">
                 <div class="card-header">

@@ -29,20 +29,6 @@
           <form action="<?=base_url('purchase')?>" method="post" id="insert">
             <div class="row">
 
-              <!-- comment -->
-              <div class="col-12">
-                <div class="callout callout-danger">
-                  <h5><i class="fas fa-exclamation-triangle text-danger"></i> Note:</h5>
-                  This page has under maintenance!, please handle with care, and <b>Code must be repaired, the code not readable.!</b> thanks
-                  <p></p>
-                  <code>
-                    • tambahkan item terlebih dahulu di master data jika data tidak ditemukan <br>
-                    • hasil dari pembelian barang akan ditamahkan ke stok item.
-                  </code>
-                </div>
-              </div>
-              <!-- /.comment -->
-
               <div class="col-sm-12 col-lg-7">
 
                 <!-- /.col -->          
@@ -275,7 +261,7 @@
                           </td>
                           <td>
                             <small>
-                              <a href="<?=base_url('customer/'.$invoice['to_customer_destination'])?>">
+                              <a href="<?=base_url('supplier#'.$invoice['to_customer_destination'])?>">
                                 <?=$invoice['user_fullname']?>
                               </a>
                               <p><?=$invoice['user_address']?>,<?=$invoice['village']?><br><?=$invoice['sub-district']?>,<?=$invoice['district']?>,<?=$invoice['province']?>,<?=$invoice['zip']?></p>

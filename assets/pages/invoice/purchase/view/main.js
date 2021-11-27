@@ -44,6 +44,13 @@ const main = () => {
 	})
 	$('button#add_order_item').on('click', function(){
 		let sub_total = 0;
+		if($(this).parents().closest('div.row#order_item').find('input#item_name').val()==''){
+			$('input#item_name').focus();
+			Toast.fire({
+				icon: 'warning',
+				title: 'Cari terlebih dahulu barang yang akan di beli !',
+			})
+		}
 		datasource.items_search($(this).parents().closest('div.row#order_item').find('input#item_name').val(), function(output){
 			datasource.field(output);
 		});
@@ -58,14 +65,14 @@ const main = () => {
 		})
 		$(this).val(currency(sub_total));
 	});
-	$('input#shipping_cost, input#other_cost').on('focusout', function(){ /* shipping and otehr cost format */
-		$(this).val(new Intl.NumberFormat('en-EN', { maximumSignificantDigits: 3 }).format(
+	$('input#shipping_cost, input#other_cost').on('keyup', function(){ /* shipping and otehr cost format */
+		$(this).val(new Intl.NumberFormat('en-EN', { maximumSignificantDigits: 9 }).format(
 	      $(this).val().replace(/[,]|[.]/g,'')
 	    ));
 	})
-	$('input#grand_total').on('focus', function(){ /* grand total */
+	$('input#grand_total').on('keyup', function(){ /* grand total */
 		$(this).val(
-			new Intl.NumberFormat('en-EN', { maximumSignificantDigits: 3 }).format(
+			new Intl.NumberFormat('en-EN', { maximumSignificantDigits: 9 }).format(
 				$('input#sub_total').val().replace(/[,]|[.]/g,'')-	/*sub total*/
 				(parseInt($('input#discount').val())*parseInt($('input#sub_total').val().replace(/[,]|[.]/g,''))/100)+ /*discount*/
 				parseInt($('input#shipping_cost').val().replace(/[,]|[.]/g,''))+ /*shiping cost*/
