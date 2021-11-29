@@ -40,12 +40,12 @@ class DataSource {
 			}	
 		})	
 	}
-	items(handle){
+	items(request = false, handle){
 		$.ajax({
 			url: this.BASEURL+'items/get-data',
 			method: 'POST',
 			dataType: 'JSON',
-			data: {'request': 'GET'},
+			data: {'request': 'GET', 'data': request},
 			success: function(result){
 				handle(result);
 			}	
@@ -56,39 +56,40 @@ class DataSource {
 		<!-- order-item -->
         <div class="row" id="order-item">
 
-          <div class="col-12">
+          <div class="col-1">
             <div class="form-group">
+              <small>Kode barang</small>
               <input type="text" name="item_code[]" id="item_code" class="form-control" value="${result.item_code}" readonly>
             </div>
           </div>
 
-          <div class="col-12">
+          <div class="col-3">
             <div class="form-group">
             	<small>Nama barang</small>
               <input type="text" name="item_name[]" id="item_name" class="form-control" value="${result.item_name}" readonly>
             </div>
           </div>
 
-          <div class="col-2">
+          <div class="col-1">
             <div class="form-group">
             	<small>Harga pokok</small>
               <input type="text" name="item_capital_price[]" id="item_capital_price" class="form-control" value="${result.capital_price}" placeholder="${result.capital_price}" required>
             </div>
           </div>
 
-          <div class="col-2">
+          <div class="col-1">
             <div class="form-group">
             	<small>Harga harga jual</small>
               <input type="text" name="item_selling_price[]" id="item_selling_price" class="form-control" value="${result.selling_price}" placeholder="${result.selling_price}" required>
             </div>
           </div>
 
-          <div class="col-3">
+          <div class="col-1">
             <!-- text input -->
             <div class="form-group">
             	<small>Jumlah barang</small>
               <div class="input-group mb-3">
-                <input type="number" class="form-control" name="quantity[]" id="quantity"  value="1" required>
+                <input type="number" class="form-control" name="quantity[]" id="quantity" min="1" value="0" required>
                 <input type="hidden" class="form-control" name="unit[]" id="unit"  value="${result.unit}" required>
                 <div class="input-group-append">
                   <span class="input-group-text">${result.unit.toUpperCase()}</span>
@@ -100,7 +101,7 @@ class DataSource {
           <div class="col-2">
             <div class="form-group">
             	<small>Harga total</small>
-              <input type="text" name="item_total_price[]" id="item_total_price" class="form-control" value="" placeholder="" required>
+              <input type="text" name="item_total_price[]" id="item_total_price" class="form-control" value="" placeholder="" readonly required>
             </div>
           </div>
 
@@ -128,6 +129,19 @@ class DataSource {
 			$(this).val(new Intl.NumberFormat('en-EN', { maximumSignificantDigits: 9 }).format($(this).val().replace(/[,]|[.]/g,'')))
 		});
 
+		$('input#item_selling_price').focusout(function(){
+			console.log()
+			if (parseInt($(this).val().replace(/[,]|[.]/g,'')) < parseInt($(this).parents().closest('div#order-item.row').find('input#item_capital_price').val().replace(/[,]|[.]/g,''))) {
+				Swal.fire({
+				  icon: 'warning',
+				  title: 'Oops...',
+				  text: 'Harga jual lebih kecil dari pada harga pokok!',
+				}).then(()=>{
+					$(this).addClass('is-invalid');
+				});
+			}
+		});
+
 		$('input#item_total_price').on('focus', function(){
 			$(this).val(new Intl.NumberFormat('en-EN', { maximumSignificantDigits: 9 }).format(parseInt($(this).parents().closest('#order-item').find('input#item_capital_price').val().replace(/[,]|[.]/g,''))*parseInt($(this).parents().closest('#order-item').find('input#quantity').val())))
 		});
@@ -135,17 +149,6 @@ class DataSource {
 		$('input#rebate_price').keyup(function(){
 			$(this).val(new Intl.NumberFormat('en-EN', { maximumSignificantDigits: 9 }).format($(this).val().replace(/[,]|[.]/g,'')))
 		});
-	}
-	items_search(request, handle = false){
-		$.ajax({
-			url: this.BASEURL+'items/get-data',
-			method: 'POST',
-			dataType: 'JSON',
-			data: {'request': 'GET', 'data': request},
-			success: function(result){
-				handle(result);
-			}	
-		})	
 	}
 	search_order(id){
 		$.ajax({

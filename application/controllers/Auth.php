@@ -10,7 +10,7 @@ class Auth extends CI_Controller {
 	public function index(){
 		is_signout();
 		$this->data['title'] = 'Sign in';
-		$this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email');
+		$this->form_validation->set_rules('email', 'Email', 'required|trim');
 		$this->form_validation->set_rules('password', 'Password', 'required|trim');
 		if ($this->form_validation->run()==false) {
 
@@ -44,7 +44,7 @@ class Auth extends CI_Controller {
 	}
 	public function signup(){
 		$this->form_validation->set_rules('name', 'Full name', 'required|trim');
-		$this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[tbl_user.user_email]',[
+		$this->form_validation->set_rules('email', 'Email', 'required|trim|is_unique[tbl_user.user_email]',[
 			'is_unique' => 'This email has alredy registerd!'
 		]);
 		$this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[3]|matches[repassword]');

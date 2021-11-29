@@ -29,54 +29,8 @@
           <form action="<?=base_url('purchase')?>" method="post" id="insert">
             <div class="row">
 
-              <div class="col-sm-12 col-lg-7">
-
-                <!-- /.col -->          
-
-                <div class="card" id="order_item">
-                  <div class="card-header bg-primary">
-                    <h3 class="card-title">Informasi barang</h3>
-                    <div class="card-tools">
-                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                      <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-                    </div>
-                  </div>
-                  <!-- /.card-header -->
-                  <div class="card-body" id="order_item">
-
-                    <div class="row" id="order_item">
-
-                      <div class="col-12">
-                        <div class="form-group">
-                          <input type="text" name="order_id" id="order_id" class="form-control" placeholder="order_id" readonly>
-                        </div>
-                      </div>
-
-                      <div class="col-10">
-                        <div class="form-group">
-                          <label for="item_name">Cari nama barang...</label>
-                          <input required type="text" id="item_name" class="form-control" value="<?=set_value('item_name[]')?>" placeholder="Cari barang...">
-                        </div>
-                        <?=form_error('item_name[]', '<small class="text-danger">','</small>')?>
-                        <?=form_error('quantity[]', '<small class="text-danger">','</small>')?>
-                        <?=form_error('unit[]', '<small class="text-danger">','</small>')?>
-                      </div>
-                      <div class="col-2">
-                        <label for="">&nbsp;</label>
-                        <button type="button" class="btn btn-block btn-primary" id="add_order_item"><i class="fa fa-tw fa-plus"></i></button>
-                      </div>
-
-                    </div>
-
-                    <hr>
-
-                  </div>
-                  <!-- /.card-body -->
-                </div>
-
-              </div>
-              <div class="col-sm-12 col-lg-5">
-                <div class="col-12">
+              <div class="col-sm-12 col-lg-6">
+                <div class="col-12 col-lg-12">
                   <!-- /.col -->          
 
                   <div class="card">
@@ -124,7 +78,10 @@
                     <!-- /.card-body -->
                   </div>
                 </div>
-                <div class="col-12">
+              </div>
+
+              <div class="col-sm-12 col-lg-6">
+                <div class="col-12 col-lg-12">
 
                   <div class="card">
                     <div class="card-header bg-primary">
@@ -206,6 +163,53 @@
                   <!-- /.col -->
                 </div>
               </div>
+
+              <div class="col-sm-12 col-lg-12">
+
+                <!-- /.col -->          
+
+                <div class="card" id="order_item">
+                  <div class="card-header bg-primary">
+                    <h3 class="card-title">Informasi barang</h3>
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                      <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                    </div>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body" id="order_item">
+
+                    <div class="row" id="order_item">
+
+                      <div class="col-12">
+                        <div class="form-group">
+                          <input type="text" name="order_id" id="order_id" class="form-control" placeholder="order_id" readonly>
+                        </div>
+                      </div>
+
+                      <div class="col-10">
+                        <div class="form-group">
+                          <label for="item_name">Cari nama barang...</label>
+                          <input required type="text" id="item_name" class="form-control" value="<?=set_value('item_name[]')?>" placeholder="Cari barang...">
+                        </div>
+                        <?=form_error('item_name[]', '<small class="text-danger">','</small>')?>
+                        <?=form_error('quantity[]', '<small class="text-danger">','</small>')?>
+                        <?=form_error('unit[]', '<small class="text-danger">','</small>')?>
+                      </div>
+                      <div class="col-2">
+                        <label for="">&nbsp;</label>
+                        <button type="button" class="btn btn-block btn-primary" id="add_order_item"><i class="fa fa-tw fa-plus"></i></button>
+                      </div>
+
+                    </div>
+
+                    <hr>
+
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+
+              </div>
             </div>
           </form>
           <!-- insert -->
@@ -272,9 +276,9 @@
                           <td id="validation" class="text-center" data-id="<?=$invoice['invoice_id']?>">
                             <?=($invoice['status_item']=='1'?
                               '<button class="btn btn-sm btn-success m-1" id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Checked</button>': 
-                               ($invoice['status_item']=='2'?
+                              ($invoice['status_item']=='2'?
                                 '<button class="btn btn-sm btn-warning m-1" id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Recheck on warehouse</button>': 
-                               ($invoice['status_item']=='3'?
+                                ($invoice['status_item']=='3'?
                                   '<button class="btn btn-sm btn-warning m-1" id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Recheck on marketing</button>':
                                   '<button class="btn btn-sm btn-danger m-1"  id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Uncheck</button>' )));?>
 
@@ -313,3 +317,4 @@
     <!-- /.content-wrapper -->
     <!-- Modals -->
     <?php $this->load->view('components/footer')?>
+    

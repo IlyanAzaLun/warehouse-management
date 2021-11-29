@@ -56,7 +56,7 @@ class Purchasing extends Invoice
                $this->add_invoice();
           }
      }
-     protected function add_invoice()
+     protected function add_invoice() // FIX THIS METHOD TO MORE BETTER, 
      {
           $this->db->group_by('order_id');
           $order_id   = sprintf("OR/%010s", $this->db->get('tbl_order')->num_rows()+1);
@@ -102,7 +102,7 @@ class Purchasing extends Invoice
                'status_settlement'       => $this->request['status_payment'],
                'note'                    => $this->request['note']
           ];
-          $this->M_order->order_insert($this->request['order']); 
+          $this->M_order->order_insert($this->request['order']); // insert to tbl_order, insert to tbl_history, and update item
           $this->M_invoice->invoice_insert($this->invoice);
           
           Flasher::setFlash('info', 'success', 'Success', ' congratulation success to entry new data!');

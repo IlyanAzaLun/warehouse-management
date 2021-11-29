@@ -144,15 +144,36 @@ class Items extends CI_Controller {
 					echo json_encode($this->data);
 				}else{
 					echo json_encode($data = array(
-						'user_id' => '', 
-						'user_contact_phone' => '', 
-						'user_address' => '', 
+						'0' => array(
+							'item_code' => '', 
+							'item_name' => '', 
+							'quantity' => '', 
+							'capital_price' => '', 
+							'selling_price' => '', 
+						)
+					));
+				}
+			}elseif ($this->input->post('_data')) {
+				$this->db->like('item_name', $this->input->post('_data'), 'both');
+				$this->data = $this->db->get('tbl_item')->result_array();
+				if ($this->data) {
+					echo json_encode($this->data);
+				}else{
+					echo json_encode($data = array(
+						'0' => array(
+							'item_code' => '', 
+							'item_name' => '', 
+							'quantity' => '', 
+							'capital_price' => '', 
+							'selling_price' => '', 
+						)
 					));
 				}
 			}else{
 				echo json_encode($this->db->get('tbl_item')->result_array());
 			}
 		}
+		// var_dump($this->input->post('data')==false);
 	}
 
 	public function update()
