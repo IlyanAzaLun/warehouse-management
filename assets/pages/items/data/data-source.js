@@ -1,19 +1,20 @@
 class DataSource {
 	constructor() {
 		this.BASEURL = location.href+'/';
+		this.dataTabels();
 	}
 
 	dataTabels(){
 
     	let self = this;
-		let datatabels = $('#tbl_items*').dataTable({
-			'dom': `<'row'<'col-6 col-lg col-xl'<'float-left'f>><'col-6 col-lg col-xl'>>
+		let datatabels = $('table#tbl_items*').dataTable({
+			'dom': `<'row'<'col-6 col-lg col-xl'<'float-left'f>><'col-6 col-lg col-xl'<'float-right'l>>>
 					<'row'<'col-12'tr>>
 					<'row'<'col-5 col-xs-12'i><'col-7 col-xs-12'p>>`,
 			'responsive': true,
 			'autoWidth': false,
 			'ordering': false,
-			'lengthChange': false
+			'lengthChange': true
 
 		});
 		$('input#item_name').keyup(function(){
@@ -69,6 +70,43 @@ class DataSource {
 				$('#modal-update input#selling_price').val(result.selling_price);
 				$('#modal-update textarea#note').val(result.note);
 			}	
+		})
+	}
+	gethistory(code_item){
+		function dateformat(data){
+			let d = new Date(data *1000)
+			return d.toDateString();
+		}
+		$.ajax({
+			url: this.BASEURL+'get-history',
+			method: 'POST',
+			dataType: 'JSON',
+			data: {'request': 'GET', 'data': code_item},
+			success: function(result){
+				$('#modal-detail tbody#tbl_history').empty();
+				if (!result[0]) {
+					const html = `
+					<tr>
+						<td colspan="5" class="text-center"><b>Data kosong</b></td>
+					</tr>
+					`;
+					$('#modal-detail tbody#tbl_history').append(html);
+				}
+				$.each(result, function(index, field){
+					const html = `
+					<tr>
+						<td>${field.item_code}</td>
+						<td>${field.previous_quantity}</td>
+						<td>${field.previous_selling_price}</td>
+						<td>${field.previous_capital_price}</td>
+						<td>${field.status_in_out}</td>
+						<td>${dateformat(field.update_at)}</td>
+					</tr>
+					`;
+
+					$('#modal-detail tbody#tbl_history').append(html);
+				})
+			}
 		})
 	}
 }

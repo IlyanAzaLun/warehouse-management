@@ -2,7 +2,6 @@ import DataSource from "../data/data-source.js";
 const datasource = new DataSource();
 
 const main = () => {
-	$('input#fullname').focus();
 	// DataSource.loadData(function(output){})
 	datasource.dataTabels();
 	$('.select2').select2();
@@ -12,8 +11,9 @@ const main = () => {
 		datasource.search_order($(this).parent().data('id'));
 	});
 	// delete
-	$('button#delete').on('click', function(){
-		$('#modal-delete input#invoice_id').val($(this).parent().data('id'));
+	$('button#cancel').on('click', function(){
+		$('#modal-cancel input#invoice_id').val($(this).parent().data('id-invoice'));
+		$('#modal-cancel input#invoice_status').val((parseInt($(this).data('status')))?'0':'1');
 	});
 	$('input#fullname').focus(function(){
 		datasource.user_info(function(output){
@@ -41,6 +41,7 @@ const main = () => {
 			})
 		});
 	})
+	$('input#fullname').focus();
 	/* auto complete */
 	$('input#item_name').focus(function(){
 		datasource.items(false ,function(output){
@@ -58,7 +59,7 @@ const main = () => {
 				return $('<li>').data("item.autocomplete", item).append(`
 					<div class="row">
 				      <div class="col-2">${item.item_code}</div>
-				      <div class="col-7"><b>${item.item_name}</b> ${(item.MG)?`[MG :${item.MG}, ML :${item.ML}, VG :${item.VG}, PG :${item.PG}, (Falvour: ${item.falvour})]`:``}</div>
+				      <div class="col-7"><b>${item.item_name}</b> ${(item.MG)?`[MG: ${item.MG}, ML: ${item.ML}, VG: ${item.VG}, PG: ${item.PG}, (Falvour: ${item.falvour})]`:``}</div>
 				      <div class="col-1">${item.quantity} (${item.unit})</div>
 				      <div class="col-1">${item.capital_price}</div>
 				      <div class="col-1">${item.selling_price}</div>

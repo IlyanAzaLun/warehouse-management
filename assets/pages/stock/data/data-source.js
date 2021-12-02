@@ -73,6 +73,7 @@ class DataSource {
 						<td>${field.previous_quantity}</td>
 						<td>${field.previous_selling_price}</td>
 						<td>${field.previous_capital_price}</td>
+						<td>${field.status_in_out}</td>
 						<td>${dateformat(field.update_at)}</td>
 					</tr>
 					`;

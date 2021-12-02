@@ -38,18 +38,49 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <div id="tbl_users"></div>
+                  <!-- <div id="tbl_users"></div> -->
+                  <table id="tbl_user" class="table table-sm table-bordered table-striped table-hover">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Opsi</th>
+                        <th>Nama pengguna (user)</th>
+                        <th>Nama peran</th>
+                        <th>Alamat pengguna</th>
+                        <th>Kontak pengguna</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php foreach ($users as $key => $user): ?>
+
+                        <tr>
+                          <th scope="row" width="5px"><?=++$key?></th>
+                          <td>
+                            <div class="btn-group d-flex justify-content-center" data-id="<?=$user['user_id']?>">
+                              <button class="btn btn-sm btn-default" id="update" data-toggle="modal" data-target="#modal-update"><i class="fa fa-tw fa-pencil-alt"></i></button>
+                              <button class="btn btn-sm btn-default" id="delete" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-tw fa-trash-alt"></i></button>
+                            </div>
+                          </td>
+                          <td><?=$user['user_fullname']?> (<?=$user['user_email']?>)</td>
+                          <td><?=$user['role_name']?></td>
+                          <td><?=$user['user_address'].$user['village']?>,<?=$user['sub-district']?>,<?=$user['district']?>,<?=$user['province']?>,<?=$user['zip']?></td>
+                          <td><?=$user['user_contact_email']?>/<br><a target="_blank" href="https://wa.me/<?=$user['user_contact_phone']?>"><?=$user['user_contact_phone']?></a></td>
+                          </tr>
+
+                        <?php endforeach ?>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- /.card-body -->
                 </div>
-                <!-- /.card-body -->
+                <!-- /.col -->
               </div>
-              <!-- /.col -->
             </div>
+            <!-- /.row -->
           </div>
-          <!-- /.row -->
-        </div>
-      </section>
-      <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
-    <!-- Modals -->
-    <?php $this->load->view('components/footer')?>
+        </section>
+        <!-- /.content -->
+      </div>
+      <!-- /.content-wrapper -->
+      <!-- Modals -->
+      <?php $this->load->view('components/footer')?>

@@ -139,6 +139,8 @@ class DataSource {
 				}).then(()=>{
 					$(this).addClass('is-invalid');
 				});
+			}else{
+				$(this).removeClass('is-invalid');
 			}
 		});
 
@@ -158,21 +160,27 @@ class DataSource {
 			success: function(result){
 				$('#modal-update tbody#tbl_order').empty();
 				$('label[for="code_order"]').text(`Kode order: ${result[0].order_id}`)
+				let grand_total = 0;
 				$.each(result, function(index, field){
 				let html = `
 				<tr>
-					<td><input type="text" class="form-control" readonly value="${field.item_id}"></td>
-					<td><input type="text" class="form-control" readonly value="${field.item_name}"></td>
-					<td><input type="text" class="form-control" readonly value="${field.capital_price}"></td>
-					<td><input type="text" class="form-control" readonly value="${field.selling_price}"></td>
-					<td><input type="text" class="form-control" value="${field.quantity}"></td>
-					<td><input type="text" class="form-control" readonly value="${field.unit}"></td>
-					<td><input type="text" class="form-control" readonly value="${field.rabate}"></td>
-					<td><input type="text" class="form-control" readonly value="${currency((parseInt(field.capital_price.replace(/[,]|[.]/g,''))*parseInt(field.quantity))-parseInt(field.rabate.replace(/[,]|[.]/g,'')))}"></td>
+					<td>${field.item_id}</td>
+					<td>${field.item_name}</td>
+					<td class="text-right">${field.capital_price}</td>
+					<td class="text-right">${field.selling_price}</td>
+					<td class="text-right">${field.quantity} (${field.unit})</td>
+					<td class="text-right">${field.rabate}</td>
+					<td class="text-right">${currency((parseInt(field.capital_price.replace(/[,]|[.]/g,''))*parseInt(field.quantity))-parseInt(field.rabate.replace(/[,]|[.]/g,'')))}</td>
 				</tr>
 				`;
+				grand_total += (parseInt(field.capital_price.replace(/[,]|[.]/g,''))*parseInt(field.quantity))-parseInt(field.rabate.replace(/[,]|[.]/g,''))
 				$('#modal-update tbody#tbl_order').append(html);
 				});
+				$('#modal-update tbody#tbl_order').append(`
+				<tr>
+					<td colspan="7" class="text-right"><b>Total: ${currency(grand_total)}</b></td>
+				</tr>
+				`);
 
 			}
 		})

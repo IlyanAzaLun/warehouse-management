@@ -18,7 +18,7 @@ abstract class Invoice extends CI_Controller
     {
 		$this->db->group_by('order_id');
 		$order_id   = sprintf("Or-%010s", $this->db->get('tbl_order')->num_rows()+1);
-		$invoice_id = sprintf("IV/S/%010s", $this->db->get('tbl_invoice')->num_rows()+1);
+		$invoice_id = sprintf("IV/SEL/%010s", $this->db->get('tbl_invoice')->num_rows()+1);
 
 		foreach ($this->input->post('item_code', true) as $key => $value) {
 			$this->request['order']['order_id'][$key]     = $order_id;
@@ -66,8 +66,8 @@ abstract class Invoice extends CI_Controller
     }
     public function info_invoice()
     {
-    	$this->data['invoice'] = $this->M_invoice->invoice_select($this->input->get('id', true));
-    	$this->data['orders'] = $this->M_order->order_select($this->data['invoice']['invoice_order_id']);
+		$this->data['invoice'] = $this->M_invoice->invoice_select($this->input->get('id', true));
+		$this->data['orders']  = $this->M_order->order_select($this->data['invoice']['invoice_order_id']);
     }
     public function update_invoice()
     {
@@ -77,5 +77,19 @@ abstract class Invoice extends CI_Controller
 			redirect($_SERVER['HTTP_REFERER']);
     	}
     	return false;
+    }
+    public function cancel_invoice()
+    {
+    	if ($this->input->post('request')) {
+    		$this->db->set('status_active', $this->input->post('invoice_status', true));
+    		$this->db->where('invoice_id', $this->input->post('invoice_id', true));
+    		$this->db->update('tbl_invoice');
+
+    		Flasher::setFlash('info', 'success', 'Success', ' congratulation success to update data!');
+			redirect($_SERVER['HTTP_REFERER']);
+    	}else{
+    		Flasher::setFlash('info', 'error', 'Failed', ' something was worng information!');
+			redirect($_SERVER['HTTP_REFERER']);
+    	}
     }
 }

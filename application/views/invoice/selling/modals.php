@@ -1,8 +1,8 @@
 <div class="modal fade" id="modal-update">
-	<div class="modal-dialog modal-lg">
+	<div class="modal-dialog modal-xl">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">Update Modal</h4>
+				<h4 class="modal-title">Info pemesanan barang</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -11,70 +11,31 @@
 				<div class="card-body">
 
 					<div class="row">
+						<label for="code_order">Kode order: </label>
+						<table class="table table-sm table-striped table-bordered">
+							<thead>
+								<tr>
+									<th>Kode barang</th>
+									<th>Nama barang</th>
+									<th>Harga barang pokok</th>
+									<th>Harga barang jual</th>
+									<th>Jumlah barang (unit)</th>
+									<th>Potongan harga barang</th>
+									<th>Total harga <small>(HP &times; JML) - PHB</small></th>
+								</tr>
+							</thead>
+							<tbody id="tbl_order">
 
-						<div class="col-sm-6">
-							<div class="form-group">
-								<label>Category invoice</label>
-								<input type="text" class="form-control" name="category" id="category"  value="<?=set_value('category')?>" required readonly>
-							</div>
-						</div>
-
-						<div class="col-sm-6">
-							<!-- text input -->
-							<div class="form-group">
-								<label>Code invoice</label>
-								<input type="text" class="form-control" name="invoice_id" id="invoice_id"  value="<?=set_value('invoice_id')?>" required readonly>
-							</div>
-						</div>
-
-						<div class="col-sm-6">
-							<!-- text input -->
-							<div class="form-group">
-								<label>Name invoice</label>
-								<input type="text" class="form-control" name="invoice_name" id="invoice_name"  value="<?=set_value('invoice_name')?>" required>
-							</div>
-						</div>
-						<div class="col-sm-6">
-							<!-- text input -->
-							<div class="form-group">
-								<label>Quantity</label>
-								<div class="input-group mb-3">
-									<input type="text" class="form-control" name="quantity" id="quantity"  value="<?=set_value('quantity')?>">
-									<div class="input-group-append">
-										<select class="input-group-text" name="unit" id="unit" required>
-											<option value="pcs">PCS</option>
-											<option value="pac">PAC</option>
-										</select>
-									</div>
-								</div>
-								<?=form_error('quantity', '<small class="text-danger">','</small>')?>
-							</div>
-						</div>
-
-						<div class="col-sm-6">
-							<!-- text input -->
-							<div class="form-group">
-								<label>Capital price</label>
-								<input type="number" class="form-control" name="capital_price" id="capital_price"  value="<?=set_value('capital_price')?>" required>
-								<?=form_error('capital_price', '<small class="text-danger">','</small>')?>
-							</div>
-						</div>
-						<div class="col-sm-6">
-							<!-- text input -->
-							<div class="form-group">
-								<label>Selling price</label>
-								<input type="number" class="form-control" name="selling_price" id="selling_price"  value="<?=set_value('selling_price')?>" required>
-								<?=form_error('selling_price', '<small class="text-danger">','</small>')?>
-							</div>
-						</div>
+							</tbody>
+						</table>
 					</div>
 
 				</div>
 				<!-- /.card-body -->
 				<div class="card-footer">
 					<div class="float-right">
-						<button type="submit" class="btn btn-primary float-right">Save</button>
-						<button type="cancel" class="btn btn-default mr-2">Cancel</button>
+						<!-- <button type="submit" class="btn btn-primary float-right">Save</button> -->
+						<button type="button" class="btn btn-default mr-2" data-dismiss="modal">Close</button>
 					</div>
 				</div>
 			</form>
@@ -94,10 +55,12 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form method="post" action="<?=base_url('invoice/delete')?>">
+			<form method="post" action="<?=base_url('sale/invoice/cancel')?>">
 				<div class="modal-body">
 					<p>Are you sure to <b class="text-danger">Cancel</b> invoice ?</p>
-					<input type="hidden" name="invoice_id" id="invoice_id" readonly>
+					<input type="hidden" name="request" id="request" value="POST" readonly>
+					<input type="text" name="invoice_id" id="invoice_id" readonly>
+					<input type="text" name="invoice_status" id="invoice_status" readonly>
 				</div>
 				<div class="modal-footer justify-content-between">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -120,10 +83,11 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form method="post" action="<?=base_url('invoice/delete')?>">
+			<form method="post" action="<?=base_url('sale/status')?>">
 				<div class="modal-body">
-					<p>Are you sure to <b class="text-danger">status-item</b> invoice ?</p>
+					<p>Are you sure to <b class="text-danger"></b> invoice ?</p>
 					<input type="hidden" name="invoice_id" id="invoice_id" readonly>
+					<input type="hidden" name="invoice_status" id="invoice_status" readonly>
 				</div>
 				<div class="modal-footer justify-content-between">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -134,31 +98,5 @@
 		<!-- /.modal-content -->
 	</div>
 	<!-- /.modal-dialog -->
-</div>
-<!-- /.modal delete -->
-
-<div class="modal fade" id="modal-status" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-sm">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title">Ubah status</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<form action="" method="post">
-				<div class="modal-body">
-					<p>Are you sure to <b class="text-danger" id="status"></b> invoice ?</p>
-					<input type="hidden" name="invoice_id" id="invoice_id" readonly>
-					<span id="button">
-						
-					</span>
-				</div>
-				<div class="modal-footer justify-content-between">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				</div>
-			</form>
-		</div>
-	</div>
 </div>
 <!-- /.modal update status -->

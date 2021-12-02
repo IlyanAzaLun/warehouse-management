@@ -25,19 +25,13 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            <div class="callout callout-danger">
-              <h5><i class="fas fa-exclamation-triangle text-danger"></i> Note:</h5>
-              This page has under maintenance!, please handle with care, thanks
-            </div>
-
 
             <!-- Main content -->
-            <div class="invoice p-3 mb-3">
+            <div class="invoice p-3 mb-3" id="invoice">
               <!-- title row -->
               <div class="row">
                 <div class="col-12">
                   <h4>
-                    <i class="fas fa-globe"></i> AdminLTE, Inc.
                     <small class="float-right">Tanggal: <?=date('d F Y', $invoice['date'])?></small>
                   </h4>
                 </div>
@@ -53,7 +47,8 @@
                     Babakan Surabaya, Kec. Kiaracondong, Kota Bandung<br>
                     Jawa Barat 40281<br>
                     Phone: -<br>
-                    Email: -
+                    Email: -<br>
+                    <b>User:</b> <?=$invoice['user']?><br>
                   </address>
                 </div>
                 <!-- /.col -->
@@ -85,19 +80,23 @@
                   <table class="table table-striped">
                     <thead>
                     <tr>
+                      <th>Kode barang</th>
                       <th>Nama barang</th>
-                      <th>Harga barang</th>
-                      <th>Jumlah dan unit barang</th>
-                      <th>Jumlah harga total</th>
+                      <th class="text-right">Harga barang</th>
+                      <th class="text-center">Jumlah dan unit barang</th>
+                      <th class="text-right">Potongan harga barang</th>
+                      <th class="text-right">Jumlah harga total</th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php foreach ($orders as $key => $order): ?>
                     <tr>
+                      <td><?=$order['item_code']?></td>
                       <td><?=$order['item_name']?></td>
-                      <td><?=$order['price']?></td>
-                      <td><?=$order['quantity']?> (<?=$order['unit']?>)</td>
-                      <td><?=convertToMoney((int)str_replace('.', '', $order['price'])*$order['quantity'])?></td>
+                      <td class="text-right"><?=$order['selling_price']?></td>
+                      <td class="text-center"><?=abs((int)$order['quantity'])?> (<?=$order['unit']?>)</td>
+                      <td class="text-right"><?=$order['rabate']?></td>
+                      <td class="text-right"><?=convertToMoney(((int)str_replace([',', '.'], ['',''], $order['selling_price'])*abs((int)$order['quantity']))-(int)str_replace([',', '.'], ['',''],$order['rabate']))?></td>
                     </tr>
                     <?php endforeach ?>
                     </tbody>
@@ -152,7 +151,7 @@
               <!-- this row will not appear when printing -->
               <div class="row no-print">
                 <div class="col-12">
-                  <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
+                  <button onclick='window.addEventListener("load", window.print())' target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</button>
                   <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
                     Payment
                   </button>

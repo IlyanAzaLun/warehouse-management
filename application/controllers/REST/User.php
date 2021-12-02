@@ -12,7 +12,7 @@ class User extends REST_Controller
     }
     function index_get() {
         header('Content-Type: application/json');
-        if ($this->input->get('user_fullname') OR $this->input->get('user_email') OR $this->input->get('role_id')) {
+        if ($this->input->get('id') OR $this->input->get('user_fullname') OR $this->input->get('user_email') OR $this->input->get('role_id')) {
             $this->db->select(
                 'user.*
                 ,user_info.user_fullname as user_info_fullname
@@ -29,12 +29,13 @@ class User extends REST_Controller
                 ,user_info.note
                 ,role.id as role_id
                 ');
+            $this->db->join('tbl_user_information user_info', 'user_info.user_id = user.user_id', 'left');
             $this->db->join('tbl_role role', 'user.role_id = role.id', 'left');
-            $this->db->join('tbl_user_information user_info', 'user_info.role_id = role.id', 'left');
-
+            $this->db->like('user.user_id', $this->input->get('id'), 'both');
             $this->db->like('user.user_fullname', $this->input->get('user_fullname'), 'both');
             $this->db->like('user.user_email', $this->input->get('user_email'), 'both');
             $this->db->like('user.role_id', $this->input->get('role_id'), 'both');
+            $this->db->group_by('user.user_id');
 
             $result = $this->db->get('tbl_user user')->row_array();
         } else {

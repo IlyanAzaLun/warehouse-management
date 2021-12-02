@@ -182,13 +182,14 @@ modals.php<div class="modal fade" id="modal-add-stock">
 				</button>
 			</div>
 			<div class="modal-body">
-				<table class="table table-striped table-bordered table-hover">
+				<table class="table table-sm table-striped table-bordered table-hover">
 					<thead>
 						<tr>
 							<th>Kode item</th>
-							<th>Jumlah <small>barang sebelumnya</small></th>
-							<th>Harga modal <small>barang sebelumnya</small></th>
-							<th>Harga jual <small>barang sebelumnya</small></th>
+							<th>Jumlah<br><small>barang sebelumnya</small></th>
+							<th>Harga modal<br><small>barang sebelumnya</small></th>
+							<th>Harga jual<br><small>barang sebelumnya</small></th>
+							<th>Status barang <small>(masuk / keluar)</small></th>
 							<th>Tanggal diubah</th>
 						</tr>
 					</thead>

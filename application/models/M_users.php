@@ -20,21 +20,30 @@ class M_users extends CI_Model {
                                 ,role.role_name
                                 ');
                         $this->db->join('tbl_role role', 'user.role_id = role.id', 'left');
+                        $this->db->group_by('user.user_id');
                         return $this->db->get_where($this->_table.' user', ['user_email'=>$data])->row_array();
                 }else{
                         $this->db->select(
                                 'user.*
-                                ,role.*
-                                ');
-                        $this->db->join('tbl_role role', 'user.role_id = role.id', 'left');
-                        $result['user'] = $this->db->get($this->_table.' user')->result_array();
-                        $this->db->select(
-                                'user_info.*
-                                ,role.*
-                                ');
-                        $this->db->join('tbl_role role', 'user_info.role_id = role.id', 'left');
-                        $result['info'] = $this->db->get($this->_foreign_table.' user_info')->result_array();
-                        return $result;
+                                ,user_info.user_fullname as user_info_fullname
+                                ,user_info.owner_name
+                                ,user_info.user_address
+                                ,user_info.village
+                                ,user_info.sub-district
+                                ,user_info.district
+                                ,user_info.province
+                                ,user_info.zip
+                                ,user_info.user_contact_phone
+                                ,user_info.user_contact_email
+                                ,user_info.type_id
+                                ,user_info.note
+                                ,role.id as role_id
+                                ,role.role_name as role_name
+                        ');
+                        $this->db->join('tbl_user_information user_info', 'user_info.user_id = user.user_id', 'left');
+                        $this->db->join('tbl_role role', 'role.id = user.role_id ', 'left');
+                        $this->db->group_by('user.user_id');
+                        return $this->db->get('tbl_user user')->result_array();
                 }
         }
         public function user_insert($data)

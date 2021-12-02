@@ -133,7 +133,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <table id="tbl_items" class="table table-bordered table-striped table-hover">
+                  <table id="tbl_items" class="table table-sm table-bordered table-striped table-hover">
                     <thead>
                       <tr>
                         <th>#</th>
@@ -153,6 +153,7 @@
                           <td>
                             <div class="btn-group d-flex justify-content-center" data-id="<?=$item['item_code']?>">
                               <button class="btn btn-sm btn-default" id="update" data-toggle="modal" data-target="#modal-update"><i class="fa fa-tw fa-pencil-alt"></i></button>
+                              <button class="btn btn-sm btn-default" id="detail" data-toggle="modal" data-target="#modal-detail"><i class="fa fa-tw fa-search-plus"></i></button>
                               <button class="btn btn-sm btn-default" id="delete" data-toggle="modal" data-target="#modal-delete"><i class="fa fa-tw fa-trash-alt"></i></button>
                             </div>
                           </td>

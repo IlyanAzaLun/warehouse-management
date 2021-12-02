@@ -27,16 +27,18 @@ $route['(:any)/items/get-data']              = 'Items/get_item_invoice';
 // item stock
 $route['stocks']                             = 'Stock';
 $route['stocks/get-item']                    = 'Stock/getitem';
-$route['stocks/get-history']                 = 'Stock/gethistory';
+$route['(:any)/get-history']                 = 'Stock/gethistory';
 
 //INVOICE
-$route['(:any)/invoice/select']              = 'Invoices/selling/select_invoice';
-$route['(:any)/invoice/update']              = 'Invoices/selling/update_invoice';
+$route['(:any)/invoice/select']              = 'Invoices/purchasing/select_invoice';
+$route['(:any)/invoice/update']              = 'Invoices/purchasing/update_invoice';
+$route['(:any)/invoice/cancel']              = 'Invoices/purchasing/cancel_invoice';
 
 //sale
 $route['sale']                               = 'Invoices/selling';
 $route['sale/info']                          = 'Invoices/Selling/info_invoice';
 $route['sale/user-info']                     = 'Invoices/Selling/user_info';
+$route['sale/status']                     	 = 'Invoices/Selling/update_status_invoice';
 
 //purchase
 $route['purchase']                           = 'Invoices/purchasing';

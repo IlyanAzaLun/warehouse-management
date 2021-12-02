@@ -25,19 +25,12 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            <div class="callout callout-danger">
-              <h5><i class="fas fa-exclamation-triangle text-danger"></i> Note:</h5>
-              This page has under maintenance!, please handle with care, thanks
-            </div>
-
-
             <!-- Main content -->
             <div class="invoice p-3 mb-3">
               <!-- title row -->
               <div class="row">
                 <div class="col-12">
                   <h4>
-                    <i class="fas fa-globe"></i> AdminLTE, Inc.
                     <small class="float-right">Tanggal: <?=date('d F Y', $invoice['date'])?></small>
                   </h4>
                 </div>
@@ -48,24 +41,24 @@
                 <div class="col-sm-4 invoice-col">
                   Dari
                   <address>
-                    <strong>CV. B.E.D distribution.</strong><br>
-                    Ruko Lucky Town House, Jl. Terusan Jakarta No.30G<br>
-                    Babakan Surabaya, Kec. Kiaracondong, Kota Bandung<br>
-                    Jawa Barat 40281<br>
-                    Phone: -<br>
-                    Email: -
-                  </address>
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-4 invoice-col">
-                  Dikirim ke
-                  <address>
                     <strong><?=$invoice['user_fullname']?></strong><br>
                     <?=$invoice['user_address']?>, <?=$invoice['village']?><br>
                     <?=$invoice['sub-district']?>, <?=$invoice['district']?><br>
                     <?=$invoice['province']?>, <?=$invoice['zip']?><br>
                     Phone: <?=$invoice['user_contact_phone']?><br>
                     Email: <?=$invoice['user_contact_email']?>
+                  </address>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 invoice-col">
+                  Dikirim ke
+                  <address>
+                    <strong>CV. B.E.D distribution.</strong><br>
+                    Ruko Lucky Town House, Jl. Terusan Jakarta No.30G<br>
+                    Babakan Surabaya, Kec. Kiaracondong, Kota Bandung<br>
+                    Jawa Barat 40281<br>
+                    Phone: -<br>
+                    Email: -
                   </address>
                 </div>
                 <!-- /.col -->

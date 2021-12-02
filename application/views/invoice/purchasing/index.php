@@ -29,138 +29,52 @@
           <form action="<?=base_url('purchase')?>" method="post" id="insert">
             <div class="row">
 
-              <div class="col-sm-12 col-lg-6">
-                <div class="col-12 col-lg-12">
-                  <!-- /.col -->          
+              <div class="col-12 col-lg-12">
+                <!-- /.col -->          
 
-                  <div class="card">
-                    <div class="card-header bg-primary">
-                      <h3 class="card-title">Informasi pemasok</h3>
-                      <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-                      </div>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-
-                      <div class="row">
-
-                        <div class="col-sm-12">
-                          <div class="form-group">
-                            <input type="text" name="user_id" id="user_id" class="form-control" placeholder="customer_id" readonly>
-                          </div>
-                        </div>
-
-                        <div class="col-sm-12 col-lg-6">
-                          <div class="form-group">
-                            <label for="fullname">Nama lengkap</label>
-                            <input type="text" name="fullname" id="fullname" class="form-control" value="" required>
-                          </div>
-                        </div>
-
-                        <div class="col-sm-12 col-lg-6">
-                          <div class="form-group">
-                            <label for="contact_number">Nomor kontak <small class="text-primary">(whatsapp)</small></label>
-                            <input type="text" name="contact_number" id="contact_number" class="form-control" value="" required readonly>
-                          </div>
-                        </div>
-
-                        <div class="col-sm-12">
-                          <div class="form-group">
-                            <label for="address">Alamat atau tujuan</label>
-                            <textarea type="text" name="address" id="address" class="form-control" value="" required readonly></textarea>
-                          </div>
-                        </div>
-                      </div>
-
-                    </div>
-                    <!-- /.card-body -->
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-sm-12 col-lg-6">
-                <div class="col-12 col-lg-12">
-
-                  <div class="card">
-                    <div class="card-header bg-primary">
-                      <h3 class="card-title">Tambah pemesanan</h3>
-                      <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-                      </div>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-
-                      <div class="row">
-                        <div class="col-12">
-                          <div class="form-group">
-                            <h6>Sub total :</h6>
-                            <input type="text" name="sub_total" id="sub_total" class="form-control" required>
-                          </div>
-                          <div class="row">
-                            <div class="col-lg-6 col-sm-12">
-                              <div class="form-group">
-                                <h6>Discount :</h6>
-                                <div class="input-group mb-3">
-                                  <input type="number" name="discount" id="discount" class="form-control" value="0" max="100" required>
-                                  <div class="input-group-append">
-                                    <span class="input-group-text">%</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-
-                            <div class="col-lg-6 col-sm-12">
-                              <div class="form-group">
-                                <h6>Ongkos kirim :</h6>
-                                <input type="text" name="shipping_cost" id="shipping_cost" class="form-control" value="0" required>
-                              </div>
-                            </div>
-
-                          </div>
-                        </div>
-
-                        <div class="col-lg-6 col-sm-12">
-                          <div class="form-group">
-                            <h6>Biaya lainnya :</h6>
-                            <input type="text" name="other_cost" id="other_cost" class="form-control" value="0" required>
-                          </div>
-                        </div>
-                        <div class="col-lg-6 col-sm-12">
-                          <div class="form-group">
-                            <h6>Grand total :</h6>
-                            <input type="text" name="grand_total" id="grand_total" class="form-control" required>
-                          </div>
-                        </div>
-                        <div class="col-lg col-sm-12">
-                          <div class="form-group">
-                            <label for="note">Catatan</label>
-                            <textarea name="note" id="note" class="form-control"></textarea>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-lg">
-                        <div class="form-check float-right">
-                          <input type="checkbox" class="form-check-input" id="status_payment" name="status_payment">
-                          <label class="form-check-label" for="status_payment">Pembayaran lunas ?</label>
-                        </div>
-                      </div>
-
-                    </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer">
-                      <div class="float-right">
-                        <button type="submit" class="btn btn-primary float-right">Save</button>
-                        <button type="cancel" class="btn btn-default mr-2">Cancel</button>
-                      </div>
+                <div class="card">
+                  <div class="card-header bg-primary">
+                    <h3 class="card-title">Informasi pemasok</h3>
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                      <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
                     </div>
                   </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
 
-                  <!-- /.col -->
+                    <div class="row">
+
+                      <div class="col-sm-12">
+                        <div class="form-group">
+                          <input type="text" name="user_id" id="user_id" class="form-control" placeholder="customer_id" readonly>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-12 col-lg-6">
+                        <div class="form-group">
+                          <label for="fullname">Nama lengkap</label>
+                          <input type="text" name="fullname" id="fullname" class="form-control" value="" required>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-12 col-lg-6">
+                        <div class="form-group">
+                          <label for="contact_number">Nomor kontak <small class="text-primary">(whatsapp)</small></label>
+                          <input type="text" name="contact_number" id="contact_number" class="form-control" value="" required readonly>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-12">
+                        <div class="form-group">
+                          <label for="address">Alamat atau tujuan</label>
+                          <textarea type="text" name="address" id="address" class="form-control" value="" required readonly></textarea>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <!-- /.card-body -->
                 </div>
               </div>
 
@@ -210,6 +124,89 @@
                 </div>
 
               </div>
+
+              <div class="col-12 col-lg-6 offset-lg-6">
+
+                <div class="card">
+                  <div class="card-header bg-primary">
+                    <h3 class="card-title">Tambah pemesanan</h3>
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                      <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                    </div>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="form-group">
+                          <h6>Sub total :</h6>
+                          <input type="text" name="sub_total" id="sub_total" class="form-control" required>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-6 col-sm-12">
+                            <div class="form-group">
+                              <h6>Discount :</h6>
+                              <div class="input-group mb-3">
+                                <input type="number" name="discount" id="discount" class="form-control" value="0" max="100" required>
+                                <div class="input-group-append">
+                                  <span class="input-group-text">%</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+
+                          <div class="col-lg-6 col-sm-12">
+                            <div class="form-group">
+                              <h6>Ongkos kirim :</h6>
+                              <input type="text" name="shipping_cost" id="shipping_cost" class="form-control" value="0" required>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="col-lg-6 col-sm-12">
+                        <div class="form-group">
+                          <h6>Biaya lainnya :</h6>
+                          <input type="text" name="other_cost" id="other_cost" class="form-control" value="0" required>
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-sm-12">
+                        <div class="form-group">
+                          <h6>Grand total :</h6>
+                          <input type="text" name="grand_total" id="grand_total" class="form-control" required>
+                        </div>
+                      </div>
+                      <div class="col-lg col-sm-12">
+                        <div class="form-group">
+                          <label for="note">Catatan</label>
+                          <textarea name="note" id="note" class="form-control"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg">
+                      <div class="form-check float-right">
+                        <input type="checkbox" class="form-check-input" id="status_payment" name="status_payment">
+                        <label class="form-check-label" for="status_payment">Pembayaran lunas ?</label>
+                      </div>
+                    </div>
+
+                  </div>
+                  <!-- /.card-body -->
+                  <div class="card-footer">
+                    <div class="float-right">
+                      <button type="submit" class="btn btn-primary float-right">Save</button>
+                      <button type="cancel" class="btn btn-default mr-2">Cancel</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- /.col -->
+              </div>
+
             </div>
           </form>
           <!-- insert -->
@@ -227,7 +224,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <table id="tbl_invoice" class="table table-bordered table-striped table-hover">
+                  <table id="tbl_invoice" class="table table-sm table-bordered table-striped table-hover">
                     <thead>
                       <tr>
                         <th>#</th>
@@ -235,7 +232,7 @@
                         <th>Kode pemesanan</th>
                         <th>Tanggal</th>
                         <th>Tujuan</th>
-                        <th>Status validasi barang</th>
+                        <th>Jumlah pembayaran</th>
                         <th>Status pembayaran</th>
                       </tr>
                     </thead>
@@ -245,11 +242,11 @@
                         <tr>
                           <th scope="row" width="5px"><?=++$key?></th>
                           <td>
-                            <div class="btn-group d-flex justify-content-center" data-id="<?=$invoice['invoice_order_id']?>">
+                            <div class="btn-group d-flex justify-content-center" data-id="<?=$invoice['invoice_order_id']?>" data-id-invoice="<?=$invoice['invoice_id']?>">
                               <a href="<?=base_url('purchase/info')?>?id=<?=$invoice['invoice_id']?>" target="_blank" class="btn btn-sm btn-default" id="info"><i class="fa fa-tw fa-expand-alt"></i></a>
                               
                               <button class="btn btn-sm btn-default" id="update" data-toggle="modal" data-target="#modal-update"><i class="fa fa-tw fa-pencil-alt"></i></button>
-                              <button class="btn btn-sm btn-default" id="cancel" data-toggle="modal" data-target="#modal-cancel"><i class="fa fa-tw fa-ban"></i></button>
+                              <button class="btn btn-sm btn-default" id="cancel" data-toggle="modal" data-target="#modal-cancel" data-status="<?=$invoice['status_active']?>"><i class="fa fa-tw fa-ban"></i></button>
                             </div>
                           </td>
                           <td>
@@ -273,20 +270,8 @@
 
                             </small>
                           </td>
-                          <td id="validation" class="text-center" data-id="<?=$invoice['invoice_id']?>">
-                            <?=($invoice['status_item']=='1'?
-                              '<button class="btn btn-sm btn-success m-1" id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Checked</button>': 
-                              ($invoice['status_item']=='2'?
-                                '<button class="btn btn-sm btn-warning m-1" id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Recheck on warehouse</button>': 
-                                ($invoice['status_item']=='3'?
-                                  '<button class="btn btn-sm btn-warning m-1" id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Recheck on marketing</button>':
-                                  '<button class="btn btn-sm btn-danger m-1"  id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Uncheck</button>' )));?>
-
-                            <?=($invoice['status_validation']=='1')?
-                            '<button class="btn btn-sm btn-success m-1" data-variabel="status_validation" data-toggle="modal" data-target="#modal-status">Send</button>':
-                            '<button class="btn btn-sm btn-secondary m-1" data-variabel="status_validation" data-toggle="modal" data-target="#modal-status">Hold</button>';?>
-                          </td>
-                          <td id="payment" class="text-center" data-id="<?=$invoice['invoice_id']?>">
+                          <td><?=$invoice['grand_total']?></td>
+                          <td id="payment" class="text-right" data-id="<?=$invoice['invoice_id']?>">
                             <?=($invoice['status_settlement']=='1'?
                               '<button class="btn btn-sm btn-primary m-1" data-variabel="status_settlement">Cash</button>':
                               ($invoice['status_settlement']=='2'?

@@ -3,7 +3,6 @@ const datasource = new DataSource();
 
 const main = () => {
 	// DataSource.loadData(function(output){})
-	datasource.dataTabels();
 	$('.select2').select2();
 
 	// category code //
@@ -110,11 +109,14 @@ const main = () => {
 	$('button#update').on('click', function(){
 		datasource.getitem($(this).parent().data('id'));
 	});
+  // detail
+  $('button#detail').on('click', function(){
+    datasource.gethistory($(this).parent().data('id'));
+  });
 	// delete
 	$('button#delete').on('click', function(){
 		$('#modal-delete input#item_code').val($(this).parent().data('id'));
 	});
-
   // uppercase name
   $('input#item_name').focusout(function(){
     $(this).val($(this).val().toUpperCase())

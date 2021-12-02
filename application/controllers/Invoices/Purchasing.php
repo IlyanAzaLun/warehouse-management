@@ -63,13 +63,15 @@ class Purchasing extends Invoice
           $invoice_id = sprintf("INV/PUR/%010s", $this->db->get('tbl_invoice')->num_rows()+1);
 
           foreach ($this->input->post('item_code', true) as $key => $value) {
-               $this->request['order']['order_id'][$key]      = $order_id;
-               $this->request['order']['item_code'][$key]     = $this->input->post('item_code', true)[$key];
-               $this->request['order']['item_capital_price'][$key]    = $this->input->post('item_capital_price', true)[$key];
-               $this->request['order']['item_selling_price'][$key]    = $this->input->post('item_selling_price', true)[$key];
-               $this->request['order']['item_quantity'][$key] = $this->input->post('quantity', true)[$key];
-               $this->request['order']['item_unit'][$key]     = $this->input->post('unit', true)[$key];
-               $this->request['order']['rebate_price'][$key]  = $this->input->post('rebate_price', true)[$key];
+               $this->request['order']['order_id'][$key]           = $order_id;
+               $this->request['order']['item_code'][$key]          = $this->input->post('item_code', true)[$key];
+               $this->request['order']['item_capital_price'][$key] = $this->input->post('item_capital_price', true)[$key];
+               $this->request['order']['item_selling_price'][$key] = $this->input->post('item_selling_price', true)[$key];
+               $this->request['order']['item_quantity'][$key]      = $this->input->post('quantity', true)[$key];
+               $this->request['order']['item_unit'][$key]          = $this->input->post('unit', true)[$key];
+               $this->request['order']['rebate_price'][$key]       = $this->input->post('rebate_price', true)[$key];
+               $this->request['order']['status_in_out'][$key]      = 'IN';
+
           }
           $this->request['order_id']       = $order_id;
           $this->request['user_id']        = $this->input->post('user_id', true);
@@ -126,9 +128,9 @@ class Purchasing extends Invoice
                          echo json_encode($this->data);
                     }else{
                          echo json_encode($data = array(
-                              'user_id' => '', 
+                              'user_id'            => '', 
                               'user_contact_phone' => '', 
-                              'user_address' => '', 
+                              'user_address'       => '', 
                          ));
                     }
                }else{
@@ -147,9 +149,9 @@ class Purchasing extends Invoice
                          echo json_encode($this->data);
                     }else{
                          echo json_encode($data = array(
-                              'user_id' => '', 
+                              'user_id'            => '', 
                               'user_contact_phone' => '', 
-                              'user_address' => '', 
+                              'user_address'       => '', 
                          ));
                     }
                }else{
@@ -203,7 +205,7 @@ class Purchasing extends Invoice
           $this->data['invoice'] = $this->M_invoice->invoice_select($this->input->get('id', true));
           if ($this->data['invoice']) {
                $this->data['orders'] = $this->M_order->order_select($this->data['invoice']['invoice_order_id']);
-               $this->data['title'] = 'Detail informasi penjualan';
+               $this->data['title'] = 'Detail informasi pembelian';
                $this->load->view('invoice/purchasing/info-invoice', $this->data);
           }else{
                Flasher::setFlash('info', 'error', 'Failed', ' something worng to select data');

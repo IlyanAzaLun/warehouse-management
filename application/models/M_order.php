@@ -12,6 +12,7 @@ class M_order extends CI_Model {
 	        		' order.index_order
 	        		, order.order_id
 	        		, order.item_id
+	        		, item.item_code
 	        		, item.item_name
 	        		, order.capital_price
 	        		, order.selling_price
@@ -59,6 +60,7 @@ class M_order extends CI_Model {
 			$this->db->set('previous_capital_price' , $history[$key]['capital_price']);
 			$this->db->set('previous_selling_price' , $history[$key]['selling_price']);
 			$this->db->set('previous_quantity' , $history[$key]['quantity']);
+			$this->db->set('status_in_out' , $data['status_in_out'][$key].' ('.$data['item_quantity'][$key].')');
 			$this->db->set('update_at' , time());
 			$this->db->insert('tbl_item_history');
 

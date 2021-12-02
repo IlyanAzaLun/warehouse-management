@@ -12,14 +12,22 @@ class Users extends User
      public function index()
      {
           $this->data['title'] = 'Manajemen pengguna';
-          $this->data['suppliers'] = $this->M_users->user_select();
+          $this->data['users'] = $this->M_users->user_select();
+          $this->data['roles'] = $this->M_role->role_select();
           $this->data['plugins'] = array(
                'css' => [
-                    base_url('assets/AdminLTE-3.0.5/plugins/jsgrid/jsgrid.min.css'),
-                    base_url('assets/AdminLTE-3.0.5/plugins/jsgrid/jsgrid-theme.min.css'),
+                    base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'),
+                    base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'),
+                    base_url('assets/AdminLTE-3.0.5/plugins/datatables-buttons/css/buttons.bootstrap4.min.css'),
+                    base_url('assets/AdminLTE-3.0.5/plugins/datatables-select/css/select.bootstrap4.min.css'),
+                    base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/css/autoFill.bootstrap4.min.css'),
                ],
                'js' => [
-                    base_url('assets/AdminLTE-3.0.5/plugins/jsgrid/jsgrid.min.js'),
+                    base_url('assets/AdminLTE-3.0.5/plugins/datatables/jquery.dataTables.min.js'),
+                    base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js'),
+                    base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/js/dataTables.responsive.min.js'),
+                    base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/js/responsive.bootstrap4.min.js'),
+                    base_url('assets/AdminLTE-3.0.5/plugins/datatables-buttons/js/dataTables.buttons.min.js'),
                ],
                'module' => [
                     base_url('assets/pages/user/users/index.js'),
@@ -39,7 +47,7 @@ class Users extends User
 
           if ($this->form_validation->run()==false) {
                $this->load->view('user/users/index', $this->data);
-               $this->load->view('user/users/modals');
+               $this->load->view('user/users/modals', $this->data);
           }else{
                $this->data = [
                     'user_fullname'      => htmlspecialchars($this->input->post('user_fullname', true)),

@@ -33,6 +33,7 @@ class M_invoice extends CI_Model {
 	        		,invoice.status_validation
 	        		,invoice.status_active
 	        		,invoice.status_settlement
+	        		,invoice.user
 	        		,invoice.note');
 	        	$this->db->join('tbl_user_information user_info', 'invoice.to_customer_destination = user_info.user_id', 'left');
 	            return $this->db->get_where($this->_table.' invoice', array('invoice.invoice_id'=>$data))->row_array();
@@ -53,6 +54,7 @@ class M_invoice extends CI_Model {
 	        		,user_info.user_contact_phone
 	        		,user_info.user_contact_email
 	        		,invoice.order_id as invoice_order_id
+	        		,invoice.grand_total
 	        		,invoice.status_item
 	        		,invoice.status_validation
 	        		,invoice.status_active
