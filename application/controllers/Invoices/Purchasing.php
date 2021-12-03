@@ -43,7 +43,7 @@ class Purchasing extends Invoice
                ],
           );
           $this->data['title'] = 'Manajemen pembelian';
-          $this->data['invoices'] = $this->M_invoice->invoice_select(false, 'INV/PUR');
+          $this->data['invoices'] = $this->M_invoice->invoice_select(false, 'INV/PUR/');
           $this->data['categorys'] = $this->M_menu->menu_category_select();
 
           $this->form_validation->set_rules('item_name[]', 'Item name', 'required|trim');
@@ -60,7 +60,8 @@ class Purchasing extends Invoice
      {
           $this->db->group_by('order_id');
           $order_id   = sprintf("OR/%010s", $this->db->get('tbl_order')->num_rows()+1);
-          $invoice_id = sprintf("INV/PUR/%010s", $this->db->get('tbl_invoice')->num_rows()+1);
+          $this->db->like('invoice_id', '/INV/PUR/'.date("dy"), 'before');
+          $invoice_id = sprintf("%04s/INV/PUR/", $this->db->get('tbl_invoice')->num_rows()+1).date("dy");
 
           foreach ($this->input->post('item_code', true) as $key => $value) {
                $this->request['order']['order_id'][$key]           = $order_id;

@@ -44,7 +44,7 @@ class Selling extends Invoice
                ],
           );
           $this->data['title'] = 'Manajemen penjualan';
-          $this->data['invoices'] = $this->M_invoice->invoice_select(false, 'INV/SEL');
+          $this->data['invoices'] = $this->M_invoice->invoice_select(false, 'INV/SEL/');
           $this->data['categorys'] = $this->M_menu->menu_category_select();
 
           $this->form_validation->set_rules('item_name[]', 'Item name', 'required|trim');
@@ -62,7 +62,8 @@ class Selling extends Invoice
      {
           $this->db->group_by('order_id');
           $order_id   = sprintf("OR/%010s", $this->db->get('tbl_order')->num_rows()+1);
-          $invoice_id = sprintf("INV/SEL/%010s", $this->db->get('tbl_invoice')->num_rows()+1);
+          $this->db->like('invoice_id', '/INV/SEL/'.date("dy"), 'before');
+          $invoice_id = sprintf("%04s/INV/SEL/", $this->db->get('tbl_invoice')->num_rows()+1).date("dy");
 
           foreach ($this->input->post('item_code', true) as $key => $value) {
                $this->request['order']['order_id'][$key]           = $order_id;
@@ -159,7 +160,7 @@ class Selling extends Invoice
           $this->data['invoice'] = $this->M_invoice->invoice_select($this->input->get('id', true));
           if ($this->data['invoice']) {
                $this->data['orders'] = $this->M_order->order_select($this->data['invoice']['invoice_order_id']);
-               $this->data['title'] = 'Detail informasi penjualan';
+               $this->data['title']  = 'Detail informasi penjualan';
                $this->load->view('invoice/selling/info-invoice', $this->data);
           }else{
                Flasher::setFlash('info', 'error', 'Failed', ' something worng to select data');

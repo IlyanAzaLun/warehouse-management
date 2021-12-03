@@ -233,6 +233,7 @@
                         <th>Tanggal</th>
                         <th>Tujuan</th>
                         <th>Jumlah pembayaran</th>
+                        <th>Keterangan</th>
                         <th>Status pembayaran</th>
                       </tr>
                     </thead>
@@ -259,7 +260,7 @@
                           </td>
                           <td>
                             <small>
-                              <?=date('d F Y', $invoice['date'])?> /<br><span class="text-danger"><?=date('d F Y', $invoice['date_due'])?></span>
+                              <?=date('d F Y - H:m:s', $invoice['date'])?></span>
                             </small>
                           </td>
                           <td>
@@ -273,17 +274,18 @@
                             </small>
                           </td>
                           <td><?=$invoice['grand_total']?></td>
+                          <td><small><?=$invoice['note']?></small></td>
                           <td id="payment" class="text-right" data-id="<?=$invoice['invoice_id']?>">
                             <?=($invoice['status_settlement']=='1'?
-                              '<button class="btn btn-sm btn-primary m-1" data-variabel="status_settlement">Cash</button>':
+                              '<button class="btn btn-sm btn-primary m-1" data-variabel="status_settlement">Tunai</button>':
                               ($invoice['status_settlement']=='2'?
-                                '<button class="btn btn-sm btn-secondary m-1" data-variabel="status_settlement">Credit</button>':
+                                '<button class="btn btn-sm btn-secondary m-1" data-variabel="status_settlement">Cicilan</button>':
                                 ''
                               ));?>
 
                             <?=($invoice['status_payment']=='1')?
-                            '<button class="btn btn-sm btn-success m-1" data-variabel="status_payment">Paid</button>':
-                            '<button class="btn btn-sm btn-danger m-1" data-variabel="status_payment">Unpayed</button>';?>
+                            '<button class="btn btn-sm btn-success m-1" data-variabel="status_payment">Lunas</button>':
+                            '<button class="btn btn-sm btn-danger m-1" data-variabel="status_payment">Belum Lunas</button>';?>
                           </td>
                         </tr>
 

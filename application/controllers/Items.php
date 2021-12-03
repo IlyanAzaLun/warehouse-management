@@ -65,7 +65,7 @@ class Items extends CI_Controller {
 		$this->form_validation->set_rules('item_code', 'Code item', 'required|trim');
 		$this->form_validation->set_rules('item_name', 'Item name', 'required|trim');
 		// $this->form_validation->set_rules('quantity', 'Quantity', 'required|trim');
-		$this->form_validation->set_rules('unit', 'Unit', 'required|trim');
+		// $this->form_validation->set_rules('unit', 'Unit', 'required|trim');
 		$this->form_validation->set_rules('capital_price', 'Capital price', 'required|trim|callback_integer_check');
 		$this->form_validation->set_rules('selling_price', 'Selling price', 'required|trim|callback_integer_check|callback_greater_than_check['.$this->input->post('capital_price').']');
 		if ($this->form_validation->run()==false) {
@@ -116,7 +116,7 @@ class Items extends CI_Controller {
 			return FALSE;
 			redirect('items');
 		}
-		if ((int)str_replace([',', '.'], ['',''], $value) > (int)str_replace([',', '.'], ['',''], $value2)){
+		if ((int)str_replace([',', '.'], ['',''], $value) >= (int)str_replace([',', '.'], ['',''], $value2)){
 			return TRUE;
 		}else{
 			return FALSE;

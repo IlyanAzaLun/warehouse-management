@@ -72,19 +72,12 @@ class DataSource {
 
           <div class="col-1">
             <div class="form-group">
-            	<small>Harga pokok</small>
-              <input type="text" name="item_capital_price[]" id="item_capital_price" class="form-control" value="${result.capital_price}" placeholder="${result.capital_price}" required>
-            </div>
-          </div>
-
-          <div class="col-1">
-            <div class="form-group">
             	<small>Harga harga jual</small>
               <input type="text" name="item_selling_price[]" id="item_selling_price" class="form-control" value="${result.selling_price}" placeholder="${result.selling_price}" required>
             </div>
           </div>
 
-          <div class="col-2">
+          <div class="col-3">
             <!-- text input -->
             <div class="form-group">
             	<small>Jumlah barang</small>

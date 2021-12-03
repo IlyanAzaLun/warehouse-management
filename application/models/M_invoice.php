@@ -59,9 +59,10 @@ class M_invoice extends CI_Model {
 	        		,invoice.status_validation
 	        		,invoice.status_active
 	        		,invoice.status_settlement
+	        		,invoice.note
 	        		,invoice.status_payment');
 	        	$this->db->join('tbl_user_information user_info', 'invoice.to_customer_destination = user_info.user_id', 'left');
-	        	$this->db->like('invoice.invoice_id', $like, 'after');
+	        	$this->db->like('invoice.invoice_id', $like, 'both');
 	        	$this->db->order_by('invoice.date', 'DESC');
 	            return $this->db->get($this->_table.' invoice')->result_array();
         	}

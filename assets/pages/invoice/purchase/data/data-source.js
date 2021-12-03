@@ -84,7 +84,7 @@ class DataSource {
             </div>
           </div>
 
-          <div class="col-1">
+          <div class="col-2">
             <!-- text input -->
             <div class="form-group">
             	<small>Jumlah barang</small>
@@ -105,7 +105,7 @@ class DataSource {
             </div>
           </div>
 
-          <div class="col-2">
+          <div class="col-1">
             <div class="form-group">
             	<small>Potongan harga</small>
               <input type="text" name="rebate_price[]" id="rebate_price" class="form-control" value="0" placeholder="" required>
