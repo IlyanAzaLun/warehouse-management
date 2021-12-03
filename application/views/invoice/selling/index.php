@@ -105,7 +105,7 @@
                       <div class="col-10">
                         <div class="form-group">
                           <label for="item_name">Cari nama barang...</label>
-                          <input required type="text" id="item_name" class="form-control" value="<?=set_value('item_name[]')?>" placeholder="Cari barang...">
+                          <input required type="text" id="item_name" class="form-control" value="<?=set_value('item_name[]')?>" placeholder="Cari barang..." autocomplete="off">
                         </div>
                         <?=form_error('item_name[]', '<small class="text-danger">','</small>')?>
                         <?=form_error('quantity[]', '<small class="text-danger">','</small>')?>
@@ -127,7 +127,7 @@
               </div>
               <div class="col-sm-12 col-lg-6">
 
-                <div class="card">
+                <div class="card" id="save">
                   <div class="card-header bg-primary">
                     <h3 class="card-title">Tambah pemesanan</h3>
                     <div class="card-tools">
@@ -244,7 +244,9 @@
                               <a href="<?=base_url('sale/info')?>?id=<?=$invoice['invoice_id']?>" target="_blank" class="btn btn-sm btn-default" id="info"><i class="fa fa-tw fa-expand-alt"></i></a>
                               
                               <button class="btn btn-sm btn-default" id="update" data-toggle="modal" data-target="#modal-update"><i class="fa fa-tw fa-pencil-alt"></i></button>
+                              <?php if (boolval((int)$invoice['status_active'])): ?>
                               <button class="btn btn-sm btn-default" id="cancel" data-toggle="modal" data-target="#modal-cancel" data-status="<?=$invoice['status_active']?>"><i class="fa fa-tw fa-ban"></i></button>
+                              <?php endif ?>
                             </div>
                           </td>
                           <td>

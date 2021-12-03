@@ -135,7 +135,7 @@ class Selling extends Invoice
           }
      }
 
-     public function items()
+     public function items() // find item, this parent on invoice
      {
           if ($this->input->post('request')) {
                if ($this->input->post('data')) {
@@ -154,22 +154,7 @@ class Selling extends Invoice
                }
           }
      }
-     public function delete()
-     {
-          $this->form_validation->set_rules('invoice_code', 'Code invoice', 'required|trim');
-          if ($this->form_validation->run()==false) {
-               Flasher::setFlash('info', 'error', 'Failed', ' something worng to delete data! '.validation_errors());
-               redirect('invoice');
-          }else{
-               $this->data = [
-                    'invoice_code'     => htmlspecialchars($this->input->post('invoice_code', true)),
-               ];
-               $this->M_invoice->invoice_delete($this->data);
-               Flasher::setFlash('info', 'success', 'Success', ' congratulation success to delete data!');
-               redirect('sale');
-          }    
-     }
-     public function info_invoice()
+     public function info_invoice() // show information/detail about invoice, on list invoice
      {
           $this->data['invoice'] = $this->M_invoice->invoice_select($this->input->get('id', true));
           if ($this->data['invoice']) {
@@ -181,7 +166,7 @@ class Selling extends Invoice
                redirect('sale');
           }
      }
-     public function update_status_invoice()
+     public function update_status_invoice() // change status invoice
      {
           $this->form_validation->set_rules('invoice_id', 'Code invoice', 'required|trim');
           $this->form_validation->set_rules('invoice_status', 'Status invoice', 'required|trim');
@@ -204,7 +189,8 @@ class Selling extends Invoice
                redirect('sale');
           }
      }
-     private function _status_check($limit){
+     private function _status_check($limit) // check status infoice, user in update status..
+     {
           if ($this->db->get_where('tbl_invoice', array('invoice_id'=>$this->input->post('invoice_id')))->row_array()[$this->input->post('invoice_status')] == $limit) {
                return 0;
           }else{

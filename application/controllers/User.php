@@ -77,9 +77,8 @@ abstract class User extends CI_Controller
                Flasher::setFlash('info', 'error', 'Failed', ' something worng to delete data! '.validation_errors());
                redirect($_SERVER['HTTP_REFERER']);
           }else{
-               
                $this->db->where('user_id', htmlspecialchars($this->input->post('user_id', true)));
-               $this->db->delete('tbl_user_information');
+               $this->db->update('tbl_user_information', array('is_active'=> 0));
                Flasher::setFlash('info', 'success', 'Success', ' congratulation success to delete data!');
                redirect($_SERVER['HTTP_REFERER']);
           }

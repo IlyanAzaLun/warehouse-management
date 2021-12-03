@@ -78,12 +78,42 @@ abstract class Invoice extends CI_Controller
     	}
     	return false;
     }
-    public function cancel_invoice()
+    public function cancel_invoice() //return invoice
     {
     	if ($this->input->post('request')) {
+    		$items = [];
+    		foreach ($this->db->get_where('tbl_order', array('order_id' => $this->db->get_where('tbl_invoice', array('invoice_id' => 
+    			$this->input->post('invoice_id')))->row_array()['order_id']))->result_array() as $key => $order) {
+    			if ((int)$order['quantity'] <= 0) {
+					$item[$key]['item_id']       = $order['item_id'];
+					$item[$key]['quantity']      = abs($order['quantity']);
+					$item[$key]['status_in_out'] = 'IN';
+    			}else{
+					$item[$key]['item_id']       = $order['item_id'];
+					$item[$key]['quantity']      = (-1*(int)$order['quantity']);
+					$item[$key]['status_in_out'] = 'OUT';
+    			}
+    			$data[$key] = $this->db->get_where('tbl_item', array('item_code'=> $item[$key]['item_id']))->row_array();
+
+    			//history
+				$this->db->set('item_code' , $item[$key]['item_id']);
+				$this->db->set('previous_quantity' , $data[$key]['quantity']);
+				$this->db->set('status_in_out' , $item[$key]['status_in_out'].' ('.$item[$key]['quantity'].', RETURN)');
+				$this->db->set('update_at' , time());
+				$this->db->insert('tbl_item_history');
+
+    			$this->db->set('quantity', '`quantity` +'.$item[$key]['quantity'], false);
+    			$this->db->where('item_code', $item[$key]['item_id']);
+    			$this->db->update('tbl_item');
+
+    		}
     		$this->db->set('status_active', $this->input->post('invoice_status', true));
     		$this->db->where('invoice_id', $this->input->post('invoice_id', true));
     		$this->db->update('tbl_invoice');
+
+    		//find order by invoice_order_id, if purcesing canceled the quantiry of item is decrise the get from the value
+    		//but if selling canceled the quantity of item is ingcrise the get from the value
+    		//finaly the action entry to the history. with note parameters.
 
     		Flasher::setFlash('info', 'success', 'Success', ' congratulation success to update data!');
 			redirect($_SERVER['HTTP_REFERER']);

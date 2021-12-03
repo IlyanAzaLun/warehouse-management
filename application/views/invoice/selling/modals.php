@@ -59,8 +59,8 @@
 				<div class="modal-body">
 					<p>Are you sure to <b class="text-danger">Cancel</b> invoice ?</p>
 					<input type="hidden" name="request" id="request" value="POST" readonly>
-					<input type="text" name="invoice_id" id="invoice_id" readonly>
-					<input type="text" name="invoice_status" id="invoice_status" readonly>
+					<input type="hidden" name="invoice_id" id="invoice_id" readonly>
+					<input type="hidden" name="invoice_status" id="invoice_status" readonly>
 				</div>
 				<div class="modal-footer justify-content-between">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

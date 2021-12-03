@@ -185,21 +185,6 @@ class Purchasing extends Invoice
                redirect('purchase');
           }
      }
-     public function delete()
-     {
-          $this->form_validation->set_rules('invoice_code', 'Code invoice', 'required|trim');
-          if ($this->form_validation->run()==false) {
-               Flasher::setFlash('info', 'error', 'Failed', ' something worng to delete data! '.validation_errors());
-               redirect('purchase');
-          }else{
-               $this->data = [
-                    'invoice_code'     => htmlspecialchars($this->input->post('invoice_code', true)),
-               ];
-               $this->M_invoice->invoice_delete($this->data);
-               Flasher::setFlash('info', 'success', 'Success', ' congratulation success to delete data!');
-               redirect('purchase');
-          }    
-     }
      public function info_invoice()
      {
           $this->data['invoice'] = $this->M_invoice->invoice_select($this->input->get('id', true));
