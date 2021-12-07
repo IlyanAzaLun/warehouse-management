@@ -1,5 +1,7 @@
 import DataSource from "../data/data-source.js";
+import Modals from "./modals.js";
 const datasource = new DataSource();
+const modals = new Modals();
 
 const main = () => {
 	// DataSource.loadData(function(output){})
@@ -88,10 +90,12 @@ const main = () => {
 				},
 				select: function(event, ui){
 					$(this).val(ui.item.item_name); // display the selected text
+					$('input#item_id').val(ui.item.item_code); // display the selected text
 					return false;
 				},
 				focus: function( event, ui ) {
 					$(this).val(ui.item.item_name); // display the selected text
+					$('input#item_id').val(ui.item.item_code); // display the selected text
 					return false;
 				}
 				//you can write for select too
@@ -114,6 +118,27 @@ const main = () => {
 		datasource.items($(this).parents().closest('div.row#order_item').find('input#item_name').val(), function(output){
 			datasource.field(output);
 		});
+	});
+	
+	$('button#detail_order_item').on('click', function(){
+		let sub_total = 0;
+		if(
+			$(this).parents().closest('div.row#order_item').find('input#item_id').val()=='' &
+			$('input#user_id').val() == ''
+		){
+			$('input#item_name').focus();
+			Toast.fire({
+				icon: 'warning',
+				title: 'isi nama pelanggan dan cari terlebih dahulu barang yang akan di beli !',
+			})
+		}else{
+			$('#modal-history').modal('show');
+				datasource.history($('input#user_id').val(),
+				$(this).parents().closest('div.row#order_item').find('input#item_id').val(),
+				function(output){
+					modals.history(output);
+				})	
+		}
 	});
 	$('input#sub_total').on('focus', function(){ /* sub-total total */
 		let sub_total = 0;

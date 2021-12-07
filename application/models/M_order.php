@@ -50,6 +50,8 @@ class M_order extends CI_Model {
         		$this->db->set('quantity', $data['item_quantity'][$key]);
         		$this->db->set('unit', $data['item_unit'][$key]);
         		$this->db->set('rabate', $data['rebate_price'][$key]);
+        		$this->db->set('user_id', $data['user_id'][$key]);
+        		$this->db->set('date', $data['date'][$key]);
         		$this->db->insert($this->_table);
 
         		//create history

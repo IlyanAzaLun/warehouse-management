@@ -23,6 +23,7 @@ $route['items/get-item']                     = 'Items/get_item';
 $route['item/delete']                        = 'Items/delete';
 $route['item/update']                        = 'Items/update';
 $route['(:any)/items/get-data']              = 'Items/get_item_invoice';
+$route['(:any)/items/get-data-history']      = 'Items/get_item_history_order';
 
 // item stock
 $route['stocks']                             = 'Stock';

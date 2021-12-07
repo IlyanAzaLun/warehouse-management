@@ -173,7 +173,26 @@ class Items extends CI_Controller {
 				echo json_encode($this->db->get('tbl_item')->result_array());
 			}
 		}
-		// var_dump($this->input->post('data')==false);
+	}
+	public function get_item_history_order()
+	{
+		$this->db->where('item_id', $this->input->post('item_id'));
+		$this->db->where('user_id', $this->input->post('user_id'));
+		$this->db->order_by('date', 'DESC');
+		$this->data = $this->db->get('tbl_order')->result_array();
+		if ($this->data) {
+			echo json_encode($this->data);
+		}else{
+			echo json_encode($data = array(
+				'0' => array(
+					'item_id' => 'Not Found', 
+					'capital_price' => 0, 
+					'selling_price' => 0, 
+					'quantity' => 0, 
+					'rabate' => 0, 
+				)
+			));
+		}
 	}
 
 	public function update()

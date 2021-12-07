@@ -74,6 +74,9 @@ class Selling extends Invoice
                $this->request['order']['item_unit'][$key]          = $this->input->post('unit', true)[$key];
                $this->request['order']['rebate_price'][$key]       = $this->input->post('rebate_price', true)[$key];
                $this->request['order']['status_in_out'][$key]      = 'OUT';
+               $this->request['order']['user_id'][$key]            = $this->input->post('user_id', true);
+               $this->request['order']['date'][$key]               = time();
+
           }
           $this->request['order_id']       = $order_id;
           $this->request['user_id']        = $this->input->post('user_id', true);

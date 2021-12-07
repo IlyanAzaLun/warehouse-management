@@ -100,3 +100,44 @@
 	<!-- /.modal-dialog -->
 </div>
 <!-- /.modal update status -->
+<div class="modal fade" id="modal-history">
+	<div class="modal-dialog modal-xl">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Info riwayat pemesanan barang</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="card-body">
+
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Tanggal</th>
+							<th>Kode item</th>
+							<th>Harga pokok</th>
+							<th>Harga jual</th>
+							<th>Jumlah barang</th>
+							<th>Potongan harga</th>
+							<th>Total</th>
+						</tr>
+					</thead>
+					<tbody id="tbl_history">
+						
+					</tbody>
+				</table>
+
+			</div>
+			<!-- /.card-body -->
+			<div class="card-footer">
+				<div class="float-right">
+					<button type="button" class="btn btn-default mr-2" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal history-->

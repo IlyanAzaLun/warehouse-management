@@ -105,13 +105,19 @@
                       <div class="col-10">
                         <div class="form-group">
                           <label for="item_name">Cari nama barang...</label>
+                          <input required type="hidden" id="item_id" class="form-control" autocomplete="off">
                           <input required type="text" id="item_name" class="form-control" value="<?=set_value('item_name[]')?>" placeholder="Cari barang..." autocomplete="off">
                         </div>
                         <?=form_error('item_name[]', '<small class="text-danger">','</small>')?>
                         <?=form_error('quantity[]', '<small class="text-danger">','</small>')?>
                         <?=form_error('unit[]', '<small class="text-danger">','</small>')?>
                       </div>
-                      <div class="col-2">
+                      
+                      <div class="col-1">
+                        <label for="">&nbsp;</label>
+                        <button type="button" class="btn btn-block btn-info" id="detail_order_item"><i class="fa fa-tw fa-info"></i></button>
+                      </div>
+                      <div class="col-1">
                         <label for="">&nbsp;</label>
                         <button type="button" class="btn btn-block btn-primary" id="add_order_item"><i class="fa fa-tw fa-plus"></i></button>
                       </div>

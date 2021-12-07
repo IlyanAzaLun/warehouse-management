@@ -6,7 +6,7 @@ class DataSource {
 	dataTabels(){
 
   	let self = this;
-		$('#tbl_invoice*').dataTable({
+		$('#tbl_invoice').dataTable({
 			'dom': `<'row'<'col-6 col-lg col-xl'<'float-left'f>><'col-6 col-lg col-xl'<'float-right'l>>>
 					<'row'<'col-12'tr>>
 					<'row'<'col-5 col-xs-12'i><'col-7 col-xs-12'p>>`,
@@ -51,6 +51,17 @@ class DataSource {
 			}	
 		})
 	}
+	history(user,item, handle){
+		$.ajax({
+			url: this.BASEURL+'items/get-data-history',
+			method: 'POST',
+			dataType: 'JSON',
+			data: {'request': 'GET', 'user_id': user, 'item_id': item},
+			success: function(result){
+				handle(result);
+			}	
+		})
+	}
 	field(result){
 		const html = `
 		<!-- order-item -->
@@ -73,6 +84,7 @@ class DataSource {
           <div class="col-1">
             <div class="form-group">
             	<small>Harga harga jual</small>
+              <input type="hidden" name="item_capital_price[]" id="item_capital_price" class="form-control" value="${result.capital_price}" placeholder="${result.capital_price}" required>
               <input type="text" name="item_selling_price[]" id="item_selling_price" class="form-control" value="${result.selling_price}" placeholder="${result.selling_price}" required>
             </div>
           </div>
