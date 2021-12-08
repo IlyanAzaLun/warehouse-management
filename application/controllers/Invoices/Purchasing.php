@@ -165,6 +165,12 @@ class Purchasing extends Invoice
 
      public function update()
      {
+          
+          $this->data['plugins'] = array(
+               'module' => [
+                    base_url('assets/pages/invoice/purchase/update.js'),
+               ],
+          );
           $this->form_validation->set_rules('invoice_code', 'Code invoice', 'required|trim');
           $this->form_validation->set_rules('invoice_name', 'invoice name', 'required|trim');
           $this->form_validation->set_rules('quantity', 'Quantity', 'required|trim');
@@ -176,6 +182,7 @@ class Purchasing extends Invoice
                $this->data['invoice'] = $this->M_invoice->invoice_select($this->input->get('id', true));
                $this->data['orders'] = $this->M_order->order_select($this->data['invoice']['invoice_order_id']);
                $this->load->view('invoice/purchasing/update-invoice', $this->data);
+               $this->load->view('invoice/purchasing/modals', $this->data);
           }else{
                $this->data = [
                     'invoice_code'  => htmlspecialchars($this->input->post('invoice_code', true)),
@@ -201,5 +208,22 @@ class Purchasing extends Invoice
                Flasher::setFlash('info', 'error', 'Failed', ' something worng to select data');
                redirect('purchase');
           }
+     }
+
+     public function invoice_order_remove()
+     {
+          $order = $this->db->get_where('tbl_order', array('index_order' => $this->input->post('id_order', true)))->row_array(); //index_order
+          $this->db->set('quantity', '`quantity`'+((int)$order['quantity']<=0)?abs((int)$order['quantity']):(-1*(int)$order['quantity']));
+          $this->db->where('item_code', $order['item_id']);
+          if($this->db->update('tbl_item')){
+               $this->where('index_order', $this->input->post('id_order', true));
+               $this->db->delete('tbl_order');
+               Flasher::setFlash('info', 'success', 'Success', ' congratulation success to update data!');
+               redirect($_SERVER['HTTP_REFERER']);
+          }else{
+               Flasher::setFlash('info', 'error', 'Failed', ' something worng to select data');
+               redirect($_SERVER['HTTP_REFERER']);
+          }
+
      }
 }

@@ -122,4 +122,30 @@
 		</div>
 	</div>
 </div>
+
+<!-- /.modal detail status -->
+<div class="modal fade" id="modal-delete_order" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Hapus item order</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form action="order/remove" method="post">
+				<div class="modal-body">
+					<p>Are you sure to <b class="text-danger">remove</b> order item ?</p>
+					<input type="text" name="id_order" id="id_order" readonly>
+					<span id="button">
+					</span>
+				</div>
+				<div class="modal-footer justify-content-between">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 <!-- /.modal detail status -->

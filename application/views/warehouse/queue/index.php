@@ -22,14 +22,132 @@
 
       <!-- Main content -->
       <section class="content">
+
         <div class="container-fluid">
+
+          <!-- insert -->
+          <form action="<?=base_url('sale')?>" method="post" id="insert">
+            <div class="row">
+
+              
+              <div class="col-sm-12 col-lg-12">
+                  <!-- /.col -->          
+
+                  <div class="card">
+                    <div class="card-header bg-primary">
+                      <h3 class="card-title">Informasi pelanggan</h3>
+                      <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                      </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+
+                      <div class="row">
+
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                            <input type="text" name="user_id" id="user_id" class="form-control" placeholder="customer_id" readonly>
+                          </div>
+                        </div>
+
+                        <div class="col-sm-12 col-lg-6">
+                          <div class="form-group">
+                            <label for="fullname">Nama toko</label>
+                            <input type="text" name="fullname" id="fullname" class="form-control" value="" required>
+                          </div>
+                        </div>
+
+                        <div class="col-sm-12 col-lg-6">
+                          <div class="form-group">
+                            <label for="contact_number">Nomor kontak <small class="text-primary">(whatsapp)</small></label>
+                            <input type="text" name="contact_number" id="contact_number" class="form-control" value="" required readonly>
+                          </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                            <label for="address">Alamat atau tujuan</label>
+                            <textarea type="text" name="address" id="address" class="form-control" value="" required readonly></textarea>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <!-- /.card-body -->
+                  </div>
+                
+              </div>
+              <div class="col-sm-12 col-lg-12">
+
+                <!-- /.col -->          
+
+                <div class="card" id="order_item">
+                  <div class="card-header bg-primary">
+                    <h3 class="card-title">Informasi barang</h3>
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                      <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                    </div>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body" id="order_item">
+
+                    <div class="row" id="order_item">
+
+                      <div class="col-12">
+                        <div class="form-group">
+                          <input type="text" name="order_id" id="order_id" class="form-control" placeholder="order_id" readonly>
+                        </div>
+                      </div>
+
+                      <div class="col-10">
+                        <div class="form-group">
+                          <label for="item_name">Cari nama barang...</label>
+                          <input required type="hidden" id="item_id" class="form-control" autocomplete="off">
+                          <input required type="text" id="item_name" class="form-control" value="<?=set_value('item_name[]')?>" placeholder="Cari barang..." autocomplete="off">
+                        </div>
+                        <?=form_error('item_name[]', '<small class="text-danger">','</small>')?>
+                        <?=form_error('quantity[]', '<small class="text-danger">','</small>')?>
+                        <?=form_error('unit[]', '<small class="text-danger">','</small>')?>
+                      </div>
+                      
+                      <div class="col-1">
+                        <label for="">&nbsp;</label>
+                        <button type="button" class="btn btn-block btn-info" id="detail_order_item"><i class="fa fa-tw fa-info"></i></button>
+                      </div>
+                      <div class="col-1">
+                        <label for="">&nbsp;</label>
+                        <button type="button" class="btn btn-block btn-primary" id="add_order_item"><i class="fa fa-tw fa-plus"></i></button>
+                      </div>
+
+                    </div>
+
+                    <hr>
+
+                  </div>
+                  <!-- /.card-body -->
+                  <div class="card-footer">
+                    <div class="float-right">
+                      <button type="submit" class="btn btn-primary float-right">Save</button>
+                      <button type="cancel" class="btn btn-default mr-2">Cancel</button>
+                    </div>
+                  </div>
+                </div>
+                
+
+              </div>
+            </div>
+          </form>
+          <!-- insert -->
           <!-- Info boxes -->
           <div class="row">
             <div class="col-12">
               <!-- /.col -->          
               <div class="card">
                 <div class="card-header bg-success">
-                  <h3 class="card-title">Daftar pesanan</h3>
+                  <h3 class="card-title">Daftar pemesanan</h3>
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
                     <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
@@ -37,7 +155,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <table id="tbl_items" class="table table-bordered table-striped table-hover">
+                  <table id="tbl_invoice" class="table table-sm table-bordered table-striped table-hover">
                     <thead>
                       <tr>
                         <th>#</th>

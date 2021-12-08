@@ -8,8 +8,9 @@ $route['translate_uri_dashes']               = FALSE;
 $route['dashboard']                          = 'welcome/dashboard';
 
 // REST API
-$route['(:any)/API/item']                   = 'REST/Items';
+$route['(:any)/(:any)/API/item']            = 'REST/Items'; // dont rewrite this ! use in wareshoues
 $route['(:any)/API/users']                  = 'REST/User';
+$route['(:any)/(:any)/API/customer']        = 'REST/Customer'; // dont rewrite this ! use in wareshoues
 $route['(:any)/API/roles']                  = 'REST/Roles';
 $route['(:any)/API/order']                  = 'REST/order';
 $route['(:any)/API/invoice']                = 'REST/Invoice';
@@ -46,11 +47,14 @@ $route['purchase']                           = 'Invoices/purchasing';
 $route['purchase/info']                      = 'Invoices/purchasing/info_invoice';
 $route['purchase/update']                    = 'Invoices/purchasing/update';
 $route['purchase/user-info']                 = 'Invoices/purchasing/user_info';
+$route['purchase/order/remove']              = 'Invoices/purchasing/invoice_order_remove';
 
 //Warehouse
-$route['queue']                              = 'Warehouse';
-$route['purchase/info']                      = 'Invoices/purchasing/info_invoice';
-$route['purchase/user-info']                 = 'Invoices/purchasing/user_info';
+$route['warehouse/queue']                    = 'Warehouse';
+$route['(:any)/(:any)/warehouse/item']       = 'Warehouse/get_item_invoice';
+
+//Shipping
+$route['shipping/queue']                     = 'Shipping';
 
 //USER;
 $route['user/delete']                        = 'Users/supplier/delete';
