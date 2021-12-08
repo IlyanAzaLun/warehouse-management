@@ -62,8 +62,8 @@ class Selling extends Invoice
      {
           $this->db->group_by('order_id');
           $order_id   = sprintf("OR/%010s", $this->db->get('tbl_order')->num_rows()+1);
-          $this->db->like('invoice_id', '/INV/SEL/'.date("dy"), 'before');
-          $invoice_id = sprintf("%04s/INV/SEL/", $this->db->get('tbl_invoice')->num_rows()+1).date("dy");
+          $this->db->like('invoice_id', '/INV/SEL/'.date("my"), 'before');
+          $invoice_id = sprintf("%04s/INV/SEL/", $this->db->get('tbl_invoice')->num_rows()+1).date("my");
 
           foreach ($this->input->post('item_code', true) as $key => $value) {
                $this->request['order']['order_id'][$key]           = $order_id;

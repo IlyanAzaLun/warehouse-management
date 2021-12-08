@@ -46,6 +46,7 @@
                         <th>Menu</th>
                         <th>Category</th>
                         <th>Url</th>
+                        <th>Controller</th>
                         <th>Icon</th>
                         <th>Options</th>
                       </tr>
@@ -58,6 +59,7 @@
                           <td><?=$menu['title']?></td>
                           <td><?=$menu['category_name']?></td>
                           <td><?=$menu['url']?></td>
+                          <td><?=$menu['menu_controller']?></td>
                           <td><i class="<?=$menu['icon']?>"></i> <span class="badge <?=($menu['is_active'])?'badge-success':'badge-danger'?> ml-1"><?=($menu['is_active'])?'Active':'Inactive'?></span></td>
                           <td>
                             <div class="btn-group">

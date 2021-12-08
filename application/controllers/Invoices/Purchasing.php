@@ -60,8 +60,8 @@ class Purchasing extends Invoice
      {
           $this->db->group_by('order_id');
           $order_id   = sprintf("OR/%010s", $this->db->get('tbl_order')->num_rows()+1);
-          $this->db->like('invoice_id', '/INV/PUR/'.date("dy"), 'before');
-          $invoice_id = sprintf("%04s/INV/PUR/", $this->db->get('tbl_invoice')->num_rows()+1).date("dy");
+          $this->db->like('invoice_id', '/INV/PUR/'.date("my"), 'before');
+          $invoice_id = sprintf("%04s/INV/PUR/", $this->db->get('tbl_invoice')->num_rows()+1).date("my");
 
           foreach ($this->input->post('item_code', true) as $key => $value) {
                $this->request['order']['order_id'][$key]           = $order_id;
@@ -72,6 +72,8 @@ class Purchasing extends Invoice
                $this->request['order']['item_unit'][$key]          = $this->input->post('unit', true)[$key];
                $this->request['order']['rebate_price'][$key]       = $this->input->post('rebate_price', true)[$key];
                $this->request['order']['status_in_out'][$key]      = 'IN';
+               $this->request['order']['user_id'][$key]            = $this->input->post('user_id', true);
+               $this->request['order']['date'][$key]               = time();
 
           }
           $this->request['order_id']       = $order_id;
@@ -170,12 +172,14 @@ class Purchasing extends Invoice
           $this->form_validation->set_rules('capital_price', 'Capital price', 'required|trim|integer');
           $this->form_validation->set_rules('selling_price', 'Selling price', 'required|trim|integer|greater_than['.$this->input->post('capital_price').']', array('greater_than' => 'The %s must greater than Capital price'));
           if ($this->form_validation->run()==false) {
-               Flasher::setFlash('info', 'error', 'Failed', ' something worng to update data! '.validation_errors());
-               redirect('purchase');
+               $this->data['title'] = 'Ubah data pemesanan';
+               $this->data['invoice'] = $this->M_invoice->invoice_select($this->input->get('id', true));
+               $this->data['orders'] = $this->M_order->order_select($this->data['invoice']['invoice_order_id']);
+               $this->load->view('invoice/purchasing/update-invoice', $this->data);
           }else{
                $this->data = [
-                    'invoice_code'     => htmlspecialchars($this->input->post('invoice_code', true)),
-                    'invoice_name'     => htmlspecialchars($this->input->post('invoice_name', true)),
+                    'invoice_code'  => htmlspecialchars($this->input->post('invoice_code', true)),
+                    'invoice_name'  => htmlspecialchars($this->input->post('invoice_name', true)),
                     'quantity'      => htmlspecialchars($this->input->post('quantity', true)),
                     'unit'          => htmlspecialchars($this->input->post('unit', true)),
                     'capital_price' => htmlspecialchars($this->input->post('capital_price', true)),

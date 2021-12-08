@@ -74,17 +74,15 @@ class M_invoice extends CI_Model {
         public function invoice_update($data)
         {
         	$this->db->select($data['variabel']);
-		$value = $this->db->get_where($this->_table, array('invoice_id' => $data['id'] ))->row_array();
-		if ($data['variabel'] == 'status_settlement' AND $value[$data['variabel']] == 2) {
-			$value[$data['variabel']] = 0;
-
-		}elseif ($value[$data['variabel']] == 1) {
-
-			$value[$data['variabel']] = 0;
-		}else{
-			(int)$value[$data['variabel']]++;
-		}
-                $this->db->where('invoice_id', $data['id']);
-                return $this->db->update($this->_table, array($data['variabel'] => $value[$data['variabel']] ));
+			$value = $this->db->get_where($this->_table, array('invoice_id' => $data['id'] ))->row_array();
+			if ($data['variabel'] == 'status_settlement' AND $value[$data['variabel']] == 2) {
+				$value[$data['variabel']] = 0;
+			}elseif ($value[$data['variabel']] == 1) {
+				$value[$data['variabel']] = 0;
+			}else{
+				(int)$value[$data['variabel']]++;
+			}
+			$this->db->where('invoice_id', $data['id']);
+			return $this->db->update($this->_table, array($data['variabel'] => $value[$data['variabel']] ));
         }
 }

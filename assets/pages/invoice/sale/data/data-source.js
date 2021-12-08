@@ -213,7 +213,7 @@ class DataSource {
 			method: 'GET',
 			dataType: 'JSON',
 			success: function(result){
-				$('#modal-update tbody#tbl_order').empty();
+				$('#modal-detail tbody#tbl_order').empty();
 				$('label[for="code_order"]').text(`Kode order: ${result[0].order_id}`)
 				let grand_total = 0;
 				$.each(result, function(index, field){
@@ -229,9 +229,9 @@ class DataSource {
 				</tr>
 				`;
 				grand_total += (parseInt(field.capital_price.replace(/[,]|[.]/g,''))*parseInt(field.quantity))-parseInt(field.rabate.replace(/[,]|[.]/g,''))
-				$('#modal-update tbody#tbl_order').append(html);
+				$('#modal-detail tbody#tbl_order').append(html);
 				});
-				$('#modal-update tbody#tbl_order').append(`
+				$('#modal-detail tbody#tbl_order').append(`
 				<tr>
 					<td colspan="7" class="text-right"><b>Total: ${currency(Math.abs(grand_total))}</b></td>
 				</tr>

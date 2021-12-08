@@ -74,7 +74,7 @@ class Items extends CI_Controller {
 		}else{
 			$this->data = [
 				'item_category' => htmlspecialchars(($this->input->post('subcategory', true))?
-					$this->input->post('category', true).' '.$this->input->post('subcategory', true):
+					$this->input->post('subcategory', true):
 					$this->input->post('category', true)),
 				'item_code'     => htmlspecialchars($this->input->post('item_code', true)),
 				'item_name'     => htmlspecialchars($this->input->post('item_name', true)),
@@ -139,7 +139,7 @@ class Items extends CI_Controller {
 	{
 		if ($this->input->post('request')) {
 			if ($this->input->post('data')) {
-				$this->data = $this->db->get_where('tbl_item', array('item_name' => $this->input->post('data')))->row_array();
+				$this->data = $this->db->get_where('tbl_item', array('item_code' => $this->input->post('data')))->row_array();
 				if ($this->data) {
 					echo json_encode($this->data);
 				}else{

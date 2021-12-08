@@ -6,8 +6,8 @@ const main = () => {
 	datasource.dataTabels();
 	$('.select2').select2();
 
-	// update
-	$('button#update').on('click', function(){
+	// detail
+	$('button#detail').on('click', function(){
 		datasource.search_order($(this).parent().data('id'));
 	});
 	// delete
@@ -82,12 +82,12 @@ const main = () => {
 				},
 				select: function(event, ui){
 					$(this).val(ui.item.item_name); // display the selected text
-					console.log(ui.item.item_name)
+					$('input#item_id').val(ui.item.item_code); // display the selected text
 					return false;
 				},
 				focus: function( event, ui ) {
 					$(this).val(ui.item.item_name); // display the selected text
-					console.log(ui.item.item_name)
+					$('input#item_id').val(ui.item.item_code); // display the selected text
 					return false;
 				}
 				//you can write for select too
@@ -107,7 +107,7 @@ const main = () => {
 				title: 'Cari terlebih dahulu barang yang akan di beli !',
 			})
 		}
-		datasource.items($(this).parents().closest('div.row#order_item').find('input#item_name').val(), function(output){
+		datasource.items($(this).parents().closest('div.row#order_item').find('input#item_id').val(), function(output){
 			datasource.field(output);
 		});
 	});

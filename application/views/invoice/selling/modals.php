@@ -1,4 +1,4 @@
-<div class="modal fade" id="modal-update">
+<div class="modal fade" id="modal-detail">
 	<div class="modal-dialog modal-xl">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -7,38 +7,36 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form action="<?=base_url('invoice/update')?>" method="post" id="update">
-				<div class="card-body">
+			<div class="card-body">
 
-					<div class="row">
-						<label for="code_order">Kode order: </label>
-						<table class="table table-sm table-striped table-bordered">
-							<thead>
-								<tr>
-									<th>Kode barang</th>
-									<th>Nama barang</th>
-									<th>Harga barang pokok</th>
-									<th>Harga barang jual</th>
-									<th>Jumlah barang (unit)</th>
-									<th>Potongan harga barang</th>
-									<th>Total harga <small>(HP &times; JML) - PHB</small></th>
-								</tr>
-							</thead>
-							<tbody id="tbl_order">
+				<div class="row">
+					<label for="code_order">Kode order: </label>
+					<table class="table table-sm table-striped table-bordered">
+						<thead>
+							<tr>
+								<th>Kode barang</th>
+								<th>Nama barang</th>
+								<th>Harga barang pokok</th>
+								<th>Harga barang jual</th>
+								<th>Jumlah barang (unit)</th>
+								<th>Potongan harga barang</th>
+								<th>Total harga <small>(HP &times; JML) - PHB</small></th>
+							</tr>
+						</thead>
+						<tbody id="tbl_order">
 
-							</tbody>
-						</table>
-					</div>
-
+						</tbody>
+					</table>
 				</div>
-				<!-- /.card-body -->
-				<div class="card-footer">
-					<div class="float-right">
-						<!-- <button type="submit" class="btn btn-primary float-right">Save</button> -->
-						<button type="button" class="btn btn-default mr-2" data-dismiss="modal">Close</button>
-					</div>
+
+			</div>
+			<!-- /.card-body -->
+			<div class="card-footer">
+				<div class="float-right">
+					<!-- <button type="submit" class="btn btn-primary float-right">Save</button> -->
+					<button type="button" class="btn btn-default mr-2" data-dismiss="modal">Close</button>
 				</div>
-			</form>
+			</div>
 		</div>
 		<!-- /.modal-content -->
 	</div>

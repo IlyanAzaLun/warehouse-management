@@ -9,16 +9,8 @@ class M_order extends CI_Model {
         {
         	if ($data) {
 	        	$this->db->select(
-	        		' order.index_order
-	        		, order.order_id
-	        		, order.item_id
-	        		, item.item_code
-	        		, item.item_name
-	        		, order.capital_price
-	        		, order.selling_price
-	        		, order.quantity
-	        		, order.unit
-	        		, order.rabate');
+	        		' order.*
+	        		, item.*');
 	        	$this->db->join('tbl_item item', 'order.item_id = item.item_code', 'left');
 	        	return $this->db->get_where($this->_table.' order', array('order.order_id'=>$data))->result_array();
         	}else{

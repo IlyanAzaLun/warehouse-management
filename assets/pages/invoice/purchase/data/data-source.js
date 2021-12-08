@@ -7,13 +7,13 @@ class DataSource {
 
   	let self = this;
 		$('#tbl_invoice*').dataTable({
-			'dom': `<'row'<'col-6 col-lg col-xl'<'float-left'f>><'col-6 col-lg col-xl'>>
+			'dom': `<'row'<'col-6 col-lg col-xl'<'float-left'f>><'col-6 col-lg col-xl'<'float-right'l>>>
 					<'row'<'col-12'tr>>
 					<'row'<'col-5 col-xs-12'i><'col-7 col-xs-12'p>>`,
 			'responsive': true,
 			'autoWidth': false,
 			'ordering': false,
-			'lengthChange': false
+			'lengthChange': true
 
 		});
 		
@@ -158,14 +158,14 @@ class DataSource {
 			method: 'GET',
 			dataType: 'JSON',
 			success: function(result){
-				$('#modal-update tbody#tbl_order').empty();
+				$('#modal-detail tbody#tbl_order').empty();
 				$('label[for="code_order"]').text(`Kode order: ${result[0].order_id}`)
 				let grand_total = 0;
 				$.each(result, function(index, field){
 				let html = `
 				<tr>
 					<td>${field.item_id}</td>
-					<td>${field.item_name}</td>
+					<td>${field.item_name} <small>${(field.MG)?`[MG: ${field.MG}, ML: ${field.ML}, VG: ${field.VG}, PG: ${field.PG}, (Falvour: ${field.falvour})]`:``}<small></td>
 					<td class="text-right">${field.capital_price}</td>
 					<td class="text-right">${field.selling_price}</td>
 					<td class="text-right">${field.quantity} (${field.unit})</td>
@@ -174,9 +174,9 @@ class DataSource {
 				</tr>
 				`;
 				grand_total += (parseInt(field.capital_price.replace(/[,]|[.]/g,''))*parseInt(field.quantity))-parseInt(field.rabate.replace(/[,]|[.]/g,''))
-				$('#modal-update tbody#tbl_order').append(html);
+				$('#modal-detail tbody#tbl_order').append(html);
 				});
-				$('#modal-update tbody#tbl_order').append(`
+				$('#modal-detail tbody#tbl_order').append(`
 				<tr>
 					<td colspan="7" class="text-right"><b>Total: ${currency(grand_total)}</b></td>
 				</tr>

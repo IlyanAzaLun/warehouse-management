@@ -41,9 +41,9 @@ class DataSource {
 			data: {'request': 'GET', 'data': type},
 			success: function(result){
 
-				$('input#item_code').val(`${$('.category').find(':selected').data('id').substring(0, 3)}${($('.subcategory')
-						.find(':selected').data('id'))?`-${sub($('.subcategory').find(':selected').val())}-`:`-`
-					}${pad(result+1, 4)}`)
+				$('input#item_code').val(`${$('.category').find(':selected').data('id').substring(0, 3)}${($('.subcategory').find(':selected').data('id'))
+				?`-${sub($('.subcategory').find(':selected').data('id'))}-`
+				:`-`}${pad(result+1, 4)}`)
 			}
 		})
 	}

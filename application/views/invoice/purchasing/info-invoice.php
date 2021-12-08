@@ -88,7 +88,11 @@
                     <tbody>
                     <?php foreach ($orders as $key => $order): ?>
                     <tr>
-                      <td><?=$order['item_name']?></td>
+                      <td><?=$order['item_name']?>
+                      <?php if($order['MG']):?>
+                        [MG: <?=$order['MG']?>, ML: <?=$order['ML']?>, VG: <?=$order['VG']?>, PG: <?=$order['PG']?>, (Falvour: <?=$order['falvour']?>)
+                      <?php endif?>
+                      </td>
                       <td class="text-right"><?=$order['capital_price']?></td>
                       <td class="text-center"><?=$order['quantity']?> (<?=$order['unit']?>)</td>
                       <td class="text-right"><?=$order['rabate']?></td>

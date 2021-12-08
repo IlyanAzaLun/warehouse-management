@@ -104,6 +104,7 @@
                       <div class="col-10">
                         <div class="form-group">
                           <label for="item_name">Cari nama barang...</label>
+                          <input required type="hidden" id="item_id" class="form-control">
                           <input required type="text" id="item_name" class="form-control" value="<?=set_value('item_name[]')?>" placeholder="Cari barang...">
                         </div>
                         <?=form_error('item_name[]', '<small class="text-danger">','</small>')?>
@@ -246,7 +247,10 @@
                             <div class="btn-group d-flex justify-content-center" data-id="<?=$invoice['invoice_order_id']?>" data-id-invoice="<?=$invoice['invoice_id']?>">
                               <a href="<?=base_url('purchase/info')?>?id=<?=$invoice['invoice_id']?>" target="_blank" class="btn btn-sm btn-default" id="info"><i class="fa fa-tw fa-expand-alt"></i></a>
                               
-                              <button class="btn btn-sm btn-default" id="update" data-toggle="modal" data-target="#modal-update"><i class="fa fa-tw fa-pencil-alt"></i></button>
+                              <a href="<?=base_url('purchase/update')?>?id=<?=$invoice['invoice_id']?>" target="_blank" class="btn btn-sm btn-default" id="update"><i class="fa fa-tw fa-pencil-alt"></i></a>
+
+
+                              <button class="btn btn-sm btn-default" id="detail" data-toggle="modal" data-target="#modal-detail"><i class="fa fa-tw fa-search-plus"></i></button>
                               <?php if (boolval((int)$invoice['status_active'])): ?>                                
                               <button class="btn btn-sm btn-default" id="cancel" data-toggle="modal" data-target="#modal-cancel" data-status="<?=$invoice['status_active']?>"><i class="fa fa-tw fa-ban"></i></button>
                               <?php endif ?>

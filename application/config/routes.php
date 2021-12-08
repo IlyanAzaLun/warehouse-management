@@ -32,8 +32,8 @@ $route['(:any)/get-history']                 = 'Stock/gethistory';
 
 //INVOICE
 $route['(:any)/invoice/select']              = 'Invoices/purchasing/select_invoice';
-$route['(:any)/invoice/update']              = 'Invoices/purchasing/update_invoice';
 $route['(:any)/invoice/cancel']              = 'Invoices/purchasing/cancel_invoice';
+$route['(:any)/invoice/update']              = 'Invoices/purchasing/update_invoice';
 
 //sale
 $route['sale']                               = 'Invoices/selling';
@@ -43,6 +43,12 @@ $route['sale/status']                     	 = 'Invoices/Selling/update_status_in
 
 //purchase
 $route['purchase']                           = 'Invoices/purchasing';
+$route['purchase/info']                      = 'Invoices/purchasing/info_invoice';
+$route['purchase/update']                    = 'Invoices/purchasing/update';
+$route['purchase/user-info']                 = 'Invoices/purchasing/user_info';
+
+//Warehouse
+$route['queue']                              = 'Warehouse';
 $route['purchase/info']                      = 'Invoices/purchasing/info_invoice';
 $route['purchase/user-info']                 = 'Invoices/purchasing/user_info';
 

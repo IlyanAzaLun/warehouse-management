@@ -249,8 +249,10 @@
                           <td>
                             <div class="btn-group d-flex justify-content-center" data-id="<?=$invoice['invoice_order_id']?>" data-id-invoice="<?=$invoice['invoice_id']?>">
                               <a href="<?=base_url('sale/info')?>?id=<?=$invoice['invoice_id']?>" target="_blank" class="btn btn-sm btn-default" id="info"><i class="fa fa-tw fa-expand-alt"></i></a>
-                              
-                              <button class="btn btn-sm btn-default" id="update" data-toggle="modal" data-target="#modal-update"><i class="fa fa-tw fa-pencil-alt"></i></button>
+                              <a href="<?=base_url('sale/info')?>?id=<?=$invoice['invoice_id']?>" target="_blank" class="btn btn-sm btn-default" id="update"><i class="fa fa-tw fa-pencil-alt"></i></a>
+
+                              <button class="btn btn-sm btn-default" id="detail" data-toggle="modal" data-target="#modal-detail"><i class="fa fa-tw fa-search-plus"></i></button>
+
                               <?php if (boolval((int)$invoice['status_active'])): ?>
                               <button class="btn btn-sm btn-default" id="cancel" data-toggle="modal" data-target="#modal-cancel" data-status="<?=$invoice['status_active']?>"><i class="fa fa-tw fa-ban"></i></button>
                               <?php endif ?>

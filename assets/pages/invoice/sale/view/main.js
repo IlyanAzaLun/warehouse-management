@@ -8,8 +8,8 @@ const main = () => {
 	datasource.dataTabels();
 	$('.select2').select2();
 
-	// update
-	$('button#update').on('click', function(){
+	// detail
+	$('button#detail').on('click', function(){
 		datasource.search_order($(this).parent().data('id'));
 	});
 	// cancel
@@ -17,7 +17,7 @@ const main = () => {
 		$('#modal-cancel input#invoice_id').val($(this).parent().data('id-invoice'));
 		$('#modal-cancel input#invoice_status').val((parseInt($(this).data('status')))?'0':'1');
 	});
-	// update status
+	// detail status
 	$('button#status-item').on('click', function(){
 		$('#modal-status-item b.text-danger').html($(this).data('variabel'));
 		$('#modal-status-item input#invoice_id').val($(this).parent().data('id'));
@@ -115,7 +115,7 @@ const main = () => {
 				title: 'Cari terlebih dahulu barang yang akan di beli !',
 			})
 		}
-		datasource.items($(this).parents().closest('div.row#order_item').find('input#item_name').val(), function(output){
+		datasource.items($(this).parents().closest('div.row#order_item').find('input#item_id').val(), function(output){
 			datasource.field(output);
 		});
 	});
