@@ -40,19 +40,6 @@ const main = () => {
     
     // item
     // auto complete, iten get all, and 
-	$('button#add_order_item').on('click', function(){
-		let sub_total = 0;
-		if($(this).parents().closest('div.row#order_item').find('input#item_name').val()==''){
-			$('input#item_name').focus();
-			Toast.fire({
-				icon: 'warning',
-				title: 'Cari terlebih dahulu barang yang akan di beli !',
-			})
-		}
-		data_item.items($(this).parents().closest('div.row#order_item').find('input#item_id').val(), function(output){
-			component.field(output);
-		});
-	});
     $('input#item_name').focus(function(){
 		data_item.items(false ,function(output){
 			$.ui.autocomplete.prototype._renderItem = function(ul, item) {
@@ -96,7 +83,20 @@ const main = () => {
 			/*auto complete*/
 			
 		})
-	})
+	});
+	$('button#add_order_item').on('click', function(){
+		let sub_total = 0;
+		if($(this).parents().closest('div.row#order_item').find('input#item_name').val()==''){
+			$('input#item_name').focus();
+			Toast.fire({
+				icon: 'warning',
+				title: 'Cari terlebih dahulu barang yang akan di beli !',
+			})
+		}
+		data_item.items($(this).parents().closest('div.row#order_item').find('input#item_id').val(), function(output){
+			component.field(output);
+		});
+	});
     // end item
 };
 export default main;

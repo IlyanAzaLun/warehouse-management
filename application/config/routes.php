@@ -8,7 +8,7 @@ $route['translate_uri_dashes']               = FALSE;
 $route['dashboard']                          = 'welcome/dashboard';
 
 // REST API
-$route['(:any)/(:any)/API/item']            = 'REST/Items'; // dont rewrite this ! use in wareshoues
+$route['(:any)/API/item']                   = 'REST/Items';    
 $route['(:any)/API/users']                  = 'REST/User';
 $route['(:any)/(:any)/API/customer']        = 'REST/Customer'; // dont rewrite this ! use in wareshoues
 $route['(:any)/API/roles']                  = 'REST/Roles';

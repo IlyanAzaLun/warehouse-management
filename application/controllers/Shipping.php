@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Warehouse extends CI_Controller {
+class Shipping extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -28,8 +28,7 @@ class Warehouse extends CI_Controller {
         $this->data['user'] = $this->M_users->user_select($this->session->userdata('email'));
 	}
 	public function index(){
-		$this->data['title'] = 'Buat antrian pesanan barang';	
-		$this->data['invoices'] = $this->M_invoice->invoice_select(false, 'INV/SEL/');
+		$this->data['title'] = 'Daftar antrian pesanan barang dari gudang';		
 		$this->data['plugins'] = array(
 			'css' => [
 				 base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'),
@@ -64,8 +63,8 @@ class Warehouse extends CI_Controller {
 	   );
 	   $this->form_validation->set_rules('user_id', 'Customer', 'required|trim');
 	   if ($this->form_validation->run()==false) {
-		   $this->load->view('warehouse/queue/index', $this->data);
-		   $this->load->view('warehouse/queue/modals');
+		   $this->load->view('shipping/queue/index', $this->data);
+		   $this->load->view('shipping/queue/modals');
 	   }else{
 			$this->add_invoice();
 	   }
@@ -73,9 +72,8 @@ class Warehouse extends CI_Controller {
 
 	protected function add_invoice()
 	{
-		 $this->db->like('order_id', '/ORD/SEL/'.date("my"), 'before');
-		 $order_id   = sprintf("%04s/ORD/SEL/", $this->db->get('tbl_order')->num_rows()+1).date("my");
-
+		 $this->db->group_by('order_id');
+		 $order_id   = sprintf("OR/%010s", $this->db->get('tbl_order')->num_rows()+1);
 		 $this->db->like('invoice_id', '/INV/SEL/'.date("my"), 'before');
 		 $invoice_id = sprintf("%04s/INV/SEL/", $this->db->get('tbl_invoice')->num_rows()+1).date("my");
 
@@ -98,7 +96,7 @@ class Warehouse extends CI_Controller {
 			  'date'                    => time(),
 			  'date_due'                => time()+(7 * 24 * 60 * 60), //7 days; 24 hours; 60 mins; 60 secs
 			  'to_customer_destination' => $this->input->post('user_id', true),
-			  'order_id'                => $order_id,
+			  'order_id'                => sprintf("OR/%010s", $this->db->get('tbl_order')->num_rows()+1),
 			  'sub_total'               => ($this->input->post('sub_total', true))?$this->input->post('sub_total', true):0,
 			  'discount'                => ($this->input->post('discount', true))?$this->input->post('discount', true):0,
 			  'shipping_cost'           => ($this->input->post('shipping_cost', true))?$this->input->post('shipping_cost', true):0,

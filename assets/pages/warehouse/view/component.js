@@ -6,57 +6,38 @@ class Component {
 		<!-- order-item -->
         <div class="row" id="order-item">
 
-          <div class="col-1">
+          <div class="col-3">
             <div class="form-group">
               <small>Kode barang</small>
               <input type="text" name="item_code[]" id="item_code" class="form-control" value="${result.item_code}" readonly>
             </div>
           </div>
 
-          <div class="col-3">
+          <div class="col-5">
             <div class="form-group">
             	<small>Nama barang</small>
-              <input type="text" name="item_name[]" id="item_name" class="form-control" value="${result.item_name}" readonly>
+              <input type="text" name="item_name[]" id="item_name" class="form-control" value="${result.item_name} ${(result.MG)?`(MG: ${result.MG})`:''}" readonly>
             </div>
           </div>
-
-          <div class="col-1">
-            <div class="form-group">
-            	<small>Harga harga jual</small>
-              <input type="hidden" name="item_capital_price[]" id="item_capital_price" class="form-control" value="${result.capital_price}" placeholder="${result.capital_price}" required>
-              <input type="text" name="item_selling_price[]" id="item_selling_price" class="form-control" value="${result.selling_price}" placeholder="${result.selling_price}" required>
-            </div>
-          </div>
-
-          <div class="col-3">
-            <!-- text input -->
-            <div class="form-group">
-            	<small>Jumlah barang</small>
-              <div class="input-group mb-3">
-                <input type="hidden" class="form-control" name="current[]" id="current" min="1" value="${parseInt(result.quantity)}" required>
-                <input type="number" class="form-control" name="quantity[]" id="quantity" min="1" value="0" required>
-                <input type="hidden" class="form-control" name="unit[]" id="unit"  value="${result.unit}" required>
+		
+		  <div class="col-3">
+			<!-- text input -->
+			<div class="form-group">
+				<small>Jumlah barang</small>
+				<div class="input-group mb-3">
+					<input type="hidden" name="item_capital_price[]" id="item_capital_price" class="form-control" value="${result.capital_price}" placeholder="${result.capital_price}" required>
+					<input type="hidden" name="item_selling_price[]" id="item_selling_price" class="form-control" value="${result.selling_price}" placeholder="${result.selling_price}" required>
+					<input type="hidden" class="form-control" name="current[]" id="current" min="1" value="${parseInt(result.quantity)}" required>
+					<input type="number" class="form-control" name="quantity[]" id="quantity" min="1" value="0" required>
+					<input type="hidden" class="form-control" name="unit[]" id="unit"  value="${result.unit}" required>
+					<input type="hidden" name="item_total_price[]" id="item_total_price" class="form-control" value="" placeholder="" readonly required>
+					<input type="hidden" name="rebate_price[]" id="rebate_price" class="form-control" value="0" placeholder="" required>
                 <div class="input-group-append">
                   <span class="input-group-text">${result.unit.toUpperCase()}</span>
                 </div>
               </div>
             </div>
           </div>
-
-          <div class="col-2">
-            <div class="form-group">
-            	<small>Harga total</small>
-              <input type="text" name="item_total_price[]" id="item_total_price" class="form-control" value="" placeholder="" readonly required>
-            </div>
-          </div>
-
-          <div class="col-1">
-            <div class="form-group">
-            	<small>Potongan harga</small>
-              <input type="text" name="rebate_price[]" id="rebate_price" class="form-control" value="0" placeholder="" required>
-            </div>
-          </div>
-
           <div class="col-1">
             	<small>&nbsp;</small>
           	<button type="button" class="btn btn-block btn-danger" id="remove_order_item"><i class="fa fa-tw fa-times"></i></button>

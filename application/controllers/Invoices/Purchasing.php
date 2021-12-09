@@ -216,7 +216,7 @@ class Purchasing extends Invoice
           $this->db->set('quantity', '`quantity`'+((int)$order['quantity']<=0)?abs((int)$order['quantity']):(-1*(int)$order['quantity']));
           $this->db->where('item_code', $order['item_id']);
           if($this->db->update('tbl_item')){
-               $this->where('index_order', $this->input->post('id_order', true));
+               $this->db->where('index_order', $this->input->post('id_order', true));
                $this->db->delete('tbl_order');
                Flasher::setFlash('info', 'success', 'Success', ' congratulation success to update data!');
                redirect($_SERVER['HTTP_REFERER']);
