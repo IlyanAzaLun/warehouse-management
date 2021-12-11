@@ -78,12 +78,9 @@
                     </div>
                     <!-- /.card-body -->
                   </div>
-                
               </div>
               <div class="col-sm-12 col-lg-12">
-
                 <!-- /.col -->          
-
                 <div class="card" id="order_item">
                   <div class="card-header bg-primary">
                     <h3 class="card-title">Informasi barang</h3>
@@ -94,15 +91,12 @@
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body" id="order_item">
-
                     <div class="row" id="order_item">
-
                       <div class="col-12">
                         <div class="form-group">
                           <input type="text" name="order_id" id="order_id" class="form-control" placeholder="order_id" readonly>
                         </div>
                       </div>
-
                       <div class="col-10">
                         <div class="form-group">
                           <label for="item_name">Cari nama barang...</label>
@@ -113,18 +107,24 @@
                         <?=form_error('quantity[]', '<small class="text-danger">','</small>')?>
                         <?=form_error('unit[]', '<small class="text-danger">','</small>')?>
                       </div>
-                      
                       <div class="col-2">
                         <label for="">&nbsp;</label>
                         <button type="button" class="btn btn-block btn-primary" id="add_order_item"><i class="fa fa-tw fa-plus"></i></button>
                       </div>
-
                     </div>
-
                     <hr>
-
                   </div>
-                  <!-- /.card-body -->
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-lg col-sm-12">
+                        <div class="form-group">
+                          <label for="note">Catatan</label>
+                          <textarea name="note" id="note" class="form-control"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /.card-body -->
+                  </div>
                   <div class="card-footer">
                     <div class="float-right">
                       <button type="submit" class="btn btn-primary float-right">Save</button>
@@ -162,7 +162,6 @@
                         <th>Tujuan</th>
                         <th>Keterangan</th>
                         <th>Status validasi barang</th>
-                        <th>Status pembayaran</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -171,8 +170,10 @@
                       <th scope="row" width="5px"><?=++$key?></th>
                       <td>
                         <div class="btn-group d-flex justify-content-center" data-id="<?=$invoice['invoice_order_id']?>" data-id-invoice="<?=$invoice['invoice_id']?>">
-                          <a href="<?=base_url('sale/info')?>?id=<?=$invoice['invoice_id']?>" target="_blank" class="btn btn-sm btn-default" id="info"><i class="fa fa-tw fa-expand-alt"></i></a>
-                          <a href="<?=base_url('sale/info')?>?id=<?=$invoice['invoice_id']?>" target="_blank" class="btn btn-sm btn-default" id="update"><i class="fa fa-tw fa-pencil-alt"></i></a>
+                          <!-- // -->
+                          <!-- <a onclick="return false;" href="<?=base_url('warehouse/info')?>?id=<?=$invoice['invoice_id']?>" target="_blank" class="btn btn-sm btn-default" id="info"><i class="fa fa-tw fa-expand-alt"></i></a> -->
+                          <!-- <a onclick="return false;" href="<?=base_url('warehouse/update')?>?id=<?=$invoice['invoice_id']?>" target="_blank" class="btn btn-sm btn-default" id="update"><i class="fa fa-tw fa-pencil-alt"></i></a> -->
+                          <!-- // -->
 
                           <button class="btn btn-sm btn-default" id="detail" data-toggle="modal" data-target="#modal-detail"><i class="fa fa-tw fa-search-plus"></i></button>
 
@@ -215,14 +216,6 @@
                             '<button class="btn btn-sm btn-success m-1" id="status-item" data-variabel="status_validation" data-toggle="modal" data-target="#modal-status-item">Send</button>':
                             '<button class="btn btn-sm btn-secondary m-1" id="status-item" data-variabel="status_validation" data-toggle="modal" data-target="#modal-status-item">Hold</button>';?>
                       </td>
-                      <td id="payment" class="text-right" data-id="<?=$invoice['invoice_id']?>">
-                        <?=($invoice['status_settlement']=='1')?
-                            '<button class="btn btn-sm btn-primary m-1" data-variabel="status_settlement">Tunai</button>':
-                            '<button class="btn btn-sm btn-secondary m-1" data-variabel="status_settlement">Cicilan</button>';?>
-                        <?=($invoice['status_payment']=='1')?
-                            '<button class="btn btn-sm btn-success m-1" data-variabel="status_payment">Lunas</button>':
-                            '<button class="btn btn-sm btn-danger m-1" data-variabel="status_payment">Belum Lunas</button>';?>
-                      </td>
                     </tr>
 
                     <?php endforeach ?>
@@ -255,10 +248,62 @@
                         <th>Tujuan</th>
                         <th>Keterangan</th>
                         <th>Status validasi barang</th>
-                        <th>Status pembayaran</th>
                       </tr>
                     </thead>
                     <tbody>
+                    <?php foreach ($returns as $key => $return): ?>
+                    <tr>
+                      <th scope="row" width="5px"><?=++$key?></th>
+                      <td>
+                        <div class="btn-group d-flex justify-content-center" data-id="<?=$return['invoice_order_id']?>" data-id-invoice="<?=$return['invoice_id']?>">
+                          <!-- // -->
+                          <!-- <a onclick="return false;" href="<?=base_url('shipping/update')?>?id=<?=$return['invoice_id']?>" target="_blank" class="btn btn-sm btn-default" id="update"><i class="fa fa-tw fa-pencil-alt"></i></a> -->
+                          <!-- // -->
+                          
+                          <button class="btn btn-sm btn-default" id="detail" data-toggle="modal" data-target="#modal-detail"><i class="fa fa-tw fa-search-plus"></i></button>
+                          <a href="<?=base_url('shipping/return')?>?id=<?=$return['invoice_id']?>" target="_blank" class="btn btn-sm btn-default" id="info"><i class="fa fa-tw fa-undo-alt"></i></a>
+
+                          <?php if (boolval((int)$return['status_active'])): ?>
+                          <button class="btn btn-sm btn-default" id="cancel" data-toggle="modal" data-target="#modal-cancel" data-status="<?=$return['status_active']?>"><i class="fa fa-tw fa-ban"></i></button>
+                          <?php endif ?>
+                        </div>
+                      </td>
+                      <td>
+                        <p>
+                          <?=$return['invoice_id']?>
+                          <?=($return['status_active']=='0')?'<span class="right badge badge-danger">Cancel</span>':'';?>
+                        </p>
+                      </td>
+                      <td>
+                        <small>
+                          <?=date('d F Y - H:m:s', $return['date'])?></span>
+                        </small>
+                      </td>
+                      <td>
+                        <small>
+                          <a href="<?=base_url('customer/'.$return['to_customer_destination'])?>">
+                            <?=$return['user_fullname']?>
+                          </a>
+                          <p><?=$return['user_address']?>,<?=$return['village']?><br><?=$return['sub-district']?>,<?=$return['district']?>,<?=$return['province']?>,<?=$return['zip']?></p>
+                          <a href="https://wa.me/<?=$return['user_contact_phone']?>" target="_blank"><?=$return['user_contact_phone']?></a>
+
+                        </small>
+                      </td>
+                      <td><small><?=$return['note']?></small></td>
+                      <td id="validation" class="text-right" data-id="<?=$return['invoice_id']?>">
+                        <?=($return['status_item']=='3'?
+                            '<button class="btn btn-sm btn-success m-1" id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Checked</button>': 
+                          ($return['status_item']=='2'?
+                            '<button class="btn btn-sm btn-warning m-1" id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Recheck on warehouse</button>': 
+                          ($return['status_item']=='1'?
+                            '<button class="btn btn-sm btn-warning m-1" id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Recheck on marketing</button>':
+                            '<button class="btn btn-sm btn-danger m-1"  id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Uncheck</button>' )));?>
+                        <?=($return['status_validation']=='1')?
+                            '<button class="btn btn-sm btn-success m-1" id="status-item" data-variabel="status_validation" data-toggle="modal" data-target="#modal-status-item">Send</button>':
+                            '<button class="btn btn-sm btn-secondary m-1" id="status-item" data-variabel="status_validation" data-toggle="modal" data-target="#modal-status-item">Hold</button>';?>
+                      </td>
+                    </tr>
+                    <?php endforeach ?>
                     </tbody>
                   </table>
                 </div>

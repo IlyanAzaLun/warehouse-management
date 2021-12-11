@@ -4,7 +4,6 @@ import DataOrder from "../data/data-order.js";
 import Component from "./component.js";
 const data_customer = new DataCustomer();
 const data_item = new DataItem();
-const data_order = new DataOrder();
 const component = new Component();
 
 const main = () => {
@@ -21,34 +20,7 @@ const main = () => {
 	})
     // customer
     // auto complete, get all, and find the customer
-    $('input#fullname').focus(function(){
-		data_customer.user_info(function(output){
-			let fullname = [];
-			$(output).each(function(index, field){
-				fullname.push(field.user_fullname);
-			})
-			$.ui.autocomplete.prototype._renderItem = function(ul, item){
-				return $( "<li>" )
-				    .attr( "data-value", item.value )
-				    .append( item.label )
-				    .appendTo( ul );
-			};
-			$('input#fullname').autocomplete({
-				source: fullname
-			});
-			$('input#fullname').on('focusout', function(){
-				data_customer.user_info_search($(this).val(), function(data){
-					$('input#user_id').val(data.user_id);
-					$('input#contact_number').val((data.user_contact_phone)?`${data.user_contact_phone} (${data.owner_name})`:``);
-					$('textarea#address').val((data.user_contact_phone)?`${data.user_address}, ${data.village}, ${data['sub-district']}, ${data['district']}, ${data.province}, ${data.zip}`:``);
-				});
-				
-			})
-		});
-	})
-	$('input#fullname').focus();
-    // end customer
-    
+    // end customer    
     // item
     // auto complete, iten get all, and 
     $('input#item_name').focus(function(){
@@ -67,7 +39,7 @@ const main = () => {
 				minLength: 0,
 				source: function(request, response) {
 					$.ajax({
-						url: location.href + "/warehouse/item",
+						url: location.origin+location.pathname + "/warehouse/item",
 						method: "POST",
 						dataType: "json",
 						data: {
@@ -92,7 +64,6 @@ const main = () => {
 				/*select:*/
 			})
 			/*auto complete*/
-			
 		})
 	});
 	$('button#add_order_item').on('click', function(){
@@ -109,11 +80,6 @@ const main = () => {
 		});
 	});
     // end item
-
-	//detail order
-	$('button#detail').on('click', function(){
-		data_order.search_order($(this).parent().data('id'));
-	});
 
 };
 export default main;

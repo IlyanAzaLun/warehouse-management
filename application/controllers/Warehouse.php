@@ -23,6 +23,7 @@ class Warehouse extends CI_Controller {
 		parent::__construct();
 		is_signin(get_class($this));
 		$this->load->model('M_invoice');
+		$this->load->model('M_warehouse');
 		$this->load->model('M_order');
 		$this->load->model('M_users');
         $this->data['user'] = $this->M_users->user_select($this->session->userdata('email'));
@@ -30,6 +31,7 @@ class Warehouse extends CI_Controller {
 	public function index(){
 		$this->data['title'] = 'Buat antrian pesanan barang';	
 		$this->data['invoices'] = $this->M_invoice->invoice_select(false, 'INV/SEL/');
+		$this->data['returns']   = $this->M_warehouse->warehouse_select(false, 'INV/RET/');
 		$this->data['plugins'] = array(
 			'css' => [
 				 base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'),
@@ -110,15 +112,15 @@ class Warehouse extends CI_Controller {
 			  'status_payment'          => ($this->input->post('status_payment', true))?1:0,
 			  'status_settlement'       => ($this->input->post('status_payment', true))?1:0,
 			  'user'                    => $this->session->userdata('fullname'),
-			  'note'                    => ($this->input->post('note', true))?$this->input->post('note', true):'Di input oleh bagian gudang'
+			  'note'                    => ($this->input->post('note', true))?$this->input->post('note', true):'Di input oleh bagian gudang '.implode(', ',$this->request['order']['item_code'])
 		 ];
-		 $this->M_order->order_insert($this->request['order']); // insert to tbl_order, insert to tbl_history, and update item
+		 $this->M_order->order_insert_history_update_item($this->request['order']); // insert to tbl_order, insert to tbl_history, and update item
 		 $this->M_invoice->invoice_insert($this->invoice);
 		 Flasher::setFlash('info', 'success', 'Success', ' congratulation success to entry data!');
 		 redirect('warehouse/queue');
 	}
 
-	public function get_item_invoice()
+	public function list_item()
 	{
 		if ($this->input->post('request')) {
 			if ($this->input->post('data')) {
@@ -156,5 +158,38 @@ class Warehouse extends CI_Controller {
 				echo json_encode($this->db->get('tbl_item')->result_array());
 			}
 		}
+	}
+
+	public function update_status()
+	{
+		$this->form_validation->set_rules('invoice_id', 'Code invoice', 'required|trim');
+          $this->form_validation->set_rules('invoice_status', 'Status invoice', 'required|trim');
+          if ($this->form_validation->run()==false) {
+               Flasher::setFlash('info', 'error', 'Failed', ' something worng to delete data! '.validation_errors());
+               redirect('warehouse/queue');
+          }else{
+               if ($this->input->post('invoice_status') == "status_validation") {
+                    //status item 1
+                    $this->request['status_validation'] = $this->_status_check(1);
+                    $this->db->where('invoice_id', $this->input->post('invoice_id', true));
+                    $this->db->update('tbl_invoice', $this->request);
+               }else{
+                    // status validation 3
+                    $this->request['status_item'] = $this->_status_check(3);
+                    $this->db->where('invoice_id', $this->input->post('invoice_id', true));
+                    $this->db->update('tbl_invoice', $this->request);
+               }
+               Flasher::setFlash('info', 'success', 'Success', ' congratulation success to update data!');
+               redirect('warehouse/queue');
+          }
+	}
+	
+	private function _status_check($limit) // check status infoice, user in update status..
+	{
+		 if ($this->db->get_where('tbl_invoice', array('invoice_id'=>$this->input->post('invoice_id')))->row_array()[$this->input->post('invoice_status')] == $limit) {
+			  return 0;
+		 }else{
+			  return ++$this->db->get_where('tbl_invoice', array('invoice_id'=>$this->input->post('invoice_id')))->row_array()[$this->input->post('invoice_status')];
+		 }
 	}
 }

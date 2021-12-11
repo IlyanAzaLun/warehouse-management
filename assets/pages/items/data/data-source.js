@@ -75,7 +75,7 @@ class DataSource {
 	gethistory(code_item){
 		function dateformat(data){
 			let d = new Date(data *1000)
-			return d.toDateString();
+			return d.toLocaleString();
 		}
 		$.ajax({
 			url: this.BASEURL+'get-history',

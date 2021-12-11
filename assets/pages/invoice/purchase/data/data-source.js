@@ -130,7 +130,6 @@ class DataSource {
 		});
 
 		$('input#item_selling_price').focusout(function(){
-			console.log()
 			if (parseInt($(this).val().replace(/[,]|[.]/g,'')) < parseInt($(this).parents().closest('div#order-item.row').find('input#item_capital_price').val().replace(/[,]|[.]/g,''))) {
 				Swal.fire({
 				  icon: 'warning',
@@ -168,12 +167,12 @@ class DataSource {
 					<td>${field.item_name} <small>${(field.MG)?`[MG: ${field.MG}, ML: ${field.ML}, VG: ${field.VG}, PG: ${field.PG}, (Falvour: ${field.falvour})]`:``}<small></td>
 					<td class="text-right">${field.capital_price}</td>
 					<td class="text-right">${field.selling_price}</td>
-					<td class="text-right">${field.quantity} (${field.unit})</td>
+					<td class="text-right">${field.quantity_order} (${field.unit})</td>
 					<td class="text-right">${field.rabate}</td>
-					<td class="text-right">${currency((parseInt(field.capital_price.replace(/[,]|[.]/g,''))*parseInt(field.quantity))-parseInt(field.rabate.replace(/[,]|[.]/g,'')))}</td>
+					<td class="text-right">${currency((parseInt(field.capital_price.replace(/[,]|[.]/g,''))*parseInt(field.quantity_order))-parseInt(field.rabate.replace(/[,]|[.]/g,'')))}</td>
 				</tr>
 				`;
-				grand_total += (parseInt(field.capital_price.replace(/[,]|[.]/g,''))*parseInt(field.quantity))-parseInt(field.rabate.replace(/[,]|[.]/g,''))
+				grand_total += (parseInt(field.capital_price.replace(/[,]|[.]/g,''))*parseInt(field.quantity_order))-parseInt(field.rabate.replace(/[,]|[.]/g,''))
 				$('#modal-detail tbody#tbl_order').append(html);
 				});
 				$('#modal-detail tbody#tbl_order').append(`

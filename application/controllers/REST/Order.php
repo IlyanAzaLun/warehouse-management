@@ -18,8 +18,9 @@ class Order extends REST_Controller
             $produk = $this->db->get('tbl_order')->result();
         } else {
             $this->db->where('order_id', $id);
-            $this->db->select('order.*, item.*');
+            $this->db->select('order.*, order.quantity as quantity_order, item.*');
             $this->db->join('tbl_item item', 'order.item_id = item.item_code', 'left');
+            $this->db->order_by('order.date', 'DESC');
             $produk = $this->db->get('tbl_order order')->result();
         }
         $this->response($produk, REST_Controller::HTTP_OK);

@@ -11,7 +11,7 @@
       <form action="<?=base_url('auth')?>" method="post">
         <?=form_error('email', '<small class="text-danger">','</small>')?>
         <div class="input-group mb-3">
-          <input type="text" name="email" class="form-control" placeholder="Email" value="<?=set_value('email')?>">
+          <input type="text" name="email" class="form-control" placeholder="Username" value="<?=set_value('email')?>">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>

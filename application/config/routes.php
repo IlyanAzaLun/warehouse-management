@@ -13,6 +13,8 @@ $route['(:any)/API/users']                  = 'REST/User';
 $route['(:any)/(:any)/API/customer']        = 'REST/Customer'; // dont rewrite this ! use in wareshoues
 $route['(:any)/API/roles']                  = 'REST/Roles';
 $route['(:any)/API/order']                  = 'REST/order';
+$route['(:any)/(:any)/API/order']           = 'REST/order';
+// $route['(:any)/queue/API/order']            = 'REST/order'; // dont rewrite this ! use in wareshoues
 $route['(:any)/API/invoice']                = 'REST/Invoice';
 
 //INVENTORY
@@ -51,10 +53,14 @@ $route['purchase/order/remove']              = 'Invoices/purchasing/invoice_orde
 
 //Warehouse
 $route['warehouse/queue']                    = 'Warehouse';
-$route['(:any)/(:any)/warehouse/item']       = 'Warehouse/get_item_invoice';
+$route['warehouse/status']                   = 'Warehouse/update_status';
+$route['(:any)/(:any)/warehouse/item']       = 'Warehouse/list_item'; // dont change this
 
 //Shipping
 $route['shipping/queue']                     = 'Shipping';
+$route['shipping/status']                    = 'Shipping/update_status';
+$route['shipping/return']                    = 'Shipping/return';
+$route['(:any)/(:any)/shipping/item']        = 'Shipping/list_item'; // dont change this
 
 //USER;
 $route['user/delete']                        = 'Users/supplier/delete';

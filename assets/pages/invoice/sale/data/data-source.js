@@ -223,12 +223,12 @@ class DataSource {
 					<td>${field.item_name}</td>
 					<td class="text-right">${field.capital_price}</td>
 					<td class="text-right">${field.selling_price}</td>
-					<td class="text-right">${Math.abs(field.quantity)} (${field.unit})</td>
+					<td class="text-right">${Math.abs(field.quantity_order)} (${field.unit})</td>
 					<td class="text-right">${field.rabate}</td>
-					<td class="text-right">${currency(Math.abs((parseInt(field.capital_price.replace(/[,]|[.]/g,''))*parseInt(field.quantity))-parseInt(field.rabate.replace(/[,]|[.]/g,''))))}</td>
+					<td class="text-right">${currency(Math.abs((parseInt(field.capital_price.replace(/[,]|[.]/g,''))*parseInt(field.quantity_order))-parseInt(field.rabate.replace(/[,]|[.]/g,''))))}</td>
 				</tr>
 				`;
-				grand_total += (parseInt(field.capital_price.replace(/[,]|[.]/g,''))*parseInt(field.quantity))-parseInt(field.rabate.replace(/[,]|[.]/g,''))
+				grand_total += (parseInt(field.capital_price.replace(/[,]|[.]/g,''))*parseInt(field.quantity_order))-parseInt(field.rabate.replace(/[,]|[.]/g,''))
 				$('#modal-detail tbody#tbl_order').append(html);
 				});
 				$('#modal-detail tbody#tbl_order').append(`

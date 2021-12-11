@@ -60,8 +60,9 @@ class Selling extends Invoice
 
      protected function add_invoice()
      {
-          $this->db->group_by('order_id');
-          $order_id   = sprintf("OR/%010s", $this->db->get('tbl_order')->num_rows()+1);
+          $this->db->like('order_id', '/ORD/SEL/'.date("my"), 'before');
+          $order_id   = sprintf("%04s/ORD/SEL/", $this->db->get('tbl_order')->num_rows()+1).date("my");
+
           $this->db->like('invoice_id', '/INV/SEL/'.date("my"), 'before');
           $invoice_id = sprintf("%04s/INV/SEL/", $this->db->get('tbl_invoice')->num_rows()+1).date("my");
 
@@ -78,39 +79,27 @@ class Selling extends Invoice
                $this->request['order']['date'][$key]               = time();
 
           }
-          $this->request['order_id']       = $order_id;
-          $this->request['user_id']        = $this->input->post('user_id', true);
-          $this->request['fullname']       = $this->input->post('fullname', true);
-          $this->request['contact_number'] = $this->input->post('contact_number', true);
-          $this->request['address']        = $this->input->post('address', true);
-          $this->request['sub_total']      = $this->input->post('sub_total', true);
-          $this->request['discount']       = $this->input->post('discount', true);
-          $this->request['shipping_cost']  = $this->input->post('shipping_cost', true);
-          $this->request['other_cost']     = $this->input->post('other_cost', true);
-          $this->request['grand_total']    = $this->input->post('grand_total', true);
-          $this->request['note']           = $this->input->post('note', true);
-          $this->request['status_payment'] = ($this->input->post('status_payment', true))?1:0;
 
           $this->invoice = [
                'invoice_id'              => $invoice_id,
                'date'                    => time(),
                'date_due'                => time()+(7 * 24 * 60 * 60), //7 days; 24 hours; 60 mins; 60 secs
-               'to_customer_destination' => $this->request['user_id'],
-               'order_id'                => $this->request['order_id'],
-               'sub_total'               => $this->request['sub_total'],
-               'discount'                => $this->request['discount'],
-               'shipping_cost'           => $this->request['shipping_cost'],
-               'other_cost'              => $this->request['other_cost'],
-               'grand_total'             => $this->request['grand_total'],
+               'to_customer_destination' => $this->input->post('user_id', true),
+               'order_id'                => $order_id,
+               'sub_total'               => ($this->input->post('sub_total', true))?$this->input->post('sub_total', true):0,
+               'discount'                => ($this->input->post('discount', true))?$this->input->post('discount', true):0,
+               'shipping_cost'           => ($this->input->post('shipping_cost', true))?$this->input->post('shipping_cost', true):0,
+               'other_cost'              => ($this->input->post('other_cost', true))?$this->input->post('other_cost', true):0,
+               'grand_total'             => ($this->input->post('grand_total', true))?$this->input->post('grand_total', true):0,
                'status_active'           => 1,
                'status_item'             => 0,
                'status_validation'       => 0,
-               'status_payment'          => $this->request['status_payment'],
-               'status_settlement'       => $this->request['status_payment'],
+               'status_payment'          => ($this->input->post('status_payment', true))?1:0,
+               'status_settlement'       => ($this->input->post('status_payment', true))?1:0,
                'user'                    => $this->session->userdata('fullname'),
-               'note'                    => $this->request['note']
+               'note'                    => ($this->input->post('note', true))?$this->input->post('note', true):join(', ', $this->request['order']['item_code'])
           ];
-          $this->M_order->order_insert($this->request['order']); // insert to tbl_order, insert to tbl_history, and update item
+          $this->M_order->order_insert_history_update_item($this->request['order']); // insert to tbl_order, insert to tbl_history, and update item
           $this->M_invoice->invoice_insert($this->invoice);
           Flasher::setFlash('info', 'success', 'Success', ' congratulation success to entry new data!');
           redirect('sale');

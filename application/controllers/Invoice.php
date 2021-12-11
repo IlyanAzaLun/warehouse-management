@@ -58,7 +58,7 @@ abstract class Invoice extends CI_Controller
 			'note'                    => $this->request['note']
 		];
 
-		$this->M_order->order_insert($this->request['order']);
+		$this->M_order->order_insert_history_update_item($this->request['order']);
 		$this->M_invoice->invoice_insert($this->invoice);
 		
 		Flasher::setFlash('info', 'success', 'Success', ' congratulation success to entry new data!');

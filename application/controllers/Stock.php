@@ -108,6 +108,7 @@ class Stock extends CI_Controller {
 
 	public function gethistory()
 	{
+		$this->db->order_by('update_at', 'DESC');
 		echo json_encode($this->db->get_where('tbl_item_history', ['item_code'=>$this->input->post('data')])->result_array());
 	}
 }

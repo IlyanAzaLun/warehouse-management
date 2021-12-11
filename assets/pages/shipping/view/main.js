@@ -8,6 +8,9 @@ const data_order = new DataOrder();
 const component = new Component();
 
 const main = () => {
+	window.setTimeout(function () {
+		window.location.reload();
+	}, 1000 * 60 * 60);
 	// cancel
 	$('button#cancel').on('click', function(){
 		$('#modal-cancel input#invoice_id').val($(this).parent().data('id-invoice'));
@@ -92,7 +95,6 @@ const main = () => {
 				/*select:*/
 			})
 			/*auto complete*/
-			
 		})
 	});
 	$('button#add_order_item').on('click', function(){

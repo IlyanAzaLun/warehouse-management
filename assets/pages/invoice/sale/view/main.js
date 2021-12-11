@@ -53,16 +53,6 @@ const main = () => {
 	/* auto complete */
 	$('input#item_name').focus(function(){
 		datasource.items(false ,function(output){
-			/* 
-			let _items = [];
-			$(output).each(function(_index, field){
-				_items.push(field.item_name);
-			})
-			$('input#item_name').autocomplete({
-				source: _items
-			}); 
-			*/
-			/*auto complete*/
 			$.ui.autocomplete.prototype._renderItem = function(ul, item) {
 				return $('<li>').data("item.autocomplete", item).append(`
 					<div class="row">
