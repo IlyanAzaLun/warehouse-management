@@ -13,11 +13,17 @@ const main = () => {
 		$('#modal-cancel input#invoice_id').val($(this).parent().data('id-invoice'));
 		$('#modal-cancel input#invoice_status').val((parseInt($(this).data('status')))?'0':'1');
 	});
-	// detail status
+	// change status
 	$('button#status-item').on('click', function(){
 		$('#modal-status-item b.text-danger').html($(this).data('variabel'));
 		$('#modal-status-item input#invoice_id').val($(this).parent().data('id'));
 		$('#modal-status-item input#invoice_status').val($(this).data('variabel'));
+	})
+	//return item confirmation on warehouse, return item to tbl_item quantity by value reference on tbl_order
+	$('button#status-item-return').on('click', function(){
+		$('#modal-status-item-return b.text-danger').html($(this).data('variabel'));
+		$('#modal-status-item-return input#invoice_reverence').val($(this).parent().data('id'));
+		$('#modal-status-item-return input#invoice_status').val($(this).data('variabel'));
 	})
     // customer
     // auto complete, get all, and find the customer

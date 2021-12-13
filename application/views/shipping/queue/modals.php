@@ -53,7 +53,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form method="post" action="<?=base_url('sale/invoice/cancel')?>">
+			<form method="post" action="<?=base_url('shipping/cancel')?>">
 				<div class="modal-body">
 					<p>Are you sure to <b class="text-danger">Cancel</b> invoice ?</p>
 					<input type="hidden" name="request" id="request" value="POST" readonly>

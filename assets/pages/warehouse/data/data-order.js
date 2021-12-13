@@ -31,7 +31,7 @@ class DataOrder {
 					let html = `
 					<tr>
 						<td>${field.item_id}</td>
-						<td>${field.item_name} ${(field.MG)?`(${field.MG})`:``}</td>
+						<td>${field.item_name} ${(field.MG)?`(MG: ${field.MG})`:``}</td>
 						<td class="text-right">${field.capital_price}</td>
 						<td class="text-right">${field.selling_price}</td>
 						<td class="text-right">${Math.abs(field.quantity_order)} (${field.unit})</td>

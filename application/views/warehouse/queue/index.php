@@ -243,7 +243,8 @@
                       <tr>
                         <th>#</th>
                         <th>Opsi</th>
-                        <th>Kode pemesanan</th>
+                        <th>Kode pengembalian</th>
+                        <th>Kode referesni pemesanan</th>
                         <th>Tanggal</th>
                         <th>Tujuan</th>
                         <th>Keterangan</th>
@@ -261,10 +262,10 @@
                           <!-- // -->
                           
                           <button class="btn btn-sm btn-default" id="detail" data-toggle="modal" data-target="#modal-detail"><i class="fa fa-tw fa-search-plus"></i></button>
-                          <a href="<?=base_url('shipping/return')?>?id=<?=$return['invoice_id']?>" target="_blank" class="btn btn-sm btn-default" id="info"><i class="fa fa-tw fa-undo-alt"></i></a>
+                          <!-- <a href="<?=base_url('shipping/return')?>?id=<?=$return['invoice_id']?>" target="_blank" class="btn btn-sm btn-default" id="info"><i class="fa fa-tw fa-undo-alt"></i></a> -->
 
                           <?php if (boolval((int)$return['status_active'])): ?>
-                          <button class="btn btn-sm btn-default" id="cancel" data-toggle="modal" data-target="#modal-cancel" data-status="<?=$return['status_active']?>"><i class="fa fa-tw fa-ban"></i></button>
+                          <!-- <button class="btn btn-sm btn-default" id="cancel" data-toggle="modal" data-target="#modal-cancel" data-status="<?=$return['status_active']?>"><i class="fa fa-tw fa-ban"></i></button> -->
                           <?php endif ?>
                         </div>
                       </td>
@@ -273,6 +274,9 @@
                           <?=$return['invoice_id']?>
                           <?=($return['status_active']=='0')?'<span class="right badge badge-danger">Cancel</span>':'';?>
                         </p>
+                      </td>
+                      <td>
+                        <?=$return['invoice_reverence']?>
                       </td>
                       <td>
                         <small>
@@ -290,17 +294,17 @@
                         </small>
                       </td>
                       <td><small><?=$return['note']?></small></td>
-                      <td id="validation" class="text-right" data-id="<?=$return['invoice_id']?>">
-                        <?=($return['status_item']=='3'?
-                            '<button class="btn btn-sm btn-success m-1" id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Checked</button>': 
+                      <td id="validation" class="text-right" data-id="<?=$return['invoice_reverence']?>">
+                        <!-- <?=($return['status_item']=='3'?
+                            '<button class="btn btn-sm btn-success m-1" id="status-item-return" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item-return">Checked</button>': 
                           ($return['status_item']=='2'?
-                            '<button class="btn btn-sm btn-warning m-1" id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Recheck on warehouse</button>': 
+                            '<button class="btn btn-sm btn-warning m-1" id="status-item-return" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item-return">Recheck on warehouse</button>': 
                           ($return['status_item']=='1'?
-                            '<button class="btn btn-sm btn-warning m-1" id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Recheck on marketing</button>':
-                            '<button class="btn btn-sm btn-danger m-1"  id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Uncheck</button>' )));?>
+                            '<button class="btn btn-sm btn-warning m-1" id="status-item-return" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item-return">Recheck on marketing</button>':
+                            '<button class="btn btn-sm btn-danger m-1"  id="status-item-return" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item-return">Uncheck</button>' )));?> -->
                         <?=($return['status_validation']=='1')?
-                            '<button class="btn btn-sm btn-success m-1" id="status-item" data-variabel="status_validation" data-toggle="modal" data-target="#modal-status-item">Send</button>':
-                            '<button class="btn btn-sm btn-secondary m-1" id="status-item" data-variabel="status_validation" data-toggle="modal" data-target="#modal-status-item">Hold</button>';?>
+                            '<button class="btn btn-sm btn-success m-1" id="status-item-return" data-variabel="status_validation" data-toggle="modal" data-target="#modal-status-item-return">Send</button>':
+                            '<button class="btn btn-sm btn-secondary m-1" id="status-item-return" data-variabel="status_validation" data-toggle="modal" data-target="#modal-status-item-return">Hold</button>';?>
                       </td>
                     </tr>
                     <?php endforeach ?>

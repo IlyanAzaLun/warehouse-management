@@ -25,6 +25,7 @@ class Warehouse extends CI_Controller {
 		$this->load->model('M_invoice');
 		$this->load->model('M_warehouse');
 		$this->load->model('M_order');
+		$this->load->model('M_items');
 		$this->load->model('M_users');
         $this->data['user'] = $this->M_users->user_select($this->session->userdata('email'));
 	}
@@ -163,25 +164,25 @@ class Warehouse extends CI_Controller {
 	public function update_status()
 	{
 		$this->form_validation->set_rules('invoice_id', 'Code invoice', 'required|trim');
-          $this->form_validation->set_rules('invoice_status', 'Status invoice', 'required|trim');
-          if ($this->form_validation->run()==false) {
-               Flasher::setFlash('info', 'error', 'Failed', ' something worng to delete data! '.validation_errors());
-               redirect('warehouse/queue');
-          }else{
-               if ($this->input->post('invoice_status') == "status_validation") {
-                    //status item 1
-                    $this->request['status_validation'] = $this->_status_check(1);
-                    $this->db->where('invoice_id', $this->input->post('invoice_id', true));
-                    $this->db->update('tbl_invoice', $this->request);
-               }else{
-                    // status validation 3
-                    $this->request['status_item'] = $this->_status_check(3);
-                    $this->db->where('invoice_id', $this->input->post('invoice_id', true));
-                    $this->db->update('tbl_invoice', $this->request);
-               }
-               Flasher::setFlash('info', 'success', 'Success', ' congratulation success to update data!');
-               redirect('warehouse/queue');
-          }
+		$this->form_validation->set_rules('invoice_status', 'Status invoice', 'required|trim');
+		if ($this->form_validation->run()==false) {
+			Flasher::setFlash('info', 'error', 'Failed', ' something worng to delete data! '.validation_errors());
+			redirect('warehouse/queue');
+		}else{
+			if ($this->input->post('invoice_status') == "status_validation") {
+				//status item 1
+				$this->request['status_validation'] = $this->_status_check(1);
+				$this->db->where('invoice_id', $this->input->post('invoice_id', true));
+				$this->db->update('tbl_invoice', $this->request);
+			}else{
+				// status validation 3
+				$this->request['status_item'] = $this->_status_check(3);
+				$this->db->where('invoice_id', $this->input->post('invoice_id', true));
+				$this->db->update('tbl_invoice', $this->request);
+			}
+			Flasher::setFlash('info', 'success', 'Success', ' congratulation success to update data!');
+			redirect('warehouse/queue');
+		}
 	}
 	
 	private function _status_check($limit) // check status infoice, user in update status..
@@ -189,7 +190,44 @@ class Warehouse extends CI_Controller {
 		 if ($this->db->get_where('tbl_invoice', array('invoice_id'=>$this->input->post('invoice_id')))->row_array()[$this->input->post('invoice_status')] == $limit) {
 			  return 0;
 		 }else{
-			  return ++$this->db->get_where('tbl_invoice', array('invoice_id'=>$this->input->post('invoice_id')))->row_array()[$this->input->post('invoice_status')];
+			  return $limit+$this->db->get_where('tbl_invoice', array('invoice_id'=>$this->input->post('invoice_id')))->row_array()[$this->input->post('invoice_status')];
 		 }
+	}
+	public function update_status_return()
+	{
+		$data_invoice = $this->M_invoice->invoice_select_by_referece($this->input->post('invoice_reverence'));
+		$data_order = $this->M_order->order_select($data_invoice['order_id']);
+		$history = array();
+		foreach ($data_order as $key => $order) {
+			//create history item
+			$this->db->select('item_code, capital_price, selling_price, quantity');
+			$this->db->where('item_code', $data_order[$key]['item_id']);
+
+			array_push($history,$this->db->get('tbl_item')->row_array()); // tmp			
+			$this->db->set('item_code' , $history[$key]['item_code']);
+			$this->db->set('previous_capital_price' , $history[$key]['capital_price']);
+			$this->db->set('previous_selling_price' , $history[$key]['selling_price']);
+			$this->db->set('previous_quantity' , $history[$key]['quantity']);
+			$this->db->set('status_in_out' , 'IN'.' ('.$data_order[$key]['quantity_order'].')');
+			$this->db->set('update_at' , time());
+			$this->db->insert('tbl_item_history');
+			
+			// update quantity item
+			$this->M_items->item_update_quantity($order['item_id'], (int)$history[$key]['quantity']+(int)abs($order['quantity_order']));
+
+		}
+		// change status invoice
+		if ($this->db->get_where('tbl_invoice', array('invoice_reverence'=>$this->input->post('invoice_reverence')))->row_array()[$this->input->post('invoice_status')] == 1) {
+			$this->db->set('status_validation', 0);
+			$this->db->where('invoice_reverence', $this->input->post('invoice_reverence', true));
+			$this->db->update('tbl_invoice');
+		}else{
+			$this->db->set('status_validation', 1);
+			$this->db->where('invoice_reverence', $this->input->post('invoice_reverence', true));
+			$this->db->update('tbl_invoice');
+		}
+
+		Flasher::setFlash('info', 'success', 'Success', ' congratulation success to update data!');
+		redirect('warehouse/queue');
 	}
 }

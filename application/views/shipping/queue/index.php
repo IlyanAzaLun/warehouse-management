@@ -51,18 +51,16 @@
                       </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($invoices as $key => $invoice): ?>
+                      <?php foreach ($invoices as $key => $invoice): ?>
                     <tr>
                       <th scope="row" width="5px"><?=++$key?></th>
                       <td>
                         <div class="btn-group d-flex justify-content-center" data-id="<?=$invoice['invoice_order_id']?>" data-id-invoice="<?=$invoice['invoice_id']?>">
                           <!-- // -->
                           <!-- <a onclick="return false;" href="<?=base_url('shipping/update')?>?id=<?=$invoice['invoice_id']?>" target="_blank" class="btn btn-sm btn-default" id="update"><i class="fa fa-tw fa-pencil-alt"></i></a> -->
-                          <!-- // -->
-                          
+                          <!-- // -->                          
                           <button class="btn btn-sm btn-default" id="detail" data-toggle="modal" data-target="#modal-detail"><i class="fa fa-tw fa-search-plus"></i></button>
                           <a href="<?=base_url('shipping/return')?>?id=<?=$invoice['invoice_id']?>" target="_blank" class="btn btn-sm btn-default" id="info"><i class="fa fa-tw fa-undo-alt"></i></a>
-
                           <?php if (boolval((int)$invoice['status_active'])): ?>
                           <button class="btn btn-sm btn-default" id="cancel" data-toggle="modal" data-target="#modal-cancel" data-status="<?=$invoice['status_active']?>"><i class="fa fa-tw fa-ban"></i></button>
                           <?php endif ?>
@@ -145,7 +143,6 @@
                           <!-- // -->
                           <!-- <a onclick="return false;" href="<?=base_url('shipping/update')?>?id=<?=$return['invoice_id']?>" target="_blank" class="btn btn-sm btn-default" id="update"><i class="fa fa-tw fa-pencil-alt"></i></a> -->
                           <!-- // -->
-                          
                           <button class="btn btn-sm btn-default" id="detail" data-toggle="modal" data-target="#modal-detail"><i class="fa fa-tw fa-search-plus"></i></button>
                           <!-- <a href="<?=base_url('shipping/return')?>?id=<?=$return['invoice_id']?>" target="_blank" class="btn btn-sm btn-default" id="info"><i class="fa fa-tw fa-undo-alt"></i></a> -->
 

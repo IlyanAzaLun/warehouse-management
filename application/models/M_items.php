@@ -23,4 +23,12 @@ class M_items extends CI_Model {
                 $this->db->where('item_code', $data['item_code']);
                 return $this->db->delete($this->_table);
         }
+        
+        //update quantity item
+        public function item_update_quantity($id, $quantity)
+        {
+                $this->db->set('quantity', $quantity);
+                $this->db->where('item_code', $id);
+                return $this->db->update('tbl_item');
+        }
 }

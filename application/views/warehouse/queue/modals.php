@@ -97,6 +97,32 @@
 	</div>
 	<!-- /.modal-dialog -->
 </div>
+
+<div class="modal fade" id="modal-status-item-return">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Ubah status barang</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form method="post" action="<?=base_url('warehouse/status-return')?>">
+				<div class="modal-body">
+					<p>Are you sure to <b class="text-danger"></b> invoice ?</p>
+					<input type="text" name="invoice_reverence" id="invoice_reverence" readonly>
+					<input type="text" name="invoice_status" id="invoice_status" readonly>
+				</div>
+				<div class="modal-footer justify-content-between">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-danger">Yes do it&hellip;</button>
+				</div>
+			</form>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
 <!-- /.modal update status -->
 <div class="modal fade" id="modal-history">
 	<div class="modal-dialog modal-xl">

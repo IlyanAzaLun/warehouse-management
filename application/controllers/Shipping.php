@@ -32,7 +32,7 @@ class Shipping extends CI_Controller {
 	public function index(){
 		$this->data['title']    = 'Daftar antrian pesanan barang dari gudang';	
 		$this->data['invoices'] = $this->M_shipping->shipping_select(false, 'INV/SEL/');
-		$this->data['returns']   = $this->M_shipping->shipping_select(false, 'INV/RET/');
+		$this->data['returns']   = $this->M_invoice->invoice_select(false, 'INV/RET/');
 		$this->data['plugins']  = array(
 			'css' => [
 				 base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'),
@@ -225,5 +225,15 @@ class Shipping extends CI_Controller {
 		 }else{
 			  return $limit+$this->db->get_where('tbl_invoice', array('invoice_id'=>$this->input->post('invoice_id')))->row_array()[$this->input->post('invoice_status')];
 		 }
+	}
+
+	public function cancel()
+	{
+		$this->db->set('status_active', $this->input->post('invoice_status', true));
+		$this->db->where('invoice_id', $this->input->post('invoice_id', true));
+		$this->db->update('tbl_invoice');
+		
+		Flasher::setFlash('info', 'success', 'Success', ' congratulation success to update data!');
+		redirect('shipping/queue');
 	}
 }
