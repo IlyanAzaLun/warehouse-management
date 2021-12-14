@@ -226,8 +226,19 @@ class Warehouse extends CI_Controller {
 			$this->db->where('invoice_reverence', $this->input->post('invoice_reverence', true));
 			$this->db->update('tbl_invoice');
 		}
+		$this->db->where('invoice_reverence', $this->input->post('invoice_reverence', true));
+		$this->db->set('status_notification', 0);  
+		$this->db->update('tbl_invoice');
 
 		Flasher::setFlash('info', 'success', 'Success', ' congratulation success to update data!');
 		redirect('warehouse/queue');
+	}
+	
+	public function notification()
+	{
+		$this->db->where('status_notification', 1);
+		// $this->db->like('invoice_id', 'INV/SEL/', 'both');
+		$this->db->like('invoice_id', '/INV/RET/'.date("my"), 'before');
+		echo json_encode($this->db->get('tbl_invoice')->result_array());
 	}
 }

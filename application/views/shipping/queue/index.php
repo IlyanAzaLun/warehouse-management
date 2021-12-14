@@ -1,6 +1,6 @@
 <?php $this->load->view('components/header')?>
 
-<body class="hold-transition sidebar-mini layout-fixed sidebar-collapse pace-primary">
+<body class="hold-transition sidebar-mini layout-fixed sidebar-collapse layout-navbar-fixed layout-footer-fixed pace-primary">
   <!-- Site wrapper -->
   <div class="wrapper">
     <!-- Navbar -->

@@ -213,6 +213,9 @@ class Shipping extends CI_Controller {
                     $this->db->where('invoice_id', $this->input->post('invoice_id', true));
                     $this->db->update('tbl_invoice', $this->request);
                }
+			   $this->db->where('invoice_id', $this->input->post('invoice_id', true));
+			   $this->db->set('status_notification', 0);  
+			   $this->db->update('tbl_invoice');
                Flasher::setFlash('info', 'success', 'Success', ' congratulation success to update data!');
                redirect('shipping/queue');
           }
@@ -235,5 +238,13 @@ class Shipping extends CI_Controller {
 		
 		Flasher::setFlash('info', 'success', 'Success', ' congratulation success to update data!');
 		redirect('shipping/queue');
+	}
+
+	public function notification()
+	{
+		$this->db->where('status_notification', 1);
+		// $this->db->like('invoice_id', 'INV/SEL/', 'both');
+		$this->db->like('invoice_id', '/INV/SEL/'.date("my"), 'before');
+		echo json_encode($this->db->get('tbl_invoice')->result_array());
 	}
 }

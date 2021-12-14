@@ -55,6 +55,7 @@ $route['purchase/order/remove']              = 'Invoices/purchasing/invoice_orde
 $route['warehouse/queue']                    = 'Warehouse';
 $route['warehouse/status']                   = 'Warehouse/update_status';
 $route['warehouse/status-return']            = 'Warehouse/update_status_return';
+$route['(:any)/(:any)/warehouse/notification']= 'Warehouse/notification';
 $route['(:any)/(:any)/warehouse/item']       = 'Warehouse/list_item'; // dont change this
 
 //Shipping
@@ -62,6 +63,7 @@ $route['shipping/queue']                     = 'Shipping';
 $route['shipping/status']                    = 'Shipping/update_status';
 $route['shipping/return']                    = 'Shipping/return';
 $route['shipping/cancel']                    = 'Shipping/cancel';
+$route['(:any)/(:any)/shipping/notification']= 'Shipping/notification';
 $route['(:any)/(:any)/shipping/item']        = 'Shipping/list_item'; // dont change this
 
 //USER;

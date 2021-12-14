@@ -1,13 +1,35 @@
 import DataCustomer from "../data/data-customer.js";
 import DataItem from "../data/data-item.js";
 import DataOrder from "../data/data-order.js";
+import DataInvoice from "../data/data-invoice.js";
 import Component from "./component.js";
 const data_customer = new DataCustomer();
 const data_item = new DataItem();
 const data_order = new DataOrder();
+const data_invoice = new DataInvoice();
 const component = new Component();
 
 const main = () => {
+	// notification
+	window.setInterval(function () {
+		data_invoice.get_status_notification(function(output){
+			if(output.length > 0 ){
+				$('a.dropdown-item').remove()
+				$('span#counter').text(output.length)
+				$.playSound('https://demos.9lessons.info/notify/notify.wav');
+				output.forEach((element, index) => {
+					$('.dropdown-menu.dropdown-menu-lg.dropdown-menu-right').append(
+					`<a href="#" class="dropdown-item">
+					  <small><i class="fas fa-file mr-2"></i><span id="id_invoice">${element.invoice_id}</span></small>
+					  <small><span class="float-right text-muted text-sm" id="user">${element.user}</span></small><br>
+					 </a>`)
+				});
+			}
+		})
+	}, 6000)
+	// notification
+
+	// notification ./ end
 	// cancel
 	$('button#cancel').on('click', function(){
 		$('#modal-cancel input#invoice_id').val($(this).parent().data('id-invoice'));
