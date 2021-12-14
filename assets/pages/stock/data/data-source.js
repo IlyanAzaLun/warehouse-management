@@ -103,8 +103,8 @@ class DataSource {
 				$('#modal-add-stock input#quantity').val(result.quantity);
 				// $('#modal-add-stock input#unit').val(result.unit);
 				$('#modal-add-stock select#unit').find('option[value="'+result.unit+'"').prop('selected', true);
-				$('#modal-add-stock input#capital_price').val(result.capital_price);
-				$('#modal-add-stock input#selling_price').val(result.selling_price);
+				$('#modal-add-stock input#capital_price').val(currencyToNum(result.capital_price));
+				$('#modal-add-stock input#selling_price').val(currencyToNum(result.selling_price));
 				$('#modal-add-stock textarea#note').val(result.note);
 			}	
 		})
