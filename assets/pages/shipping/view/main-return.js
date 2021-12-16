@@ -28,18 +28,16 @@ const main = () => {
 			$.ui.autocomplete.prototype._renderItem = function(ul, item) {
 				return $('<li>').data("item.autocomplete", item).append(`
 					<div class="row">
-				      <div class="col-2">${item.item_code}</div>
+				      <div class="col-3">${item.item_code}</div>
 				      <div class="col-7"><b>${item.item_name}</b> ${(item.MG)?`[MG: ${item.MG}, ML: ${item.ML}, VG: ${item.VG}, PG: ${item.PG}, (Falvour: ${item.falvour})]`:``}</div>
-				      <div class="col-1">${item.quantity} (${item.unit})</div>
-				      <div class="col-1">${item.capital_price}</div>
-				      <div class="col-1">${item.selling_price}</div>
+				      <div class="col-2">${item.quantity} (${item.unit})</div>
 				    </div>`).appendTo(ul);
 			};
 			$("input#item_name").autocomplete({
 				minLength: 0,
 				source: function(request, response) {
 					$.ajax({
-						url: location.origin+location.pathname + "/warehouse/item",
+						url: location.origin+location.pathname + "/shipping/item",
 						method: "POST",
 						dataType: "json",
 						data: {

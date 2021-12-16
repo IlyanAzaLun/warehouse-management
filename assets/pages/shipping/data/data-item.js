@@ -5,7 +5,7 @@ class DataItem {
 	
 	items(request = false, handle){
 		$.ajax({
-			url: location.origin+location.pathname+'/warehouse/item',
+			url: location.origin+location.pathname+'/shipping/item',
 			method: 'POST',
 			dataType: 'JSON',
 			data: {'request': 'GET', 'data': request},

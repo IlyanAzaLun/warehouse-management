@@ -184,6 +184,18 @@ class Warehouse extends CI_Controller {
 			redirect('warehouse/queue');
 		}
 	}
+
+	public function notification_change()
+	{
+		// change status invoice
+		$this->db->set('status_item', 3);
+		$this->db->where('order_id', $this->input->post('order_id', true));
+		$this->db->update('tbl_invoice');
+
+		$this->db->where('order_id', $this->input->post('order_id', true));
+		$this->db->set('status_notification', 0);  
+		$this->db->update('tbl_invoice');
+	}
 	
 	private function _status_check($limit) // check status infoice, user in update status..
 	{
@@ -213,7 +225,7 @@ class Warehouse extends CI_Controller {
 			$this->db->insert('tbl_item_history');
 			
 			// update quantity item
-			$this->M_items->item_update_quantity($order['item_id'], (int)$history[$key]['quantity']+(int)abs($order['quantity_order']));
+			$this->M_items->item_update_quantity($order['item_id'], (int)$history[$key]['quantity']+(int)$order['quantity_order']);
 
 		}
 		// change status invoice

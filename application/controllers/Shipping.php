@@ -84,12 +84,12 @@ class Shipping extends CI_Controller {
 		 foreach ($this->input->post('item_code', true) as $key => $value) {
 			  $this->request['order']['order_id'][$key]           = $order_id;
 			  $this->request['order']['item_code'][$key]          = $this->input->post('item_code', true)[$key];
-			  $this->request['order']['item_capital_price'][$key] = $this->input->post('item_capital_price', true)[$key];
-			  $this->request['order']['item_selling_price'][$key] = $this->input->post('item_selling_price', true)[$key];
+			  $this->request['order']['item_capital_price'][$key] = ($this->input->post('item_capital_price', true)[$key])?$this->input->post('item_capital_price', true)[$key]:0;
+			  $this->request['order']['item_selling_price'][$key] = ($this->input->post('item_selling_price', true)[$key])?$this->input->post('item_selling_price', true)[$key]:0;
 			  $this->request['order']['item_quantity'][$key]      = $this->input->post('quantity', true)[$key];
 			  $this->request['order']['item_unit'][$key]          = $this->input->post('unit', true)[$key];
-			  $this->request['order']['rebate_price'][$key]       = $this->input->post('rebate_price', true)[$key];
-			  $this->request['order']['status_in_out'][$key]      = 'IN';
+			  $this->request['order']['rebate_price'][$key]       = ($this->input->post('rebate_price', true)[$key])?$this->input->post('rebate_price', true)[$key]:0;
+			  $this->request['order']['status_in_out'][$key]      = ($this->input->post('quantity', true)[$key] > 0)?'IN':'OUT';
 			  $this->request['order']['user_id'][$key]            = $this->input->post('user_id', true);
 			  $this->request['order']['date'][$key]               = time();
 
@@ -133,15 +133,32 @@ class Shipping extends CI_Controller {
 		$this->data['orders'] = $this->M_order->order_select($this->data['invoice']['invoice_order_id']);
 		$this->data['plugins'] = array(
 			'css' => [
-				base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/css/autoFill.bootstrap4.min.css'),
-				base_url('assets/AdminLTE-3.0.5/plugins/jquery-ui/jquery-ui.min.css'),
-				base_url('assets/AdminLTE-3.0.5/plugins/jquery-ui/jquery-ui.structure.min.css'),
-				base_url('assets/AdminLTE-3.0.5/plugins/jquery-ui/jquery-ui.theme.min.css'),
-		   ],
-		   'js' => [
-				base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/js/autoFill.bootstrap4.min.js'),
-				base_url('assets/AdminLTE-3.0.5/plugins/jquery-ui/jquery-ui.min.js'),
-		   ],
+				 base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'),
+				 base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'),
+				 base_url('assets/AdminLTE-3.0.5/plugins/datatables-buttons/css/buttons.bootstrap4.min.css'),
+				 base_url('assets/AdminLTE-3.0.5/plugins/datatables-select/css/select.bootstrap4.min.css'),
+				 base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/css/autoFill.bootstrap4.min.css'),
+				 base_url('assets/AdminLTE-3.0.5/plugins/select2/css/select2.min.css'),
+				 base_url('assets/AdminLTE-3.0.5/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css'),
+				 base_url('assets/AdminLTE-3.0.5/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css'),
+				 base_url('assets/AdminLTE-3.0.5/plugins/jquery-ui/jquery-ui.min.css'),
+				 base_url('assets/AdminLTE-3.0.5/plugins/jquery-ui/jquery-ui.structure.min.css'),
+				 base_url('assets/AdminLTE-3.0.5/plugins/jquery-ui/jquery-ui.theme.min.css'),
+			],
+			'js' => [
+				 base_url('assets/AdminLTE-3.0.5/plugins/datatables/jquery.dataTables.min.js'),
+				 base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js'),
+				 base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/js/dataTables.responsive.min.js'),
+				 base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/js/responsive.bootstrap4.min.js'),
+				 base_url('assets/AdminLTE-3.0.5/plugins/datatables-buttons/js/dataTables.buttons.min.js'),
+				 base_url('assets/AdminLTE-3.0.5/plugins/datatables-buttons/js/buttons.bootstrap4.min.js'),
+				 base_url('assets/AdminLTE-3.0.5/plugins/datatables-select/js/dataTables.select.min.js'),
+				 base_url('assets/AdminLTE-3.0.5/plugins/datatables-select/js/select.bootstrap4.min.js'),
+				 base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/js/dataTables.autoFill.min.js'),
+				 base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/js/autoFill.bootstrap4.min.js'),
+				 base_url('assets/AdminLTE-3.0.5/plugins/select2/js/select2.full.min.js'),
+				 base_url('assets/AdminLTE-3.0.5/plugins/jquery-ui/jquery-ui.min.js'),
+			],
 			'module' => [
 				 base_url('assets/pages/shipping/return.js'),
 			],
@@ -220,6 +237,18 @@ class Shipping extends CI_Controller {
                redirect('shipping/queue');
           }
 	}
+
+	public function notification_change()
+	{
+		// change status invoice
+		$this->db->set('status_item', 3);
+		$this->db->where('order_id', $this->input->post('order_id', true));
+		$this->db->update('tbl_invoice');
+
+		$this->db->where('order_id', $this->input->post('order_id', true));
+		$this->db->set('status_notification', 0);  
+		$this->db->update('tbl_invoice');
+	}
 	
 	private function _status_check($limit) // check status infoice, user in update status..
 	{
@@ -238,6 +267,46 @@ class Shipping extends CI_Controller {
 		
 		Flasher::setFlash('info', 'success', 'Success', ' congratulation success to update data!');
 		redirect('shipping/queue');
+	}
+
+	public function list_item()
+	{
+		if ($this->input->post('request')) {
+			if ($this->input->post('data')) {
+				$this->data = $this->db->get_where('tbl_item', array('item_code' => $this->input->post('data')))->row_array();
+				if ($this->data) {
+					echo json_encode($this->data);
+				}else{
+					echo json_encode($data = array(
+						'0' => array(
+							'item_code' => '', 
+							'item_name' => '', 
+							'quantity' => '', 
+							'capital_price' => '', 
+							'selling_price' => '', 
+						)
+					));
+				}
+			}elseif ($this->input->post('_data')) {
+				$this->db->like('item_name', $this->input->post('_data'), 'both');
+				$this->data = $this->db->get('tbl_item')->result_array();
+				if ($this->data) {
+					echo json_encode($this->data);
+				}else{
+					echo json_encode($data = array(
+						'0' => array(
+							'item_code' => '', 
+							'item_name' => '', 
+							'quantity' => '', 
+							'capital_price' => '', 
+							'selling_price' => '', 
+						)
+					));
+				}
+			}else{
+				echo json_encode($this->db->get('tbl_item')->result_array());
+			}
+		}
 	}
 
 	public function notification()

@@ -16,11 +16,7 @@
 							<tr>
 								<th>Kode barang</th>
 								<th>Nama barang</th>
-								<th>Harga barang pokok</th>
-								<th>Harga barang jual</th>
 								<th>Jumlah barang (unit)</th>
-								<th>Potongan harga barang</th>
-								<th>Total harga <small>(HP &times; JML) - PHB</small></th>
 							</tr>
 						</thead>
 						<tbody id="tbl_order">

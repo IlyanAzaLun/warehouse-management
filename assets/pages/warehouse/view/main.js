@@ -13,17 +13,24 @@ const main = () => {
 	// notification
 	window.setInterval(function () {
 		data_invoice.get_status_notification(function(output){
+			console.log(output)
 			if(output.length > 0 ){
-				$('a.dropdown-item').remove()
+				$('a.dropdown-item').parent().remove()
 				$('span#counter').text(output.length)
 				$.playSound('https://demos.9lessons.info/notify/notify.wav');
 				output.forEach((element, index) => {
 					$('.dropdown-menu.dropdown-menu-lg.dropdown-menu-right').append(
-					`<a href="#" class="dropdown-item">
-					  <small><i class="fas fa-file mr-2"></i><span id="id_invoice">${element.invoice_id}</span></small>
-					  <small><span class="float-right text-muted text-sm" id="user">${element.user}</span></small><br>
-					 </a>`)
+				   `<div data-id="${element.order_id}" data-id_invoice="${element.invoice_id}">
+						<a href="#" class="dropdown-item" id="detail-return" data-toggle="modal" data-target="#modal-detail">
+							<small><i class="fas fa-file mr-2"></i><span id="id_invoice">${element.invoice_id}</span></small>
+							<small><span class="float-right text-muted text-sm" id="user">${element.user}</span></small><br>
+						</a>
+					</div>`)
 				});
+				detail_order()
+			}else{
+				$('span#counter').text('')
+				$('a.dropdown-item').remove()
 			}
 		})
 	}, 6000)
@@ -84,11 +91,9 @@ const main = () => {
 			$.ui.autocomplete.prototype._renderItem = function(ul, item) {
 				return $('<li>').data("item.autocomplete", item).append(`
 					<div class="row">
-				      <div class="col-2">${item.item_code}</div>
+				      <div class="col-3">${item.item_code}</div>
 				      <div class="col-7"><b>${item.item_name}</b> ${(item.MG)?`[MG: ${item.MG}, ML: ${item.ML}, VG: ${item.VG}, PG: ${item.PG}, (Falvour: ${item.falvour})]`:``}</div>
-				      <div class="col-1">${item.quantity} (${item.unit})</div>
-				      <div class="col-1">${item.capital_price}</div>
-				      <div class="col-1">${item.selling_price}</div>
+				      <div class="col-2">${item.quantity} (${item.unit})</div>
 				    </div>`).appendTo(ul);
 			};
 			$("input#item_name").autocomplete({
@@ -138,10 +143,31 @@ const main = () => {
 	});
     // end item
 
-	//detail order
-	$('button#detail').on('click', function(){
-		data_order.search_order($(this).parent().data('id'));
-	});
+	//detail order, return
+	
+	//detail order, return
+	function detail_order(){
+		let id;
+		let id_invoice;
+
+		$('button#detail-return').on('click', function(){
+			id = $(this).parent().data('id');
+			id_invoice = $(this).parent().data('id_invoice');
+			data_order.search_return($(this).parent().data('id'));
+		});
+		$('button#detail-order').on('click', function(){
+			id = $(this).parent().data('id');
+			id_invoice = $(this).parent().data('id_invoice');
+			data_order.search_order($(this).parent().data('id'));
+		});
+
+		$('#modal-detail').on('shown.bs.modal', function(){
+			data_invoice.change_status_notification(id, function(output){
+			})
+		})
+
+	}
+	detail_order();
 
 };
 export default main;

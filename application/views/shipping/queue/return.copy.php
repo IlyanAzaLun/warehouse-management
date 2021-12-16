@@ -104,16 +104,22 @@
                           <input type="text" name="order_id" id="order_id" class="form-control" placeholder="<?=$invoice['invoice_order_id']?>" readonly>
                         </div>
                       </div>
-                      <table class="table table-bordered table-hover table-sm">
+                      <table class="table table-bordered table-hover">
                         <thead>
                           <tr>
-                            <th scope="col" rowspan="2" class="align-middle">No</th>
-                            <th scope="col" rowspan="2" class="align-middle text-center">Nama barang</th>
-                            <th scope="col" class="text-center align-middle" colspan="2">Jumlah barang</th>
-                          </tr>
-                          <tr class="text-center align-middle">
-                            <th>Saat ini</th>
-                            <th><small><b>lebih (nominal) / kurang (-nominal)</b></small></th>
+                            <th>
+                                No
+                            </th>
+                            <th>
+                              <div class="col-12">
+                                Nama Barang
+                              </div>
+                            </th>
+                            <th>
+                              <div class="col-12">
+                                Jumlah barang
+                              </div>
+                            </th>
                           </tr>
                         </thead>
                         <tbody>
@@ -122,19 +128,19 @@
                             <td>
                               <?=$key+1?>.
                             </td>
-                            <td class="col-8">
-                              <input type="hidden" name="item_code[]" class="form-control" value="<?=$order['item_id']?>">
+                            <td class="col-10">
                               <?=$order['item_name']?> <?=($order['MG'])?'(MG: '.$order['MG'].')':'';?>
                             </td>
-                            <td class="text-center col-2">
-                                <?=abs($order['quantity_order'])?> (<?=$order['unit']?>)
-                            </td>
-                            <td class="text-center col-2">
-                              <div class="form-group form-group-sm row">
-                                <label for="quantity" class="col-2"><i class="fa fa-tw fa-angle-up"></i></label>
-                                <input type="number" name="quantity[]" id="quantity" class="form-control form-control-sm col-8" value="0">
-                                <input type="hidden" name="unit[]" id="unit" class="form-control form-control-sm col-8" value="<?=$order['unit']?>">
-                                <label for="quantity" class="col-2"><i class="fa fa-tw fa-angle-down"></i></label>
+                            <td class="col-12 text-center text-justify">
+                              <div class="row">
+                                <div class="col-6">
+                                  <?=abs($order['quantity_order'])?>
+                                </div>
+                                <div class="col-6">
+                                  <div class="group-control">
+                                    <input type="number" class="form-control form-control-sm" value="0">
+                                  </div>
+                                </div>
                               </div>
                             </td>
                           </tr>
@@ -149,6 +155,55 @@
                         <div class="form-group">
                           <label for="note">Catatan</label>
                           <textarea name="note" id="note" class="form-control" disabled><?=$invoice['note']?></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- /.card-body -->
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-lg-12">
+                <!-- /.col -->          
+                <div class="card" id="order_item">
+                  <div class="card-header bg-danger">
+                    <h3 class="card-title">Informasi barang kembali</h3>
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                      <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                    </div>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body" id="order_item">
+                    <div class="row" id="order_item">
+                      <div class="col-12">
+                        <div class="form-group">
+                          <input type="text" name="order_reference_id" id="order_reference_id" class="form-control" placeholder="<?=$invoice['invoice_order_id']?>" readonly>
+                        </div>
+                      </div>
+                      <div class="col-10">
+                        <div class="form-group">
+                          <label for="item_name">Cari nama barang...</label>
+                          <input required type="hidden" id="item_id" class="form-control" autocomplete="off">
+                          <input required type="text" id="item_name" class="form-control" placeholder="Cari barang..." autocomplete="off">
+                        </div>
+                        <?=form_error('item_name[]', '<small class="text-danger">','</small>')?>
+                        <?=form_error('quantity[]', '<small class="text-danger">','</small>')?>
+                        <?=form_error('unit[]', '<small class="text-danger">','</small>')?>
+                      </div>
+                      <div class="col-2">
+                        <label for="">&nbsp;</label>
+                        <button type="button" class="btn btn-block btn-primary" id="add_order_item"><i class="fa fa-tw fa-plus"></i></button>
+                      </div>
+                    </div>
+                    <hr>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-lg col-sm-12">
+                        <div class="form-group">
+                          <label for="note">Catatan</label>
+                          <textarea name="note" id="note" class="form-control"></textarea>
                         </div>
                       </div>
                     </div>

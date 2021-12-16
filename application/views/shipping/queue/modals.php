@@ -16,11 +16,7 @@
 							<tr>
 								<th>Kode barang</th>
 								<th>Nama barang</th>
-								<th>Harga barang pokok</th>
-								<th>Harga barang jual</th>
 								<th>Jumlah barang (unit)</th>
-								<th>Potongan harga barang</th>
-								<th>Total harga <small>(HP &times; JML) - PHB</small></th>
 							</tr>
 						</thead>
 						<tbody id="tbl_order">
@@ -29,13 +25,6 @@
 					</table>
 				</div>
 
-			</div>
-			<!-- /.card-body -->
-			<div class="card-footer">
-				<div class="float-right">
-					<!-- <button type="submit" class="btn btn-primary float-right">Save</button> -->
-					<button type="button" class="btn btn-default mr-2" data-dismiss="modal">Close</button>
-				</div>
 			</div>
 		</div>
 		<!-- /.modal-content -->

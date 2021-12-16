@@ -32,21 +32,34 @@ class DataOrder {
 					<tr>
 						<td>${field.item_id}</td>
 						<td>${field.item_name} ${(field.MG)?`(MG: ${field.MG})`:``}</td>
-						<td class="text-right">${field.capital_price}</td>
-						<td class="text-right">${field.selling_price}</td>
 						<td class="text-right">${Math.abs(field.quantity_order)} (${field.unit})</td>
-						<td class="text-right">${field.rabate}</td>
-						<td class="text-right">${currency(Math.abs((parseInt(field.selling_price.replace(/[,]|[.]/g,''))*parseInt(field.quantity_order))-parseInt(field.rabate.replace(/[,]|[.]/g,''))))}</td>
 					</tr>
 					`;
-					grand_total += (parseInt(field.selling_price.replace(/[,]|[.]/g,''))*parseInt(field.quantity_order))-parseInt(field.rabate.replace(/[,]|[.]/g,''))
 					$('#modal-detail tbody#tbl_order').append(html);
 				});
-				$('#modal-detail tbody#tbl_order').append(`
-				<tr>
-					<td colspan="7" class="text-right"><b>Total: ${currency(Math.abs(grand_total))}</b></td>
-				</tr>
-				`);
+			}
+		})
+	}
+
+	search_return(id, id_invoice){
+		$.ajax({
+			url: this.BASEURL+'API/order?id='+id,
+			method: 'GET',
+			dataType: 'JSON',
+			success: function(result){
+				$('#modal-detail tbody#tbl_order').empty();
+				$('label[for="code_order"]').text(`Kode order: ${result[0].order_id}`)
+				let grand_total = 0;
+				$.each(result, function(index, field){
+					let html = `
+					<tr>
+						<td>${field.item_id}</td>
+						<td>${field.item_name} ${(field.MG)?`(MG: ${field.MG})`:``}</td>
+						<td class="text-right">${(field.quantity_order > 0)?`Barang lebih ${Math.abs(field.quantity_order)}`:`Barang Kurang ${Math.abs(field.quantity_order)}`} (${field.unit})</td>
+					</tr>
+					`;
+					$('#modal-detail tbody#tbl_order').append(html);
+				});
 			}
 		})
 	}

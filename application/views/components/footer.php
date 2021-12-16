@@ -8,7 +8,7 @@
   </footer>
 
   <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
+  <aside class="control-sidebar control-sidebar-light">
     <!-- Control sidebar content goes here -->
     <?php $this->load->view('components/sidebar_config')?>
   </aside>
