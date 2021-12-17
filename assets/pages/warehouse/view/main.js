@@ -150,7 +150,7 @@ const main = () => {
 		let id;
 		let id_invoice;
 
-		$('button#detail-return').on('click', function(){
+		$('#detail-return*').on('click', function(){
 			id = $(this).parent().data('id');
 			id_invoice = $(this).parent().data('id_invoice');
 			data_order.search_return($(this).parent().data('id'));
