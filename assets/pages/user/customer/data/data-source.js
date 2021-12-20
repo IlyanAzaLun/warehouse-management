@@ -5,14 +5,22 @@ class DataSource {
 
 	dataTabels(){
 			let datatabels = $('#tbl_customer*').dataTable({
-			'dom': `<'row'<'col-6 col-lg col-xl'<'float-left'f>><'col-6 col-lg col-xl'<'float-right'l>>>
+			'dom': `<'row'<'col-6 col-lg col-xl'<'row'<'col-6float-left'f><'col-6 float-left'B>>><'col-6 col-lg col-xl'<'float-right'l>>>
 					<'row'<'col-12'tr>>
 					<'row'<'col-5 col-xs-12'i><'col-7 col-xs-12'p>>`,
 			'responsive': true,
 			'autoWidth': false,
 			'ordering': false,
-			'lengthChange': true
-
+			'lengthChange': true,
+			'buttons': [
+				{
+					text: 'Import',
+					className: 'btn-sm bg-primary',
+					action: function ( e, dt, node, config ) {
+						$('#modal-import').modal('show');
+					}
+				}
+			]
 		});
 		$('.content input#user_fullname').keyup(function(){
 			datatabels.fnFilter(this.value);

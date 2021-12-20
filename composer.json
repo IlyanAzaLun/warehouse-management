@@ -13,13 +13,14 @@
 	"require": {
 		"php": ">=5.3.7",
 		"ramsey/uuid": "^4.2",
-		"setasign/fpdf": "1.8.1"
+		"setasign/fpdf": "1.8.1",
+		"phpoffice/phpspreadsheet": "^1.20"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"
 	},
 	"require-dev": {
-		"mikey179/vfsStream": "1.1.*",
+		"mikey179/vfsstream": "1.1.*",
 		"phpunit/phpunit": "4.* || 5.*"
 	}
 }
