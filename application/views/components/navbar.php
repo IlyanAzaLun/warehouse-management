@@ -1,4 +1,5 @@
-<?php $curent = $this->uri->segment(1)==''?'dashboard': $this->uri->segment(1);?>  
+<?php $curent =
+    $this->uri->segment(1) == '' ? 'dashboard' : $this->uri->segment(1); ?>  
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -56,7 +57,7 @@
          -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="fa fa-bell"></i>
+          <i class="fa fa-bell fa-2x"></i>
           <span class="badge badge-warning navbar-badge" id="counter"></span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
@@ -69,7 +70,7 @@
 
       <li class="nav-item">
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-          <i class="fa fa-cogs"></i>
+          <i class="fa fa-cogs fa-2x"></i>
         </a>
       </li>
     </ul>

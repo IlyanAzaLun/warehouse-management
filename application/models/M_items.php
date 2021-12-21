@@ -7,8 +7,14 @@ class M_items extends CI_Model
 
     public function item_select($data = false)
     {
-        return $this->db->get_where($this->_table)->result_array();
+        if ($data) {
+            $this->db->where('item_code', $data);
+            return $this->db->get($this->_table)->row_array();
+        } else {
+            return $this->db->get($this->_table)->result_array();
+        }
     }
+
     public function item_insert($data)
     {
         return $this->db->insert('tbl_item', $data);

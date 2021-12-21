@@ -123,18 +123,18 @@ class Items extends CI_Controller
         );
         // $this->form_validation->set_rules('quantity', 'Quantity', 'required|trim');
         // $this->form_validation->set_rules('unit', 'Unit', 'required|trim');
-        $this->form_validation->set_rules(
-            'capital_price',
-            'Capital price',
-            'required|trim|callback_integer_check'
-        );
-        $this->form_validation->set_rules(
-            'selling_price',
-            'Selling price',
-            'required|trim|callback_integer_check|callback_greater_than_check[' .
-                $this->input->post('capital_price') .
-                ']'
-        );
+        // $this->form_validation->set_rules( // UNCOMMENT IF USE PRISE
+        //     'capital_price',
+        //     'Capital price',
+        //     'required|trim|callback_integer_check'
+        // );
+        // $this->form_validation->set_rules(
+        //     'selling_price',
+        //     'Selling price',
+        //     'required|trim|callback_integer_check|callback_greater_than_check[' .
+        //         $this->input->post('capital_price') .
+        //         ']'
+        // );                                  // UNCOMMENT IF USE PRISE
         if ($this->form_validation->run() == false) {
             $this->load->view('items/index', $this->data);
             $this->load->view('items/modals');
@@ -206,7 +206,7 @@ class Items extends CI_Controller
                 'info',
                 'success',
                 'Success',
-                ' congratulation success to entry new data!'
+                ' Berhasil input data!'
             );
             redirect('items');
         }
@@ -222,7 +222,7 @@ class Items extends CI_Controller
                 'info',
                 'error',
                 'Failed',
-                ' something worng to update data! ' . validation_errors()
+                ' informasi tidak sesuai, Coba lagi ' . validation_errors()
             );
             return false;
         }
@@ -243,7 +243,7 @@ class Items extends CI_Controller
                 'info',
                 'error',
                 'Failed',
-                ' something worng to update data! ' . validation_errors()
+                ' Gagal update data ' . validation_errors()
             );
             return false;
             redirect('items');
@@ -260,7 +260,7 @@ class Items extends CI_Controller
             'info',
             'error',
             'Failed',
-            ' something worng to update data! ' . validation_errors()
+            ' Gagal update data! ' . validation_errors()
         );
         redirect('items');
     }
@@ -393,7 +393,7 @@ class Items extends CI_Controller
                 'info',
                 'error',
                 'Failed',
-                ' something worng to update data! ' . validation_errors()
+                ' Gagal update data! ' . validation_errors()
             );
             redirect('items');
         } else {
@@ -459,7 +459,7 @@ class Items extends CI_Controller
                 'info',
                 'success',
                 'Success',
-                ' congratulation success to update data!'
+                ' berhasil update data!'
             );
             redirect('items');
         }
@@ -476,7 +476,7 @@ class Items extends CI_Controller
                 'info',
                 'error',
                 'Failed',
-                ' something worng to delete data! ' . validation_errors()
+                ' Gagal hapus data! ' . validation_errors()
             );
             redirect('items');
         } else {
@@ -490,7 +490,7 @@ class Items extends CI_Controller
                 'info',
                 'success',
                 'Success',
-                ' congratulation success to delete data!'
+                ' berhasil hapus data!'
             );
             redirect('items');
         }
@@ -536,7 +536,7 @@ class Items extends CI_Controller
                         'info',
                         'success',
                         ',Success !',
-                        ',to add your students'
+                        ',Berhasil import data!'
                     );
                     header('Location: ' . $_SERVER['HTTP_REFERER']);
                     exit();
@@ -545,7 +545,7 @@ class Items extends CI_Controller
                         'info',
                         'warning',
                         ',Error !',
-                        ',check again your data if updateed don\'t worry' .
+                        ', informasi yang diterima tidak sesuai, coba lagi' .
                             validation_errors()
                     );
                     header('Location: ' . $_SERVER['HTTP_REFERER']);
@@ -590,7 +590,7 @@ class Items extends CI_Controller
                     'info',
                     'error',
                     'Failed',
-                    ' something worng to update data! ' . validation_errors()
+                    ' Gagal update data! ' . validation_errors()
                 );
                 redirect('items');
                 return false;
@@ -604,7 +604,7 @@ class Items extends CI_Controller
                 'info',
                 'error',
                 'Failed',
-                ' something worng to update data! ' . validation_errors()
+                ' Gagal update data! ' . validation_errors()
             );
             redirect('items');
             return false;

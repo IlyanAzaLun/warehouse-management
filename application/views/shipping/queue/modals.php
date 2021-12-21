@@ -42,7 +42,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form method="post" action="<?=base_url('shipping/cancel')?>">
+			<form method="post" action="<?= base_url('shipping/cancel') ?>">
 				<div class="modal-body">
 					<p>Are you sure to <b class="text-danger">Cancel</b> invoice ?</p>
 					<input type="hidden" name="request" id="request" value="POST" readonly>
@@ -70,15 +70,15 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form method="post" action="<?=base_url('shipping/status')?>">
+			<form method="post" action="<?= base_url('shipping/status') ?>">
 				<div class="modal-body">
-					<p>Are you sure to <b class="text-danger"></b> invoice ?</p>
+					<p>Lakukan pengemasan dam pengiriman <b class="text-danger"></b>?</p>
 					<input type="hidden" name="invoice_id" id="invoice_id" readonly>
 					<input type="hidden" name="invoice_status" id="invoice_status" readonly>
 				</div>
 				<div class="modal-footer justify-content-between">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="submit" class="btn btn-danger">Yes do it&hellip;</button>
+					<button type="submit" class="btn btn-success">Kirim&hellip;</button>
 				</div>
 			</form>
 		</div>

@@ -16,7 +16,7 @@ class Component {
           <div class="col-5">
             <div class="form-group">
             	<small>Nama barang</small>
-              <input type="text" name="item_name[]" id="item_name" class="form-control" value="${result.item_name} ${(result.MG)?`(MG: ${result.MG})`:''}">
+              <input type="text" name="item_name[]" id="item_name" class="form-control" value="${result.item_name} ${(result.MG)?`(MG: ${result.MG})`:''}" readonly>
             </div>
           </div>
 		
@@ -46,43 +46,6 @@ class Component {
         </div>
 		<!-- order-item -->
 		`;$('div#order_item.card-body').append(html);
-		
-		$("input#item_name").autocomplete({
-			minLength: 0,
-			source: function(request, response) {
-				$.ajax({
-					url: location.href + "/warehouse/item",
-					method: "POST",
-					dataType: "json",
-					data: {
-						'request': 'GET', '_data': request.term
-					},
-					success: function(data) {
-						response(data);
-					}
-				});
-			},
-			select: function(event, ui){
-				$(this).val(`${ui.item.item_name} ${(result.MG)?`(MG: ${result.MG})`:''}`); // display the selected text
-				$(this).parents('div#order-item.row').find('#item_code').val(ui.item.item_code);
-				$(this).parents('div#order-item.row').find('#current').val(ui.item.quantity);
-				$(this).parents('div#order-item.row').find('#unit').val(ui.item.unit);
-				$(this).parents('div#order-item.row').find('.input-group-text').text(ui.item.unit.toUpperCase());
-				//('input#item_id').val(ui.item.item_code); // display the selected text
-				return false;
-			},
-			focus: function( event, ui ) {
-				$(this).val(`${ui.item.item_name} ${(result.MG)?`(MG: ${result.MG})`:''}`); // display the selected text
-				$(this).parents('div#order-item.row').find('#item_code').val(ui.item.item_code);
-				$(this).parents('div#order-item.row').find('#current').val(ui.item.quantity);
-				$(this).parents('div#order-item.row').find('#unit').val(ui.item.unit);
-				$(this).parents('div#order-item.row').find('.input-group-text').text(ui.item.unit.toUpperCase());
-				// $('input#item_id').val(ui.item.item_code); // display the selected text
-				return false;
-			}
-			//you can write for select too
-			/*select:*/
-		})
 		// quantity value 
 		$('input#quantity').focusout(function () {
 			//lop each value of quantity and sum it.
