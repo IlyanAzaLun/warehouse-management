@@ -151,7 +151,7 @@
                     </div>
                     <!-- /.card-body -->
                   </div>
-                  <div class="card-footer">
+                  <div class="card-footer" id="save">
                     <div class="float-right">
                       <button type="submit" class="btn btn-primary float-right">Save</button>
                       <button type="cancel" class="btn btn-default mr-2">Cancel</button>
@@ -260,16 +260,17 @@
                           'invoice_id'
                       ] ?>">
                         <?= $invoice['status_item'] == '3'
-                            ? '<button class="btn btn-sm btn-success m-1" id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Checked</button>'
+                            ? '<button class="btn btn-sm btn-success m-1" id="status-item" data-variabel="status_item" data-toggle="modal">Checked</button>'
                             : ($invoice['status_item'] == '2'
-                                ? '<button class="btn btn-sm btn-warning m-1" id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Recheck on warehouse</button>'
+                                ? '<button class="btn btn-sm btn-warning m-1" id="status-item" data-variabel="status_item" data-toggle="modal">Recheck on warehouse</button>'
                                 : ($invoice['status_item'] == '1'
-                                    ? '<button class="btn btn-sm btn-warning m-1" id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Recheck on marketing</button>'
-                                    : '<button class="btn btn-sm btn-danger m-1"  id="status-item" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item">Uncheck</button>')) ?>
+                                    ? '<button class="btn btn-sm btn-warning m-1" id="status-item" data-variabel="status_item" data-toggle="modal">Recheck on marketing</button>'
+                                    : '<button class="btn btn-sm btn-danger m-1"  id="status-item" data-variabel="status_item" data-toggle="modal">Uncheck</button>')) ?>
                         <?= $invoice['status_validation'] == '1'
-                            ? '<button class="btn btn-sm btn-success m-1" id="status-item" data-variabel="status_validation" data-toggle="modal" data-target="#modal-status-item">Send</button>'
-                            : '<button class="btn btn-sm btn-secondary m-1" id="status-item" data-variabel="status_validation" data-toggle="modal" data-target="#modal-status-item">Hold</button>' ?>
+                            ? '<button class="btn btn-sm btn-success m-1" id="status-item" data-variabel="status_validation" data-toggle="modal">Send</button>'
+                            : '<button class="btn btn-sm btn-secondary m-1" id="status-item" data-variabel="status_validation" data-toggle="modal">Hold</button>' ?>
                       </td>
+                      <!--tambahkan untuk menambahkan aksi pada setiap button` data-target="#modal-status-item" ` -->
                     </tr>
 
                     <?php endforeach; ?>

@@ -13,7 +13,6 @@ const main = () => {
 	// notification
 	window.setInterval(function () {
 		data_invoice.get_status_notification(function(output){
-			console.log(output)
 			if(output.length > 0 ){
 				$('a.dropdown-item').parent().remove()
 				$('span#counter').text(output.length)
@@ -77,7 +76,7 @@ const main = () => {
 					$('input#contact_number').val((data.user_contact_phone)?`${data.user_contact_phone} (${data.owner_name})`:``);
 					$('textarea#address').val((data.user_contact_phone)?`${data.user_address}, ${data.village}, ${data['sub-district']}, ${data['district']}, ${data.province}, ${data.zip}`:``);
 				});
-				
+				$('input#item_name').focus();
 			})
 		});
 	})

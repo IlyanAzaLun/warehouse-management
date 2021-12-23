@@ -154,6 +154,7 @@ class Warehouse extends CI_Controller
                 $this->db->get('tbl_invoice')->num_rows() + 1
             ) . date('my');
 
+        $this->tmp = [];
         foreach ($this->input->post('item_code', true) as $key => $value) {
             $this->request['order']['order_id'][$key] = $order_id;
             $this->request['order']['item_code'][$key] = $this->input->post(
@@ -185,8 +186,8 @@ class Warehouse extends CI_Controller
             $this->request['order']['date'][$key] = time();
 
             $this->_check_quantity(
-                $this->input->post('item_code', true)[$key],
-                $this->input->post('quantity', true)[$key]
+                $this->input->post('item_code'),
+                $this->input->post('quantity')
             );
         }
 
@@ -241,19 +242,31 @@ class Warehouse extends CI_Controller
 
     private function _check_quantity($id, $quantity)
     {
-        $item = $this->M_items->item_select($id);
-        if ((int) $item['quantity'] - (int) $quantity < 0) {
-            Flasher::setFlash(
-                'info',
-                'error',
-                'Failed',
-                ' <b>data gagal ditambahkan</b> ' . validation_errors()
-            );
-            redirect('warehouse/queue');
-            return false;
-            die();
-        } else {
-            return true;
+        foreach ($id as $key => $value) {
+            $tmp_value = $value;
+            $tmp[$tmp_value][] = $quantity[$key];
+        }
+        foreach ($tmp as $key => $value) {
+            $result[] = [
+                'item_code' => $key,
+                'item_quantity' => array_sum($value),
+            ];
+        }
+        foreach ($result as $key => $value) {
+            $item = $this->M_items->item_select($value['item_code']);
+            if ((int) $item['quantity'] - (int) $value['item_quantity'] < 0) {
+                Flasher::setFlash(
+                    'info',
+                    'error',
+                    'Failed',
+                    ' <b>data gagal ditambahkan</b> ' . validation_errors()
+                );
+                redirect('warehouse/queue');
+                return false;
+                die();
+            } else {
+                return true;
+            }
         }
     }
 
@@ -261,6 +274,7 @@ class Warehouse extends CI_Controller
     {
         if ($this->input->post('request')) {
             if ($this->input->post('data')) {
+                $this->db->limit(5);
                 $this->data = $this->db
                     ->get_where('tbl_item', [
                         'item_code' => $this->input->post('data'),
@@ -282,6 +296,7 @@ class Warehouse extends CI_Controller
                     );
                 }
             } elseif ($this->input->post('_data')) {
+                $this->db->limit(5);
                 $this->db->like(
                     'item_name',
                     $this->input->post('_data'),
@@ -304,6 +319,7 @@ class Warehouse extends CI_Controller
                     );
                 }
             } else {
+                $this->db->limit(5);
                 echo json_encode($this->db->get('tbl_item')->result_array());
             }
         }

@@ -3,20 +3,25 @@ class Component {
 	
 	field(result){
 		const html = `
+		<!-- order-item -->
         <div class="row" id="order-item">
+
           <div class="col-3">
             <div class="form-group">
               <small>Kode barang</small>
               <input type="text" name="item_code[]" id="item_code" class="form-control" value="${result.item_code}" readonly>
             </div>
           </div>
+
           <div class="col-5">
             <div class="form-group">
             	<small>Nama barang</small>
               <input type="text" name="item_name[]" id="item-name" class="form-control" value="${result.item_name} ${(result.MG)?`(MG: ${result.MG})`:''}">
             </div>
           </div>
+		
 		  <div class="col-3">
+			<!-- text input -->
 			<div class="form-group">
 				<small>Jumlah barang</small>
 				<div class="input-group mb-3">
@@ -41,9 +46,6 @@ class Component {
         </div>
 		<!-- order-item -->
 		`;$('div#order_item.card-body').append(html);
-		$('button#remove_order_item').on('click', function(){
-			$(this).parents().closest('div.row#order-item').empty();
-		});
 		
 		$("input#item-name").autocomplete({
 			minLength: 0,
@@ -61,56 +63,106 @@ class Component {
 				});
 			},
 			select: function(event, ui){
-				$(this).val(`${ui.item.item_name} ${(ui.item.MG)?`(MG: ${ui.item.MG})`:''}`);
+				$(this).val(`${ui.item.item_name} ${(ui.item.MG)?`(MG: ${ui.item.MG})`:''}`); // display the selected text
 				$(this).parents('div#order-item.row').find('#item_code').val(ui.item.item_code);
 				$(this).parents('div#order-item.row').find('#current').val(ui.item.quantity);
 				$(this).parents('div#order-item.row').find('#unit').val(ui.item.unit);
 				$(this).parents('div#order-item.row').find('.input-group-text').text(ui.item.unit.toUpperCase());
+				//('input#item_id').val(ui.item.item_code); // display the selected text
 				return false;
 			},
 			focus: function( event, ui ) {
-				$(this).val(`${ui.item.item_name} ${(ui.item.MG)?`(MG: ${ui.item.MG})`:''}`);
+				$(this).val(`${ui.item.item_name} ${(ui.item.MG)?`(MG: ${ui.item.MG})`:''}`); // display the selected text
 				$(this).parents('div#order-item.row').find('#item_code').val(ui.item.item_code);
 				$(this).parents('div#order-item.row').find('#current').val(ui.item.quantity);
 				$(this).parents('div#order-item.row').find('#unit').val(ui.item.unit);
 				$(this).parents('div#order-item.row').find('.input-group-text').text(ui.item.unit.toUpperCase());
+				// $('input#item_id').val(ui.item.item_code); // display the selected text
 				return false;
 			}
+			//you can write for select too
+			/*select:*/
 		})
+		// quantity value 
 		$('input#quantity').focusout(function () {
+			//lop each value of quantity and sum it.
+			//compare with current quantity
 			let _total = [];
 			let unique_values = {};
 			let list_of_values = [];
-			let button = $('div#save button[type="submit"]');
 			$('input#item_code').each(function(item, field){
 				_total[item] = 0;
-				if(!unique_values[field.value]){
-					unique_values[field.value] = true;
-					list_of_values.push(field.value);
-					$(`input#item_code[value="${field.value}"]`).each(function(index, res){
-						_total[item] += parseInt( $(this).parents('div#order-item.row').find('input#quantity').val());
-					});
-				}else{
-					let element_quantity_code = $(`input#item_code[value="${field.value}"]`).parents('div#order-item.row')
-					$(`input#item_code[value="${field.value}"]`).each(function(index, res){
-						_total[item] += parseInt( $(this).parents('div#order-item.row').find('input#quantity').val());
-					});
-					if(element_quantity_code.find('input#current').val() < _total[item]){
-						Swal.fire({
-							icon: 'warning',
-							title: 'Oops...',
-							text: 'Jumlah item melampaui stok yang ada!',
-							}).then(()=>{
-								element_quantity_code.find('input#quantity').addClass('is-invalid');
-								button.prop('disabled', true);
-							});
-					}else{
-						element_quantity_code.find('input#quantity').removeClass('is-invalid');
-						button.prop('disabled', false);
-					}
-				}
+		    if(!unique_values[field.value]){
+		        //
+		        unique_values[field.value] = true;
+		        list_of_values.push(field.value);
+		    }
+		    else{
+		        //
+				$(`input#item_code[value="${field.value}"]`).each(function(index, res){
+					_total[item] += parseInt($(this).parents().closest('div#order-item.row').find('input#quantity').val());
+				});
+			    if($(`input#item_code[value="${field.value}"]`).parents().closest('div#order-item.row').find('input#current').val() < _total[item]){
+			    	$(`input#item_code[value="${field.value}"]`).parents().closest('div#order-item.row').find('input#quantity').addClass('is-invalid');
+			    	Swal.fire({
+						  icon: 'warning',
+						  title: 'Oops...',
+						  text: 'Jumlah item melampaui stok yang ada!',
+						}).then(()=>{
+							$('div#save button[type="submit"]').prop('disabled', true);
+						});
+			    }else{
+			    	$(`input#item_code[value="${field.value}"]`).parents().closest('div#order-item.row').find('input#quantity').removeClass('is-invalid');
+			    	$('div#save button[type="submit"]').prop('disabled', false);
+			    }
+		    }
 			})
 		})
+		// 
+		$('button#remove_order_item').on('click', function(){
+			$(this).parents().closest('div.row#order-item').empty();
+		});
+
+		$('input#item_selling_price, input#item_capital_price').keyup(function(){
+			$(this).val(new Intl.NumberFormat('en-EN', { maximumSignificantDigits: 9 }).format($(this).val().replace(/[,]|[.]/g,'')))
+		});
+
+		$('input#item_selling_price').focusout(function(){
+			if (parseInt($(this).val().replace(/[,]|[.]/g,'')) < parseInt($(this).parents().closest('div#order-item.row').find('input#item_capital_price').val().replace(/[,]|[.]/g,''))) {
+				Swal.fire({
+				  icon: 'warning',
+				  title: 'Oops...',
+				  text: 'Harga jual lebih kecil dari pada harga pokok!',
+				}).then(()=>{
+					$(this).addClass('is-invalid');
+				});
+			}else{
+				$(this).removeClass('is-invalid');
+			}
+		});
+		$('input#quantity').focusout(function(){
+			if (parseInt($(this).val()) > parseInt($(this).parents().closest('div#order-item.row').find('input#current').val())) {
+				Swal.fire({
+				  icon: 'warning',
+				  title: 'Oops...',
+				  text: 'Jumlah item melampaui stok yang ada!',
+				}).then(()=>{
+					$(this).addClass('is-invalid');
+					$('div#save button[type="submit"]').prop('disabled', true);
+				});
+			}else{
+				$(this).removeClass('is-invalid');
+				$('div#save button[type="submit"]').prop('disabled', false);
+			}
+		})
+
+		$('input#item_total_price').on('focus', function(){
+			$(this).val(new Intl.NumberFormat('en-EN', { maximumSignificantDigits: 9 }).format(parseInt($(this).parents().closest('#order-item').find('input#item_selling_price').val().replace(/[,]|[.]/g,''))*parseInt($(this).parents().closest('#order-item').find('input#quantity').val())))
+		});
+
+		$('input#rebate_price').keyup(function(){
+			$(this).val(new Intl.NumberFormat('en-EN', { maximumSignificantDigits: 9 }).format($(this).val().replace(/[,]|[.]/g,'')))
+		});
 	}
 }
 export default Component;
