@@ -27,7 +27,6 @@ class DataSource {
 					}
 				}
 			]
-
 		});
 		$('input#item_name').keyup(function(){
 			datatabels.fnFilter(this.value);
