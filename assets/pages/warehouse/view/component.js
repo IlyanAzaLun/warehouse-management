@@ -22,7 +22,7 @@ class Component {
 				<div class="input-group mb-3">
 					<input type="hidden" name="item_capital_price[]" id="item_capital_price" class="form-control" value="${result.capital_price}" placeholder="${result.capital_price}" required>
 					<input type="hidden" name="item_selling_price[]" id="item_selling_price" class="form-control" value="${result.selling_price}" placeholder="${result.selling_price}" required>
-					<input type="hidden" class="form-control" name="current[]" id="current" min="1" value="${parseInt(result.quantity)}" required>
+					<input type="hidden" class="form-control" name="current[]" id="current" value="${parseInt(result.quantity)}" required>
 					<input type="number" class="form-control" name="quantity[]" id="quantity" min="1" value="0" required>
 					<input type="hidden" class="form-control" name="unit[]" id="unit"  value="${result.unit}" required>
 					<input type="hidden" name="item_total_price[]" id="item_total_price" class="form-control" value="" placeholder="" readonly required>
@@ -34,12 +34,10 @@ class Component {
             </div>
           </div>
           <div class="col-1">
-            	<small>&nbsp;</small>
+            <small>&nbsp;</small>
           	<button type="button" class="btn btn-block btn-danger" id="remove_order_item"><i class="fa fa-tw fa-times"></i></button>
           </div>
-
         </div>
-		<!-- order-item -->
 		`;$('div#order_item.card-body').append(html);
 		$('button#remove_order_item').on('click', function(){
 			$(this).parents().closest('div.row#order-item').empty();
