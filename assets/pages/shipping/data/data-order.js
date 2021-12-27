@@ -5,6 +5,19 @@ class DataOrder {
 	}
 
 	dataTabels(){
+		// cancel
+		$('button#cancel').on('click', function(){
+			$('#modal-cancel input#invoice_id').val($(this).parent().data('id-invoice'));
+			$('#modal-cancel input#invoice_status').val((parseInt($(this).data('status')))?'0':'1');
+		});
+		// detail status
+		$('button#status-item').on('click', function(){
+			$('#modal-status-item b.text-danger').html($(this).data('variabel'));
+			$('#modal-status-item input#invoice_id').val($(this).parent().data('id'));
+			$('#modal-status-item input#invoice_status').val($(this).data('variabel'));
+		})
+	    // customer
+
 		let self = this;
 		let datatabels = $('#tbl_invoice*').dataTable({
 			'dom': `<'row'<'col-6 col-lg col-xl'<'float-left'f>><'col-6 col-lg col-xl'<'float-right'l>>>
@@ -12,8 +25,9 @@ class DataOrder {
 					<'row'<'col-5 col-xs-12'i><'col-7 col-xs-12'p>>`,
 			'responsive': true,
 			'autoWidth': false,
-			'ordering': false,
-			'lengthChange': true
+			'ordering': true,
+			'lengthChange': [[ 25, 50, 100, -1], [ 25, 50, 100, "All"]],
+			'pageLength': 25
 
 		});
 	}

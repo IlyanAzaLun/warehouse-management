@@ -34,18 +34,6 @@ const main = () => {
 		})
 	}, 6000)
 	// notification ./ end
-	// cancel
-	$('button#cancel').on('click', function(){
-		$('#modal-cancel input#invoice_id').val($(this).parent().data('id-invoice'));
-		$('#modal-cancel input#invoice_status').val((parseInt($(this).data('status')))?'0':'1');
-	});
-	// detail status
-	$('button#status-item').on('click', function(){
-		$('#modal-status-item b.text-danger').html($(this).data('variabel'));
-		$('#modal-status-item input#invoice_id').val($(this).parent().data('id'));
-		$('#modal-status-item input#invoice_status').val($(this).data('variabel'));
-	})
-    // customer
     // auto complete, get all, and find the customer
     $('input#fullname').focus(function(){
 		data_customer.user_info(function(output){

@@ -11,8 +11,28 @@ class M_items extends CI_Model
             $this->db->where('item_code', $data);
             return $this->db->get($this->_table)->row_array();
         } else {
+            $this->db->select(
+                'item_code
+                ,item_name
+                ,item_category
+                ,quantity
+                ,unit');
             return $this->db->get($this->_table)->result_array();
         }
+    }
+
+    public function item_select_by_code($data, $limit)
+    {
+        $this->db->limit($limit);
+        $this->db->where('item_code', $data);
+        return $this->db->get('tbl_item')->row_array();
+    }
+
+    public function item_select_like_name($data, $limit)
+    {
+        $this->db->limit($limit);
+        $this->db->like('item_name',$data,'both');
+        return $this->db->get('tbl_item')->result_array();        
     }
 
     public function item_insert($data)

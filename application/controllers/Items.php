@@ -29,6 +29,7 @@ class Items extends CI_Controller
         $this->load->model('M_menu');
         $this->load->model('M_items');
         $this->load->model('M_users');
+        date_default_timezone_set('Asia/Jakarta');
         $this->data['user'] = $this->M_users->user_select(
             $this->session->userdata('email')
         );
@@ -37,68 +38,28 @@ class Items extends CI_Controller
     {
         $this->data['plugins'] = [
             'css' => [
-                base_url(
-                    'assets/AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'
-                ),
-                base_url(
-                    'assets/AdminLTE-3.0.5/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'
-                ),
-                base_url(
-                    'assets/AdminLTE-3.0.5/plugins/datatables-buttons/css/buttons.bootstrap4.min.css'
-                ),
-                base_url(
-                    'assets/AdminLTE-3.0.5/plugins/datatables-select/css/select.bootstrap4.min.css'
-                ),
-                base_url(
-                    'assets/AdminLTE-3.0.5/plugins/datatables-autofill/css/autoFill.bootstrap4.min.css'
-                ),
-                base_url(
-                    'assets/AdminLTE-3.0.5/plugins/select2/css/select2.min.css'
-                ),
-                base_url(
-                    'assets/AdminLTE-3.0.5/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css'
-                ),
-                base_url(
-                    'assets/AdminLTE-3.0.5/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css'
-                ),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-buttons/css/buttons.bootstrap4.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-select/css/select.bootstrap4.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/css/autoFill.bootstrap4.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/select2/css/select2.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css'),
             ],
             'js' => [
-                base_url(
-                    'assets/AdminLTE-3.0.5/plugins/datatables/jquery.dataTables.min.js'
-                ),
-                base_url(
-                    'assets/AdminLTE-3.0.5/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js'
-                ),
-                base_url(
-                    'assets/AdminLTE-3.0.5/plugins/datatables-responsive/js/dataTables.responsive.min.js'
-                ),
-                base_url(
-                    'assets/AdminLTE-3.0.5/plugins/datatables-responsive/js/responsive.bootstrap4.min.js'
-                ),
-                base_url(
-                    'assets/AdminLTE-3.0.5/plugins/datatables-buttons/js/dataTables.buttons.min.js'
-                ),
-                base_url(
-                    'assets/AdminLTE-3.0.5/plugins/datatables-buttons/js/buttons.bootstrap4.min.js'
-                ),
-                base_url(
-                    'assets/AdminLTE-3.0.5/plugins/datatables-select/js/dataTables.select.min.js'
-                ),
-                base_url(
-                    'assets/AdminLTE-3.0.5/plugins/datatables-select/js/select.bootstrap4.min.js'
-                ),
-                base_url(
-                    'assets/AdminLTE-3.0.5/plugins/datatables-autofill/js/dataTables.autoFill.min.js'
-                ),
-                base_url(
-                    'assets/AdminLTE-3.0.5/plugins/datatables-autofill/js/autoFill.bootstrap4.min.js'
-                ),
-                base_url(
-                    'assets/AdminLTE-3.0.5/plugins/select2/js/select2.full.min.js'
-                ),
-                base_url(
-                    'assets/AdminLTE-3.0.5/plugins/inputmask/min/jquery.inputmask.bundle.min.js'
-                ),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables/jquery.dataTables.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/js/dataTables.responsive.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/js/responsive.bootstrap4.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-buttons/js/dataTables.buttons.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-buttons/js/buttons.bootstrap4.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-select/js/dataTables.select.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-select/js/select.bootstrap4.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/js/dataTables.autoFill.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/js/autoFill.bootstrap4.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/select2/js/select2.full.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/inputmask/min/jquery.inputmask.bundle.min.js'),
             ],
             'module' => [base_url('assets/pages/items/index.js')],
         ];
@@ -106,21 +67,9 @@ class Items extends CI_Controller
         $this->data['items'] = $this->M_items->item_select();
         $this->data['categorys'] = $this->M_menu->menu_category_select();
 
-        $this->form_validation->set_rules(
-            'category',
-            'Category item',
-            'required|trim'
-        );
-        $this->form_validation->set_rules(
-            'item_code',
-            'Code item',
-            'required|trim'
-        );
-        $this->form_validation->set_rules(
-            'item_name',
-            'Item name',
-            'required|trim'
-        );
+        $this->form_validation->set_rules('category','Category item','required|trim');
+        $this->form_validation->set_rules('item_code','Code item','required|trim');
+        $this->form_validation->set_rules('item_name','Item name','required|trim');
         // $this->form_validation->set_rules('quantity', 'Quantity', 'required|trim');
         // $this->form_validation->set_rules('unit', 'Unit', 'required|trim');
         // $this->form_validation->set_rules( // UNCOMMENT IF USE PRISE
@@ -140,73 +89,25 @@ class Items extends CI_Controller
             $this->load->view('items/modals');
         } else {
             $this->data = [
-                'item_category' => htmlspecialchars(
-                    $this->input->post('subcategory', true)
-                        ? $this->input->post('subcategory', true)
-                        : $this->input->post('category', true)
-                ),
-                'item_code' => htmlspecialchars(
-                    $this->input->post('item_code', true)
-                ),
-                'item_name' => htmlspecialchars(
-                    $this->input->post('item_name', true)
-                ),
+                'item_category' => htmlspecialchars($this->input->post('subcategory', true) ? $this->input->post('subcategory', true ): $this->input->post('category', true)),
+                'item_code' => htmlspecialchars($this->input->post('item_code', true)),
+                'item_name' => htmlspecialchars($this->input->post('item_name', true)),
                 'unit' => htmlspecialchars($this->input->post('unit', true)),
                 'quantity' => 0,
-                'MG' => htmlspecialchars(
-                    $this->input->post('MG', true)
-                        ? $this->input->post('MG', true)
-                        : ''
-                ),
-                'ML' => htmlspecialchars(
-                    $this->input->post('ML', true)
-                        ? $this->input->post('ML', true)
-                        : ''
-                ),
-                'VG' => htmlspecialchars(
-                    $this->input->post('VG', true)
-                        ? $this->input->post('VG', true)
-                        : ''
-                ),
-                'PG' => htmlspecialchars(
-                    $this->input->post('PG', true)
-                        ? $this->input->post('PG', true)
-                        : ''
-                ),
-                'falvour' => htmlspecialchars(
-                    $this->input->post('flavour', true)
-                        ? $this->input->post('flavour', true)
-                        : ''
-                ),
-                'customs' => htmlspecialchars(
-                    $this->input->post('customs', true)
-                        ? $this->input->post('customs', true)
-                        : ''
-                ),
-                'brand_1' => htmlspecialchars(
-                    $this->input->post('brand_1', true)
-                        ? $this->input->post('brand_1', true)
-                        : ''
-                ),
-                'brand_2' => htmlspecialchars(
-                    $this->input->post('brand_2', true)
-                        ? $this->input->post('brand_2', true)
-                        : ''
-                ),
-                'capital_price' => htmlspecialchars(
-                    $this->input->post('capital_price', true)
-                ),
-                'selling_price' => htmlspecialchars(
-                    $this->input->post('selling_price', true)
-                ),
+                'MG' => htmlspecialchars($this->input->post('MG', true) ? $this->input->post('MG', true): ''),
+                'ML' => htmlspecialchars($this->input->post('ML', true) ? $this->input->post('ML', true): ''),
+                'VG' => htmlspecialchars($this->input->post('VG', true) ? $this->input->post('VG', true): ''),
+                'PG' => htmlspecialchars($this->input->post('PG', true) ? $this->input->post('PG', true): ''),
+                'falvour' => htmlspecialchars($this->input->post('flavour', true) ? $this->input->post('flavour', true): ''),
+                'customs' => htmlspecialchars($this->input->post('customs', true) ? $this->input->post('customs', true): ''),
+                'brand_1' => htmlspecialchars($this->input->post('brand_1', true) ? $this->input->post('brand_1', true): ''),
+                'brand_2' => htmlspecialchars($this->input->post('brand_2', true) ? $this->input->post('brand_2', true): ''),
+                'capital_price' => htmlspecialchars($this->input->post('capital_price', true)),
+                'selling_price' => htmlspecialchars($this->input->post('selling_price', true)),
                 'note' => htmlspecialchars($this->input->post('note', true)),
             ];
             $this->M_items->item_insert($this->data);
-            Flasher::setFlash(
-                'info',
-                'success',
-                'Success',
-                ' Berhasil input data!'
+            Flasher::setFlash('info','success','Success',' Berhasil input data!'
             );
             redirect('items');
         }
@@ -218,12 +119,7 @@ class Items extends CI_Controller
             "The {field} must numeric {$value}"
         );
         if (!$value) {
-            Flasher::setFlash(
-                'info',
-                'error',
-                'Failed',
-                ' informasi tidak sesuai, Coba lagi ' . validation_errors()
-            );
+            Flasher::setFlash('info','error','Failed',' informasi tidak sesuai, Coba lagi ' . validation_errors());
             return false;
         }
         if (is_numeric((int) str_replace([',', '.'], ['', ''], $value))) {
@@ -239,11 +135,7 @@ class Items extends CI_Controller
             "The {field} field must be higher than {$value2}"
         );
         if (!$value) {
-            Flasher::setFlash(
-                'info',
-                'error',
-                'Failed',
-                ' Gagal update data ' . validation_errors()
+            Flasher::setFlash('info','error','Failed',' Gagal update data ' . validation_errors()
             );
             return false;
             redirect('items');
@@ -265,25 +157,83 @@ class Items extends CI_Controller
         redirect('items');
     }
 
+    public function update(){
+        $this->form_validation->set_rules('item_code','Code item','required|trim');
+        $this->form_validation->set_rules('item_name','Item name','required|trim');
+        $this->form_validation->set_rules('unit', 'Unit', 'required|trim');
+        // $this->form_validation->set_rules('quantity', 'Quantity', 'required|trim');
+        // $this->form_validation->set_rules(
+        //     'capital_price',
+        //     'Capital price',
+        //     'required|trim|callback_integer_check'
+        // );
+        // $this->form_validation->set_rules(
+        //     'selling_price',
+        //     'Selling price',
+        //     'required|trim|callback_integer_check|callback_greater_than_check[' .
+        //         $this->input->post('capital_price') .
+        //         ']',
+        //     ['greater_than' => 'The %s must greater than Capital price']
+        // );
+        if ($this->form_validation->run() == false) {
+            $this->data['title']     = 'Informasi barang';
+            $this->data['items']     = $this->M_items->item_select($this->input->get('id'));
+            $this->data['categorys'] = $this->M_menu->menu_category_select();
+            $this->load->view ('items/information', $this->data);
+        } else {
+            $this->data = [
+                'item_code' => htmlspecialchars($this->input->post('item_code', true)),
+                'item_name' => htmlspecialchars($this->input->post('item_name', true)),
+            // 'quantity'   => htmlspecialchars($this->input->post('quantity', true)),
+                'unit' => htmlspecialchars($this->input->post('unit', true)),
+                'MG' => htmlspecialchars($this->input->post('MG', true)? $this->input->post('MG', true): ''),
+                'ML' => htmlspecialchars($this->input->post('ML', true)? $this->input->post('ML', true): ''),
+                'VG' => htmlspecialchars($this->input->post('VG', true)? $this->input->post('VG', true): ''),
+                'PG' => htmlspecialchars($this->input->post('PG', true)? $this->input->post('PG', true): ''),
+                'falvour' => htmlspecialchars($this->input->post('falvour', true)? $this->input->post('falvour', true): ''),
+                'customs' => htmlspecialchars($this->input->post('customs', true)? $this->input->post('customs', true): ''),
+                'brand_1' => htmlspecialchars($this->input->post('brand_1', true)? $this->input->post('brand_1', true): ''),
+                'brand_2' => htmlspecialchars($this->input->post('brand_2', true)? $this->input->post('brand_2', true): ''),
+                'capital_price' => htmlspecialchars($this->input->post('capital_price', true)),
+                'selling_price' => htmlspecialchars($this->input->post('selling_price', true)),
+                'note' => htmlspecialchars($this->input->post('note', true)),
+            ];
+            $this->M_items->item_update($this->data);
+            Flasher::setFlash('info','success','Success',' berhasil update data!');
+            redirect('items');
+        }
+    }
+    public function history()
+    {
+        $this->data['plugins'] = [
+            'css' => [
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'),
+            ],
+            'js' => [
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables/jquery.dataTables.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/js/dataTables.responsive.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/js/responsive.bootstrap4.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/select2/js/select2.full.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/inputmask/min/jquery.inputmask.bundle.min.js'),
+            ],
+            'module' => [base_url('assets/pages/items/index.js')],
+        ];
+        $this->db->where('item_code', $this->input->get('id'));
+        $this->db->order_by('update_at', 'DESC');
+        $this->data['history'] = $this->db->get('tbl_item_history')->result_array();
+        $this->data['title']= 'Informasi histori barang';
+        $this->load->view ('items/history', $this->data);
+    }
+
+
     public function get_code()
     {
         echo json_encode(
-            $this->db
-                ->get_where('tbl_item', [
+            $this->db->get_where('tbl_item', [
                     'item_category' => $this->input->post('data'),
-                ])
-                ->num_rows()
-        );
-    }
-
-    public function get_item()
-    {
-        echo json_encode(
-            $this->db
-                ->get_where('tbl_item', [
-                    'item_code' => $this->input->post('data'),
-                ])
-                ->row_array()
+                ])->num_rows()
         );
     }
 
@@ -291,11 +241,9 @@ class Items extends CI_Controller
     {
         if ($this->input->post('request')) {
             if ($this->input->post('data')) {
-                $this->data = $this->db
-                    ->get_where('tbl_item', [
+                $this->data = $this->db->get_where('tbl_item', [
                         'item_code' => $this->input->post('data'),
-                    ])
-                    ->row_array();
+                    ])->row_array();
                 if ($this->data) {
                     echo json_encode($this->data);
                 } else {
@@ -338,132 +286,7 @@ class Items extends CI_Controller
             }
         }
     }
-    public function get_item_history_order()
-    {
-        $this->db->where('item_id', $this->input->post('item_id'));
-        $this->db->where('user_id', $this->input->post('user_id'));
-        $this->db->order_by('date', 'DESC');
-        $this->data = $this->db->get('tbl_order')->result_array();
-        if ($this->data) {
-            echo json_encode($this->data);
-        } else {
-            echo json_encode(
-                $data = [
-                    '0' => [
-                        'item_id' => 'Not Found',
-                        'capital_price' => 0,
-                        'selling_price' => 0,
-                        'quantity' => 0,
-                        'rabate' => 0,
-                    ],
-                ]
-            );
-        }
-    }
 
-    public function update()
-    {
-        $this->form_validation->set_rules(
-            'item_code',
-            'Code item',
-            'required|trim'
-        );
-        $this->form_validation->set_rules(
-            'item_name',
-            'Item name',
-            'required|trim'
-        );
-        // $this->form_validation->set_rules('quantity', 'Quantity', 'required|trim');
-        $this->form_validation->set_rules('unit', 'Unit', 'required|trim');
-        $this->form_validation->set_rules(
-            'capital_price',
-            'Capital price',
-            'required|trim|callback_integer_check'
-        );
-        $this->form_validation->set_rules(
-            'selling_price',
-            'Selling price',
-            'required|trim|callback_integer_check|callback_greater_than_check[' .
-                $this->input->post('capital_price') .
-                ']',
-            ['greater_than' => 'The %s must greater than Capital price']
-        );
-        if ($this->form_validation->run() == false) {
-            Flasher::setFlash(
-                'info',
-                'error',
-                'Failed',
-                ' Gagal update data! ' . validation_errors()
-            );
-            redirect('items');
-        } else {
-            $this->data = [
-                'item_code' => htmlspecialchars(
-                    $this->input->post('item_code', true)
-                ),
-                'item_name' => htmlspecialchars(
-                    $this->input->post('item_name', true)
-                ),
-                // 'quantity'   => htmlspecialchars($this->input->post('quantity', true)),
-                'unit' => htmlspecialchars($this->input->post('unit', true)),
-                'MG' => htmlspecialchars(
-                    $this->input->post('MG', true)
-                        ? $this->input->post('MG', true)
-                        : ''
-                ),
-                'ML' => htmlspecialchars(
-                    $this->input->post('ML', true)
-                        ? $this->input->post('ML', true)
-                        : ''
-                ),
-                'VG' => htmlspecialchars(
-                    $this->input->post('VG', true)
-                        ? $this->input->post('VG', true)
-                        : ''
-                ),
-                'PG' => htmlspecialchars(
-                    $this->input->post('PG', true)
-                        ? $this->input->post('PG', true)
-                        : ''
-                ),
-                'falvour' => htmlspecialchars(
-                    $this->input->post('falvour', true)
-                        ? $this->input->post('falvour', true)
-                        : ''
-                ),
-                'customs' => htmlspecialchars(
-                    $this->input->post('customs', true)
-                        ? $this->input->post('customs', true)
-                        : ''
-                ),
-                'brand_1' => htmlspecialchars(
-                    $this->input->post('brand_1', true)
-                        ? $this->input->post('brand_1', true)
-                        : ''
-                ),
-                'brand_2' => htmlspecialchars(
-                    $this->input->post('brand_2', true)
-                        ? $this->input->post('brand_2', true)
-                        : ''
-                ),
-                'capital_price' => htmlspecialchars(
-                    $this->input->post('capital_price', true)
-                ),
-                'selling_price' => htmlspecialchars(
-                    $this->input->post('selling_price', true)
-                ),
-                'note' => htmlspecialchars($this->input->post('note', true)),
-            ];
-            $this->M_items->item_update($this->data);
-            Flasher::setFlash(
-                'info',
-                'success',
-                'Success',
-                ' berhasil update data!'
-            );
-            redirect('items');
-        }
-    }
     public function delete()
     {
         $this->form_validation->set_rules(
@@ -523,8 +346,6 @@ class Items extends CI_Controller
                 } else {
                     $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
                 }
-                // $reader = new \PhpOffice\PhpSpreadsheet\IOFactory();
-                // file path
                 $spreadsheet = $reader->load($_FILES['file']['tmp_name']);
                 $allDataInSheet = $spreadsheet
                     ->getActiveSheet()

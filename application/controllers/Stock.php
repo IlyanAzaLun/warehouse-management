@@ -59,16 +59,21 @@ class Stock extends CI_Controller {
 		);
 		$this->data['title'] = 'Manajemen persediaan barang';
 		$this->data['items'] = $this->M_items->item_select();
-		$this->data['categorys'] = $this->M_menu->menu_category_select();
 
+		$this->load->view('stock/index', $this->data);
+		$this->load->view('stock/modals');
+	}
+	public function restock()
+	{
 		$this->form_validation->set_rules('item_code', 'Code item', 'required|trim');
 		$this->form_validation->set_rules('quantity', 'Quantity', 'required|trim');
 		$this->form_validation->set_rules('unit', 'Unit item', 'required|trim');
 		$this->form_validation->set_rules('capital_price', 'Capital price', 'required|trim');
 		$this->form_validation->set_rules('selling_price', 'Selling price', 'required|trim|greater_than['.$this->input->post('capital_price').']');
 		if ($this->form_validation->run()==false) {
-			$this->load->view('stock/index', $this->data);
-			$this->load->view('stock/modals');
+			$this->data['title'] = 'Tambah persediaan barang';
+			$this->data['items'] = $this->M_items->item_select($this->input->get('id'));
+			$this->load->view('stock/restock', $this->data);
 		}else{
 			$this->_history_insert();
 			Flasher::setFlash('info', 'success', 'Success', ' congratulation success to entry data!');
@@ -92,23 +97,5 @@ class Stock extends CI_Controller {
 			'selling_price' => htmlspecialchars($this->input->post('selling_price', true)),
 		];
 		$this->M_stock->history_item_insert($this->request);
-	}
-
-	/* not used
-	public function getcode()
-	{
-		echo json_encode($this->db->get_where('tbl_item', ['item_category'=>$this->input->post('data')])->num_rows());
-	}
-	*/
-
-	public function getitem()
-	{
-		echo json_encode($this->db->get_where('tbl_item', ['item_code'=>$this->input->post('data')])->row_array());
-	}
-
-	public function gethistory()
-	{
-		$this->db->order_by('update_at', 'DESC');
-		echo json_encode($this->db->get_where('tbl_item_history', ['item_code'=>$this->input->post('data')])->result_array());
 	}
 }

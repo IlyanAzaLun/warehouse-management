@@ -45,8 +45,6 @@
                         <th>Kode barang</th>
                         <th>Nama barang</th>
                         <th>Jumlah</th>
-                        <th>Harga pokok</th>
-                        <th>Harga jual</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -55,16 +53,14 @@
                         <tr>
                           <th scope="row" width="5px"><?=++$key?></th>
                           <td>
-                            <div class="btn-group d-flex justify-content-center" data-id="<?=$item['item_code']?>">
-                              <button class="btn btn-sm btn-default" id="add-stock" data-toggle="modal" data-target="#modal-add-stock"><i class="fa fa-tw fa-plus"></i></button>
-                              <button class="btn btn-sm btn-default" id="detail" data-toggle="modal" data-target="#modal-detail"><i class="fa fa-tw fa-search-plus"></i></button>
+                            <div class="btn-group d-flex justify-content-center">
+                              <a href="<?= base_url('stock/restock')?>?id=<?=$item['item_code']?>" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-tw fa-plus"></i></a>
+                              <a href="<?= base_url('item/history')?>?id=<?=$item['item_code']?>" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-tw fa-search-plus"></i></a>
                             </div>
                           </td>
                           <td><?=$item['item_code']?></td>
                           <td><?=$item['item_name']?></td>
                           <td><?=$item['quantity']?> (<?=$item['unit']?>)</td>
-                          <td><?=$item['capital_price']?></td>
-                          <td><?=$item['selling_price']?></td>
                         </tr>
 
                       <?php endforeach ?>

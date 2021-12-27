@@ -84,15 +84,16 @@ class Component {
 			let button = $('div#save button[type="submit"]');
 			$('input#item_code').each(function(item, field){
 				_total[item] = 0;
+				let parent = $(`input#item_code[value="${field.value}"]`);
 				if(!unique_values[field.value]){
 					unique_values[field.value] = true;
 					list_of_values.push(field.value);
-					$(`input#item_code[value="${field.value}"]`).each(function(index, res){
+					parent.each(function(index, res){
 						_total[item] += parseInt( $(this).parents('div#order-item.row').find('input#quantity').val());
 					});
 				}else{
-					let element_quantity_code = $(`input#item_code[value="${field.value}"]`).parents('div#order-item.row')
-					$(`input#item_code[value="${field.value}"]`).each(function(index, res){
+					let element_quantity_code = parent.parents('div#order-item.row')
+					parent.each(function(index, res){
 						_total[item] += parseInt( $(this).parents('div#order-item.row').find('input#quantity').val());
 					});
 					if(element_quantity_code.find('input#current').val() < _total[item]){

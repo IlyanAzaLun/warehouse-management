@@ -26,12 +26,9 @@
         <div class="container-fluid">
 
           <!-- insert -->
-          <form action="<?= base_url(
-              'warehouse/queue'
-          ) ?>" method="post" id="insert">
+          <form action="<?= base_url('warehouse/queue') ?>" method="post" id="insert">
             <div class="row">
 
-              
               <div class="col-sm-12 col-lg-12">
                   <!-- /.col -->          
 
@@ -50,41 +47,29 @@
 
                         <div class="col-sm-12">
                           <div class="form-group">
-                            <input type="text" name="user_id" id="user_id" class="form-control" placeholder="customer_id" value="<?= set_value(
-                                'user_id'
-                            ) ?>" readonly>
+                            <input type="text" name="user_id" id="user_id" class="form-control" placeholder="customer_id" value="<?= set_value('user_id') ?>" readonly>
                           </div>
                         </div>
 
                         <div class="col-sm-12 col-lg-6">
                           <div class="form-group">
                             <label for="fullname">Nama toko</label>
-                            <input type="text" name="fullname" id="fullname" class="form-control" value="<?= set_value(
-                                'fullname'
-                            ) ?>" required>
-                            <?= form_error(
-                                'user_id',
-                                '<small class="text-danger">',
-                                '</small>'
-                            ) ?>
+                            <input type="text" name="fullname" id="fullname" class="form-control" value="<?= set_value('fullname') ?>" required>
+                            <?= form_error('user_id','<small class="text-danger">','</small>') ?>
                           </div>
                         </div>
 
                         <div class="col-sm-12 col-lg-6">
                           <div class="form-group">
                             <label for="contact_number">Nomor kontak <small class="text-primary">(whatsapp)</small></label>
-                            <input type="text" name="contact_number" id="contact_number" class="form-control" value="<?= set_value(
-                                'contact_number'
-                            ) ?>" required readonly>
+                            <input type="text" name="contact_number" id="contact_number" class="form-control" value="<?= set_value('contact_number') ?>" required readonly>
                           </div>
                         </div>
 
                         <div class="col-sm-12">
                           <div class="form-group">
                             <label for="address">Alamat atau tujuan</label>
-                            <textarea type="text" name="address" id="address" class="form-control" required readonly><?= set_value(
-                                'address'
-                            ) ?></textarea>
+                            <textarea type="text" name="address" id="address" class="form-control" required readonly><?= set_value('address') ?></textarea>
                           </div>
                         </div>
                       </div>
@@ -117,21 +102,9 @@
                           <input required type="hidden" id="item_id" class="form-control" autocomplete="off">
                           <input required type="text" id="item_name" class="form-control" placeholder="Cari barang..." autocomplete="off">
                         </div>
-                        <?= form_error(
-                            'item_name[]',
-                            '<small class="text-danger">',
-                            '</small>'
-                        ) ?>
-                        <?= form_error(
-                            'quantity[]',
-                            '<small class="text-danger">',
-                            '</small>'
-                        ) ?>
-                        <?= form_error(
-                            'unit[]',
-                            '<small class="text-danger">',
-                            '</small>'
-                        ) ?>
+                        <?= form_error('item_name[]','<small class="text-danger">','</small>') ?>
+                        <?= form_error('quantity[]','<small class="text-danger">','</small>') ?>
+                        <?= form_error('unit[]','<small class="text-danger">','</small>') ?>
                       </div>
                       <div class="col-2">
                         <label for="">&nbsp;</label>
@@ -158,7 +131,6 @@
                     </div>
                   </div>
                 </div>
-                
 
               </div>
             </div>
@@ -195,27 +167,13 @@
                     <tr>
                       <th scope="row" width="5px"><?= ++$key ?></th>
                       <td>
-                        <div class="btn-group d-flex justify-content-center" data-id="<?= $invoice[
-                            'invoice_order_id'
-                        ] ?>" data-id-invoice="<?= $invoice['invoice_id'] ?>">
+                        <div class="btn-group d-flex justify-content-center" data-id="<?= $invoice['invoice_order_id'] ?>" data-id-invoice="<?= $invoice['invoice_id'] ?>">
                           <!-- // -->
-                          <!-- <a onclick="return false;" href="<?= base_url(
-                              'warehouse/info'
-                          ) ?>?id=<?= $invoice[
-    'invoice_id'
-] ?>" target="_blank" class="btn btn-sm btn-default" id="info"><i class="fa fa-tw fa-expand-alt"></i></a> -->
-                          <!-- <a onclick="return false;" href="<?= base_url(
-                              'warehouse/update'
-                          ) ?>?id=<?= $invoice[
-    'invoice_id'
-] ?>" target="_blank" class="btn btn-sm btn-default" id="update"><i class="fa fa-tw fa-pencil-alt"></i></a> -->
+                          <!-- <a onclick="return false;" href="<?= base_url('warehouse/info') ?>?id=<?= $invoice['invoice_id'] ?>" target="_blank" class="btn btn-sm btn-default" id="info"><i class="fa fa-tw fa-expand-alt"></i></a> -->
+                          <!-- <a onclick="return false;" href="<?= base_url('warehouse/update') ?>?id=<?= $invoice['invoice_id'] ?>" target="_blank" class="btn btn-sm btn-default" id="update"><i class="fa fa-tw fa-pencil-alt"></i></a> -->
                           <!-- // -->
-
                           <button class="btn btn-sm btn-default" id="detail-order" data-toggle="modal" data-target="#modal-detail"><i class="fa fa-tw fa-search-plus"></i></button>
-
-                          <?php if (
-                              boolval((int) $invoice['status_active'])
-                          ): ?>
+                          <?php if (boolval((int) $invoice['status_active'])): ?>
                           <button class="btn btn-sm btn-default" id="cancel" data-toggle="modal" data-target="#modal-cancel" data-status="<?= $invoice[
                               'status_active'
                           ] ?>"><i class="fa fa-tw fa-ban"></i></button>
@@ -232,26 +190,17 @@
                       </td>
                       <td>
                         <small>
-                          <?= date('d F Y - H:m:s', $invoice['date']) ?></span>
+                          <?= $invoice['date'] ?></span>
                         </small>
                       </td>
                       <td>
                         <small>
-                          <a href="<?= base_url(
-                              'customer/' . $invoice['to_customer_destination']
-                          ) ?>">
+                          <a href="<?= base_url('customer/' . $invoice['to_customer_destination']) ?>">
                             <?= $invoice['user_fullname'] ?>
                           </a>
-                          <p><?= $invoice['user_address'] ?>,<?= $invoice[
-    'village'
-] ?><br><?= $invoice['sub-district'] ?>,<?= $invoice[
-    'district'
-] ?>,<?= $invoice['province'] ?>,<?= $invoice['zip'] ?></p>
-                          <a href="https://wa.me/<?= $invoice[
-                              'user_contact_phone'
-                          ] ?>" target="_blank"><?= $invoice[
-    'user_contact_phone'
-] ?></a>
+                          <p><?= $invoice['user_address'] ?>,<?= $invoice['village'] ?><br>
+                             <?= $invoice['sub-district'] ?>,<?= $invoice['district'] ?>,<?= $invoice['province'] ?>,<?= $invoice['zip'] ?></p>
+                          <a href="https://wa.me/<?= $invoice['user_contact_phone'] ?>" target="_blank"><?= $invoice['user_contact_phone'] ?></a>
 
                         </small>
                       </td>
@@ -311,28 +260,14 @@
                     <tr>
                       <th scope="row" width="5px"><?= ++$key ?></th>
                       <td>
-                        <div class="btn-group d-flex justify-content-center" data-id="<?= $return[
-                            'invoice_order_id'
-                        ] ?>" data-id-invoice="<?= $return['invoice_id'] ?>">
+                        <div class="btn-group d-flex justify-content-center" data-id="<?= $return['invoice_order_id'] ?>" data-id-invoice="<?= $return['invoice_id'] ?>">
                           <!-- // -->
-                          <!-- <a onclick="return false;" href="<?= base_url(
-                              'shipping/update'
-                          ) ?>?id=<?= $return[
-    'invoice_id'
-] ?>" target="_blank" class="btn btn-sm btn-default" id="update"><i class="fa fa-tw fa-pencil-alt"></i></a> -->
+                          <!-- <a onclick="return false;" href="<?= base_url('shipping/update') ?>?id=<?= $return['invoice_id'] ?>" target="_blank" class="btn btn-sm btn-default" id="update"><i class="fa fa-tw fa-pencil-alt"></i></a> -->
                           <!-- // -->
-                          
                           <button class="btn btn-sm btn-default" id="detail-return" data-toggle="modal" data-target="#modal-detail"><i class="fa fa-tw fa-search-plus"></i></button>
-                          <!-- <a href="<?= base_url(
-                              'shipping/return'
-                          ) ?>?id=<?= $return[
-    'invoice_id'
-] ?>" target="_blank" class="btn btn-sm btn-default" id="info"><i class="fa fa-tw fa-undo-alt"></i></a> -->
-
+                          <!-- <a href="<?= base_url('shipping/return') ?>?id=<?= $return['invoice_id'] ?>" target="_blank" class="btn btn-sm btn-default" id="info"><i class="fa fa-tw fa-undo-alt"></i></a> -->
                           <?php if (boolval((int) $return['status_active'])): ?>
-                          <!-- <button class="btn btn-sm btn-default" id="cancel" data-toggle="modal" data-target="#modal-cancel" data-status="<?= $return[
-                              'status_active'
-                          ] ?>"><i class="fa fa-tw fa-ban"></i></button> -->
+                          <!-- <button class="btn btn-sm btn-default" id="cancel" data-toggle="modal" data-target="#modal-cancel" data-status="<?= $return['status_active'] ?>"><i class="fa fa-tw fa-ban"></i></button> -->
                           <?php endif; ?>
                         </div>
                       </td>
@@ -354,28 +289,15 @@
                       </td>
                       <td>
                         <small>
-                          <a href="<?= base_url(
-                              'customer/' . $return['to_customer_destination']
-                          ) ?>">
+                          <a href="<?= base_url('customer/' . $return['to_customer_destination']) ?>">
                             <?= $return['user_fullname'] ?>
                           </a>
-                          <p><?= $return['user_address'] ?>,<?= $return[
-    'village'
-] ?><br><?= $return['sub-district'] ?>,<?= $return['district'] ?>,<?= $return[
-    'province'
-] ?>,<?= $return['zip'] ?></p>
-                          <a href="https://wa.me/<?= $return[
-                              'user_contact_phone'
-                          ] ?>" target="_blank"><?= $return[
-    'user_contact_phone'
-] ?></a>
-
+                          <p><?= $return['user_address'] ?>,<?= $return['village'] ?><br><?= $return['sub-district'] ?>,<?= $return['district'] ?>,<?= $return['province'] ?>,<?= $return['zip'] ?></p>
+                          <a href="https://wa.me/<?= $return['user_contact_phone'] ?>" target="_blank"><?= $return['user_contact_phone'] ?></a>
                         </small>
                       </td>
                       <td><small><?= $return['note'] ?></small></td>
-                      <td id="validation" class="text-right" data-id="<?= $return[
-                          'invoice_reverence'
-                      ] ?>">
+                      <td id="validation" class="text-right" data-id="<?= $return['invoice_reverence'] ?>">
                         <!-- <?= $return['status_item'] == '3'
                             ? '<button class="btn btn-sm btn-success m-1" id="status-item-return" data-variabel="status_item" data-toggle="modal" data-target="#modal-status-item-return">Checked</button>'
                             : ($return['status_item'] == '2'

@@ -74,7 +74,7 @@
                       </td>
                       <td>
                         <small>
-                          <?=date('d F Y - H:m:s', $invoice['date'])?></span>
+                          <?=$invoice['date']?></span>
                         </small>
                       </td>
                       <td>

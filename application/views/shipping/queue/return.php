@@ -123,7 +123,7 @@
                               <?=$key+1?>.
                             </td>
                             <td class="col-8">
-                              <input type="hidden" name="item_code[]" class="form-control" value="<?=$order['item_id']?>">
+                              <input type="hidden" name="item_code[]" class="form-control" value="<?=$order['item_code']?>">
                               <?=$order['item_name']?> <?=($order['MG'])?'(MG: '.$order['MG'].')':'';?>
                             </td>
                             <td class="text-center col-2">
