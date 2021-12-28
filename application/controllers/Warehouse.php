@@ -37,7 +37,8 @@ class Warehouse extends CI_Controller
     {
         $this->data['title'] = 'Buat antrian pesanan barang';
         $this->data['invoices'] = $this->M_invoice->invoice_history_select(false,'INV/SEL/');
-        $this->data['plugins'] = ['css' => [
+        $this->data['plugins'] = [
+            'css' => [
                 base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'),
                 base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'),
             ],

@@ -5,7 +5,7 @@ class Component {
 		const html = `
         <div class="row" id="order-item">
           <div class="col-3">
-            <div class="form-group">
+            <div class="form-group" id="field-item_code">
               <small>Kode barang</small>
               <input type="text" name="item_code[]" id="item_code" class="form-control" value="${result.item_code}" readonly>
             </div>
@@ -19,7 +19,7 @@ class Component {
 		  <div class="col-3">
 			<div class="form-group">
 				<small>Jumlah barang</small>
-				<div class="input-group mb-3">
+				<div class="input-group mb-3" id="field-item_attribute">
 					<input type="hidden" name="item_capital_price[]" id="item_capital_price" class="form-control" value="${result.capital_price}" placeholder="${result.capital_price}" required>
 					<input type="hidden" name="item_selling_price[]" id="item_selling_price" class="form-control" value="${result.selling_price}" placeholder="${result.selling_price}" required>
 					<input type="hidden" class="form-control" name="current[]" id="current" value="${parseInt(result.quantity)}" required>
@@ -60,18 +60,22 @@ class Component {
 			},
 			select: function(event, ui){
 				$(this).val(`${ui.item.item_name} ${(ui.item.MG)?`(MG: ${ui.item.MG})`:''}`);
-				$(this).parents('div#order-item.row').find('#item_code').val(ui.item.item_code);
-				$(this).parents('div#order-item.row').find('#current').val(ui.item.quantity);
+				$(this).parents('div#order-item.row').find('#item_code').remove();
+				$(this).parents('div#order-item.row').find('#field-item_code').append(`
+	              <input type="text" name="item_code[]" id="item_code" class="form-control" value="${ui.item.item_code}" readonly>
+				`);
+				// $(this).parents('div#order-item.row').find('#item_code').val(ui.item.item_code);
+				$(this).parents('div#order-item.row').find('#current').remove();
+				$(this).parents('div#order-item.row').find('#field-item_attribute').append(`
+				  <input type="hidden" class="form-control" name="current[]" id="current" value="${parseInt(ui.item.quantity)}" required>
+				`);
+				// $(this).parents('div#order-item.row').find('#current').val(ui.item.quantity);
 				$(this).parents('div#order-item.row').find('#unit').val(ui.item.unit);
 				$(this).parents('div#order-item.row').find('.input-group-text').text(ui.item.unit.toUpperCase());
 				return false;
 			},
 			focus: function( event, ui ) {
 				$(this).val(`${ui.item.item_name} ${(ui.item.MG)?`(MG: ${ui.item.MG})`:''}`);
-				$(this).parents('div#order-item.row').find('#item_code').val(ui.item.item_code);
-				$(this).parents('div#order-item.row').find('#current').val(ui.item.quantity);
-				$(this).parents('div#order-item.row').find('#unit').val(ui.item.unit);
-				$(this).parents('div#order-item.row').find('.input-group-text').text(ui.item.unit.toUpperCase());
 				return false;
 			}
 		})
@@ -112,7 +116,8 @@ class Component {
 						validation(_total[item])
 					});
 				}
-			})
+			});
+			console.log(_total);
 		})
 	}
 }

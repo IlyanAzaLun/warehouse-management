@@ -126,7 +126,7 @@ const queue = () => {
 	// end item
 
 	//detail order, return
-	function detail_order() {
+ 	function detail_order() {
 		let id;
 		let id_invoice;
 
