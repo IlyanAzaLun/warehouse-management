@@ -1,4 +1,4 @@
-<?php $this->load->view('components/header')?>
+  <?php $this->load->view('components/header')?>
 
 <body class="hold-transition sidebar-mini layout-fixed sidebar-collapse pace-primary">
   <!-- Site wrapper -->
@@ -132,7 +132,7 @@
                             <td class="text-center col-2">
                               <div class="form-group form-group-sm row">
                                 <label for="quantity" class="col-2"><i class="fa fa-tw fa-angle-up"></i></label>
-                                <input type="number" name="quantity[]" id="quantity" class="form-control form-control-sm col-8" value="0">
+                                <input type="number" name="quantity[]" id="quantity" class="form-control form-control-sm col-8" value="<?=(isset($order_return))?$order_return[$key]['quantity_order']:0?>">
                                 <input type="hidden" name="unit[]" id="unit" class="form-control form-control-sm col-8" value="<?=$order['unit']?>">
                                 <label for="quantity" class="col-2"><i class="fa fa-tw fa-angle-down"></i></label>
                               </div>

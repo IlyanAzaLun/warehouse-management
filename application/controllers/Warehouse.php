@@ -29,6 +29,7 @@ class Warehouse extends CI_Controller
         $this->load->model('M_order');
         $this->load->model('M_items');
         $this->load->model('M_users');
+        $this->load->model('M_stock');
         $this->data['user'] = $this->M_users->user_select(
             $this->session->userdata('email')
         );
@@ -159,14 +160,14 @@ class Warehouse extends CI_Controller
             $this->request['order']['rebate_price'][$key] = $this->input->post('rebate_price', true)[$key];
             $this->request['order']['status_in_out'][$key] = 'OUT';
             $this->request['order']['user_id'][$key] = $this->input->post('user_id', true);
-            $this->request['order']['date'][$key] = date('d F Y - H:m:s',time());
+            $this->request['order']['date'][$key] = date('d F Y - H:i:s',time());
             $this->_check_quantity($this->input->post('item_code'),$this->input->post('quantity'));
         }
 
         $this->invoice = [
             'invoice_id' => $invoice_id,
-            'date' => date('d F Y - H:m:s',time()),
-            'date_due' => date('d F Y - H:m:s',time() + 7 * 24 * 60 * 60), //7 days; 24 hours; 60 mins; 60 secs
+            'date' => date('d F Y - H:i:s',time()),
+            'date_due' => date('d F Y - H:i:s',time() + 7 * 24 * 60 * 60), //7 days; 24 hours; 60 mins; 60 secs
             'to_customer_destination' => $this->input->post('user_id', true),
             'order_id' => $order_id,
             'sub_total' => $this->input->post('sub_total', true) ? $this->input->post('sub_total', true) : 0,
@@ -182,10 +183,16 @@ class Warehouse extends CI_Controller
             'user' => $this->session->userdata('fullname'),
             'note' => $this->input->post('note', true) ? $this->input->post('note', true) : 'Di input oleh bagian gudang ' . implode(', ', $this->request['order']['item_code']),
         ];
-        $this->M_order->order_insert_history_update_item($this->request['order']); // insert to tbl_order, insert to tbl_history, and update item
-        $this->M_invoice->invoice_insert($this->invoice);
-        Flasher::setFlash('info','success','Success',' data berhasil di tambahkan');
-        redirect('warehouse/queue');
+        try {
+            $this->M_invoice->invoice_insert($this->invoice);
+            $this->M_order->order_insert_history_update_item($this->request['order']); // insert to tbl_order, insert to tbl_history, and update item
+            Flasher::setFlash('info','success','Success',' data berhasil di tambahkan');
+            redirect('warehouse/queue');
+        } catch (Exception $e) {
+            Flasher::setFlash('info','error','Failed ',$e);
+            redirect('warehouse/queue');
+        }
+
     }
 
     private function _check_quantity($id, $quantity)
@@ -215,6 +222,7 @@ class Warehouse extends CI_Controller
             } else {
                 return true;
             }
+            var_dump((int) $item['quantity'] - (int) $value['item_quantity'] < 0);
         }
     }
 
@@ -297,6 +305,34 @@ class Warehouse extends CI_Controller
             return $limit + $this->data[$invoice_status];
         }
     }
+    public function cancel()
+    {
+        $this->data['invoice'] = $this->M_invoice->invoice_select($this->input->post('invoice_id'));
+        $this->data['order'] = $this->M_order->order_select($this->data['invoice']['invoice_order_id']);
+        foreach ($this->data['order'] as $key => $value) {
+            $this->db->select('item_code, quantity');
+            $this->db->where('item_code', $value['item_code']);
+            //create history item
+            $this->data['history'][$key]                     = $this->db->get('tbl_item')->row_array();
+            $this->data['history'][$key]['status_in_out']    = 'IN: '.abs($this->data['order'][$key]['quantity_order']);
+            $this->data['history'][$key]['previous_quantity']= $this->data['history'][$key]['quantity'];
+            $this->data['history'][$key]['update_at']        = date('d F Y - H:i:s',time());
+            $this->data['item'][$key]['item_code']           = $this->data['order'][$key]['item_code'];
+            $this->data['item'][$key]['quantity']            = abs($this->data['order'][$key]['quantity_order'])+$this->data['history'][$key]['quantity'];
+            unset($this->data['history'][$key]['quantity']);
+        }
+        $this->M_stock->history_item_insert_multiple($this->data);        
+        //notification
+        $this->db->where('invoice_id',$this->input->post('invoice_id', true));
+        $this->db->set('status_validation', 1);
+        $this->db->set('status_active', 0);
+        $this->db->set('status_notification', 0);
+        $this->db->update('tbl_invoice');
+
+        Flasher::setFlash('info','success','Success',' data berhasil diubah!');
+        redirect('warehouse/queue');
+
+    }
     public function update_status_return()
     {
         $data_invoice = $this->M_invoice->invoice_select_by_referece($this->input->post('invoice_reverence'));
@@ -307,13 +343,13 @@ class Warehouse extends CI_Controller
             $this->db->select('item_code, capital_price, selling_price, quantity');
             $this->db->where('item_code', $data_order[$key]['item_code']);
             array_push($history, $this->db->get('tbl_item')->row_array()); // tmp
+
             $this->db->set('item_code', $history[$key]['item_code']);
             $this->db->set('previous_capital_price',$history[$key]['capital_price']);
             $this->db->set('previous_selling_price',$history[$key]['selling_price']);
             $this->db->set('previous_quantity', $history[$key]['quantity']);
-            $this->db->set('status_in_out',
-                ((int)$data_order[$key]['quantity_order']<0)?'OUT':'IN' . ' (' . $data_order[$key]['quantity_order'] . ')');
-            $this->db->set('update_at', date('d F Y - H:m:s',time()));
+            $this->db->set('status_in_out', ((int)$data_order[$key]['quantity_order']<0)?'OUT':'IN' . ' (' . $data_order[$key]['quantity_order'] . ')');
+            $this->db->set('update_at', date('d F Y - H:i:s',time()));
             $this->db->insert('tbl_item_history');
             // update quantity item
             $this->M_items->item_update_quantity($order['item_code'],(int) $history[$key]['quantity'] + (int) $order['quantity_order']);
@@ -329,6 +365,7 @@ class Warehouse extends CI_Controller
             $this->db->where('invoice_reverence',$this->input->post('invoice_reverence', true));
             $this->db->update('tbl_invoice');
         }
+        //notification
         $this->db->where('invoice_reverence',$this->input->post('invoice_reverence', true));
         $this->db->set('status_notification', 0);
         $this->db->update('tbl_invoice');

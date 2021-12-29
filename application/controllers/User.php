@@ -72,13 +72,14 @@ abstract class User extends CI_Controller
 
     public function delete()
     {
-    	$this->form_validation->set_rules('user_id', 'Code item', 'required|trim');
+    	$this->form_validation->set_rules('user_id', 'Code User', 'required|trim');
           if ($this->form_validation->run()==false) {
                Flasher::setFlash('info', 'error', 'Failed', ' something worng to delete data! '.validation_errors());
                redirect($_SERVER['HTTP_REFERER']);
           }else{
                $this->db->where('user_id', htmlspecialchars($this->input->post('user_id', true)));
-               $this->db->update('tbl_user_information', array('is_active'=> 0));
+               $this->db->set('is_active', 1);
+               $this->db->update('tbl_user_information');
                Flasher::setFlash('info', 'success', 'Success', ' congratulation success to delete data!');
                redirect($_SERVER['HTTP_REFERER']);
           }

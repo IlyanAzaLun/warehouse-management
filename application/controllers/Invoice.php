@@ -41,8 +41,8 @@ abstract class Invoice extends CI_Controller
 
 		$this->invoice = [
 			'invoice_id'              => $invoice_id,
-			'date'                    => time(),
-			'date_due'                => time()+(7 * 24 * 60 * 60), //7 days; 24 hours; 60 mins; 60 secs
+			'date'                    => date('d F Y - H:i:s',time()),
+			'date_due'                => date('d F Y - H:i:s',time())+(7 * 24 * 60 * 60), //7 days; 24 hours; 60 mins; 60 secs
 			'to_customer_destination' => $this->request['user_id'],
 			'order_id'                => $this->request['order_id'],
 			'sub_total'               => $this->request['sub_total'],
@@ -99,7 +99,7 @@ abstract class Invoice extends CI_Controller
 				$this->db->set('item_code' , $item[$key]['item_id']);
 				$this->db->set('previous_quantity' , $data[$key]['quantity']);
 				$this->db->set('status_in_out' , $item[$key]['status_in_out'].' ('.$item[$key]['quantity'].', RETURN)');
-				$this->db->set('update_at' , time());
+				$this->db->set('update_at' , date('d F Y - H:i:s',time()));
 				$this->db->insert('tbl_item_history');
 
     			$this->db->set('quantity', '`quantity` +'.$item[$key]['quantity'], false);

@@ -116,6 +116,10 @@ const main = () => {
       currencyToNum($(this).val())
     ));
   })
+  // label changed import file
+  $('input#file').change(function() {
+    $('.custom-file-label').text(this.files[0]['name']);
+  });
 
 };
 export default main;

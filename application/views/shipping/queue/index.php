@@ -61,9 +61,6 @@
                           <!-- // -->                          
                           <button class="btn btn-sm btn-default" id="detail-order" data-toggle="modal" data-target="#modal-detail"><i class="fa fa-tw fa-search-plus"></i></button>
                           <a href="<?=base_url('shipping/return')?>?id=<?=$invoice['invoice_id']?>" target="_blank" class="btn btn-sm btn-default" id="info"><i class="fa fa-tw fa-undo-alt"></i></a>
-                          <?php if (boolval((int)$invoice['status_active'])): ?>
-                          <button class="btn btn-sm btn-default" id="cancel" data-toggle="modal" data-target="#modal-cancel" data-status="<?=$invoice['status_active']?>"><i class="fa fa-tw fa-ban"></i></button>
-                          <?php endif ?>
                         </div>
                       </td>
                       <td>
@@ -162,7 +159,7 @@
                       </td>
                       <td>
                         <small>
-                          <?=date('d F Y - H:m:s', $return['date'])?></span>
+                          <?=$return['date']?></span>
                         </small>
                       </td>
                       <td>

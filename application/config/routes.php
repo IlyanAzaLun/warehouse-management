@@ -35,6 +35,7 @@ $route['stocks/restock'] 		= 'Stock/restock';
 $route['warehouse/info'] 							  = 'Warehouse/info';
 $route['warehouse/queue'] 							  = 'Warehouse/queue';
 $route['warehouse/status'] 							  = 'Warehouse/update_status';
+$route['warehouse/cancel'] 							  = 'Warehouse/cancel';
 $route['warehouse/status-return'] 					  = 'Warehouse/update_status_return';
 $route['(:any)/(:any)/warehouse/notification']		  = 'Warehouse/notification';
 $route['(:any)/(:any)/warehouse/notification-change'] =	'Warehouse/notification_change';

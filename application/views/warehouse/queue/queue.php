@@ -284,7 +284,7 @@
                       </td>
                       <td>
                         <small>
-                          <?= date('d F Y - H:m:s', $return['date']) ?></span>
+                          <?= $return['date'] ?></span>
                         </small>
                       </td>
                       <td>

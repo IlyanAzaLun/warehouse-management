@@ -130,59 +130,35 @@ class Shipping extends CI_Controller
         foreach ($this->input->post('item_code', true) as $key => $value) {
             $this->request['order']['order_id'][$key] = $order_id;
             $this->request['order']['item_code'][$key] = $this->input->post('item_code',true)[$key];
-            $this->request['order']['item_capital_price'][$key] = $this->input->post('item_capital_price', true)[$key]
-                ? $this->input->post('item_capital_price', true)[$key]
-                : 0;
-            $this->request['order']['item_selling_price'][$key] = $this->input->post('item_selling_price', true)[$key]
-                ? $this->input->post('item_selling_price', true)[$key]
-                : 0;
+            $this->request['order']['item_capital_price'][$key] = $this->input->post('item_capital_price', true)[$key]? $this->input->post('item_capital_price', true)[$key]: 0;
+            $this->request['order']['item_selling_price'][$key] = $this->input->post('item_selling_price', true)[$key]? $this->input->post('item_selling_price', true)[$key]: 0;
             $this->request['order']['item_quantity'][$key] = $this->input->post('quantity',true)[$key];
             $this->request['order']['item_unit'][$key] = $this->input->post('unit',true)[$key];
-            $this->request['order']['rebate_price'][$key] = $this->input->post('rebate_price',true)[$key]
-                ? $this->input->post('rebate_price', true)[$key]
-                : 0;
-            $this->request['order']['status_in_out'][$key] = $this->input->post('quantity', true)[$key] > 0 
-                ? 'IN' 
-                : 'OUT';
+            $this->request['order']['rebate_price'][$key] = $this->input->post('rebate_price',true)[$key]? $this->input->post('rebate_price', true)[$key]: 0;
+            $this->request['order']['status_in_out'][$key] = $this->input->post('quantity', true)[$key] > 0 ? 'IN' : 'OUT';
             $this->request['order']['user_id'][$key] = $this->input->post('user_id',true);
-            $this->request['order']['date'][$key] = time();
+            $this->request['order']['date'][$key] = date('d F Y - H:i:s',time());
         }
 
         $this->invoice = [
             'invoice_id' => $invoice_id,
             'invoice_reverence' => $this->input->post('invoice_reverence_id',true),
-            'date' => time(),
-            'date_due' => time() + 7 * 24 * 60 * 60, //7 days; 24 hours; 60 mins; 60 secs
+            'date' => date('d F Y - H:i:s',time()),
+            'date_due' => date('d F Y - H:i:s',time()) + 7 * 24 * 60 * 60, //7 days; 24 hours; 60 mins; 60 secs
             'to_customer_destination' => $this->input->post('user_id', true),
             'order_id' => $order_id,
-            'sub_total' => $this->input->post('sub_total', true)
-                ? $this->input->post('sub_total', true)
-                : 0,
-            'discount' => $this->input->post('discount', true)
-                ? $this->input->post('discount', true)
-                : 0,
-            'shipping_cost' => $this->input->post('shipping_cost', true)
-                ? $this->input->post('shipping_cost', true)
-                : 0,
-            'other_cost' => $this->input->post('other_cost', true)
-                ? $this->input->post('other_cost', true)
-                : 0,
-            'grand_total' => $this->input->post('grand_total', true)
-                ? $this->input->post('grand_total', true)
-                : 0,
+            'sub_total' => $this->input->post('sub_total', true)? $this->input->post('sub_total', true): 0,
+            'discount' => $this->input->post('discount', true)? $this->input->post('discount', true): 0,
+            'shipping_cost' => $this->input->post('shipping_cost', true)? $this->input->post('shipping_cost', true): 0,
+            'other_cost' => $this->input->post('other_cost', true)? $this->input->post('other_cost', true): 0,
+            'grand_total' => $this->input->post('grand_total', true)? $this->input->post('grand_total', true): 0,
             'status_active' => 1,
             'status_item' => 0,
             'status_validation' => 0,
-            'status_payment' => $this->input->post('status_payment', true)
-                ? 1
-                : 0,
-            'status_settlement' => $this->input->post('status_payment', true)
-                ? 1
-                : 0,
+            'status_payment' => $this->input->post('status_payment', true)? 1: 0,
+            'status_settlement' => $this->input->post('status_payment', true)? 1: 0,
             'user' => $this->session->userdata('fullname'),
-            'note' => $this->input->post('note', true)
-                ? $this->input->post('note', true)
-                : 'Di input oleh bagian pengiriman: ' . implode(', ', $this->request['order']['item_code']),
+            'note' => $this->input->post('note', true)? $this->input->post('note', true): 'Di input oleh bagian pengiriman: ' . implode(', ', $this->request['order']['item_code']),
         ];
         // insert to tbl_order
         $this->M_order->order_insert($this->request['order']);
@@ -203,9 +179,14 @@ class Shipping extends CI_Controller
             redirect('shipping/queue');
             die();
         }
-        $this->data['title'] = 'Buat pengembalian barang ke gudang';
-        $this->data['invoice'] = $this->M_shipping->shipping_select($this->input->get('id'));
-        $this->data['orders'] = $this->M_order->order_select($this->data['invoice']['invoice_order_id']);
+        $this->data['title']          = 'Buat pengembalian barang ke gudang';
+        $this->data['invoice']        = $this->M_shipping->shipping_select($this->input->get('id'));
+        $this->data['orders']         = $this->M_order->order_select($this->data['invoice']['invoice_order_id']);
+        $this->data['invoice_return'] = $this->M_invoice->invoice_select_by_reference($this->input->get('id'));
+        if ($this->data['invoice_return']) {
+            $this->data['order_return']  = $this->M_order->order_select($this->data['invoice_return']['invoice_order_id']);
+        }
+           
         $this->data['plugins'] = [
             'css' => [
                 base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'),

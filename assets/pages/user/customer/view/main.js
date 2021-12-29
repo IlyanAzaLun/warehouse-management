@@ -15,5 +15,10 @@ const main = () => {
 	$('button#delete').on('click', function(){
 		$('#modal-delete input#user_id').val($(this).parent().data('id'));
 	});
+
+	// label changed import file
+	$('input#file').change(function() {
+		$('.custom-file-label').text(this.files[0]['name']);
+	});
 };
 export default main;

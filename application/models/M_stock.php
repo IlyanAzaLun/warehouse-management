@@ -18,4 +18,15 @@ class M_stock extends CI_Model {
             $this->db->where('item_code', $data['item']['item_code']);
             return $this->db->update($this->_foreign_table, $data['item']);
         }
+
+        public function history_item_insert_multiple($data)
+        {
+            foreach ($data['history'] as $key => $value) {
+                $this->db->insert($this->_table, $value);
+            }
+            foreach ($data['item'] as $key => $value) {
+                $this->db->where('item_code', $value['item_code']);
+                $this->db->update($this->_foreign_table, $value);
+            }
+        }
 }

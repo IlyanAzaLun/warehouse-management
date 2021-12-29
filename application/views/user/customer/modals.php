@@ -107,6 +107,7 @@
 							<div class="form-group">
 								<label>Keterangan</label>
 								<textarea type="text" class="form-control" name="note" id="note"><?=set_value('note')?></textarea>
+								<input type="hidden" class="form-control" name="role_id" id="role_id"  value="752c0ad8-4925-11ec-8cc8-1be21be013bc" required>
 							</div>
 
 						</div>

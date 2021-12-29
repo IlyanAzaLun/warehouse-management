@@ -132,7 +132,10 @@ const main = () => {
 			console.log($(this).parent().data('id'))
 			id = $(this).parent().data('id');
 			id_invoice = $(this).parent().data('id_invoice');
-			data_order.search_order($(this).parent().data('id'), $(this).parent().data('id_invoice'));			
+			data_order.search_order($(this).parent().data('id'), $(this).parent().data('id_invoice'));	
+			data_invoice.change_status_notification(id, function(output){
+			})
+		
 		});
 		// return
 		$('#detail-return*').on('click', function(){
@@ -141,11 +144,6 @@ const main = () => {
 			id_invoice = $(this).parent().data('id_invoice');
 			data_order.search_return($(this).parent().data('id'), $(this).parent().data('id_invoice'));
 		});
-
-		$('#modal-detail').on('shown.bs.modal', function(){
-			data_invoice.change_status_notification(id, function(output){
-			})
-		})
 	}
 	detail_order()
 };

@@ -45,7 +45,7 @@ class M_customer extends CI_Model
                     'note' => $value['L'],
                     'type_id' => $value['M'],
                     'role_id' => '752c0ad8-4925-11ec-8cc8-1be21be013bc',
-                    'is_active' => 0,
+                    'is_active' => 1,
                 ];
             }
         }

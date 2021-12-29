@@ -45,10 +45,7 @@ const queue = () => {
 				fullname.push(field.user_fullname);
 			})
 			$.ui.autocomplete.prototype._renderItem = function (ul, item) {
-				return $("<li>")
-					.attr("data-value", item.value)
-					.append(item.label)
-					.appendTo(ul);
+				return $("<li>").attr("data-value", item.value).append(item.label).appendTo(ul);
 			};
 			$('input#fullname').autocomplete({
 				source: fullname
@@ -134,16 +131,14 @@ const queue = () => {
 			id = $(this).parent().data('id');
 			id_invoice = $(this).parent().data('id_invoice');
 			data_order.search_return($(this).parent().data('id'));
+			data_invoice.change_status_notification(id, function (output) {
+			})
 		});
 		$('button#detail-order').on('click', function () {
 			id = $(this).parent().data('id');
 			id_invoice = $(this).parent().data('id_invoice');
 			data_order.search_order($(this).parent().data('id'));
 		});
-		$('#modal-detail').on('shown.bs.modal', function () {
-			data_invoice.change_status_notification(id, function (output) {
-			})
-		})
 
 	}
 	detail_order();

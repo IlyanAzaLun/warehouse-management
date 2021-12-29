@@ -200,7 +200,7 @@
                     <tbody>
                       <?php foreach ($customers as $key => $customer): ?>
 
-                        <tr id="<?=$customer['user_id']?>" class="<?=((int)$customer['is_active'])?'bg-red':''?>">
+                        <tr id="<?=$customer['user_id']?>" class="<?=((int)$customer['is_active'])?'':'bg-red'?>">
                           <th scope="row" width="5px"><?=++$key?></th>
                           <td>
                             <div class="btn-group d-flex justify-content-center" data-id="<?=$customer['user_id']?>">
