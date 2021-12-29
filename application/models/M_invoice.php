@@ -104,6 +104,7 @@ class M_invoice extends CI_Model {
 			,invoice.note');
 		$this->db->join('tbl_user_information user_info', 'invoice.to_customer_destination = user_info.user_id', 'left');
 		$this->db->where('invoice.invoice_reverence', $data);
+		$this->db->where('invoice.status_active', 1);
 		return $this->db->get($this->_table.' invoice')->row_array();
 
 	}

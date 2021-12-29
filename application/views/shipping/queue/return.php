@@ -104,6 +104,7 @@
                           <input type="text" name="order_id" id="order_id" class="form-control" placeholder="<?=$invoice['invoice_order_id']?>" readonly>
                         </div>
                       </div>
+                      <?php $quantity = [];?>
                       <table class="table table-bordered table-hover table-sm">
                         <thead>
                           <tr>
@@ -118,6 +119,11 @@
                         </thead>
                         <tbody>
                           <?php foreach ($orders as $key => $order):?>
+                          <?php 
+                            $this->db->select('quantity');
+                            $this->db->where('item_code', $order['item_code']);
+                            $quantity[$key] = $this->db->get('tbl_item')->row_array();
+                          ?>
                           <tr>
                             <td>
                               <?=$key+1?>.
@@ -126,13 +132,13 @@
                               <input type="hidden" name="item_code[]" class="form-control" value="<?=$order['item_code']?>">
                               <?=$order['item_name']?> <?=($order['MG'])?'(MG: '.$order['MG'].')':'';?>
                             </td>
-                            <td class="text-center col-2">
-                                <?=abs($order['quantity_order'])?> (<?=$order['unit']?>)
+                            <td class="text-center col-2" current="<?=abs($order['quantity_order'])?>" order="<?=(isset($order_return))?(int)$order_return[$key]['quantity_order']:0?>">
+                                <?=abs($order['quantity_order'])-((isset($order_return))?(int)$order_return[$key]['quantity_order']:0)?> (<?=$order['unit']?>)
                             </td>
                             <td class="text-center col-2">
                               <div class="form-group form-group-sm row">
                                 <label for="quantity" class="col-2"><i class="fa fa-tw fa-angle-up"></i></label>
-                                <input type="number" name="quantity[]" id="quantity" class="form-control form-control-sm col-8" value="<?=(isset($order_return))?$order_return[$key]['quantity_order']:0?>">
+                                <input type="number" name="quantity[]" id="quantity" class="form-control form-control-sm col-8" max="<?=abs($order['quantity_order'])?>" min="<?=((int)$quantity[$key]['quantity']*-1)?>" value="<?=(isset($order_return))?$order_return[$key]['quantity_order']:0?>">
                                 <input type="hidden" name="unit[]" id="unit" class="form-control form-control-sm col-8" value="<?=$order['unit']?>">
                                 <label for="quantity" class="col-2"><i class="fa fa-tw fa-angle-down"></i></label>
                               </div>

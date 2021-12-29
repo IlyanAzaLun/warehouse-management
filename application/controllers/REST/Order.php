@@ -25,4 +25,30 @@ class Order extends REST_Controller
         }
         $this->response($produk, REST_Controller::HTTP_OK);
     }
+
+    function index_post()
+    {
+        $id_invoice   = $this->input->post('id');
+        $this->db->where('invoice_reverence', $id_invoice);
+        $data_invoice = $this->db->get('tbl_invoice')->row_array();
+        $this->db->where('order_id', $data_invoice['order_id']);
+        $this->db->select(
+            ' order.order_id
+            , order.item_id
+            , order.quantity as quantity_order
+            , order.unit
+            , order.date
+            , item.item_name
+            , item.MG
+            , item.ML
+            , item.VG
+            , item.PG
+            , item.falvour
+            , item.quantity'
+        );
+        $this->db->join('tbl_item item', 'order.item_id = item.item_code', 'left');
+        $this->db->order_by('order.date', 'DESC');
+        $produk = $this->db->get('tbl_order order')->result();
+        $this->response($produk, REST_Controller::HTTP_OK);
+    }
 }
