@@ -13,7 +13,7 @@
 					<label for="code_order">Kode order: </label>
 					<table class="table table-sm table-striped table-bordered">
 						<thead>
-							<tr>
+							<tr id="thead">
 								<th>Kode barang</th>
 								<th>Nama barang</th>
 								<th>Jumlah barang (unit)</th>

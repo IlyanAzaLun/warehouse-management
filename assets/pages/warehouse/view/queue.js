@@ -130,14 +130,14 @@ const queue = () => {
 		$('#detail-return*').on('click', function () {
 			id = $(this).parent().data('id');
 			id_invoice = $(this).parent().data('id_invoice');
-			data_order.search_return($(this).parent().data('id'));
+			data_order.search_return(id);
 			data_invoice.change_status_notification(id, function (output) {
 			})
 		});
-		$('button#detail-order').on('click', function () {
+		$('#detail-order*').on('click', function () {
 			id = $(this).parent().data('id');
 			id_invoice = $(this).parent().data('id_invoice');
-			data_order.search_order($(this).parent().data('id'));
+			data_order.search_order($(this).parent().data('id'), $(this).parent().data('id-invoice'));
 		});
 
 	}

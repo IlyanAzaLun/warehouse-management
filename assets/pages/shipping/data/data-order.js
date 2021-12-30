@@ -2,6 +2,7 @@ class DataOrder {
 	constructor() {
 		this.BASEURL = location.href+'/';
 		this.dataTabels();
+		this.result_array = [];
 	}
 
 	dataTabels(){
@@ -33,20 +34,38 @@ class DataOrder {
 	}
 
 	search_order(id, id_invoice){
-		var data = [];
+		function return_order(id_invoice, callback) {
+			$.ajax({
+				url: location.href+'/API/order',
+				method: 'POST',
+				dataType: 'JSON',
+				data: {id: id_invoice}
+			})
+			.done(function(result) {
+				console.log("success ajax callback");
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function(result) {
+				console.log("always");
+				callback(result);
+			});
+		}
+
 		$.ajax({
 			url: this.BASEURL+'API/order?id='+id,
 			method: 'GET',
 			dataType: 'JSON',
 		})
 		.done(function(result) {
-			console.log("success ajax 1");
-			data.push(result);
+			console.log("success")			
 		})
 		.fail(function() {
 			console.log("error");
 		})
 		.always(function(result) {
+			console.log("always");
 			$('#modal-detail tbody#tbl_order').empty();
 			$('#modal-detail .float-right').empty();
 			$('#modal-detail .modal-content form#form-detail-order').remove();
@@ -63,41 +82,34 @@ class DataOrder {
 				</div>
 			</form>
 			`);
-			$('label[for="code_order"]').text(`Kode order: ${result[0].order_id}`)
-			$.each(result, function(index, field){
-				let html = `
-				<tr>
-					<td>${field.item_id}</td>
-					<td>${field.item_name} <small>${(field.MG)?`[MG: ${field.MG}, ML: ${field.ML}, VG: ${field.VG}, PG: ${field.PG}, (Falvour: ${field.falvour})]`:``}<small></td>
-					<td class="text-right">${Math.abs(field.quantity_order)} (${field.unit})</td>
-				</tr>					`;
-				$('#modal-detail tbody#tbl_order').append(html);
-			});
+			$('label[for="code_order"]').text(`Kode order: ${result[0].order_id}`);
+			return_order(id_invoice, function(output){
+				$('#modal-detail #return').remove();
+				if (output.length > 0) {
+					let html = `
+						<th id="return">Permintaan barang</th>
+						<th id="return">Kebutuhan barang</th>`
+					$('#modal-detail thead #thead').append(html)
+				}
+				$.each(result, function(index, field){
+					let html = `
+					<tr>
+						<td>${field.item_id}</td>
+						<td>${field.item_name} <small>${(field.MG)?`[MG: ${field.MG}, ML: ${field.ML}, VG: ${field.VG}, PG: ${field.PG}, (Falvour: ${field.falvour})]`:``}<small></td>
+						<td class="text-right">${Math.abs(field.quantity_order)}(${field.unit})</td>
+					`;
+					if (output.length>0) {
+						html += `
+						<td id="return" class="text-right">${(output[index]['quantity_order'] > 0)?`Barang lebih ${Math.abs(output[index]['quantity_order'])}`:`Barang Kurang ${Math.abs(output[index]['quantity_order'])}`}(${field.unit})</td>
+						<td id="return" class="text-right">${Math.abs(field.quantity_order)-(output[index]['quantity_order'])}(${field.unit})</td>
+						`;
+					}
+					html += `</tr>`;
+					$('#modal-detail tbody#tbl_order').append(html);
+				});
+			})
 		});
-		$.ajax({
-			url: this.BASEURL+'API/order',
-			method: 'POST',
-			dataType: 'JSON',
-			data: {id: id_invoice}
-		})
-		.done(function(result) {
-			console.log("success ajax 2");
-			console.log(data[0])
-		})
-		.fail(function() {
-			console.log("error");
-		})
-		.always(function(result) {
-			$.each(result, function(index, field){
-				let html = `
-				<tr class="bg-danger">
-					<td>${field.item_id}</td>
-					<td>${field.item_name} <small>${(field.MG)?`[MG: ${field.MG}, ML: ${field.ML}, VG: ${field.VG}, PG: ${field.PG}, (Falvour: ${field.falvour})]`:``}<small></td>
-					<td class="text-right">${(field.quantity_order > 0)?`Barang lebih ${Math.abs(field.quantity_order)}`:`Barang Kurang ${Math.abs(field.quantity_order)}`} (${field.unit})</td>
-				</tr>`;
-				$('#modal-detail tbody#tbl_order').append(html);
-			});
-		});
+		
 	}
 	search_return(id, id_invoice){
 		$.ajax({
@@ -106,6 +118,7 @@ class DataOrder {
 			dataType: 'JSON',
 			success: function(result){
 				$('#modal-detail tbody#tbl_order').empty();
+				$('#modal-detail #return').remove();
 				$('#modal-detail .float-right').empty();
 				$('label[for="code_order"]').text(`Kode order: ${result[0].order_id}`)
 				$.each(result, function(index, field){

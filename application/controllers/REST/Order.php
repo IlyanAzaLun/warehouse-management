@@ -30,6 +30,7 @@ class Order extends REST_Controller
     {
         $id_invoice   = $this->input->post('id');
         $this->db->where('invoice_reverence', $id_invoice);
+        $this->db->where('status_active', 1);
         $data_invoice = $this->db->get('tbl_invoice')->row_array();
         $this->db->where('order_id', $data_invoice['order_id']);
         $this->db->select(
