@@ -1,8 +1,8 @@
 class Component {
 
 	validation_form() {
-		// 085224566209 Sandi
-	// INI YANG BIKIN LAGH JIKA PEMESANAN LEBIH DARI 20 ITEM
+// 085224566209 Sandi
+// INI YANG BIKIN LAGH JIKA PEMESANAN LEBIH DARI 20 ITEM
 		var executed = false;
 		if (!executed) {
 			executed = true;
@@ -26,7 +26,7 @@ class Component {
 					validation(_total[item], field.value);
 					console.log(_total)
 				});
-	//				
+//// Sampai method ini				
 
 				function validation(data, item_code) {
 					let selected_element = element_quantity_code.find(`input#item_code[value="${item_code}"]`).parents('div#order-item.row').find('input#quantity');
