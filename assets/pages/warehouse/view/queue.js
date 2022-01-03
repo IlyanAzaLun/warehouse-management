@@ -121,6 +121,17 @@ const queue = () => {
 		});
 	});
 	// end item
+	var lots_of_stuff_already_done = false;
+	$('div#save button[type="submit"]').on('click', function(event){
+		if (lots_of_stuff_already_done) {
+	        lots_of_stuff_already_done = false; // reset flag
+	        return; // let the event bubble away
+	    }
+		event.preventDefault();
+		console.log(component.validation_form());
+     	lots_of_stuff_already_done = true;
+		$(this).trigger('click');
+	});
 
 	//detail order, return
  	function detail_order() {

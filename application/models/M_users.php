@@ -64,9 +64,9 @@ class M_users extends CI_Model {
                 $this->db->update($this->_table, $value);
         }
 
-        public function user_info_select($data, $type)
+        public function user_info_select($data = false, $type = false)
         {
-                if ($data['user_id']) {
+                if ($data) {
                         $this->db->where('user_id', $data['user_id']);
                         return $this->db->get($this->_foreign_table)->row_array();
                 }else{
