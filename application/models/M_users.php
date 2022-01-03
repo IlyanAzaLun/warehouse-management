@@ -58,10 +58,17 @@ class M_users extends CI_Model {
 
         }
 
+        public function user_update($value)
+        {
+                $this->db->where('user_id', $value['user_id']);
+                $this->db->update($this->_table, $value);
+        }
+
         public function user_info_select($data, $type)
         {
                 if ($data['user_id']) {
-                        // code...
+                        $this->db->where('user_id', $data['user_id']);
+                        return $this->db->get($this->_foreign_table)->row_array();
                 }else{
                         $this->db->join('tbl_role role', 'user_info.role_id = role.id', 'left');
                         $this->db->where('user_info.is_active', 1);

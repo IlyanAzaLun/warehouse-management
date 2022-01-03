@@ -1,6 +1,53 @@
 class Component {
 
-	
+	validation_form() {
+		// 085224566209 Sandi
+	// INI YANG BIKIN LAGH JIKA PEMESANAN LEBIH DARI 20 ITEM
+		var executed = false;
+		if (!executed) {
+			executed = true;
+			$('input#quantity').on('change',function () {
+				let _total = [];
+				let unique_values = {};
+				let list_of_values = [];
+				let button = $('div#save button[type="submit"]');
+				let element_quantity_code;
+				$('input#item_code').each(function(item, field){
+					_total[item] = 0;
+					let element_parent = $(`input#item_code[value="${field.value}"]`);
+					element_quantity_code = element_parent.parents('div#order-item.row');
+					if(!unique_values[field.value]){
+						unique_values[field.value] = true;
+						list_of_values.push(field.value);
+					}
+					element_parent.each(function(index, res){
+						_total[item] += parseInt( $(this).parents('div#order-item.row').find('input#quantity').val());
+					});
+					validation(_total[item], field.value);
+					console.log(_total)
+				});
+	//				
+
+				function validation(data, item_code) {
+					let selected_element = element_quantity_code.find(`input#item_code[value="${item_code}"]`).parents('div#order-item.row').find('input#quantity');
+					if(element_quantity_code.find('input#current').val() < data){
+						Swal.fire({
+							icon: 'warning',
+							title: 'Oops...',	
+							text: 'Jumlah item melampaui stok yang ada!',
+							}).then(()=>{
+								selected_element.addClass('is-invalid');
+								button.prop('disabled', true);
+							});
+					}else{
+						selected_element.removeClass('is-invalid');
+						button.prop('disabled', false);
+					}
+				}
+			})
+		}
+	}
+
 	field(result){
 		const html = `
         <div class="row" id="order-item">
@@ -42,7 +89,8 @@ class Component {
 		$('button#remove_order_item').on('click', function(){
 			$(this).parents().closest('div.row#order-item').empty();
 		});
-		
+		this.validation_form();
+		this.validation_form();
 		$("input#item-name").autocomplete({
 			minLength: 0,
 			source: function(request, response) {
@@ -79,43 +127,8 @@ class Component {
 				return false;
 			}
 		})
-		$('input#quantity').on('change',function () {
-			let _total = [];
-			let unique_values = {};
-			let list_of_values = [];
-			let button = $('div#save button[type="submit"]');
-			let element_quantity_code;
-			$('input#item_code').each(function(item, field){
-				_total[item] = 0;
-				let element_parent = $(`input#item_code[value="${field.value}"]`);
-				element_quantity_code = element_parent.parents('div#order-item.row');
-				if(!unique_values[field.value]){
-					unique_values[field.value] = true;
-					list_of_values.push(field.value);
-				}
-				//
-				element_parent.each(function(index, res){
-					_total[item] += parseInt( $(this).parents('div#order-item.row').find('input#quantity').val());
-				});
-				validation(_total[item], field.value)
-			});
-			function validation(data, item_code) {
-				let selected_element = element_quantity_code.find(`input#item_code[value="${item_code}"]`).parents('div#order-item.row').find('input#quantity');
-				if(element_quantity_code.find('input#current').val() < data){
-					Swal.fire({
-						icon: 'warning',
-						title: 'Oops...',
-						text: 'Jumlah item melampaui stok yang ada!',
-						}).then(()=>{
-							selected_element.addClass('is-invalid');
-							button.prop('disabled', true);
-						});
-				}else{
-					selected_element.removeClass('is-invalid');
-					button.prop('disabled', false);
-				}
-			}
-		})
+
 	}
 }
+
 export default Component;

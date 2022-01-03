@@ -145,7 +145,7 @@ class="hold-transition sidebar-mini layout-fixed sidebar-collapse layout-navbar-
                 <div class="form-group">
                     <label>Tambah jumlah</label>
                     <div class="input-group mb-3">
-                        <input type="number" class="form-control" name="add_quantity" id="add_quantity"  value="0">
+                        <input type="number" class="form-control" name="add_quantity" id="add_quantity"  value="0" min="1">
                         <div class="input-group-append">
                             <select class="input-group-text" name="unit" id="unit" required>
                                 <option value="pcs">PCS</option>
@@ -165,7 +165,7 @@ class="hold-transition sidebar-mini layout-fixed sidebar-collapse layout-navbar-
                 <div class="form-group">
                     <label>Harga pokok</label>
                     <input type="hidden" class="form-control" name="previous_capital_price" id="capital_price"  value="<?=$items['capital_price']?>" required readonly>
-                    <input type="number" class="form-control" name="capital_price" id="capital_price"  value="<?=$items['capital_price']?>" required>
+                    <input type="number" class="form-control" name="capital_price" id="capital_price"  value="<?=$items['capital_price']?>" disabled>
                     <?=form_error('capital_price', '<small class="text-danger">','</small>')?>
                 </div>
             </div>
@@ -174,7 +174,7 @@ class="hold-transition sidebar-mini layout-fixed sidebar-collapse layout-navbar-
                 <div class="form-group">
                     <label>Harga jual</label>
                     <input type="hidden" class="form-control" name="previous_selling_price" id="selling_price"  value="<?=$items['selling_price']?>" required readonly>
-                    <input type="number" class="form-control" name="selling_price" id="selling_price"  value="<?=$items['selling_price']?>" required>
+                    <input type="number" class="form-control" name="selling_price" id="selling_price"  value="<?=$items['selling_price']?>" disabled>
                     <?=form_error('selling_price', '<small class="text-danger">','</small>')?>
                 </div>
             </div>

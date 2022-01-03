@@ -76,4 +76,37 @@ class Users extends User
                }
           }
      }
+
+     public function profile()
+     {
+          echo "<pre>";
+          print_r ($this->data['user']['user_fullname']);
+          // $this->db->where('user_id', $this->data['user']['user_id']);
+          // print_r ($this->db->get('tbl_user_information')->row_array());
+          echo "</pre>";
+          die();
+          if ($this->form_validation->run()==false) {
+               $this->data['title'] = 'Profile';
+               $this->load->view('user/users/profile', $this->data);
+          }else{
+               $this->M_users->user_update();
+          }
+     }
+
+     public function update_password()
+     {
+          $this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[5]');
+          $this->form_validation->set_rules('re-password', 'Re-password', 'required|trim|matches[password]');
+          if ($this->form_validation->run()==false) {
+               $this->profile();
+          }else{
+               $this->data['update'] = array(
+                    'user_id' => $this->data['user']['user_id'],
+                    'user_password' => password_hash($this->input->post('password', true), PASSWORD_DEFAULT),
+               );
+               $this->M_users->user_update($this->data['update']);
+               Flasher::setFlash('info', 'success', 'Success', ' congratulation success to entry data!');
+               redirect('profile');    
+          }
+     }
 }

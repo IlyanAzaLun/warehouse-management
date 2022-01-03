@@ -76,6 +76,8 @@ $route['(:any)/user/select'] = 'Users/supplier/getuser';
 
 //users
 $route['users'] = 'Users/users';
+$route['profile'] = 'Users/users/profile';
+$route['profile/update-password'] = 'Users/users/update_password';
 
 //supplier
 $route['supplier'] = 'Users/supplier';

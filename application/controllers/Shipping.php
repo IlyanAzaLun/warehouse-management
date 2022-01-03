@@ -135,7 +135,7 @@ class Shipping extends CI_Controller
             $this->request['order']['item_quantity'][$key] = $this->input->post('quantity',true)[$key];
             $this->request['order']['item_unit'][$key] = $this->input->post('unit',true)[$key];
             $this->request['order']['rebate_price'][$key] = $this->input->post('rebate_price',true)[$key]? $this->input->post('rebate_price', true)[$key]: 0;
-            $this->request['order']['status_in_out'][$key] = $this->input->post('quantity', true)[$key] > 0 ? 'IN' : 'OUT';
+            $this->request['order']['status_in_out'][$key] = $this->input->post('quantity', true)[$key] > 0 ? 'IN ('.$this->input->post('quantity', true).' )'.$this->data['user']['user_fullname'] : 'OUT ('.$this->input->post('quantity', true)[$key].' ) :'.$this->data['user']['user_fullname'];
             $this->request['order']['user_id'][$key] = $this->input->post('user_id',true);
         }
 
@@ -155,7 +155,7 @@ class Shipping extends CI_Controller
             'status_payment' => $this->input->post('status_payment', true)? 1: 0,
             'status_settlement' => $this->input->post('status_payment', true)? 1: 0,
             'user' => $this->session->userdata('fullname'),
-            'note' => $this->input->post('note', true)? $this->input->post('note', true): 'Di input oleh bagian pengiriman: ' . implode(', ', $this->request['order']['item_code']),
+            'note' => $this->input->post('note', true)? $this->input->post('note', true).' :'.$this->data['user']['user_fullname']: 'Di input oleh bagian pengiriman : '.$this->data['user']['user_fullname'].': ' . implode(', ', $this->request['order']['item_code']),
         ];
         // insert to tbl_order
         $this->M_order->order_insert($this->request['order']);
