@@ -73,7 +73,7 @@
                       </td>
                       <td>
                         <small>
-                          <?= $invoice['date'] ?></span>
+                          <?=date("d/F/Y H:i:s", strtotime($invoice['date']));?>
                         </small>
                       </td>
                       <td>

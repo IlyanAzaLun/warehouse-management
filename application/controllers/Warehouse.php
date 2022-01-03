@@ -160,14 +160,11 @@ class Warehouse extends CI_Controller
             $this->request['order']['rebate_price'][$key] = $this->input->post('rebate_price', true)[$key];
             $this->request['order']['status_in_out'][$key] = 'OUT';
             $this->request['order']['user_id'][$key] = $this->input->post('user_id', true);
-            $this->request['order']['date'][$key] = date('d F Y - H:i:s',time());
             $this->_check_quantity($this->input->post('item_code'),$this->input->post('quantity'));
         }
 
         $this->invoice = [
             'invoice_id' => $invoice_id,
-            'date' => date('d F Y - H:i:s',time()),
-            'date_due' => date('d F Y - H:i:s',time() + 7 * 24 * 60 * 60), //7 days; 24 hours; 60 mins; 60 secs
             'to_customer_destination' => $this->input->post('user_id', true),
             'order_id' => $order_id,
             'sub_total' => $this->input->post('sub_total', true) ? $this->input->post('sub_total', true) : 0,
@@ -316,7 +313,7 @@ class Warehouse extends CI_Controller
             $this->data['history'][$key]                     = $this->db->get('tbl_item')->row_array();
             $this->data['history'][$key]['status_in_out']    = 'IN: '.abs($this->data['order'][$key]['quantity_order']);
             $this->data['history'][$key]['previous_quantity']= $this->data['history'][$key]['quantity'];
-            $this->data['history'][$key]['update_at']        = date('d F Y - H:i:s',time());
+            $this->data['history'][$key]['update_at']        = date('Y-m-d H:i:s',time());
             $this->data['item'][$key]['item_code']           = $this->data['order'][$key]['item_code'];
             $this->data['item'][$key]['quantity']            = abs($this->data['order'][$key]['quantity_order'])+$this->data['history'][$key]['quantity'];
             unset($this->data['history'][$key]['quantity']);
@@ -349,7 +346,7 @@ class Warehouse extends CI_Controller
             $this->db->set('previous_selling_price',$history[$key]['selling_price']);
             $this->db->set('previous_quantity', $history[$key]['quantity']);
             $this->db->set('status_in_out', ((int)$data_order[$key]['quantity_order']<0)?'OUT':'IN' . ' (' . $data_order[$key]['quantity_order'] . ')');
-            $this->db->set('update_at', date('d F Y - H:i:s',time()));
+            $this->db->set('update_at', date('Y-m-d H:i:s',time()));
             $this->db->insert('tbl_item_history');
             // update quantity item
             $this->M_items->item_update_quantity($order['item_code'],(int) $history[$key]['quantity'] + (int) $order['quantity_order']);

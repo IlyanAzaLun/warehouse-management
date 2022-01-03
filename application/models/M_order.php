@@ -69,7 +69,7 @@ class M_order extends CI_Model {
         		$this->db->set('unit', $data['item_unit'][$key]);
         		$this->db->set('rabate', $data['rebate_price'][$key]);
         		$this->db->set('user_id', $data['user_id'][$key]);
-        		$this->db->set('date', $data['date'][$key]);
+			$this->db->set('date', 'NOW()', FALSE);
         		$this->db->insert($this->_table);
 			}
 		}
@@ -88,7 +88,7 @@ class M_order extends CI_Model {
         		$this->db->set('unit', $data['item_unit'][$key]);
         		$this->db->set('rabate', $data['rebate_price'][$key]);
         		$this->db->set('user_id', $data['user_id'][$key]);
-        		$this->db->set('date', $data['date'][$key]);
+			$this->db->set('date', 'NOW()', FALSE);
         		$this->db->insert($this->_table);
 
         		//create history
@@ -100,7 +100,7 @@ class M_order extends CI_Model {
 				$this->db->set('previous_selling_price' , $history[$key]['selling_price']);
 				$this->db->set('previous_quantity' , $history[$key]['quantity']);
 				$this->db->set('status_in_out' , $data['status_in_out'][$key].' ('.$data['item_quantity'][$key].')');
-				$this->db->set('update_at' , time());
+				$this->db->set('update_at', 'NOW()', FALSE);
 				$this->db->insert('tbl_item_history');
 
         		//update item

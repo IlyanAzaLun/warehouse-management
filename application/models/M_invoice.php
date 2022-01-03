@@ -193,7 +193,9 @@ class M_invoice extends CI_Model {
 
 	public function invoice_insert($data)
 	{
-			return $this->db->insert($this->_table, $data);
+		$this->db->set('date', 'NOW()', FALSE);
+		$this->db->set('date_due', 'NOW() + INTERVAL 7 DAY', FALSE);
+		return $this->db->insert($this->_table, $data);
 	}
 	public function invoice_update($data)
 	{

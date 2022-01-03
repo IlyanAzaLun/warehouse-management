@@ -137,14 +137,11 @@ class Shipping extends CI_Controller
             $this->request['order']['rebate_price'][$key] = $this->input->post('rebate_price',true)[$key]? $this->input->post('rebate_price', true)[$key]: 0;
             $this->request['order']['status_in_out'][$key] = $this->input->post('quantity', true)[$key] > 0 ? 'IN' : 'OUT';
             $this->request['order']['user_id'][$key] = $this->input->post('user_id',true);
-            $this->request['order']['date'][$key] = date('d F Y - H:i:s',time());
         }
 
         $this->invoice = [
             'invoice_id' => $invoice_id,
             'invoice_reverence' => $this->input->post('invoice_reverence_id',true),
-            'date' => date('d F Y - H:i:s',time()),
-            'date_due' => date('d F Y - H:i:s',time()) + 7 * 24 * 60 * 60, //7 days; 24 hours; 60 mins; 60 secs
             'to_customer_destination' => $this->input->post('user_id', true),
             'order_id' => $order_id,
             'sub_total' => $this->input->post('sub_total', true)? $this->input->post('sub_total', true): 0,

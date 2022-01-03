@@ -88,7 +88,8 @@ class Stock extends CI_Controller {
 			'previous_quantity'      => htmlspecialchars($this->input->post('quantity', true)),
 			'previous_capital_price' => htmlspecialchars($this->input->post('previous_capital_price', true)),
 			'previous_selling_price' => htmlspecialchars($this->input->post('previous_selling_price', true)),
-			'update_at' => date('d F Y - H:i:s',time()),
+			'update_at' => date('Y-m-d H:i:s',time()),
+
 		];
 		$this->request['item'] = [
 			'item_code'     => htmlspecialchars($this->input->post('item_code', true)),

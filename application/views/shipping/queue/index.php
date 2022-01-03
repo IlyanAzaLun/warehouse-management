@@ -71,7 +71,7 @@
                       </td>
                       <td>
                         <small>
-                          <?=$invoice['date']?></span>
+                          <?=date("d/F/Y H:i:s", strtotime($invoice['date']));?></span>
                         </small>
                       </td>
                       <td>
@@ -159,7 +159,7 @@
                       </td>
                       <td>
                         <small>
-                          <?=$return['date']?></span>
+                          <span><?=date("d/F/Y H:i:s", strtotime($return['date']));?></span>
                         </small>
                       </td>
                       <td>

@@ -56,7 +56,7 @@ class="hold-transition sidebar-mini layout-fixed sidebar-collapse layout-navbar-
             <tr>
               <td><?= $value['previous_quantity']?></td>
               <td><?= $value['status_in_out']?></td>
-              <td><?= $value['update_at']?></td>
+              <td><?= date("d/F/Y H:i:s", strtotime($value['update_at']));?></td>
             </tr>
             <?php endforeach ?>
 
