@@ -22,9 +22,13 @@ class M_stock extends CI_Model {
         public function history_item_insert_multiple($data)
         {
             foreach ($data['history'] as $key => $value) {
+                $this->db->set('created_by', $this->data['user']['user_fullname']);
                 $this->db->insert($this->_table, $value);
             }
             foreach ($data['item'] as $key => $value) {
+
+                $this->db->set('update_by', $this->data['user']['user_fullname']);
+                $this->db->set('update_at', 'NOW()', false);
                 $this->db->where('item_code', $value['item_code']);
                 $this->db->update($this->_foreign_table, $value);
             }

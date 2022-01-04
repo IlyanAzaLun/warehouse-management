@@ -47,6 +47,7 @@ class="hold-transition sidebar-mini layout-fixed sidebar-collapse layout-navbar-
       				<th>Jumlah sebelumnya</th>
       				<th>Jumlah masuk/keluar</th>
       				<th>Diubah</th>
+              <th>Oleh</th>
       			</tr>
       		</thead>
       		<tbody>
@@ -56,7 +57,8 @@ class="hold-transition sidebar-mini layout-fixed sidebar-collapse layout-navbar-
             <tr>
               <td><?= $value['previous_quantity']?></td>
               <td><?= $value['status_in_out']?></td>
-              <td><?= date("d/F/Y H:i:s", strtotime($value['update_at']));?></td>
+              <td><?= date("d/F/Y H:i:s", strtotime($value['created_at']));?></td>
+              <td><?= $value['created_by'];?></td>
             </tr>
             <?php endforeach ?>
 

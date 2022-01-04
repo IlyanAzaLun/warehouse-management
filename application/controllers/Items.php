@@ -105,6 +105,7 @@ class Items extends CI_Controller
                 'capital_price' => htmlspecialchars($this->input->post('capital_price', true)),
                 'selling_price' => htmlspecialchars($this->input->post('selling_price', true)),
                 'note' => htmlspecialchars($this->input->post('note', true)),
+                'created_by' => $this->data['user']['user_fullname'],
             ];
             $this->M_items->item_insert($this->data);
             Flasher::setFlash('info','success','Success',' Berhasil input data!'
@@ -197,6 +198,9 @@ class Items extends CI_Controller
                 'capital_price' => htmlspecialchars($this->input->post('capital_price', true)),
                 'selling_price' => htmlspecialchars($this->input->post('selling_price', true)),
                 'note' => htmlspecialchars($this->input->post('note', true)),
+                'update_at' => date('Y-m-d H:i:s',time()),
+                'update_by' => $this->data['user']['user_fullname'],
+
             ];
             $this->M_items->item_update($this->data);
             Flasher::setFlash('info','success','Success',' berhasil update data!');

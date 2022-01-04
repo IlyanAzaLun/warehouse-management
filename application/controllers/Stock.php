@@ -88,9 +88,9 @@ class Stock extends CI_Controller {
 			'previous_quantity'      => htmlspecialchars($this->input->post('quantity', true)),
 			'previous_capital_price' => htmlspecialchars($this->input->post('previous_capital_price', true)),
 			'previous_selling_price' => htmlspecialchars($this->input->post('previous_selling_price', true)),
-			'status_in_out' 		 => htmlspecialchars('IN ('.$this->input->post('quantity', true).') :'.$this->data['user']['user_fullname']),
-			'update_at' => date('Y-m-d H:i:s',time()),
-
+			'status_in_out' 		 => htmlspecialchars('IN ('.(int)$this->input->post('add_quantity', true).')'),
+			'created_at' => date('Y-m-d H:i:s',time()),
+			'created_by' => $this->data['user']['user_fullname'],
 		];
 		$this->request['item'] = [
 			'item_code'     => htmlspecialchars($this->input->post('item_code', true)),
@@ -98,6 +98,8 @@ class Stock extends CI_Controller {
 			'unit'      	=> htmlspecialchars($this->input->post('unit', true)),
 			'capital_price' => htmlspecialchars($this->input->post('capital_price', true)),
 			'selling_price' => htmlspecialchars($this->input->post('selling_price', true)),
+			'update_at' => date('Y-m-d H:i:s',time()),
+			'update_by' => $this->data['user']['user_fullname'],
 		];
 		$this->M_stock->history_item_insert($this->request);
 	}

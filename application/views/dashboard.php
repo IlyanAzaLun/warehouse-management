@@ -44,8 +44,7 @@
                 <h3 class="profile-username text-center"><?=$user['user_fullname']?></h3>
 
                 <p class="text-muted text-center"><?=$user['role_name']?></p>
-                <p class="text-muted text-center"><small>Member since <?=date('d F Y', $user['date_created'])?></small></p>
-
+                <p class="text-muted text-center"><small>Dibuat pada: <?= date("d/F/Y H:i:s", strtotime($user['created_at']));?></small></p>
               </div>
               <!-- /.card-body -->
             </div>

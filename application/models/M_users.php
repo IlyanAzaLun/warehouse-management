@@ -16,7 +16,7 @@ class M_users extends CI_Model {
                                 ,user.user_image
                                 ,user.role_id
                                 ,user.is_active
-                                ,user.date_created
+                                ,user.created_at
                                 ,role.role_name
                                 ');
                         $this->db->join('tbl_role role', 'user.role_id = role.id', 'left');
@@ -24,7 +24,13 @@ class M_users extends CI_Model {
                         return $this->db->get_where($this->_table.' user', ['user_email'=>$data])->row_array();
                 }else{
                         $this->db->select(
-                                'user.*
+                                'user.user_id
+                                ,user.user_fullname
+                                ,user.user_email
+                                ,user.user_image
+                                ,user.role_id
+                                ,user.is_active
+                                ,user.created_at
                                 ,user_info.user_fullname as user_info_fullname
                                 ,user_info.owner_name
                                 ,user_info.user_address
@@ -53,13 +59,15 @@ class M_users extends CI_Model {
                 $data['user_image']   =  'assets/images/default.jpg';
                 $data['role_id']      =  '752c0ad8-4925-11ec-8cc8-1be21be013bc';
                 $data['is_active']    =  1;
-                $data['date_created'] =  time();
+                $this->db->set('created_at', 'NOW()', FALSE);
                 return $this->db->insert('tbl_user', $data);
 
         }
 
         public function user_update($value)
         {
+                $this->db->set('update_at', 'NOW()', FALSE);
+                $this->db->set('update_by', $this->data['user']['user_fullname']);
                 $this->db->where('user_id', $value['user_id']);
                 $this->db->update($this->_table, $value);
         }

@@ -36,6 +36,10 @@ abstract class User extends CI_Controller
                'type_id'            =>  $this->input->post('type_id', true),
                'role_id'            =>  $this->input->post('role_id', true),
                'note'               =>  $this->input->post('note', true),
+               'update_at'          =>  date('Y-m-d H:i:s',time()),
+               'update_by'          =>  $this->data['user']['user_fullname'],
+               'created_by'          =>  $this->data['user']['user_fullname'],
+
           );
           $this->user = array(
                'user_fullname'      =>  $this->input->post('user_fullname', true),
@@ -49,14 +53,21 @@ abstract class User extends CI_Controller
           }else{
                if($this->db->get_where('tbl_user_information', array('user_id' => $this->input->post('user_id', true)))->num_rows() <= 0){
                     $this->info['user_id'] = $this->input->post('user_id', true);
+                    $this->db->set('created_by', $this->data['user']['user_fullname']);
                     $this->db->insert('tbl_user_information', $this->info);
 
                     $this->db->where('user_id', $this->input->post('user_id', true));
+                    $this->db->set('update_at', 'NOW()', FALSE);
+                    $this->db->set('update_by', $this->data['user']['user_fullname']);
                     $this->db->update('tbl_user', $this->user);
                }else{
+                    $this->db->set('update_at', 'NOW()', FALSE);
+                    $this->db->set('update_by', $this->data['user']['user_fullname']);
                     $this->db->where('user_id', $this->input->post('user_id'));
                     $this->db->update('tbl_user_information', $this->info);
                     
+                    $this->db->set('update_at', 'NOW()', FALSE);
+                    $this->db->set('update_by', $this->data['user']['user_fullname']);
                     $this->db->where('user_id', $this->input->post('user_id'));
                     $this->db->update('tbl_user', $this->user);
                }
@@ -79,6 +90,8 @@ abstract class User extends CI_Controller
           }else{
                $this->db->where('user_id', htmlspecialchars($this->input->post('user_id', true)));
                $this->db->set('is_active', 1);
+               $this->db->set('update_at', 'NOW()', false);
+               $this->db->set('update_by', $this->data['user']['user_fullname']);
                $this->db->update('tbl_user_information');
                Flasher::setFlash('info', 'success', 'Success', ' congratulation success to delete data!');
                redirect($_SERVER['HTTP_REFERER']);

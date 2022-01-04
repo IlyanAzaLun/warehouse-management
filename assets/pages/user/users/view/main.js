@@ -6,13 +6,15 @@ const main = () => {
 	// datasource.get_roles(function(callback){datasource.jsGrid('#tbl_users', callback)});
 
 	// options //
-	// update
-	$('button#update').on('click', function(){
-		datasource.search_user($(this).parent().data('id'));
-	});
 	// delete
 	$('button#delete').on('click', function(){
 		$('#modal-delete input#user_id').val($(this).parent().data('id'));
 	});
+	// update
+	$('button#update').on('click', function(){
+		datasource.search_user($(this).parent().data('id'));
+	});
+	
+	datasource.dataTabels()
 };
 export default main;

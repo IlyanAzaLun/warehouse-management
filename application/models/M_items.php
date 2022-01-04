@@ -61,6 +61,7 @@ class M_items extends CI_Model
                     'unit' => $value['L'],
                     'customs' => $value['M'],
                     'note' => $value['N'],
+                    'created_by' => $this->data['user']['user_fullname'],
                 ];
             }
         }
@@ -69,6 +70,8 @@ class M_items extends CI_Model
     public function item_update($data)
     {
         $this->db->where('item_code', $data['item_code']);
+        $this->db->set('update_at', 'NOW()', FALSE);
+        $this->db->set('update_by', $this->data['user']['user_fullname']);
         return $this->db->update($this->_table, $data);
     }
     public function item_delete($data)
@@ -80,6 +83,10 @@ class M_items extends CI_Model
     //update quantity item
     public function item_update_quantity($id, $quantity)
     {
+        $this->db->set('update_at', date('Y-m-d H:i:s',time()));
+        $this->db->set('update_by', $this->data['user']['user_fullname']);
+        $this->db->set('created_by', $this->data['user']['user_fullname']);
+
         $this->db->set('quantity', $quantity);
         $this->db->where('item_code', $id);
         return $this->db->update('tbl_item');

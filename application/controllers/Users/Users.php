@@ -64,9 +64,10 @@ class Users extends User
                     'type_id'            => htmlspecialchars($this->input->post('type_id', true)),
                     'role_id'            => '5347d8a4-4925-11ec-8cc8-1be21be013bc',
                     'note'               => htmlspecialchars($this->input->post('note', true)),
+                    'created_at' => date('Y-m-d H:i:s',time()),
+                    'created_by' => $this->data['user']['user_fullname'],
                ];
                try {
-
                     $this->M_users->user_info_insert($this->data, 'Supplier'); // this id for role on tbl_role
                     Flasher::setFlash('info', 'success', 'Success', ' congratulation success to entry data!');
                     redirect('users');    
