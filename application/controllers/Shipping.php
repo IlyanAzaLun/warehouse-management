@@ -128,46 +128,43 @@ class Shipping extends CI_Controller
         $invoice_id = sprintf('%04s/INV/RET/',$this->db->get('tbl_invoice')->num_rows() + 1) . date('my');
 
         foreach ($this->input->post('item_code', true) as $key => $value) {
-            $this->request['order']['order_id'][$key] = $order_id;
-            $this->request['order']['item_code'][$key] = $this->input->post('item_code',true)[$key];
+            $this->request['order']['order_id'][$key]           = $order_id;
+            $this->request['order']['item_code'][$key]          = $this->input->post('item_code',true)[$key];
             $this->request['order']['item_capital_price'][$key] = $this->input->post('item_capital_price', true)[$key]? $this->input->post('item_capital_price', true)[$key]: 0;
             $this->request['order']['item_selling_price'][$key] = $this->input->post('item_selling_price', true)[$key]? $this->input->post('item_selling_price', true)[$key]: 0;
-            $this->request['order']['item_quantity'][$key] = $this->input->post('quantity',true)[$key];
-            $this->request['order']['item_unit'][$key] = $this->input->post('unit',true)[$key];
-            $this->request['order']['rebate_price'][$key] = $this->input->post('rebate_price',true)[$key]? $this->input->post('rebate_price', true)[$key]: 0;
+            $this->request['order']['item_quantity'][$key]      = $this->input->post('quantity',true)[$key];
+            $this->request['order']['item_unit'][$key]          = $this->input->post('unit',true)[$key];
+            $this->request['order']['rebate_price'][$key]       = $this->input->post('rebate_price',true)[$key]? $this->input->post('rebate_price', true)[$key]: 0;
             
-            $this->request['order']['status_in_out'][$key] = ((int)$this->input->post('quantity', true)[$key] > 0)?'IN':'OUT'.' ('.$this->input->post('quantity', true)[$key].')';
-
-            $this->request['order']['user_id'][$key] = $this->input->post('user_id',true);
+            $this->request['order']['status_in_out'][$key]      = ((int)$this->input->post('quantity', true)[$key] > 0)?
+                'IN'.' ('.$this->input->post('quantity', true)[$key].')':
+                'OUT'.' ('.$this->input->post('quantity', true)[$key].')';
+            $this->request['order']['user_id'][$key]            = $this->input->post('user_id',true);
         }
 
         $this->invoice = [
-            'invoice_id' => $invoice_id,
-            'invoice_reverence' => $this->input->post('invoice_reverence_id',true),
+            'invoice_id'              => $invoice_id,
+            'invoice_reverence'       => $this->input->post('invoice_reverence_id',true),
             'to_customer_destination' => $this->input->post('user_id', true),
-            'order_id' => $order_id,
-            'sub_total' => $this->input->post('sub_total', true)? $this->input->post('sub_total', true): 0,
-            'discount' => $this->input->post('discount', true)? $this->input->post('discount', true): 0,
-            'shipping_cost' => $this->input->post('shipping_cost', true)? $this->input->post('shipping_cost', true): 0,
-            'other_cost' => $this->input->post('other_cost', true)? $this->input->post('other_cost', true): 0,
-            'grand_total' => $this->input->post('grand_total', true)? $this->input->post('grand_total', true): 0,
-            'status_active' => 1,
-            'status_item' => 0,
-            'status_validation' => 0,
-            'status_payment' => $this->input->post('status_payment', true)? 1: 0,
-            'status_settlement' => $this->input->post('status_payment', true)? 1: 0,
-            'user' => $this->session->userdata('fullname'),
-            'note' => $this->input->post('note', true)? $this->input->post('note', true).' :'.$this->data['user']['user_fullname']: 'Di input oleh bagian pengiriman : '.$this->data['user']['user_fullname'].': ' . implode(', ', $this->request['order']['item_code']),
+            'order_id'                => $order_id,
+            'sub_total'               => $this->input->post('sub_total', true)? $this->input->post('sub_total', true): 0,
+            'discount'                => $this->input->post('discount', true)? $this->input->post('discount', true): 0,
+            'shipping_cost'           => $this->input->post('shipping_cost', true)? $this->input->post('shipping_cost', true): 0,
+            'other_cost'              => $this->input->post('other_cost', true)? $this->input->post('other_cost', true): 0,
+            'grand_total'             => $this->input->post('grand_total', true)? $this->input->post('grand_total', true): 0,
+            'status_active'           => 1,
+            'status_item'             => 0,
+            'status_validation'       => 0,
+            'status_payment'          => $this->input->post('status_payment', true)? 1: 0,
+            'status_settlement'       => $this->input->post('status_payment', true)? 1: 0,
+            'user'                    => $this->session->userdata('fullname'),
+            'note'                    => $this->input->post('note', true)? $this->input->post('note', true).' :'.$this->data['user']['user_fullname']: 'Di input oleh bagian pengiriman : '.$this->data['user']['user_fullname'].': ' . implode(', ', $this->request['order']['item_code']),
+            'created_by'              => $this->data['user']['user_fullname'],
         ];
         // insert to tbl_order
         $this->M_order->order_insert($this->request['order']);
         $this->M_invoice->invoice_insert($this->invoice);
-        Flasher::setFlash(
-            'info',
-            'success',
-            'Success',
-            ' Berhasil tambah data!'
-        );
+        Flasher::setFlash('info','success','Success',' Berhasil tambah data!');
         redirect('shipping/queue');
     }
 

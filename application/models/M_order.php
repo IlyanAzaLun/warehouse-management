@@ -101,7 +101,7 @@ class M_order extends CI_Model {
 				$this->db->set('previous_capital_price' , $history[$key]['capital_price']);
 				$this->db->set('previous_selling_price' , $history[$key]['selling_price']);
 				$this->db->set('previous_quantity' , $history[$key]['quantity']);
-				$this->db->set('status_in_out' , $data['status_in_out'][$key].' ('.$data['item_quantity'][$key].')');
+				$this->db->set('status_in_out' , $data['status_in_out'][$key]);
 				$this->db->set('update_at', 'NOW()', FALSE);
 				$this->db->set('update_by', $this->data['user']['user_fullname']);
 				$this->db->set('created_by', $this->data['user']['user_fullname']);

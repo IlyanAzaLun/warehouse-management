@@ -32,9 +32,9 @@ class Welcome extends CI_Controller {
 	public function dashboard()
 	{
 		$this->data['plugins'] = array(
-			'css' => [
+			'css'    => [
 			],
-			'js' => [
+			'js'     => [
 			],
 			'module' => [
 			],

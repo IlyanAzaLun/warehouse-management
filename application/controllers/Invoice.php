@@ -21,7 +21,7 @@ abstract class Invoice extends CI_Controller
 		$invoice_id = sprintf("IV/SEL/%010s", $this->db->get('tbl_invoice')->num_rows()+1);
 
 		foreach ($this->input->post('item_code', true) as $key => $value) {
-			$this->request['order']['order_id'][$key]     = $order_id;
+			$this->request['order']['order_id'][$key]      = $order_id;
 			$this->request['order']['item_code'][$key]     = $this->input->post('item_code', true)[$key];
 			$this->request['order']['item_price'][$key]    = $this->input->post('item_price', true)[$key];
 			$this->request['order']['item_quantity'][$key] = $this->input->post('quantity', true)[$key];

@@ -61,29 +61,27 @@ class Customer extends User
             $this->load->view('user/customer/modals');
         } else {
             $this->data = [
-                'user_fullname' => htmlspecialchars($this->input->post('user_fullname', true)),
-                'user_address' => htmlspecialchars($this->input->post('user_address', true)),
-                'owner_name' => htmlspecialchars($this->input->post('owner_name', true)),
-                'user_address' => htmlspecialchars($this->input->post('user_address', true)),
-                'village' => htmlspecialchars($this->input->post('village', true)),
-                'sub-district' => htmlspecialchars($this->input->post('sub-district', true)),
-                'district' => htmlspecialchars($this->input->post('district', true)),
-                'province' => htmlspecialchars($this->input->post('province', true)),
-                'zip' => htmlspecialchars($this->input->post('zip', true)),
+                'user_fullname'      => htmlspecialchars($this->input->post('user_fullname', true)),
+                'user_address'       => htmlspecialchars($this->input->post('user_address', true)),
+                'owner_name'         => htmlspecialchars($this->input->post('owner_name', true)),
+                'user_address'       => htmlspecialchars($this->input->post('user_address', true)),
+                'village'            => htmlspecialchars($this->input->post('village', true)),
+                'sub-district'       => htmlspecialchars($this->input->post('sub-district', true)),
+                'district'           => htmlspecialchars($this->input->post('district', true)),
+                'province'           => htmlspecialchars($this->input->post('province', true)),
+                'zip'                => htmlspecialchars($this->input->post('zip', true)),
                 'user_contact_phone' => htmlspecialchars($this->input->post('user_contact_phone', true)),
                 'user_contact_email' => htmlspecialchars($this->input->post('user_contact_email', true)),
-                'type_id' => htmlspecialchars($this->input->post('type_id', true)),
-                'role_id' => '752c0ad8-4925-11ec-8cc8-1be21be013bc',
-                'note' => htmlspecialchars($this->input->post('note', true)),
+                'type_id'            => htmlspecialchars($this->input->post('type_id', true)),
+                'role_id'            => '752c0ad8-4925-11ec-8cc8-1be21be013bc',
+                'note'               => htmlspecialchars($this->input->post('note', true)),
             ];
             try {
                 $this->M_users->user_info_insert($this->data, 'Customer'); // this id for role on tbl_role
-                Flasher::setFlash('info','success','Success',' congratulation success to entry data!'
-                );
+                Flasher::setFlash('info','success','Success',' congratulation success to entry data!');
                 redirect('customer');
             } catch (Exception $e) {
-                Flasher::setFlash('info','error','Failed','  to entry data!, ' . $e
-                );
+                Flasher::setFlash('info','error','Failed','  to entry data!, ' . $e);
                 redirect('customer');
             }
         }
@@ -116,7 +114,7 @@ class Customer extends User
                 }
                 // $reader = new \PhpOffice\PhpSpreadsheet\IOFactory();
                 // file path
-                $spreadsheet = $reader->load($_FILES['file']['tmp_name']);
+                $spreadsheet    = $reader->load($_FILES['file']['tmp_name']);
                 $allDataInSheet = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
 
                 // array Count
@@ -151,14 +149,13 @@ class Customer extends User
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         ];
         if (isset($_FILES['file']['name'])) {
-            $arr_file = explode('.', $_FILES['file']['name']);
+            $arr_file  = explode('.', $_FILES['file']['name']);
             $extension = end($arr_file);
-            if (
-                ($extension == 'xlsx' ||
-                    $extension == 'xls' ||
-                    $extension == 'csv') &&
-                in_array($_FILES['file']['type'], $file_mimes)
-            ) {
+            if ((
+            $extension == 'xlsx' ||
+            $extension == 'xls' ||
+            $extension == 'csv') &&
+            in_array($_FILES['file']['type'], $file_mimes)){
                 return true;
             } else {
                 $this->form_validation->set_message('checkFileValidation','Please choose correct file.');

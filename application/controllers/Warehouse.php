@@ -36,9 +36,9 @@ class Warehouse extends CI_Controller
     }
     public function index()
     {
-        $this->data['title'] = 'Buat antrian pesanan barang';
+        $this->data['title']    = 'Buat antrian pesanan barang';
         $this->data['invoices'] = $this->M_invoice->invoice_history_select(false,'INV/SEL/');
-        $this->data['plugins'] = [
+        $this->data['plugins']  = [
             'css' => [
                 base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'),
                 base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'),
@@ -62,11 +62,11 @@ class Warehouse extends CI_Controller
     }
     public function info()
     {
-        $this->data['title']   = 'Riwayat pesanan barang';
-        $id_invoice = $this->input->get('id');
-        $this->data['invoice'] = $this->M_invoice->invoice_select($id_invoice);
-        $this->data['orders']  = $this->M_order->order_select($this->data['invoice']['invoice_order_id']);
-        $this->data['invoice_return']  = $this->M_invoice->invoice_select_by_reference($id_invoice);
+        $this->data['title']          = 'Riwayat pesanan barang';
+        $id_invoice                   = $this->input->get('id');
+        $this->data['invoice']        = $this->M_invoice->invoice_select($id_invoice);
+        $this->data['orders']         = $this->M_order->order_select($this->data['invoice']['invoice_order_id']);
+        $this->data['invoice_return'] = $this->M_invoice->invoice_select_by_reference($id_invoice);
         if ($this->data['invoice_return']) {
             $this->data['order_return']  = $this->M_order->order_select($this->data['invoice_return']['invoice_order_id']);
         }
@@ -95,11 +95,11 @@ class Warehouse extends CI_Controller
     }
     public function queue()
     {
-        $this->data['title'] = 'Buat antrian pesanan barang';
+        $this->data['title']    = 'Buat antrian pesanan barang';
         $this->data['invoices'] = $this->M_invoice->invoice_select(
             false,'INV/SEL/'
         );
-        $this->data['returns'] = $this->M_warehouse->warehouse_select(
+        $this->data['returns']  = $this->M_warehouse->warehouse_select(
             false,'INV/RET/'
         );
         $this->data['plugins'] = ['css' => [
@@ -151,36 +151,36 @@ class Warehouse extends CI_Controller
 
         $this->tmp = [];
         foreach ($this->input->post('item_code', true) as $key => $value) {
-            $this->request['order']['order_id'][$key] = $order_id;
-            $this->request['order']['item_code'][$key] = $this->input->post('item_code',true)[$key];
+            $this->request['order']['order_id'][$key]           = $order_id;
+            $this->request['order']['item_code'][$key]          = $this->input->post('item_code',true)[$key];
             $this->request['order']['item_capital_price'][$key] = $this->input->post('item_capital_price', true)[$key];
             $this->request['order']['item_selling_price'][$key] = $this->input->post('item_selling_price', true)[$key];
-            $this->request['order']['item_quantity'][$key] = -(int) $this->input->post('quantity', true)[$key];
-            $this->request['order']['item_unit'][$key] = $this->input->post('unit',true)[$key];
-            $this->request['order']['rebate_price'][$key] = $this->input->post('rebate_price', true)[$key];
-            $this->request['order']['status_in_out'][$key] = 'OUT';
-            $this->request['order']['created_by'][$key] = $this->data['user']['user_fullname'];
-            $this->request['order']['user_id'][$key] = $this->input->post('user_id', true);
+            $this->request['order']['item_quantity'][$key]      = -(int) $this->input->post('quantity', true)[$key];
+            $this->request['order']['item_unit'][$key]          = $this->input->post('unit',true)[$key];
+            $this->request['order']['rebate_price'][$key]       = $this->input->post('rebate_price', true)[$key];
+            $this->request['order']['status_in_out'][$key]      = 'OUT ('.(int) $this->input->post('quantity', true)[$key].')';
+            $this->request['order']['created_by'][$key]         = $this->data['user']['user_fullname'];
+            $this->request['order']['user_id'][$key]            = $this->input->post('user_id', true);
             $this->_check_quantity($this->input->post('item_code'),$this->input->post('quantity'));
         }
 
         $this->invoice = [
-            'invoice_id' => $invoice_id,
+            'invoice_id'              => $invoice_id,
             'to_customer_destination' => $this->input->post('user_id', true),
-            'order_id' => $order_id,
-            'sub_total' => $this->input->post('sub_total', true) ? $this->input->post('sub_total', true) : 0,
-            'discount' => $this->input->post('discount', true) ? $this->input->post('discount', true) : 0,
-            'shipping_cost' => $this->input->post('shipping_cost', true) ? $this->input->post('shipping_cost', true) : 0,
-            'other_cost' => $this->input->post('other_cost', true) ? $this->input->post('other_cost', true) : 0,
-            'grand_total' => $this->input->post('grand_total', true) ? $this->input->post('grand_total', true) : 0,
-            'status_active' => 1,
-            'status_item' => 0,
-            'status_validation' => 0,
-            'status_payment' => $this->input->post('status_payment', true) ? 1 : 0,
-            'status_settlement' => $this->input->post('status_payment', true) ? 1 : 0,
-            'user' => $this->session->userdata('fullname'),
-            'note' => $this->input->post('note', true) ? $this->input->post('note', true).' '.$this->data['user']['user_fullname'] : 'Di input oleh bagian gudang :'.$this->data['user']['user_fullname'].': ' . implode(', ', $this->request['order']['item_code']),
-            'created_by' => $this->data['user']['user_fullname'],
+            'order_id'                => $order_id,
+            'sub_total'               => $this->input->post('sub_total', true) ? $this->input->post('sub_total', true) : 0,
+            'discount'                => $this->input->post('discount', true) ? $this->input->post('discount', true) : 0,
+            'shipping_cost'           => $this->input->post('shipping_cost', true) ? $this->input->post('shipping_cost', true) : 0,
+            'other_cost'              => $this->input->post('other_cost', true) ? $this->input->post('other_cost', true) : 0,
+            'grand_total'             => $this->input->post('grand_total', true) ? $this->input->post('grand_total', true) : 0,
+            'status_active'           => 1,
+            'status_item'             => 0,
+            'status_validation'       => 0,
+            'status_payment'          => $this->input->post('status_payment', true) ? 1 : 0,
+            'status_settlement'       => $this->input->post('status_payment', true) ? 1 : 0,
+            'user'                    => $this->session->userdata('fullname'),
+            'note'                    => $this->input->post('note', true) ? $this->input->post('note', true).' '.$this->data['user']['user_fullname'] : 'Di input oleh bagian gudang :'.$this->data['user']['user_fullname'].': ' . implode(', ', $this->request['order']['item_code']),
+            'created_by'              => $this->data['user']['user_fullname'],
 
         ];
         try {
@@ -198,24 +198,19 @@ class Warehouse extends CI_Controller
     private function _check_quantity($id, $quantity)
     {
         foreach ($id as $key => $value) {
-            $tmp_value = $value;
+            $tmp_value         = $value;
             $tmp[$tmp_value][] = $quantity[$key];
         }
         foreach ($tmp as $key => $value) {
             $result[] = [
-                'item_code' => $key,
+                'item_code'     => $key,
                 'item_quantity' => array_sum($value),
             ];
         }
         foreach ($result as $key => $value) {
             $item = $this->M_items->item_select($value['item_code']);
             if ((int) $item['quantity'] - (int) $value['item_quantity'] < 0) {
-                Flasher::setFlash(
-                    'info',
-                    'error',
-                    'Failed',
-                    ' <b>data gagal ditambahkan</b> ' . validation_errors()
-                );
+                Flasher::setFlash('info','error','Failed',' <b>data gagal ditambahkan</b> ' . validation_errors());
                 redirect('warehouse/queue');
                 return false;
                 die();
@@ -234,9 +229,9 @@ class Warehouse extends CI_Controller
             echo json_encode(
                 $data = [
                     '0' => [
-                        'item_code' => '',
-                        'item_name' => '',
-                        'quantity' => '',
+                        'item_code'     => '',
+                        'item_name'     => '',
+                        'quantity'      => '',
                         'capital_price' => '',
                         'selling_price' => '',
                     ],
@@ -348,7 +343,9 @@ class Warehouse extends CI_Controller
             $this->db->set('previous_capital_price',$history[$key]['capital_price']);
             $this->db->set('previous_selling_price',$history[$key]['selling_price']);
             $this->db->set('previous_quantity', $history[$key]['quantity']);
-            $this->db->set('status_in_out', ((int)$data_order[$key]['quantity_order']<0)?'OUT':'IN' . ' (' . $data_order[$key]['quantity_order'] . ')');
+            $this->db->set('status_in_out', ((int)$data_order[$key]['quantity_order']<0)?
+                'OUT'. ' (' . abs($data_order[$key]['quantity_order']) . ')':
+                'IN' . ' (' . abs($data_order[$key]['quantity_order']) . ')');
             $this->db->set('update_at', date('Y-m-d H:i:s',time()));
             $this->db->set('update_by', $this->data['user']['user_fullname']);
             $this->db->set('created_by', $this->data['user']['user_fullname']);

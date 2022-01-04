@@ -11,7 +11,7 @@ class Supplier extends User
 
      public function index()
      {
-          $this->data['title'] = 'Manajemen penyedia barang';
+          $this->data['title']     = 'Manajemen penyedia barang';
           $this->data['suppliers'] = $this->M_users->user_info_select(false, 'Supplier');
 
           

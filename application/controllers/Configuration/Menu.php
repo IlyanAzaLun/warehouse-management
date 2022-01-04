@@ -35,11 +35,11 @@ class Menu extends CI_Controller {
 				base_url('assets/pages/configuration/menu/index.js'),
 			],
 		);
-		$this->data['title'] = 'Menu management';
-		$this->data['user'] = $this->M_users->user_select($this->session->userdata('email'));
-		$this->data['menus'] = $this->M_menu->menu_select();
+		$this->data['title']     = 'Menu management';
+		$this->data['user']      = $this->M_users->user_select($this->session->userdata('email'));
+		$this->data['menus']     = $this->M_menu->menu_select();
 		$this->data['categorys'] = $this->M_menu->menu_category_select();
-		$this->data['roles'] = $this->M_role->role_select();
+		$this->data['roles']     = $this->M_role->role_select();
 
 		$this->form_validation->set_rules('menu', 'Menu name', 'required|trim');
 		$this->form_validation->set_rules('category_id', 'Category menu', 'required|trim');
@@ -50,13 +50,13 @@ class Menu extends CI_Controller {
 			$this->load->view('configuration/menu/modals', $this->data);
 		}else{
 			$this->data = [
-				'title' => htmlspecialchars($this->input->post('menu', true)),
-				'category_id' => htmlspecialchars($this->input->post('category_id', true)),
-				'url' => htmlspecialchars($this->input->post('url', true)),
-				'parent_id' => htmlspecialchars($this->input->post('parent_id', true)),
+				'title'           => htmlspecialchars($this->input->post('menu', true)),
+				'category_id'     => htmlspecialchars($this->input->post('category_id', true)),
+				'url'             => htmlspecialchars($this->input->post('url', true)),
+				'parent_id'       => htmlspecialchars($this->input->post('parent_id', true)),
 				'menu_controller' => htmlspecialchars($this->input->post('menu_controller', true)),
-				'icon' => htmlspecialchars($this->input->post('icon', true)),
-				'is_active' => htmlspecialchars($this->input->post('is_active', true)),
+				'icon'            => htmlspecialchars($this->input->post('icon', true)),
+				'is_active'       => htmlspecialchars($this->input->post('is_active', true)),
 			];
 
 			echo "<b>Information! under maintenance</b>";

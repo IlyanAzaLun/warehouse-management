@@ -38,7 +38,7 @@ abstract class User extends CI_Controller
                'note'               =>  $this->input->post('note', true),
                'update_at'          =>  date('Y-m-d H:i:s',time()),
                'update_by'          =>  $this->data['user']['user_fullname'],
-               'created_by'          =>  $this->data['user']['user_fullname'],
+               'created_by'         =>  $this->data['user']['user_fullname'],
 
           );
           $this->user = array(

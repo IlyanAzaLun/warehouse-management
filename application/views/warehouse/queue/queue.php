@@ -54,7 +54,7 @@
                         <div class="col-sm-12 col-lg-6">
                           <div class="form-group">
                             <label for="fullname">Nama toko</label>
-                            <input type="text" name="fullname" id="fullname" class="form-control" value="<?= set_value('fullname') ?>" required>
+                            <input type="text" name="fullname" id="fullname" class="form-control" value="<?= set_value('fullname') ?>" autoComplete="off" required>
                             <?= form_error('user_id','<small class="text-danger">','</small>') ?>
                           </div>
                         </div>

@@ -90,22 +90,22 @@ class Items extends CI_Controller
         } else {
             $this->data = [
                 'item_category' => htmlspecialchars($this->input->post('subcategory', true) ? $this->input->post('subcategory', true ): $this->input->post('category', true)),
-                'item_code' => htmlspecialchars($this->input->post('item_code', true)),
-                'item_name' => htmlspecialchars($this->input->post('item_name', true)),
-                'unit' => htmlspecialchars($this->input->post('unit', true)),
-                'quantity' => 0,
-                'MG' => htmlspecialchars($this->input->post('MG', true) ? $this->input->post('MG', true): ''),
-                'ML' => htmlspecialchars($this->input->post('ML', true) ? $this->input->post('ML', true): ''),
-                'VG' => htmlspecialchars($this->input->post('VG', true) ? $this->input->post('VG', true): ''),
-                'PG' => htmlspecialchars($this->input->post('PG', true) ? $this->input->post('PG', true): ''),
-                'falvour' => htmlspecialchars($this->input->post('flavour', true) ? $this->input->post('flavour', true): ''),
-                'customs' => htmlspecialchars($this->input->post('customs', true) ? $this->input->post('customs', true): ''),
-                'brand_1' => htmlspecialchars($this->input->post('brand_1', true) ? $this->input->post('brand_1', true): ''),
-                'brand_2' => htmlspecialchars($this->input->post('brand_2', true) ? $this->input->post('brand_2', true): ''),
+                'item_code'     => htmlspecialchars($this->input->post('item_code', true)),
+                'item_name'     => htmlspecialchars($this->input->post('item_name', true)),
+                'unit'          => htmlspecialchars($this->input->post('unit', true)),
+                'quantity'      => 0,
+                'MG'            => htmlspecialchars($this->input->post('MG', true) ? $this->input->post('MG', true): ''),
+                'ML'            => htmlspecialchars($this->input->post('ML', true) ? $this->input->post('ML', true): ''),
+                'VG'            => htmlspecialchars($this->input->post('VG', true) ? $this->input->post('VG', true): ''),
+                'PG'            => htmlspecialchars($this->input->post('PG', true) ? $this->input->post('PG', true): ''),
+                'falvour'       => htmlspecialchars($this->input->post('flavour', true) ? $this->input->post('flavour', true): ''),
+                'customs'       => htmlspecialchars($this->input->post('customs', true) ? $this->input->post('customs', true): ''),
+                'brand_1'       => htmlspecialchars($this->input->post('brand_1', true) ? $this->input->post('brand_1', true): ''),
+                'brand_2'       => htmlspecialchars($this->input->post('brand_2', true) ? $this->input->post('brand_2', true): ''),
                 'capital_price' => htmlspecialchars($this->input->post('capital_price', true)),
                 'selling_price' => htmlspecialchars($this->input->post('selling_price', true)),
-                'note' => htmlspecialchars($this->input->post('note', true)),
-                'created_by' => $this->data['user']['user_fullname'],
+                'note'          => htmlspecialchars($this->input->post('note', true)),
+                'created_by'    => $this->data['user']['user_fullname'],
             ];
             $this->M_items->item_insert($this->data);
             Flasher::setFlash('info','success','Success',' Berhasil input data!'
@@ -183,23 +183,23 @@ class Items extends CI_Controller
             $this->load->view ('items/information', $this->data);
         } else {
             $this->data = [
-                'item_code' => htmlspecialchars($this->input->post('item_code', true)),
-                'item_name' => htmlspecialchars($this->input->post('item_name', true)),
-            // 'quantity'   => htmlspecialchars($this->input->post('quantity', true)),
-                'unit' => htmlspecialchars($this->input->post('unit', true)),
-                'MG' => htmlspecialchars($this->input->post('MG', true)? $this->input->post('MG', true): ''),
-                'ML' => htmlspecialchars($this->input->post('ML', true)? $this->input->post('ML', true): ''),
-                'VG' => htmlspecialchars($this->input->post('VG', true)? $this->input->post('VG', true): ''),
-                'PG' => htmlspecialchars($this->input->post('PG', true)? $this->input->post('PG', true): ''),
-                'falvour' => htmlspecialchars($this->input->post('falvour', true)? $this->input->post('falvour', true): ''),
-                'customs' => htmlspecialchars($this->input->post('customs', true)? $this->input->post('customs', true): ''),
-                'brand_1' => htmlspecialchars($this->input->post('brand_1', true)? $this->input->post('brand_1', true): ''),
-                'brand_2' => htmlspecialchars($this->input->post('brand_2', true)? $this->input->post('brand_2', true): ''),
+                'item_code'     => htmlspecialchars($this->input->post('item_code', true)),
+                'item_name'     => htmlspecialchars($this->input->post('item_name', true)),
+                // 'quantity'   => htmlspecialchars($this->input->post('quantity', true)),
+                'unit'          => htmlspecialchars($this->input->post('unit', true)),
+                'MG'            => htmlspecialchars($this->input->post('MG', true)? $this->input->post('MG', true): ''),
+                'ML'            => htmlspecialchars($this->input->post('ML', true)? $this->input->post('ML', true): ''),
+                'VG'            => htmlspecialchars($this->input->post('VG', true)? $this->input->post('VG', true): ''),
+                'PG'            => htmlspecialchars($this->input->post('PG', true)? $this->input->post('PG', true): ''),
+                'falvour'       => htmlspecialchars($this->input->post('falvour', true)? $this->input->post('falvour', true): ''),
+                'customs'       => htmlspecialchars($this->input->post('customs', true)? $this->input->post('customs', true): ''),
+                'brand_1'       => htmlspecialchars($this->input->post('brand_1', true)? $this->input->post('brand_1', true): ''),
+                'brand_2'       => htmlspecialchars($this->input->post('brand_2', true)? $this->input->post('brand_2', true): ''),
                 'capital_price' => htmlspecialchars($this->input->post('capital_price', true)),
                 'selling_price' => htmlspecialchars($this->input->post('selling_price', true)),
-                'note' => htmlspecialchars($this->input->post('note', true)),
-                'update_at' => date('Y-m-d H:i:s',time()),
-                'update_by' => $this->data['user']['user_fullname'],
+                'note'          => htmlspecialchars($this->input->post('note', true)),
+                'update_at'     => date('Y-m-d H:i:s',time()),
+                'update_by'     => $this->data['user']['user_fullname'],
 
             ];
             $this->M_items->item_update($this->data);
@@ -234,29 +234,23 @@ class Items extends CI_Controller
 
     public function get_code()
     {
-        echo json_encode(
-            $this->db->get_where('tbl_item', [
-                    'item_category' => $this->input->post('data'),
-                ])->num_rows()
-        );
+        echo json_encode($this->db->get_where('tbl_item', ['item_category' => $this->input->post('data')])->num_rows());
     }
 
     public function get_item_invoice()
     {
         if ($this->input->post('request')) {
             if ($this->input->post('data')) {
-                $this->data = $this->db->get_where('tbl_item', [
-                        'item_code' => $this->input->post('data'),
-                    ])->row_array();
+                $this->data = $this->db->get_where('tbl_item', ['item_code' => $this->input->post('data')])->row_array();
                 if ($this->data) {
                     echo json_encode($this->data);
                 } else {
                     echo json_encode(
                         $data = [
                             '0' => [
-                                'item_code' => '',
-                                'item_name' => '',
-                                'quantity' => '',
+                                'item_code'     => '',
+                                'item_name'     => '',
+                                'quantity'      => '',
                                 'capital_price' => '',
                                 'selling_price' => '',
                             ],
@@ -276,9 +270,9 @@ class Items extends CI_Controller
                     echo json_encode(
                         $data = [
                             '0' => [
-                                'item_code' => '',
-                                'item_name' => '',
-                                'quantity' => '',
+                                'item_code'     => '',
+                                'item_name'     => '',
+                                'quantity'      => '',
                                 'capital_price' => '',
                                 'selling_price' => '',
                             ],
@@ -293,18 +287,9 @@ class Items extends CI_Controller
 
     public function delete()
     {
-        $this->form_validation->set_rules(
-            'item_code',
-            'Code item',
-            'required|trim'
-        );
+        $this->form_validation->set_rules('item_code','Code item','required|trim');
         if ($this->form_validation->run() == false) {
-            Flasher::setFlash(
-                'info',
-                'error',
-                'Failed',
-                ' Gagal hapus data! ' . validation_errors()
-            );
+            Flasher::setFlash('info','error','Failed',' Gagal hapus data! ' . validation_errors());
             redirect('items');
         } else {
             $this->data = [
@@ -313,12 +298,7 @@ class Items extends CI_Controller
                 ),
             ];
             $this->M_items->item_delete($this->data);
-            Flasher::setFlash(
-                'info',
-                'success',
-                'Success',
-                ' berhasil hapus data!'
-            );
+            Flasher::setFlash('info','success','Success',' berhasil hapus data!');
             redirect('items');
         }
     }
@@ -357,21 +337,12 @@ class Items extends CI_Controller
 
                 // array Count
                 if ($this->M_items->item_insert_multiple($allDataInSheet) > 0) {
-                    Flasher::setFlash(
-                        'info',
-                        'success',
-                        ',Success !',
-                        ',Berhasil import data!'
-                    );
+                    Flasher::setFlash('info','success',',Success !',',Berhasil import data!');
                     header('Location: ' . $_SERVER['HTTP_REFERER']);
                     exit();
                 } else {
-                    Flasher::setFlash(
-                        'info',
-                        'warning',
-                        ',Error !',
-                        ', informasi yang diterima tidak sesuai, coba lagi' .
-                            validation_errors()
+                    Flasher::setFlash('info','warning',',Error !',', informasi yang diterima tidak sesuai, coba lagi' .
+                        validation_errors()
                     );
                     header('Location: ' . $_SERVER['HTTP_REFERER']);
                     exit();
@@ -407,29 +378,15 @@ class Items extends CI_Controller
             ) {
                 return true;
             } else {
-                $this->form_validation->set_message(
-                    'checkFileValidation',
-                    'Please choose correct file.'
-                );
-                Flasher::setFlash(
-                    'info',
-                    'error',
-                    'Failed',
-                    ' Gagal update data! ' . validation_errors()
-                );
+                $this->form_validation->set_message('checkFileValidation','Please choose correct file.');
+                Flasher::setFlash('info','error','Failed',' Gagal update data! ' . validation_errors());
                 redirect('items');
                 return false;
             }
         } else {
-            $this->form_validation->set_message(
-                'checkFileValidation',
-                'Please choose a file.'
-            );
-            Flasher::setFlash(
-                'info',
-                'error',
-                'Failed',
-                ' Gagal update data! ' . validation_errors()
+            $this->form_validation->set_message('checkFileValidation','Please choose a file.');
+            Flasher::setFlash('info','error','Failed',' Gagal update data! ' . 
+                validation_errors()
             );
             redirect('items');
             return false;
