@@ -80,17 +80,33 @@ class Users extends User
 
      public function profile()
      {
-          echo "<pre>";
-          print_r ($this->data['user']['user_fullname']);
-          // $this->db->where('user_id', $this->data['user']['user_id']);
-          // print_r ($this->db->get('tbl_user_information')->row_array());
-          echo "</pre>";
-          die();
+          $this->form_validation->set_rules('user_id', 'User', 'required|trim');
           if ($this->form_validation->run()==false) {
                $this->data['title'] = 'Profile';
                $this->load->view('user/users/profile', $this->data);
           }else{
-               $this->M_users->user_update();
+               $config['allowed_types'] = 'jpg|jpeg|png';
+               $config['upload_path']   = 'assets/images/';
+               $config['file_name']     = 'user-'.date("YMD").time();
+               $this->load->library('upload', $config);
+               if (@$_FILES['user_image']) {
+                    //upload
+                    if ($this->upload->do_upload('user_image')) {
+                         if ($this->data['user']['user_image']!="assets/images/default.jpg") {
+                              unlink($this->data['user']['user_image']);
+                         }
+                         $this->request['user_image'] = $config['upload_path'].$this->upload->data('file_name');
+                         $this->request['user_id'] = $this->data['user']['user_id'];
+                         $this->M_users->user_update($this->request);
+                         Flasher::setFlash('info', 'success', 'Success', ' congratulation success to entry data!');
+                         redirect('profile');    
+                    }
+                    //update ./
+               }else{
+                    //add more do something, to update data, if form no image
+                    Flasher::setFlash('info', 'error', 'Failed', ' kesalahan pada informasi!');
+                    redirect('profile');    
+               }    
           }
      }
 

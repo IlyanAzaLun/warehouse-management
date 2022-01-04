@@ -61,7 +61,6 @@ class M_users extends CI_Model {
                 $data['is_active']    =  1;
                 $this->db->set('created_at', 'NOW()', FALSE);
                 return $this->db->insert('tbl_user', $data);
-
         }
 
         public function user_update($value)

@@ -185,7 +185,9 @@ class Warehouse extends CI_Controller
         ];
         try {
             $this->M_invoice->invoice_insert($this->invoice);
-            $this->M_order->order_insert_history_update_item($this->request['order']); // insert to tbl_order, insert to tbl_history, and update item
+            $this->M_order->order_insert_history_update_item($this->request['order']); 
+            // insert to tbl_order, insert to tbl_history, and update item
+            
             Flasher::setFlash('info','success','Success',' data berhasil di tambahkan');
             redirect('warehouse/queue');
         } catch (Exception $e) {
