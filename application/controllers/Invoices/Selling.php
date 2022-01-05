@@ -43,8 +43,8 @@ class Selling extends Invoice
                     base_url('assets/pages/invoice/sale/index.js'),
                ],
           );
-          $this->data['title'] = 'Manajemen penjualan';
-          $this->data['invoices'] = $this->M_invoice->invoice_select(false, 'INV/SEL/');
+          $this->data['title']     = 'Manajemen penjualan';
+          $this->data['invoices']  = $this->M_invoice->invoice_select(false, 'INV/SEL/');
           $this->data['categorys'] = $this->M_menu->menu_category_select();
 
           $this->form_validation->set_rules('item_name[]', 'Item name', 'required|trim');

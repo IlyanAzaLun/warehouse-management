@@ -58,14 +58,6 @@ class Menu extends CI_Controller {
 				'icon'            => htmlspecialchars($this->input->post('icon', true)),
 				'is_active'       => htmlspecialchars($this->input->post('is_active', true)),
 			];
-
-			echo "<b>Information! under maintenance</b>";
-			echo "<pre>";
-			foreach ($this->input->post('role') as $key => $role) {
-				echo $key;
-			}
-			echo "</pre>";
-			// die();
 			
 			if ($this->M_menu->menu_insert($this->data)) {
 				Flasher::setFlash('info', 'success', 'Success', ' congratulation you already added new data!');

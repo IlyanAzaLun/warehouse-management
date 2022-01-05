@@ -27,9 +27,9 @@ class Auth extends CI_Controller {
 		if($user AND password_verify($this->input->post('password', true), $user['user_password'])){
 			if ($user['is_active']) {
 				$this->session->set_userdata([
-					'fullname'=>$user['user_fullname'],
-					'email'=>$user['user_email'],
-					'role_id'=>$user['role_id']
+					'fullname' =>$user['user_fullname'],
+					'email'    =>$user['user_email'],
+					'role_id'  =>$user['role_id']
 				]);
 				Flasher::setFlash('info', 'success', 'Success', ' congratulation you already signin!');
 				redirect('dashboard');
@@ -44,8 +44,8 @@ class Auth extends CI_Controller {
 	}
 	public function signup(){
 		$this->form_validation->set_rules('name', 'Full name', 'required|trim');
-		$this->form_validation->set_rules('email', 'Email', 'required|trim|is_unique[tbl_user.user_email]',[
-			'is_unique' => 'This email has alredy registerd!'
+		$this->form_validation->set_rules('email', 'Username', 'required|trim|is_unique[tbl_user.user_email]',[
+			'is_unique' => 'This Username has alredy registerd!'
 		]);
 		$this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[3]|matches[repassword]');
 		$this->form_validation->set_rules('repassword', 'Re-password', 'required|trim|matches[password]');

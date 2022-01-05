@@ -34,19 +34,19 @@ class Profile extends User
 						}
 						$gbr = $this->upload->data();
 						//Compress Image
-						$config['image_library']='gd2';
-						$config['source_image']='assets/images/'.$gbr['file_name'];
-						$config['create_thumb']= FALSE;
-						$config['maintain_ratio']= FALSE;
-						$config['quality']= '50%';
-						$config['width']= 100;
-						$config['height']= 100;
-						$config['new_image']= 'assets/images/'.$gbr['file_name'];
-						$this->load->library('image_lib', $config);
-						$this->image_lib->resize();
+                              $config['image_library']     ='gd2';
+                              $config['source_image']      ='assets/images/'.$gbr['file_name'];
+                              $config['create_thumb']      = FALSE;
+                              $config['maintain_ratio']    = FALSE;
+                              $config['quality']           = '50%';
+                              $config['width']             = 100;
+                              $config['height']            = 100;
+                              $config['new_image']         = 'assets/images/'.$gbr['file_name'];
+                              $this->load->library('image_lib', $config);
+                              $this->image_lib->resize();
 
-						$this->request['user_image'] = $config['upload_path'].$this->upload->data('file_name');
-						$this->request['user_id'] = $this->data['user']['user_id'];
+                              $this->request['user_image'] = $config['upload_path'].$this->upload->data('file_name');
+                              $this->request['user_id']    = $this->data['user']['user_id'];
 						$this->M_users->user_update($this->request);
 						Flasher::setFlash('info', 'success', 'Success', ' congratulation success to entry data!');
 						redirect('profile');    

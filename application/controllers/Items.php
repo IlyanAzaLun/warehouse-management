@@ -63,8 +63,8 @@ class Items extends CI_Controller
             ],
             'module' => [base_url('assets/pages/items/index.js')],
         ];
-        $this->data['title'] = 'Manajemen barang';
-        $this->data['items'] = $this->M_items->item_select();
+        $this->data['title']     = 'Manajemen barang';
+        $this->data['items']     = $this->M_items->item_select();
         $this->data['categorys'] = $this->M_menu->menu_category_select();
 
         $this->form_validation->set_rules('category','Category item','required|trim');
@@ -330,7 +330,7 @@ class Items extends CI_Controller
                 } else {
                     $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
                 }
-                $spreadsheet = $reader->load($_FILES['file']['tmp_name']);
+                $spreadsheet    = $reader->load($_FILES['file']['tmp_name']);
                 $allDataInSheet = $spreadsheet
                     ->getActiveSheet()
                     ->toArray(null, true, true, true);
@@ -368,7 +368,7 @@ class Items extends CI_Controller
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         ];
         if (isset($_FILES['file']['name'])) {
-            $arr_file = explode('.', $_FILES['file']['name']);
+            $arr_file  = explode('.', $_FILES['file']['name']);
             $extension = end($arr_file);
             if (
                 ($extension == 'xlsx' ||

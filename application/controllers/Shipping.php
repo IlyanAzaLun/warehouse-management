@@ -35,9 +35,9 @@ class Shipping extends CI_Controller
 
     public function index()
     {
-        $this->data['title'] = 'Daftar kesalahan julah barang pada pesanan';
+        $this->data['title']    = 'Daftar kesalahan julah barang pada pesanan';
         $this->data['invoices'] = $this->M_invoice->invoice_history_select(false,'INV/RET/');
-        $this->data['plugins'] = [
+        $this->data['plugins']  = [
             'css' => [
                 base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'),
                 base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'),
@@ -57,10 +57,10 @@ class Shipping extends CI_Controller
     public function info()
     {
         $id_invoice = $this->input->get('id');
-        $this->data['title'] = 'Informasi kesalahan pemesanan';
+        $this->data['title']    = 'Informasi kesalahan pemesanan';
         $this->data['invoices'] = $this->M_invoice->invoice_select_by_reference($id_invoice,false);
         $this->data['order']    = $this->M_order->order_select($this->data['invoices']['invoice_order_id']);
-        $this->data['plugins'] = [
+        $this->data['plugins']  = [
             'css' => [
                 base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'),
                 base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'),
@@ -78,10 +78,10 @@ class Shipping extends CI_Controller
 
     public function queue()
     {
-        $this->data['title'] = 'Daftar antrian pesanan barang dari gudang';
+        $this->data['title']    = 'Daftar antrian pesanan barang dari gudang';
         $this->data['invoices'] = $this->M_shipping->shipping_select(false,'INV/SEL/');
-        $this->data['returns'] = $this->M_invoice->invoice_select(false,'INV/RET/');
-        $this->data['plugins'] = [
+        $this->data['returns']  = $this->M_invoice->invoice_select(false,'INV/RET/');
+        $this->data['plugins']  = [
             'css' => [
                 base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'),
                 base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'),
@@ -123,7 +123,7 @@ class Shipping extends CI_Controller
     protected function add_invoice()
     {
         $this->db->group_by('order_id');
-        $order_id = sprintf('%04s/ORD/RET/', $this->db->get('tbl_order')->num_rows() + 1) . date('my');
+        $order_id   = sprintf('%04s/ORD/RET/', $this->db->get('tbl_order')->num_rows() + 1) . date('my');
         $this->db->like('invoice_id', '/INV/RET/' . date('my'), 'before');
         $invoice_id = sprintf('%04s/INV/RET/',$this->db->get('tbl_invoice')->num_rows() + 1) . date('my');
 

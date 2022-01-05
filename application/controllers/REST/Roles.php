@@ -23,9 +23,9 @@ class Roles extends REST_Controller
 
     function index_post() {
         $data = array(
-            'id'           => $this->post('id'),
-            'nama'          => $this->post('nama'),
-            'nomor'    => $this->post('nomor'));
+            'id'    => $this->post('id'),
+            'nama'  => $this->post('nama'),
+            'nomor' => $this->post('nomor'));
         $insert = $this->db->insert('telepon', $data);
         if ($insert) {
             $this->response($data, 200);
@@ -37,9 +37,9 @@ class Roles extends REST_Controller
     function index_put() {
         $id = $this->put('id');
         $data = array(
-            'id'       => $this->put('id'),
-            'nama'          => $this->put('nama'),
-            'nomor'    => $this->put('nomor'));
+            'id'    => $this->put('id'),
+            'nama'  => $this->put('nama'),
+            'nomor' => $this->put('nomor'));
         $this->db->where('id', $id);
         $update = $this->db->update('telepon', $data);
         if ($update) {
