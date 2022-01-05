@@ -76,8 +76,6 @@ $route['(:any)/user/select']                          = 'Users/supplier/getuser'
 
 //users
 $route['users']                                       = 'Users/users';
-$route['profile']                                     = 'Users/users/profile';
-$route['profile/update-password']                     = 'Users/users/update_password';
 
 //supplier
 $route['supplier']                                    = 'Users/supplier';
@@ -95,3 +93,5 @@ $route['configuration/menu/category-insert']          =
 //role
 $route['configuration/role']                          = 'Configuration/role';
 $route['configuration/role/data']                     = 'Configuration/role/data';
+$route['profile']                                     = 'Configuration/profile';
+$route['profile/update-password']                     = 'Configuration/profile/update_password';

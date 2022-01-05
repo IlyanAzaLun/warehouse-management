@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 04, 2022 at 03:39 PM
+-- Generation Time: Jan 05, 2022 at 07:57 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -4535,7 +4535,7 @@ INSERT INTO `tbl_user` (`user_id`, `user_fullname`, `user_email`, `user_image`, 
 ('1cd992ec-2d9b-4749-b2de-68a12e16a181', 'esa', 'esa', 'assets/images/default.jpg', '$2y$10$in0E.zfziYybrhegy4IKE.yTL/a6ciKjbzd1ZNr27QXM.zcsBqug6', '3', 1, '2022-01-04 08:19:40', '', '2022-01-04 17:02:39', 'root'),
 ('737eac20-2794-485e-ad9a-5d75a06cd754', 'gentur', 'gentur', 'assets/images/default.jpg', '$2y$10$WJn5063.L11DHE19b/bxbeG4WYugY4GUFVINSyVGPcKR8RnSgDwWK', '0', 1, '2022-01-04 08:19:13', '', '2022-01-04 17:02:46', 'root'),
 ('741be1f7-83dc-44b9-8352-6e23cc329632', 'opick', 'opick', 'assets/images/default.jpg', '$2y$10$tKwpEgHFFxRwi6Uq2ZN7yubrTovqihRu9nv3f8yqW3HOLiZ59Ucjm', '0', 1, '2022-01-04 07:57:52', '', '2022-01-04 17:02:55', 'root'),
-('86f2ceda-ce17-4086-bc9c-8146115e63c4', 'adi', 'adi', 'assets/images/default.jpg', '$2y$10$VvOFZ3nElshSJmdLP/MSv.HiUD6HAd5dEl49X7yrFvKhB1tuoi.YO', 'df9a5008-49c5-11ec-915b-5cac4cba0f32', 1, '2022-01-04 08:17:47', '', NULL, NULL),
+('86f2ceda-ce17-4086-bc9c-8146115e63c4', 'adi', 'adi', 'assets/images/user-2022JanWed1641364984.jpg', '$2y$10$KIKVjEhKgQt.8eQ2KFkZP.4nvAqexvxJhNKXjdNk/P4l83y0Xt6Va', 'df9a5008-49c5-11ec-915b-5cac4cba0f32', 1, '2022-01-04 08:17:47', '', '2022-01-05 13:43:04', 'adi'),
 ('a8434635-d631-414c-aefb-024a7782eda6', 'iyang', 'iyang', 'assets/images/default.jpg', '$2y$10$M8nd06AeFya/HQ6VbrQtyeCyJQBSBd1lq/KNQqsZW8GTpWi0XvsrO', 'c046aeb0-40f9-11ec-ae08-0d3b0460d819', 1, '2022-01-04 07:57:35', '', NULL, NULL),
 ('b5797429-3639-4aa6-81f9-aef0f26cf3ec', 'kiki', 'kiki', 'assets/images/default.jpg', '$2y$10$Gq7AHLNuyMLFZojoYBJKQuDZQL0aF3WAHvtcLsESgsXfD9OKbQZCG', 'df9a5008-49c5-11ec-915b-5cac4cba0f32', 1, '2022-01-04 07:59:23', '', NULL, NULL),
 ('b7631115-1670-4b97-9041-3beb3596e2a0', 'yuni', 'yuni', 'assets/images/default.jpg', '$2y$10$Y2U4jd9MGX9Wz4.6pyUuReuV1.1b8qR.Jc0uACSmK9.sH3aTqhklK', 'c046aeb0-40f9-11ec-ae08-0d3b0460d819', 1, '2022-01-04 08:18:54', '', NULL, NULL),
@@ -4580,7 +4580,9 @@ INSERT INTO `tbl_user_access_menu` (`id`, `role_id`, `category_id`) VALUES
 ('70ceb125-415c-11ec-ae08-0d3b0460d819', 'c046d399-40f9-11ec-ae08-0d3b0460d819', '85f50b77-69ec-44e7-8a54-def0e8a1efec'),
 ('962123a9-4907-11ec-8cc8-1be21be013bc', '190f670e-4907-11ec-8cc8-1be21be013bc', '85f50b77-69ec-44e7-8a54-def0e8a1efea'),
 ('96213c68-4907-11ec-8cc8-1be21be013bc', 'c046d399-40f9-11ec-ae08-0d3b0460d819', '85f50b77-69ec-44e7-8a54-def0e8a1efea'),
-('f0a3ed94-57de-11ec-86f5-54e1ada26e81', 'dc9126cc-57de-11ec-86f5-54e1ada26e81', '8bad6901-4798-472e-a810-38f11f207ea8');
+('f0a3ed94-57de-11ec-86f5-54e1ada26e81', 'dc9126cc-57de-11ec-86f5-54e1ada26e81', '8bad6901-4798-472e-a810-38f11f207ea8'),
+('6fe73a04-6dee-11ec-8340-54e1ada26e81', 'dc9126cc-57de-11ec-86f5-54e1ada26e81', 'deca10c9-4127-11ec-ae08-0d3b0460d819'),
+('6fe7550f-6dee-11ec-8340-54e1ada26e81', 'df9a5008-49c5-11ec-915b-5cac4cba0f32', 'deca10c9-4127-11ec-ae08-0d3b0460d819');
 
 -- --------------------------------------------------------
 
@@ -5962,11 +5964,11 @@ INSERT INTO `tbl_user_menu` (`menu_id`, `parent_id`, `category_id`, `title`, `ur
 ('52eacc07-eed3-43e8-9e93-0310749aa3be', '0db37be1-41fa-464d-8a29-a3772811884b', '85f50b77-69ec-44e7-8a54-def0e8a1efec', 'Tambah barang', 'items', 'Items', 'far fa-tw fa-circle text-primary', 1, '2022-01-04 17:46:20', NULL, NULL, NULL),
 ('9d9b9783-9ff5-479a-87c0-c1b00b52bf35', '', '92589956-c498-4e3f-86fd-d7f489c964a3', 'Pengiriman barang', '', '', 'fa fa-tw fa-truck', 1, '2022-01-04 17:46:20', NULL, NULL, NULL),
 ('9dd386cb-4909-11ec-8cc8-1be21be013bc', '', '85f50b77-69ec-44e7-8a54-def0e8a1efec', 'Pemasok', 'supplier', 'supplier', 'fas fa-tw fa-people-carry', 1, '2022-01-04 17:46:20', NULL, NULL, NULL),
-('a14b5cea-6c32-436c-a474-09ff17b934bd', '', 'deca10c9-4127-11ec-ae08-0d3b0460d819', 'Riwayat aktivitas', 'activity', 'activity', 'fas fa-tw fa-history', 1, '2022-01-04 17:46:20', NULL, NULL, NULL),
+('a14b5cea-6c32-436c-a474-09ff17b934bd', '', 'deca10c9-4127-11ec-ae08-0d3b0460d819', 'Riwayat aktivitas', 'activity', 'activity', 'fas fa-tw fa-history', 0, '2022-01-04 17:46:20', NULL, NULL, NULL),
 ('a87acd37-4166-11ec-ae08-0d3b0460d819', '', '41baae76-4166-11ec-ae08-0d3b0460d819', 'Dashboard', 'dashboard', 'Welcome', 'fas fa-tachometer-alt', 1, '2022-01-04 17:46:20', NULL, NULL, NULL),
 ('a93e3526-4134-11ec-ae08-0d3b0460d819', '', 'dec9f1e2-4127-11ec-ae08-0d3b0460d819', 'Konfigurasi', '', '', 'fa fa-tw fa-cog', 1, '2022-01-04 17:46:20', NULL, NULL, NULL),
 ('ac4dbd05-5546-4ba5-9108-7bc3e57d3e8f', '9d9b9783-9ff5-479a-87c0-c1b00b52bf35', '92589956-c498-4e3f-86fd-d7f489c964a3', 'Laporan Shipping', 'shipping', 'Shipping', 'fa fa-tw fa-circle text-primary', 1, '2022-01-04 17:46:20', NULL, NULL, NULL),
-('b6f27b24-4128-11ec-ae08-0d3b0460d819', '', 'deca10c9-4127-11ec-ae08-0d3b0460d819', 'Profilku', 'profile', '', 'fas fa-tw fa-user', 1, '2022-01-04 17:46:20', NULL, NULL, NULL),
+('b6f27b24-4128-11ec-ae08-0d3b0460d819', '', 'deca10c9-4127-11ec-ae08-0d3b0460d819', 'Profilku', 'profile', 'profile', 'fas fa-tw fa-user', 1, '2022-01-04 17:46:20', NULL, NULL, NULL),
 ('f0f4a736-6546-4413-903a-384c32f48052', '9d9b9783-9ff5-479a-87c0-c1b00b52bf35', '92589956-c498-4e3f-86fd-d7f489c964a3', 'Daftar antrian barang', 'shipping/queue', 'Shipping', 'far fa-tw fa-circle text-primary', 1, '2022-01-04 17:46:20', NULL, NULL, NULL),
 ('f5902e19-08f5-4e7e-91d5-9295e167012b', '', '85f50b77-69ec-44e7-8a54-def0e8a1efea', 'Pembelian', 'purchase', 'purchasing', 'fa fa-tw fa-file-invoice text-warning', 0, '2022-01-04 17:46:20', NULL, NULL, NULL),
 ('f8b6ef10-eb05-4fb7-bb19-66866379bf49', '0db37be1-41fa-464d-8a29-a3772811884b', '85f50b77-69ec-44e7-8a54-def0e8a1efec', 'Tambah persediaan barang', 'stocks', 'stock', 'far fa-tw fa-circle text-primary', 1, '2022-01-04 17:46:20', NULL, NULL, NULL),
@@ -6053,6 +6055,12 @@ ALTER TABLE `tbl_user_information`
 --
 ALTER TABLE `tbl_user_menu`
   ADD PRIMARY KEY (`menu_id`);
+
+--
+-- Indexes for table `tbl_user_menu_category`
+--
+ALTER TABLE `tbl_user_menu_category`
+  ADD PRIMARY KEY (`category_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
