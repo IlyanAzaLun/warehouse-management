@@ -154,6 +154,7 @@ const queue = () => {
 		});
 
 	}
+	//call the function curent.
 	detail_order();
 
 };
