@@ -226,6 +226,7 @@ class Items extends CI_Controller
         ];
         $this->db->where('item_code', $this->input->get('id'));
         $this->db->order_by('update_at', 'DESC');
+        $this->db->order_by('created_at', 'DESC');
         $this->data['history'] = $this->db->get('tbl_item_history')->result_array();
         $this->data['title']= 'Informasi histori barang';
         $this->load->view ('items/history', $this->data);

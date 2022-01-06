@@ -122,15 +122,10 @@ const queue = () => {
 	// end item
 	var lots_of_stuff_already_done = false;
 	$('div#save button[type="submit"]').on('click', function(event){
-		if (lots_of_stuff_already_done) {
-	        lots_of_stuff_already_done = false; // reset flag
-	        return; // let the event bubble away
-	    }
 		event.preventDefault();		
-        lots_of_stuff_already_done = true; // reset flag
 	    component.validation_form(function(output){
 	    	if(output){
-				$(this).trigger('click');
+			    $("#insert").submit();
 	    	}
 	    })
 	});

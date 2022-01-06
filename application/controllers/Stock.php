@@ -66,6 +66,15 @@ class Stock extends CI_Controller {
 	}
 	public function restock()
 	{
+		$this->data['plugins'] = array(
+			'css' => [
+			],
+			'js' => [
+			],
+			'module' => [
+				base_url('assets/pages/stock/index-restock.js'),
+			],
+		);
 		$this->form_validation->set_rules('item_code', 'Code item', 'required|trim');
 		$this->form_validation->set_rules('quantity', 'Quantity', 'required|trim');
 		// $this->form_validation->set_rules('unit', 'Unit item', 'required|trim');
@@ -88,7 +97,9 @@ class Stock extends CI_Controller {
 			'previous_quantity'      => htmlspecialchars($this->input->post('quantity', true)),
 			'previous_capital_price' => htmlspecialchars($this->input->post('previous_capital_price', true)),
 			'previous_selling_price' => htmlspecialchars($this->input->post('previous_selling_price', true)),
-			'status_in_out'          => htmlspecialchars('IN ('.(int)$this->input->post('add_quantity', true).')'),
+			'status_in_out'          => htmlspecialchars(((int)$this->input->post('add_quantity', true)<0)?
+                'OUT'. ' (' . abs($this->input->post('add_quantity', true)) . ')':
+                'IN' . ' (' . abs($this->input->post('add_quantity', true)) . ')'),
 			'created_at'             => date('Y-m-d H:i:s',time()),
 			'created_by'             => $this->data['user']['user_fullname'],
 		];
