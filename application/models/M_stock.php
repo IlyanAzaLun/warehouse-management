@@ -26,11 +26,11 @@ class M_stock extends CI_Model {
                 $this->db->insert($this->_table, $value);
             }
             foreach ($data['item'] as $key => $value) {
-
                 $this->db->set('update_by', $this->data['user']['user_fullname']);
                 $this->db->set('update_at', 'NOW()', false);
+                $this->db->set('quantity', 'quantity + '.$value['quantity'], false);
                 $this->db->where('item_code', $value['item_code']);
-                $this->db->update($this->_foreign_table, $value);
+                $this->db->update($this->_foreign_table);
             }
         }
 }

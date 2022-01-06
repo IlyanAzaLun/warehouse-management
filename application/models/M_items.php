@@ -87,7 +87,7 @@ class M_items extends CI_Model
         $this->db->set('update_by', $this->data['user']['user_fullname']);
         $this->db->set('created_by', $this->data['user']['user_fullname']);
 
-        $this->db->set('quantity', $quantity);
+        $this->db->set('quantity', 'quantity +'.$quantity, false);
         $this->db->where('item_code', $id);
         return $this->db->update('tbl_item');
     }

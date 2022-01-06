@@ -1,6 +1,6 @@
 class Component {
 
-	validation_form() {
+	validation_form(callBack) {
 			// $('input#quantity').on('change',function () {
 			let _total = [];
 			let unique_values = {};
@@ -32,12 +32,12 @@ class Component {
 						}).then(()=>{
 							selected_element.addClass('is-invalid');
 							button.prop('disabled', true);
-							return false;
+							return callBack(false)
 						});
 				}else{
 					selected_element.removeClass('is-invalid');
 					button.prop('disabled', false);
-					return true;
+					return callBack(true);
 				}
 			}
 				

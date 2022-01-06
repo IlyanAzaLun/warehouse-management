@@ -315,7 +315,7 @@ class Warehouse extends CI_Controller
             $this->data['history'][$key]['previous_quantity']= $this->data['history'][$key]['quantity'];
             $this->data['history'][$key]['update_at']        = date('Y-m-d H:i:s',time());
             $this->data['item'][$key]['item_code']           = $this->data['order'][$key]['item_code'];
-            $this->data['item'][$key]['quantity']            = abs($this->data['order'][$key]['quantity_order'])+$this->data['history'][$key]['quantity'];
+            $this->data['item'][$key]['quantity']            = abs($this->data['order'][$key]['quantity_order']);
             unset($this->data['history'][$key]['quantity']);
         }
         $this->M_stock->history_item_insert_multiple($this->data);        
@@ -353,7 +353,9 @@ class Warehouse extends CI_Controller
             $this->db->set('created_by', $this->data['user']['user_fullname']);
             $this->db->insert('tbl_item_history');
             // update quantity item
-            $this->M_items->item_update_quantity($order['item_code'],(int) $history[$key]['quantity'] + (int) $order['quantity_order']);
+
+            // ketika barang sama di input lebih dari 2x dan di kembalikan. data yang terbaca hanya 1.
+            $this->M_items->item_update_quantity($order['item_code'],(int) $order['quantity_order']);
         }
         // change status invoice
         if ($this->db->get_where('tbl_invoice', 

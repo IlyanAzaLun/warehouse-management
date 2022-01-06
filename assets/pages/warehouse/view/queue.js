@@ -104,7 +104,6 @@ const queue = () => {
 				/*select:*/
 			})
 			/*auto complete*/
-
 		})
 	});
 	$('button#add_order_item').on('click', function () {
@@ -127,10 +126,13 @@ const queue = () => {
 	        lots_of_stuff_already_done = false; // reset flag
 	        return; // let the event bubble away
 	    }
-		event.preventDefault();
-		console.log(component.validation_form());
-     	lots_of_stuff_already_done = true;
-		$(this).trigger('click');
+		event.preventDefault();		
+        lots_of_stuff_already_done = true; // reset flag
+	    component.validation_form(function(output){
+	    	if(output){
+				$(this).trigger('click');
+	    	}
+	    })
 	});
 
 	//detail order, return

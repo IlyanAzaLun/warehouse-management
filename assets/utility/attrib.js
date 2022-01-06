@@ -7,7 +7,8 @@ let Toast = Swal.mixin({
 (function ($) {
   // alert
     if ($('.toast').data('icon') !== '') {
-      Toast.fire({
+      Swal.fire({
+      // Toast.fire({
         icon: $('.toast').data('icon'),
         title: $('.toast').data('title'),
       })
