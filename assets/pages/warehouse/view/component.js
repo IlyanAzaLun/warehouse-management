@@ -64,11 +64,18 @@ class Component {
           </div>
 		  <div class="col-3">
 			<div class="form-group">
-				<small>Jumlah barang</small>
+				<div class="row">
+					<div class="col-5">
+						<small>Jumlah stok barang</small>
+				  </div>
+					<div class="col-7">
+					  <small>Jumlah yang dipesan</small>
+					</div>
+				</div>
 				<div class="input-group mb-3" id="field-item_attribute">
 					<input type="hidden" name="item_capital_price[]" id="item_capital_price" class="form-control" value="${result.capital_price}" placeholder="${result.capital_price}" required>
 					<input type="hidden" name="item_selling_price[]" id="item_selling_price" class="form-control" value="${result.selling_price}" placeholder="${result.selling_price}" required>
-					<input type="hidden" class="form-control" name="current[]" id="current" value="${parseInt(result.quantity)}" required>
+					<input type="number" disabled class="form-control" name="current[]" id="current" value="${parseInt(result.quantity)}" required>
 					<input type="number" class="form-control" name="quantity[]" id="quantity" min="1" value="0" required>
 					<input type="hidden" class="form-control" name="unit[]" id="unit"  value="${result.unit}" required>
 					<input type="hidden" name="item_total_price[]" id="item_total_price" class="form-control" value="" placeholder="" readonly required>
