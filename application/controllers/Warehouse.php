@@ -211,7 +211,7 @@ class Warehouse extends CI_Controller
         }
         foreach ($result as $key => $value) {
             $item = $this->M_items->item_select($value['item_code']);
-            if ((int) $item['quantity'] - (int) $value['item_quantity'] < 0) {
+            if ((int) $item['quantity'] - (int) $value['item_quantity'] <= 0) {
                 Flasher::setFlash('info','error','Failed',' <b>data gagal ditambahkan</b> ' . validation_errors());
                 redirect('warehouse/queue');
                 return false;
@@ -219,7 +219,7 @@ class Warehouse extends CI_Controller
             } else {
                 return true;
             }
-            var_dump((int) $item['quantity'] - (int) $value['item_quantity'] < 0);
+            var_dump((int) $item['quantity'] - (int) $value['item_quantity'] <= 0);
         }
     }
 

@@ -19,12 +19,12 @@ class Component {
 					_total[item] += parseInt( $(this).parents('div#order-item.row').find('input#quantity').val());
 				});
 				validation(_total[item], field.value);
-				console.log(_total)
 			});
 
 			function validation(data, item_code) {
 				let selected_element = element_quantity_code.find(`input#item_code[value="${item_code}"]`).parents('div#order-item.row').find('input#quantity');
 				if(element_quantity_code.find('input#current').val() < data){
+					callBack(false)
 					Swal.fire({
 						icon: 'warning',
 						title: 'Oops...',	
@@ -32,8 +32,8 @@ class Component {
 						}).then(()=>{
 							selected_element.addClass('is-invalid');
 							button.prop('disabled', true);
-							return callBack(false)
 						});
+						return false;
 				}else{
 					selected_element.removeClass('is-invalid');
 					button.prop('disabled', false);
@@ -76,7 +76,7 @@ class Component {
 					<input type="hidden" name="item_capital_price[]" id="item_capital_price" class="form-control" value="${result.capital_price}" placeholder="${result.capital_price}" required>
 					<input type="hidden" name="item_selling_price[]" id="item_selling_price" class="form-control" value="${result.selling_price}" placeholder="${result.selling_price}" required>
 					<input type="number" disabled class="form-control" name="current[]" id="current" value="${parseInt(result.quantity)}" required>
-					<input type="number" class="form-control" name="quantity[]" id="quantity" min="1" value="0" required>
+					<input type="number" class="form-control" name="quantity[]" id="quantity" value="0" min="1" max="${parseInt(result.quantity)}" required>
 					<input type="hidden" class="form-control" name="unit[]" id="unit"  value="${result.unit}" required>
 					<input type="hidden" name="item_total_price[]" id="item_total_price" class="form-control" value="" placeholder="" readonly required>
 					<input type="hidden" name="rebate_price[]" id="rebate_price" class="form-control" value="0" placeholder="" required>
@@ -116,11 +116,18 @@ class Component {
 				$(this).parents('div#order-item.row').find('#field-item_code').append(`
 	              <input type="text" name="item_code[]" id="item_code" class="form-control" value="${ui.item.item_code}" readonly>
 				`);
+
+				$(this).parents('div#order-item.row').find('#quantity').remove();
+				$(this).parents('div#order-item.row').find('#field-item_attribute').prepend(`
+				  <input type="number"  class="form-control" name="quantity[]" id="quantity" value="0" min="1" max="${parseInt(ui.item.quantity)}" required>
+				`);
+
 				// $(this).parents('div#order-item.row').find('#item_code').val(ui.item.item_code);
 				$(this).parents('div#order-item.row').find('#current').remove();
-				$(this).parents('div#order-item.row').find('#field-item_attribute').append(`
-				  <input type="hidden" class="form-control" name="current[]" id="current" value="${parseInt(ui.item.quantity)}" required>
+				$(this).parents('div#order-item.row').find('#field-item_attribute').prepend(`
+				  <input type="number" disabled class="form-control" name="current[]" id="current" value="${parseInt(ui.item.quantity)}" required>
 				`);
+
 				// $(this).parents('div#order-item.row').find('#current').val(ui.item.quantity);
 				$(this).parents('div#order-item.row').find('#unit').val(ui.item.unit);
 				$(this).parents('div#order-item.row').find('.input-group-text').text(ui.item.unit.toUpperCase());

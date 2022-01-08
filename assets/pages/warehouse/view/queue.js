@@ -108,7 +108,7 @@ const queue = () => {
 	});
 	$('button#add_order_item').on('click', function () {
 		let sub_total = 0;
-		if ($(this).parents().closest('div.row#order_item').find('input#item_name').val() == '') {
+		if ($('input#item-name').length <= 0) {
 			$('input#item_name').focus();
 			Toast.fire({
 				icon: 'warning',
@@ -120,14 +120,17 @@ const queue = () => {
 		});
 	});
 	// end item
-	var lots_of_stuff_already_done = false;
-	$('div#save button[type="submit"]').on('click', function(event){
+	$('form#insert').on('submit', function(event){
+		var lots_of_stuff_already_done = true;
 		event.preventDefault();		
 	    component.validation_form(function(output){
-	    	if(output){
-			    $("#insert").submit();
+	    	if(!output){
+	    		lots_of_stuff_already_done = false; // force to result false.
 	    	}
 	    })
+	    if(lots_of_stuff_already_done == true){
+	    	$("#insert").submit();
+	    }
 	});
 
 	//detail order, return
