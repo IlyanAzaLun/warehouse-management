@@ -79,7 +79,7 @@ class Shipping extends CI_Controller
     public function queue()
     {
         $this->data['title']    = 'Daftar antrian pesanan barang dari gudang';
-        $this->data['invoices'] = $this->M_shipping->shipping_select(false,'INV/SEL/');
+        $this->data['invoices'] = $this->M_shipping->shipping_select(false,'INV/WHS/');
         $this->data['returns']  = $this->M_invoice->invoice_select(false,'INV/RET/');
         $this->data['plugins']  = [
             'css' => [
@@ -283,7 +283,7 @@ class Shipping extends CI_Controller
     public function notification()
     {
         $this->db->where('status_notification', 1);
-        $this->db->like('invoice_id', '/INV/SEL/' . date('my'), 'before');
+        $this->db->like('invoice_id', '/INV/WHS/' . date('my'), 'before');
         echo json_encode($this->db->get('tbl_invoice')->result_array());
     }
 }
