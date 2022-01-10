@@ -120,7 +120,7 @@ const queue = () => {
 		});
 	});
 	// end item
-	var lots_of_stuff_already_done = false;
+	// var lots_of_stuff_already_done = false;
 	$('form#insert').on('submit', function(event){
 		// if(lots_of_stuff_already_done){
 		// 	lots_of_stuff_already_done = false;
@@ -129,8 +129,8 @@ const queue = () => {
 		// event.preventDefault();		
 	    component.validation_form(function(output){
 	    	if(!output){
-	    		lots_of_stuff_already_done = false; // force to result false.
-				event.preventDefault();		
+	    		// lots_of_stuff_already_done = false; // force to result false.
+				event.preventDefault();
 	    	}
 	    })
 	    // if(lots_of_stuff_already_done == true){

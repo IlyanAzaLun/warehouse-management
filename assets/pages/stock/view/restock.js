@@ -16,7 +16,7 @@ const restock = () => {
 			cancelButtonColor: '#d33',
 			confirmButtonText: 'Ya, tolong lakukan',
 		}).then((result) => {
-		  if (result.isConfirmed) {
+		  if (result.value) {
 		    $("#insert").submit();
 		  }
 		})	    
