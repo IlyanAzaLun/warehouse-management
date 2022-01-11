@@ -1,5 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Writer\Xls;
 
 class Stock extends CI_Controller {
 
@@ -32,28 +35,31 @@ class Stock extends CI_Controller {
 	public function index(){
 		$this->data['plugins'] = array(
 			'css' => [
-				base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'),
-				base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'),
-				base_url('assets/AdminLTE-3.0.5/plugins/datatables-buttons/css/buttons.bootstrap4.min.css'),
-				base_url('assets/AdminLTE-3.0.5/plugins/datatables-select/css/select.bootstrap4.min.css'),
-				base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/css/autoFill.bootstrap4.min.css'),
-				base_url('assets/AdminLTE-3.0.5/plugins/select2/css/select2.min.css'),
-				base_url('assets/AdminLTE-3.0.5/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css'),
-				base_url('assets/AdminLTE-3.0.5/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css'),
-			],
-			'js' => [
-				base_url('assets/AdminLTE-3.0.5/plugins/datatables/jquery.dataTables.min.js'),
-				base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js'),
-				base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/js/dataTables.responsive.min.js'),
-				base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/js/responsive.bootstrap4.min.js'),
-				base_url('assets/AdminLTE-3.0.5/plugins/datatables-buttons/js/dataTables.buttons.min.js'),
-				base_url('assets/AdminLTE-3.0.5/plugins/datatables-buttons/js/buttons.bootstrap4.min.js'),
-				base_url('assets/AdminLTE-3.0.5/plugins/datatables-select/js/dataTables.select.min.js'),
-				base_url('assets/AdminLTE-3.0.5/plugins/datatables-select/js/select.bootstrap4.min.js'),
-				base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/js/dataTables.autoFill.min.js'),
-				base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/js/autoFill.bootstrap4.min.js'),
-				base_url('assets/AdminLTE-3.0.5/plugins/select2/js/select2.full.min.js'),
-			],
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-buttons/css/buttons.bootstrap4.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-select/css/select.bootstrap4.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/css/autoFill.bootstrap4.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/select2/css/select2.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css'),
+            ],
+            'js' => [
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables/jquery.dataTables.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/js/dataTables.responsive.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/js/responsive.bootstrap4.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-buttons/js/dataTables.buttons.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-buttons/js/buttons.bootstrap4.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-select/js/dataTables.select.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-select/js/select.bootstrap4.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/js/dataTables.autoFill.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/jszip/jszip.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-buttons/js/buttons.html5.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/js/autoFill.bootstrap4.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/select2/js/select2.full.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/inputmask/min/jquery.inputmask.bundle.min.js'),
+            ],
 			'module' => [
 				base_url('assets/pages/stock/index.js'),
 			],
@@ -114,4 +120,88 @@ class Stock extends CI_Controller {
 		];
 		$this->M_stock->history_item_insert($this->request);
 	}
+	// file upload functionality
+    public function import()
+    {
+        $data = [];
+        $this->form_validation->set_rules('file','Upload File','callback_checkFileValidation');
+        if ($this->form_validation->run() == false) {
+            $this->index();
+        } else {
+            // If file uploaded
+            if (!empty($_FILES['file']['name'])) {
+                // get file extension
+                $extension = pathinfo(
+                    $_FILES['file']['name'],
+                    PATHINFO_EXTENSION
+                );
+
+                if ($extension == 'csv') {
+                    $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv(); //not problem
+                } elseif ($extension == 'xlsx') {
+                    $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+                } else {
+                    $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
+                }
+                $spreadsheet    = $reader->load($_FILES['file']['tmp_name']);
+                $allDataInSheet = $spreadsheet
+                    ->getActiveSheet()
+                    ->toArray(null, true, true, true);
+
+                // array Count
+                if ($this->M_stock->stock_update_multiple($allDataInSheet) > 0) {
+                    Flasher::setFlash('info','success',',Success !',',Berhasil import data!');
+                    header('Location: ' . $_SERVER['HTTP_REFERER']);
+                    exit();
+                } else {
+                    Flasher::setFlash('info','warning',',Error !',', informasi yang diterima tidak sesuai, coba lagi' .
+                        validation_errors()
+                    );
+                    header('Location: ' . $_SERVER['HTTP_REFERER']);
+                    exit();
+                }
+            }
+        }
+    }
+    public function checkFileValidation($string)
+    {
+        $file_mimes = [
+            'text/x-comma-separated-values',
+            'text/comma-separated-values',
+            'application/octet-stream',
+            'application/vnd.ms-excel',
+            'application/x-csv',
+            'text/x-csv',
+            'text/csv',
+            'application/csv',
+            'application/excel',
+            'application/vnd.msexcel',
+            'text/plain',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        ];
+        if (isset($_FILES['file']['name'])) {
+            $arr_file  = explode('.', $_FILES['file']['name']);
+            $extension = end($arr_file);
+            if (
+                ($extension == 'xlsx' ||
+                    $extension == 'xls' ||
+                    $extension == 'csv') &&
+                in_array($_FILES['file']['type'], $file_mimes)
+            ) {
+                return true;
+            } else {
+                $this->form_validation->set_message('checkFileValidation','Please choose correct file.');
+                Flasher::setFlash('info','error','Failed',' Gagal update data! ' . validation_errors());
+                redirect('items');
+                return false;
+            }
+        } else {
+            $this->form_validation->set_message('checkFileValidation','Please choose a file.');
+            Flasher::setFlash('info','error','Failed',' Gagal update data! ' . 
+                validation_errors()
+            );
+            redirect('items');
+            return false;
+        }
+    }
 }
