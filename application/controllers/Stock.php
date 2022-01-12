@@ -65,7 +65,7 @@ class Stock extends CI_Controller {
 			],
 		);
 		$this->data['title'] = 'Manajemen persediaan barang';
-		$this->data['items'] = $this->M_items->item_select();
+		// $this->data['items'] = $this->M_items->item_select();
 
 		$this->load->view('stock/index', $this->data);
 		$this->load->view('stock/modals');

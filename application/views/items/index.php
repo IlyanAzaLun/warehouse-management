@@ -75,8 +75,16 @@
                         <!-- text input -->
                         <div class="form-group">
                           <label>Kode barang</label>
-                          <input type="text" class="form-control" name="item_code" id="item_code"
-                            value="<?=set_value('item_code')?>" required readonly>
+                          <div class="input-group">
+                            <input type="text" class="form-control" name="item_code" id="item_code"
+                              value="<?=set_value('item_code')?>" required readonly>
+                            <div class="input-group-append">
+                              <select class="input-group-text" name="unit" id="unit" required>
+                                <option value="pcs">PCS</option>
+                                <option value="pac">PAC</option>
+                              </select>
+                            </div>
+                          </div>
                         </div>
                       </div>
 
@@ -153,10 +161,10 @@
                   <table id="tbl_items" class="table table-sm table-bordered table-striped table-hover">
                     <thead>
                       <tr>
-                        <th>Opsi</th>
                         <th>Kode barang</th>
                         <th>Nama barang</th>
                         <th>Jumlah</th>
+                        <th>Opsi</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -175,6 +183,8 @@
     </div>
     <!-- /.content-wrapper -->
     <!-- Modals -->
+    <pre>
+    </pre>
     <?php $this->load->view('components/footer')?>
         <script>
       $('table#tbl_items').dataTable({
@@ -185,6 +195,7 @@
       serverSide: true,
       responsive: true,
       autoWidth: false,
+      lengthMenu: [[10, 25, 50, 100, 200, <?=$this->db->count_all('tbl_item')?>], [10, 25, 50, 100, 200, "All"]],
       ajax: {
           "url": "<?php echo base_url('items/serverside_datatables_data_items') ?>",
           "type": "POST",

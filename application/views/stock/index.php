@@ -40,10 +40,10 @@
                   <table id="tbl_items" class="table table-bordered table-striped table-hover">
                     <thead>
                       <tr>
-                        <th>Opsi</th>
                         <th>Kode barang</th>
                         <th>Nama barang</th>
                         <th>Jumlah</th>
+                        <th>Opsi</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -72,6 +72,7 @@
       serverSide: true,
       responsive: true,
       autoWidth: false,
+      lengthMenu: [[10, 25, 50, 100, 200, <?=$this->db->count_all('tbl_item')?>], [10, 25, 50, 100, 200, "All"]],
       ajax: {
           "url": "<?php echo base_url('items/serverside_datatables_data_items') ?>",
           "type": "POST",

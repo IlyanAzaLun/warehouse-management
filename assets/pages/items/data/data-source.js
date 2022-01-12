@@ -1,7 +1,6 @@
 class DataSource {
 	constructor() {
 		this.BASEURL = location.href+'/';
-		// this.dataTabels();
 	}
 
 	dataTabels(){
@@ -53,7 +52,7 @@ class DataSource {
 			success: function(result){
 				$('input#item_code').val(`${$('.category').find(':selected').data('id').substring(0, 3)}${($('.subcategory').find(':selected').data('id'))
 				?`-${sub($('.subcategory').find(':selected').data('id'))}-`
-				:`-`}${pad(result+1, 4)}`)
+				:`-`}${pad(result+1, 6)}`)
 			}
 		})
 	}

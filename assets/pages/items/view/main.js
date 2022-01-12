@@ -12,23 +12,15 @@ const main = () => {
 <div class="col-sm-3 subcategory">
   <div class="form-group">
     <label>Jumlah sekarang</label>
-    <div class="input-group mb-3">
-      <select class="form-control select2" style="width: 100%;" name="subcategory" id="subcategory" required>
-        <option disabled value="" selected="selected">Select category item</option>
-        <option value="LIQUID FREEBASE CREAMY" data-id="FREEBASE-CREAMY" >LIQUID FREEBASE CREAMY</option>
-        <option value="LIQUID FREEBASE FRUITY" data-id="FREEBASE-FRUITY" >LIQUID FREEBASE FRUITY</option>
-        <option value="LIQUID SALT CREAMY" data-id="SALT-CREAMY" >LIQUID SALT CREAMY</option>
-        <option value="LIQUID SALT FRUITY" data-id="SALT-FRUITY" >LIQUID SALT FRUITY</option>
-        <option value="LIQUID PODS CREAMY" data-id="PODS-CREAMY" >LIQUID PODS CREAMY</option>
-        <option value="LIQUID PODS FRUITY" data-id="PODS-FRUITY" >LIQUID PODS FRUITY</option>
-      </select>
-      <div class="input-group-append">
-        <select class="input-group-text" name="unit" id="unit" required>
-          <option value="pcs">PCS</option>
-          <option value="pac">PAC</option>
-        </select>
-      </div>
-    </div>
+    <select class="form-control select2" style="width: 100%;" name="subcategory" id="subcategory" required>
+      <option disabled value="" selected="selected">Select category item</option>
+      <option value="LIQUID FREEBASE CREAMY" data-id="FREEBASE-CREAMY" >LIQUID FREEBASE CREAMY</option>
+      <option value="LIQUID FREEBASE FRUITY" data-id="FREEBASE-FRUITY" >LIQUID FREEBASE FRUITY</option>
+      <option value="LIQUID SALT CREAMY" data-id="SALT-CREAMY" >LIQUID SALT CREAMY</option>
+      <option value="LIQUID SALT FRUITY" data-id="SALT-FRUITY" >LIQUID SALT FRUITY</option>
+      <option value="LIQUID PODS CREAMY" data-id="PODS-CREAMY" >LIQUID PODS CREAMY</option>
+      <option value="LIQUID PODS FRUITY" data-id="PODS-FRUITY" >LIQUID PODS FRUITY</option>
+    </select>
   </div>
 </div>
 
