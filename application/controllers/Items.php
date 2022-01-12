@@ -38,26 +38,26 @@ class Items extends CI_Controller
     {
         $this->data['plugins'] = [
             'css' => [
-                base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'),
-                base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'),
+                //base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'),
+                //base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'),
+                // base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/css/autoFill.bootstrap4.min.css'),
+                // base_url('assets/AdminLTE-3.0.5/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css'),
                 base_url('assets/AdminLTE-3.0.5/plugins/datatables-buttons/css/buttons.bootstrap4.min.css'),
                 base_url('assets/AdminLTE-3.0.5/plugins/datatables-select/css/select.bootstrap4.min.css'),
-                base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/css/autoFill.bootstrap4.min.css'),
                 base_url('assets/AdminLTE-3.0.5/plugins/select2/css/select2.min.css'),
-                base_url('assets/AdminLTE-3.0.5/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css'),
                 base_url('assets/AdminLTE-3.0.5/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css'),
             ],
             'js' => [
-                base_url('assets/AdminLTE-3.0.5/plugins/datatables/jquery.dataTables.min.js'),
-                base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js'),
-                base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/js/dataTables.responsive.min.js'),
-                base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/js/responsive.bootstrap4.min.js'),
-                base_url('assets/AdminLTE-3.0.5/plugins/datatables-buttons/js/dataTables.buttons.min.js'),
-                base_url('assets/AdminLTE-3.0.5/plugins/datatables-buttons/js/buttons.bootstrap4.min.js'),
-                base_url('assets/AdminLTE-3.0.5/plugins/datatables-select/js/dataTables.select.min.js'),
-                base_url('assets/AdminLTE-3.0.5/plugins/datatables-select/js/select.bootstrap4.min.js'),
-                base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/js/dataTables.autoFill.min.js'),
-                base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/js/autoFill.bootstrap4.min.js'),
+                //base_url('assets/AdminLTE-3.0.5/plugins/datatables/jquery.dataTables.min.js'),
+                //base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js'),
+                //base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/js/dataTables.responsive.min.js'),
+                //base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/js/responsive.bootstrap4.min.js'),
+                //base_url('assets/AdminLTE-3.0.5/plugins/datatables-buttons/js/dataTables.buttons.min.js'),
+                //base_url('assets/AdminLTE-3.0.5/plugins/datatables-buttons/js/buttons.bootstrap4.min.js'),
+                //base_url('assets/AdminLTE-3.0.5/plugins/datatables-select/js/dataTables.select.min.js'),
+                //base_url('assets/AdminLTE-3.0.5/plugins/datatables-select/js/select.bootstrap4.min.js'),
+                //base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/js/dataTables.autoFill.min.js'),
+                //base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/js/autoFill.bootstrap4.min.js'),
                 base_url('assets/AdminLTE-3.0.5/plugins/select2/js/select2.full.min.js'),
                 base_url('assets/AdminLTE-3.0.5/plugins/inputmask/min/jquery.inputmask.bundle.min.js'),
             ],
@@ -392,5 +392,70 @@ class Items extends CI_Controller
             redirect('items');
             return false;
         }
+    }
+
+    public function serverside_datatables_data_items()
+    {
+
+        $response = array();
+
+        $postData = $this->input->post();
+
+        ## Read value
+        $draw            = $postData['draw'];
+        $start           = $postData['start'];
+        $rowperpage      = $postData['length']; // Rows display per page
+        $columnIndex     = $postData['order'][0]['column']; // Column index
+        $columnName      = $postData['columns'][$columnIndex]['data']; // Column name
+        $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
+        $searchValue     = $postData['search']['value']; // Search value
+
+        ## Search 
+        $searchQuery = "";
+        if($searchValue != ''){
+            $searchQuery = " (item_name like '%".$searchValue."%' or item_code like '%".$searchValue."%' ) ";
+        }
+
+        ## Total number of records without filtering
+        $this->db->select('count(*) as allcount');
+        $records = $this->db->get('tbl_item')->result();
+        $totalRecords = $records[0]->allcount;
+
+        ## Total number of record with filtering
+        $this->db->select('count(*) as allcount');
+        if($searchQuery != '')
+            $this->db->where($searchQuery);
+        $records = $this->db->get('tbl_item')->result();
+        $totalRecordwithFilter = $records[0]->allcount;
+
+        ## Fetch records
+        $this->db->select('*');
+        if($searchQuery != '')
+            $this->db->where($searchQuery);
+        $this->db->order_by($columnName, $columnSortOrder);
+        $this->db->limit($rowperpage, $start);
+        $records = $this->db->get('tbl_item')->result();
+
+        $data = array();
+
+        foreach($records as $record ){
+
+            $data[] = array( 
+                "item_code"     =>$record->item_code,
+                "item_name"     =>$record->item_name,
+                "item_quantity" =>$record->quantity,
+                "item_unit"     =>$record->unit,
+            ); 
+        }
+
+        ## Response
+        $response = array(
+            "draw"                 => intval($draw),
+            "iTotalRecords"        => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordwithFilter,
+            "aaData"               => $data
+        );
+        $this->output->set_content_type('application/json')->set_output(json_encode( $response ));
+
     }
 }

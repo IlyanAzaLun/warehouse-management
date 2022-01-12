@@ -3,7 +3,7 @@ const datasource = new DataSource();
 
 const main = () => {
 	// DataSource.loadData(function(output){})
-	datasource.dataTabels();
+	// datasource.dataTabels();
 
 	// label changed import file
 	$('input#file').change(function() {

@@ -153,7 +153,6 @@
                   <table id="tbl_items" class="table table-sm table-bordered table-striped table-hover">
                     <thead>
                       <tr>
-                        <th>#</th>
                         <th>Opsi</th>
                         <th>Kode barang</th>
                         <th>Nama barang</th>
@@ -161,39 +160,6 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <?php foreach ($items as $key => $item): ?>
-
-                      <tr>
-                        <th scope="row" width="5px">
-                          <?=++$key?>
-                        </th>
-                        <td>
-                          <div class="btn-group d-flex justify-content-center" data-id="<?=$item['item_code']?>">
-                            <a href="<?=base_url('items/update')?>?id=<?=$item['item_code']?>" target="_blank"
-                              class="btn btn-sm btn-default" id="update" data-target="#modal-update"><i
-                                class="fa fa-tw fa-pencil-alt"></i></a>
-                            <a href="<?=base_url('items/history')?>?id=<?=$item['item_code']?>" target="_blank"
-                              class="btn btn-sm btn-default" id="detail" data-target="#modal-detail"><i
-                                class="fa fa-tw fa-search-plus"></i></a>
-                            <button class="btn btn-sm btn-default" id="delete" data-toggle="modal"
-                              data-target="#modal-delete"><i class="fa fa-tw fa-trash-alt"></i></button>
-                          </div>
-                        </td>
-                        <td>
-                          <?=$item['item_code']?>
-                        </td>
-                        <td>
-                          <?=$item['item_name']?>
-                        </td>
-                        <td>
-                          <?=$item['quantity']?> (
-                          <?=$item['unit']?>)
-                        </td>
-                        <!-- <td><?=@$item['capital_price']?></td> -->
-                        <!-- <td><?=@$item['selling_price']?></td> -->
-                      </tr>
-
-                      <?php endforeach ?>
                     </tbody>
                   </table>
                 </div>
@@ -210,3 +176,62 @@
     <!-- /.content-wrapper -->
     <!-- Modals -->
     <?php $this->load->view('components/footer')?>
+        <script>
+      $('table#tbl_items').dataTable({
+      'dom': `<'row'<'col-6 col-lg col-xl'<'row'<'col-6float-left'f><'col-6 float-left'B>>><'col-6 col-lg col-xl'<'float-right'l>>>
+          <'row'<'col-12'tr>>
+          <'row'<'col-5 col-xs-12'i><'col-7 col-xs-12'p>>`,
+      processing: true,
+      serverSide: true,
+      responsive: true,
+      autoWidth: false,
+      ajax: {
+          "url": "<?php echo base_url('items/serverside_datatables_data_items') ?>",
+          "type": "POST",
+          "data": {
+            "<?php echo $this->security->get_csrf_token_name(); ?>" : $('meta[name=csrf_token_hash]').attr('content')
+          }
+      },
+      columns: [
+          {
+              data : "item_code"},
+          {
+              data : "item_name"},
+          {
+              render : function (data, type, row) {
+                  return `${row['item_quantity']} (${row['item_unit']})`;
+              }},
+          {
+          data : "item_code",
+          render: function (data, type, row) {
+              return `
+              <div class="btn-group d-flex justify-content-center" data-id="${data}">
+                <a href="<?=base_url('items/update')?>?id=${data}" target="_blank"
+                  class="btn btn-sm btn-default" id="update" data-target="#modal-update"><i
+                    class="fa fa-tw fa-pencil-alt"></i></a>
+                <a href="<?=base_url('items/history')?>?id=${data}" target="_blank"
+                  class="btn btn-sm btn-default" id="detail" data-target="#modal-detail"><i
+                    class="fa fa-tw fa-search-plus"></i></a>
+                <button class="btn btn-sm btn-default" id="delete" data-toggle="modal"
+                  data-target="#modal-delete" onclick="$('#modal-delete input#item_code').val($(this).parent().data('id'));"><i class="fa fa-tw fa-trash-alt"></i></button>
+              </div>
+              `;
+              }},
+      ],
+      buttons: [
+        {
+          text: 'Export', 
+          extend: 'excelHtml5',
+          className: 'btn-sm',
+          customize: function ( xlsx ){
+                  var sheet = xlsx.xl.worksheets['sheet1.xml'];
+          }},
+        {
+          text: 'Import',
+          className: 'btn-sm',
+          action: function ( e, dt, node, config ) {
+            $('#modal-import').modal('show');
+          }},      
+      ],
+    });
+    </script>

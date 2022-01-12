@@ -49,6 +49,16 @@ if (isset($plugins['js'])) {
       }
   }
 ?>
+<!-- datatabels -->
+<script src="<?=base_url()?>assets/AdminLTE-3.0.5/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="<?=base_url()?>assets/AdminLTE-3.0.5/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="<?=base_url()?>assets/AdminLTE-3.0.5/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="<?=base_url()?>assets/AdminLTE-3.0.5/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="<?=base_url()?>assets/AdminLTE-3.0.5/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="<?=base_url()?>assets/AdminLTE-3.0.5/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="<?=base_url()?>assets/AdminLTE-3.0.5/plugins/jszip/jszip.min.js"></script>
+<script src="<?=base_url()?>assets/AdminLTE-3.0.5/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+
 <!-- overlayScrollbars -->
 <script src="<?=base_url()?>assets/AdminLTE-3.0.5/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- pace-progress -->

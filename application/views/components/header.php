@@ -6,6 +6,9 @@
   <title><?= $title ?></title>
   <link rel="icon" href="<?= base_url() ?>assets/images/logo.png">  <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf_token_name" content="<?php echo $this->security->get_csrf_token_name(); ?>" />
+  <meta name="csrf_token_hash" content="<?php echo $this->security->get_csrf_hash(); ?>" />
+
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/AdminLTE-3.0.5/plugins/fontawesome-free/css/all.min.css">
@@ -19,6 +22,13 @@
       ) { ?><link href="<?= $value ?>" rel="stylesheet" type="text/css"/><?php }
   } ?>
   <!-- PLugins -->
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="<?= base_url(
+      'assets/AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'
+  ) ?>">
+  <link rel="stylesheet" href="<?= base_url(
+      'assets/AdminLTE-3.0.5/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'
+  ) ?>">
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="<?= base_url(
       'assets/AdminLTE-3.0.5/plugins/overlayScrollbars/css/OverlayScrollbars.min.css'

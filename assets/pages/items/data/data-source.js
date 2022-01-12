@@ -1,7 +1,7 @@
 class DataSource {
 	constructor() {
 		this.BASEURL = location.href+'/';
-		this.dataTabels();
+		// this.dataTabels();
 	}
 
 	dataTabels(){
