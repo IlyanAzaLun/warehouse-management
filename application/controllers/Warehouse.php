@@ -246,10 +246,10 @@ class Warehouse extends CI_Controller
     {
         if ($this->input->post('request')) {
             if ($this->input->post('data')) {
-                $this->data = $this->M_items->item_select_by_code($this->input->post('data'), 5);
+                $this->data = $this->M_items->item_select_by_code($this->input->post('data'), 10);
                 $this->_result_list_item($this->data);
             } elseif ($this->input->post('_data')) {
-                $this->data = $this->M_items->item_select_like_name($this->input->post('_data'),5);
+                $this->data = $this->M_items->item_select_like_name($this->input->post('_data'), 10);
                 $this->_result_list_item($this->data);
             } else {
                 $this->db->limit(5);

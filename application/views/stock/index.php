@@ -37,7 +37,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <table id="tbl_items" class="table table-bordered table-striped table-hover">
+                  <table id="tbl_items" class="table table-sm table-bordered table-striped table-hover">
                     <thead>
                       <tr>
                         <th>Kode barang</th>
