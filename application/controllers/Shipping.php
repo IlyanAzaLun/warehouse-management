@@ -130,12 +130,18 @@ class Shipping extends CI_Controller
         foreach ($this->input->post('item_code', true) as $key => $value) {
             $this->request['order']['order_id'][$key]           = $order_id;
             $this->request['order']['item_code'][$key]          = $this->input->post('item_code',true)[$key];
-            $this->request['order']['item_capital_price'][$key] = $this->input->post('item_capital_price', true)[$key]? $this->input->post('item_capital_price', true)[$key]: 0;
-            $this->request['order']['item_selling_price'][$key] = $this->input->post('item_selling_price', true)[$key]? $this->input->post('item_selling_price', true)[$key]: 0;
+            // $this->request['order']['item_capital_price'][$key] = $this->input->post('item_capital_price', true)[$key]? $this->input->post('item_capital_price', true)[$key]: 0;
+            // $this->request['order']['item_selling_price'][$key] = $this->input->post('item_selling_price', true)[$key]? $this->input->post('item_selling_price', true)[$key]: 0;
+
+            $this->request['order']['item_capital_price'][$key] = 0;
+            $this->request['order']['item_selling_price'][$key] = 0;
+
             $this->request['order']['item_quantity'][$key]      = $this->input->post('quantity',true)[$key];
             $this->request['order']['item_unit'][$key]          = $this->input->post('unit',true)[$key];
-            $this->request['order']['rebate_price'][$key]       = $this->input->post('rebate_price',true)[$key]? $this->input->post('rebate_price', true)[$key]: 0;
+            // $this->request['order']['rebate_price'][$key]       = $this->input->post('rebate_price',true)[$key]? $this->input->post('rebate_price', true)[$key]: 0;
             
+            $this->request['order']['rebate_price'][$key]       = 0;
+
             $this->request['order']['status_in_out'][$key]      = ((int)$this->input->post('quantity', true)[$key] > 0)?
                 'IN'.' ('.$this->input->post('quantity', true)[$key].')':
                 'OUT'.' ('.$this->input->post('quantity', true)[$key].')';
