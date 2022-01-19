@@ -60,6 +60,9 @@
                         <th>Kategori</th>
                         <th>Nama barang</th>
                         <th>Jumlah pemesanan barang</th>
+                      <?php if (@$order_return): ?>
+                        <th colspan="2">Permintaan dari shipping</th>
+                      <?php endif ?>
                       </tr>
                     </thead>
                     <tbody>
@@ -71,6 +74,10 @@
                       <th><?= $order['item_name'] ?> 
                       <?php($order['MG'])?'(MG: '.$order['MG'].')':''?></th>
                       <th><?= abs($order['quantity_order']) ?></th>
+                      <?php if (@$order_return): ?>
+                        <th><?= abs($order_return[$key-1]['quantity_order']) ?></th>
+                        <th><?= ($order_return[$key-1]['quantity_order']>0)?'Lebih':'Kurang' ?></th>
+                      <?php endif ?>
                     <?php endforeach; ?>
                     </tbody>
                   </table>
@@ -96,7 +103,7 @@
                           <th>Kode barang</th>
                           <th>Kategori</th>
                           <th>Nama barang</th>
-                          <th>Jumlah pemesanan barang</th>
+                          <th>Jumlah pemesanan</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -107,7 +114,7 @@
                         <th><?= $order['item_category'] ?></th>
                         <th><?= $order['item_name'] ?> 
                         <?php($order['MG'])?'(MG: '.$order['MG'].')':''?></th>
-                        <th><?= $order['quantity_order'] ?></th>
+                        <th><?= abs($order['quantity_order']+$orders[$key-1]['quantity_order']) ?></th>
                       <?php endforeach; ?>
                       </tbody>
                     </table>

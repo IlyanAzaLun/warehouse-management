@@ -45,7 +45,7 @@
                         <th>Kode barang</th>
                         <th>Kategori</th>
                         <th>Nama barang</th>
-                        <th>Jumlah pemesanan barang</th>
+                        <th colspan="2">Jumlah permintaan ke-gudang</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -57,18 +57,19 @@
                       <th><?= $order['item_name'] ?> 
                       <?php($order['MG'])?'(MG: '.$order['MG'].')':''?></th>
                       <th><?= abs($order['quantity_order']) ?></th>
+                      <th><?= ($order['quantity_order']>=0)?'Lebih':'Kurang' ?></th>
                     <?php endforeach; ?>
                     </tbody>
                   </table>
-					<div class="row">
-						<div class="col-12">
-						  <br>
-						  <b>Catatan:</b>
-						  <div class="mb-2 float-right">
-						    <p><?=@$invoices['note']?></p>
-						  </div>
-						</div>
-					</div>
+      					<div class="row">
+      						<div class="col-12">
+      						  <br>
+      						  <b>Catatan:</b>
+      						  <div class="mb-2 float-right">
+      						    <p><?=@$invoices['note']?></p>
+      						  </div>
+      						</div>
+      					</div>
 
                 </div>
                 <!-- /.card-body -->
