@@ -58,8 +58,8 @@
                         <div class="btn-group d-flex justify-content-center" data-id="<?=$invoice['invoice_order_id']?>" data-id_invoice="<?=$invoice['invoice_id']?>">
                           <!-- // -->
                           <!-- <a onclick="return false;" href="<?=base_url('shipping/update')?>?id=<?=$invoice['invoice_id']?>" target="_blank" class="btn btn-sm btn-default" id="update"><i class="fa fa-tw fa-pencil-alt"></i></a> -->
+                          <!-- <button class="btn btn-sm btn-default" id="detail-order" data-toggle="modal" data-target="#modal-detail"><i class="fa fa-tw fa-search-plus"></i></button> -->
                           <!-- // -->                          
-                          <button class="btn btn-sm btn-default" id="detail-order" data-toggle="modal" data-target="#modal-detail"><i class="fa fa-tw fa-search-plus"></i></button>
                           <a href="<?=base_url('shipping/return')?>?id=<?=$invoice['invoice_id']?>" target="_blank" class="btn btn-sm btn-default" id="info"><i class="fa fa-tw fa-undo-alt"></i></a>
                         </div>
                       </td>

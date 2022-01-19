@@ -150,6 +150,7 @@ class Warehouse extends CI_Controller
         $invoice_id = sprintf('%04s/INV/WHS/',$this->db->get('tbl_invoice')->num_rows() + 1) . date('my');
 
         $this->tmp = [];
+        $this->total_item = 0;
         foreach ($this->input->post('item_code', true) as $key => $value) {
             $this->request['order']['order_id'][$key]           = $order_id;
             $this->request['order']['item_code'][$key]          = $this->input->post('item_code',true)[$key];
@@ -162,6 +163,8 @@ class Warehouse extends CI_Controller
             $this->request['order']['created_by'][$key]         = $this->data['user']['user_fullname'];
             $this->request['order']['user_id'][$key]            = $this->input->post('user_id', true);
             $this->_check_quantity($this->input->post('item_code'),$this->input->post('quantity'));
+            $this->total_item += (int) $this->input->post('quantity', true)[$key];
+
         }
 
         $this->invoice = [
@@ -179,7 +182,9 @@ class Warehouse extends CI_Controller
             'status_payment'          => $this->input->post('status_payment', true) ? 1 : 0,
             'status_settlement'       => $this->input->post('status_payment', true) ? 1 : 0,
             'user'                    => $this->session->userdata('fullname'),
-            'note'                    => $this->input->post('note', true) ? $this->input->post('note', true).' '.$this->data['user']['user_fullname'] : 'Di input oleh bagian gudang :'.$this->data['user']['user_fullname'].': ' . implode(', ', $this->request['order']['item_code']),
+            'note'                    => $this->input->post('note', true) ? 
+            'Jumlah item: ('.$this->total_item.'), '.$this->input->post('note', true).' '.$this->data['user']['user_fullname'] : 
+            'Jumlah item: ('.$this->total_item.'), '.'Di input oleh bagian gudang :'.$this->data['user']['user_fullname'].',<br> ' . implode(', ', $this->request['order']['item_code']),
             'created_by'              => $this->data['user']['user_fullname'],
 
         ];

@@ -107,17 +107,17 @@ const queue = () => {
 		})
 	});
 	$('button#add_order_item').on('click', function () {
-		let sub_total = 0;
-		if ($('input#item-name').length <= 0) {
+		if ($('input#item_name').val() == "") {
 			$('input#item_name').focus();
 			Toast.fire({
 				icon: 'warning',
 				title: 'Cari terlebih dahulu barang yang akan di beli !',
 			})
+		}else{
+			data_item.items($(this).parents().closest('div.row#order_item').find('input#item_id').val(), function (output) {
+				component.field(output);
+			});
 		}
-		data_item.items($(this).parents().closest('div.row#order_item').find('input#item_id').val(), function (output) {
-			component.field(output);
-		});
 	});
 	// end item
 	// var lots_of_stuff_already_done = false;

@@ -164,7 +164,7 @@ class Shipping extends CI_Controller
             'status_payment'          => $this->input->post('status_payment', true)? 1: 0,
             'status_settlement'       => $this->input->post('status_payment', true)? 1: 0,
             'user'                    => $this->session->userdata('fullname'),
-            'note'                    => $this->input->post('note', true)? $this->input->post('note', true).' :'.$this->data['user']['user_fullname']: 'Di input oleh bagian pengiriman : '.$this->data['user']['user_fullname'].': ' . implode(', ', $this->request['order']['item_code']),
+            'note'                    => $this->input->post('note', true)? $this->input->post('note', true).' : '.$this->data['user']['user_fullname']: 'Di input oleh bagian pengiriman : '.$this->data['user']['user_fullname'].' : ' . implode(', ', $this->request['order']['item_code']),
             'created_by'              => $this->data['user']['user_fullname'],
         ];
         // insert to tbl_order

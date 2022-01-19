@@ -1,4 +1,4 @@
-  <?php $this->load->view('components/header')?>
+<?php $this->load->view('components/header')?>
 
 <body class="hold-transition sidebar-mini layout-fixed sidebar-collapse pace-primary">
   <!-- Site wrapper -->
@@ -162,8 +162,9 @@
                   </div>
                   <div class="card-footer">
                     <div class="float-right">
-                      <button type="submit" class="btn btn-primary float-right">Save</button>
-                      <button type="cancel" class="btn btn-default mr-2">Cancel</button>
+                      <button type="button" class="btn btn-secondary" onclick="window.close();">Cancel</button>
+                      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-status-shipping">Kirim</button>
+                      <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                   </div>
                 </div>
@@ -171,10 +172,37 @@
             </div>
           </form>
           <!-- insert -->
+
         </div>
       </section>
       <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
     <!-- Modals -->
+
+<div class="modal fade" id="modal-status-shipping">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Ubah status pemesanan</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="post" action="<?= base_url('shipping/status') ?>">
+        <div class="modal-body">
+          <p>Lakukan pengiriman <b class="text-danger"></b>?</p>
+          <input type="hidden" name="invoice_id" id="invoice_id" value="<?=$invoice['invoice_id']?>" readonly>
+          <input type="hidden" name="invoice_status" id="invoice_status" value="status_validation" readonly>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success">Kirim&hellip;</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
     <?php $this->load->view('components/footer')?>
