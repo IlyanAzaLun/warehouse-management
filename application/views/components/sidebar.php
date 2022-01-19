@@ -18,7 +18,7 @@
           <img src="<?=base_url($user['user_image'])?>" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block"><?=@$this->session->userdata('fullname')?></a>
+          <span class="brand-text font-weight-light"><?=@$this->session->userdata('fullname')?></span>
         </div>
       </div>
 

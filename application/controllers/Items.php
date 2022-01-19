@@ -424,14 +424,16 @@ class Items extends CI_Controller
         ## Total number of record with filtering
         $this->db->select('count(*) as allcount');
         if($searchQuery != '')
-            $this->db->where($searchQuery);
+            $this->db->like('item_name', $searchValue, 'both'); $this->db->or_like('item_code', $searchValue, 'both');
+            // $this->db->where($searchQuery);
         $records = $this->db->get('tbl_item')->result();
         $totalRecordwithFilter = $records[0]->allcount;
 
         ## Fetch records
         $this->db->select('*');
         if($searchQuery != '')
-            $this->db->where($searchQuery);
+            $this->db->like('item_name', $searchValue, 'both'); $this->db->or_like('item_code', $searchValue, 'both');
+            // $this->db->where($searchQuery);
         $this->db->order_by($columnName, $columnSortOrder);
         $this->db->limit($rowperpage, $start);
         $records = $this->db->get('tbl_item')->result();
