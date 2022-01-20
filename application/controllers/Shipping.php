@@ -59,7 +59,11 @@ class Shipping extends CI_Controller
         $id_invoice = $this->input->get('id');
         $this->data['title']    = 'Informasi kesalahan pemesanan';
         $this->data['invoices'] = $this->M_invoice->invoice_select_by_reference($id_invoice,false);
-        $this->data['order']    = $this->M_order->order_select(@$this->data['invoices']['invoice_order_id']);
+        if (!$this->data['invoices']) {
+            Flasher::setFlash('info', 'info', 'Informasi', ' Pemesanan di batalkan oleh pihak gudang!');
+            redirect('shipping/index');
+        }
+        $this->data['order']    = $this->M_order->order_select($this->data['invoices']['invoice_order_id']);
         $this->data['plugins']  = [
             'css' => [
                 base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'),
