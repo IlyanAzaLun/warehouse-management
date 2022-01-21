@@ -225,7 +225,7 @@ class Items extends CI_Controller
             'module' => [base_url('assets/pages/items/index.js')],
         ];
         $this->db->where('item_code', $this->input->get('id'));
-        $this->db->order_by('update_at', 'DESC');
+        $this->db->order_by('updated_at', 'DESC');
         $this->db->order_by('created_at', 'DESC');
         $this->data['history'] = $this->db->get('tbl_item_history')->result_array();
         $this->data['title']= 'Informasi histori barang';
@@ -235,7 +235,13 @@ class Items extends CI_Controller
 
     public function get_code()
     {
-        echo json_encode($this->db->get_where('tbl_item', ['item_category' => $this->input->post('data')])->num_rows());
+        $this->db->where('item_category', $this->input->post('data'));
+        $this->db->order_by('item_code', 'DESC');
+        $result = $this->db->get('tbl_item')->row_array();
+        $splite = explode('-', $result['item_code']);
+        echo json_encode(
+            (int)$splite[sizeof($splite)-1]
+        );
     }
 
     public function get_item_invoice()

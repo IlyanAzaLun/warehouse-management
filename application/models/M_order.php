@@ -102,8 +102,8 @@ class M_order extends CI_Model {
 				$this->db->set('previous_selling_price' , $history[$key]['selling_price']);
 				$this->db->set('previous_quantity' , $history[$key]['quantity']);
 				$this->db->set('status_in_out' , $data['status_in_out'][$key]);
-				$this->db->set('update_at', 'NOW()', FALSE);
-				$this->db->set('update_by', $this->data['user']['user_fullname']);
+				$this->db->set('updated_at', 'NOW()', FALSE);
+				$this->db->set('updated_by', $this->data['user']['user_fullname']);
 				$this->db->set('created_by', $this->data['user']['user_fullname']);
 				$this->db->insert('tbl_item_history');
 
@@ -117,10 +117,9 @@ class M_order extends CI_Model {
         		$this->db->update('tbl_item');
         	}
         }
-        public function order_update($data)
+        public function order_update_multiple($data)
         {
-                $this->db->where('order_code', $data['order_code']);
-                return $this->db->update($this->_table, $data);
+        	$this->db->update_batch($this->_table, $data,'index_order');
         }
         public function order_delete($data)
         {

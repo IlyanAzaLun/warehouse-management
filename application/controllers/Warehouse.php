@@ -30,6 +30,7 @@ class Warehouse extends CI_Controller
         $this->load->model('M_items');
         $this->load->model('M_users');
         $this->load->model('M_stock');
+        $this->load->model('M_history');
         $this->data['user'] = $this->M_users->user_select(
             $this->session->userdata('email')
         );
@@ -183,8 +184,8 @@ class Warehouse extends CI_Controller
             'status_settlement'       => $this->input->post('status_payment', true) ? 1 : 0,
             'user'                    => $this->session->userdata('fullname'),
             'note'                    => $this->input->post('note', true) ? 
-            'Jumlah item: ('.$this->total_item.'), '.$this->input->post('note', true).' '.$this->data['user']['user_fullname'] : 
-            'Jumlah item: ('.$this->total_item.'), '.'Di input oleh bagian gudang :'.$this->data['user']['user_fullname'].',<br> ' . implode(', ', $this->request['order']['item_code']),
+                'Jumlah item: ('.$this->total_item.'), '.$this->input->post('note', true).' '.$this->data['user']['user_fullname'] : 
+                'Jumlah item: ('.$this->total_item.'), '.'Di input oleh bagian gudang :'.$this->data['user']['user_fullname'].',<br> ' . implode(', ', $this->request['order']['item_code']),
             'created_by'              => $this->data['user']['user_fullname'],
 
         ];
@@ -204,7 +205,6 @@ class Warehouse extends CI_Controller
 
     public function edit()
     {
-
         $this->data['plugins'] = ['css' => [
                 base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'),
                 base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'),
@@ -236,10 +236,58 @@ class Warehouse extends CI_Controller
                 base_url('assets/pages/warehouse/edit-queue.js')
             ],
         ];
-        $this->data['title'] = 'Update Order';
-        $this->data['invoice'] = $this->M_invoice->invoice_select($this->input->get('id'), false);
-        $this->data['orders'] = $this->M_order->order_select($this->data['invoice']['invoice_order_id']);
-        $this->load->view('warehouse/queue/update-queue', $this->data);
+
+        $this->form_validation->set_rules('order_id','Curent Order','required|trim');
+        if ($this->form_validation->run() == false) {
+            $this->data['title'] = 'Update Order';
+            $this->data['invoice'] = $this->M_invoice->invoice_select($this->input->get('id'), false);
+            $this->data['orders'] = $this->M_order->order_select($this->data['invoice']['invoice_order_id']);
+            $this->load->view('warehouse/queue/update-queue', $this->data);
+        }else{
+            $this->total_item = 0;
+            foreach ($this->input->post('item_code', true) as $key => $value) {
+                $this->_check_quantity($this->input->post('item_code'),$this->input->post('quantity'));
+                $this->total_item += (int) $this->input->post('quantity', true)[$key];
+
+                $order[$key] = array(
+                    'index_order'        => $this->input->post('index_order', true)[$key],
+                    'quantity'           => -(int) $this->input->post('quantity', true)[$key],
+                    'unit'               => $this->input->post('unit',true)[$key],
+                    'updated_by'         => $this->data['user']['user_fullname'],
+                    'updated_at'         => date('Y-m-d H:i:s',time()),
+                );
+                $history[$key] = array(
+                    'previous_quantity'  => (int) $this->input->post('current',true)[$key]-(int) $this->input->post('quantity', true)[$key],
+                    'item_code'          => $this->input->post('item_code',true)[$key],
+                    'status_in_out'      => 'UPDATE OUT ('.(int) $this->input->post('quantity', true)[$key].')',
+                    'created_by'         => $this->data['user']['user_fullname'],
+                    'updated_by'         => $this->data['user']['user_fullname'],
+                    'updated_at'         => date('Y-m-d H:i:s',time()),
+                );
+                $item[$key] = array(
+                    'item_code'          => $this->input->post('item_code',true)[$key],
+                    'quantity'           => (int) $this->input->post('current',true)[$key]-(int) $this->input->post('quantity', true)[$key]
+                );
+            }
+            $invoice = [
+                'invoice_id'             => $this->input->get('id'),
+                'note'                   => $this->input->post('note', true) ? 
+                    'Jumlah item: ('.$this->total_item.'), '.$this->input->post('note', true).' '.$this->data['user']['user_fullname'] : 
+                    'Jumlah item: ('.$this->total_item.'), '.'Di input, dan diubah oleh bagian gudang :'.$this->data['user']['user_fullname']
+            ];
+            try {
+                $this->M_items->item_update_multiple($item);
+                $this->M_order->order_update_multiple($order);
+                $this->M_history->history_insert_multiple($history);
+                $this->M_invoice->warehouse_invoice_update($invoice);
+                
+                Flasher::setFlash('info','success','Success',' data berhasil di tambahkan');
+                redirect('warehouse/queue');
+            } catch (Exception $e) {
+                Flasher::setFlash('info','error','Failed ',$e);
+                redirect('warehouse/queue');
+            }
+        }
     }
 
     private function _check_quantity($id, $quantity)
@@ -393,8 +441,8 @@ class Warehouse extends CI_Controller
             $this->db->set('status_in_out', ((int)$data_order[$key]['quantity_order']<0)?
                 'OUT'. ' (' . abs($data_order[$key]['quantity_order']) . ')':
                 'IN' . ' (' . abs($data_order[$key]['quantity_order']) . ')');
-            $this->db->set('update_at', date('Y-m-d H:i:s',time()));
-            $this->db->set('update_by', $this->data['user']['user_fullname']);
+            $this->db->set('updated_at', date('Y-m-d H:i:s',time()));
+            $this->db->set('updated_by', $this->data['user']['user_fullname']);
             $this->db->set('created_by', $this->data['user']['user_fullname']);
             $this->db->insert('tbl_item_history');
             // update quantity item

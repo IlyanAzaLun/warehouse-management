@@ -74,101 +74,110 @@
             </div>
           </div>
           <div class="col-sm-12 col-lg-12">
-            <!-- /.col -->          
-            <div class="card" id="order_item">
-              <div class="card-header bg-primary">
-                <h3 class="card-title">Informasi barang</h3>
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+            <!-- /.col -->
+            <form action="<?=base_url('warehouse/update')?>?id=<?=$invoice['invoice_id']?>" method="POST">
+              <div class="card" id="order_item">
+                <div class="card-header bg-primary">
+                  <h3 class="card-title">Informasi barang</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                  </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body" id="order_item">
+
+                  <div class="row" id="order_item">
+
+                    <div class="col-12">
+                      <div class="form-group">
+                        <input type="text" name="order_id" id="order_id" class="form-control" placeholder="order_id" readonly value="<?=$invoice['invoice_order_id']?>">
+                      </div>
+                    </div>
+
+                    <div class="col-10">
+                      <div class="form-group">
+                        <label for="item_name">Cari nama barang...</label>
+                        <input required type="hidden" id="item_id" class="form-control">
+                        <input required type="text" id="item_name" class="form-control" disabled placeholder="Cari barang...">
+                      </div>
+                      <?=form_error('item_name[]', '<small class="text-danger">','</small>')?>
+                      <?=form_error('quantity[]', '<small class="text-danger">','</small>')?>
+                      <?=form_error('unit[]', '<small class="text-danger">','</small>')?>
+                    </div>
+                    <div class="col-2">
+                      <label for="">&nbsp;</label>
+                      <button type="button" class="btn btn-block btn-secondary" disabled id="add_order_item"><i class="fa fa-tw fa-plus"></i></button>
+                    </div>
+
+                  </div>
+                  <hr>
+                  <?php foreach ($orders as $key => $order):?>
+                  <!-- order-item -->
+                  <div class="row" id="order-item">
+  	                <div class="col-3">
+  	                  <div class="form-group">
+  	                    <small>Kode barang</small>
+                        <input type="hidden" name="index_order[]" value="<?=$order['index_order']?>">
+  	                    <input type="text" name="item_code[]" id="item_code" class="form-control" value="<?=$order['item_code']?>" readonly>
+  	                  </div>
+  	                </div>
+
+  	                <div class="col-5">
+  	                  <div class="form-group">
+  	                    <small>Nama barang</small>
+  	                    <input type="text" name="item_name[]" id="item_name" class="form-control" value="<?=$order['item_name']?>" readonly>
+  	                  </div>
+  	                </div>
+
+        				  	<div class="col-3">
+          						<div class="form-group">
+          							<div class="row">
+          								<div class="col-5">
+          									<small>Jumlah stok barang</small>
+          							  	</div>
+          								<div class="col-7">
+          								  	<small>Jumlah yang dipesan</small>
+          								</div>
+          							</div>
+          							<div class="input-group mb-3" id="field-item_attribute">
+          								<input type="number" readonly class="form-control" name="current[]" id="current" value="<?php
+                          echo((int)$this->M_items->item_select($order['item_code'])['quantity']+abs($order['quantity_order']));?>" required>
+          								<input type="number" class="form-control" name="quantity[]" id="quantity" value="<?=abs($order['quantity_order'])?>" min="0" max="<?=$this->M_items->item_select($order['item_code'])['quantity']?>" required>
+          								<input type="hidden" class="form-control" name="unit[]" id="unit"  value="<?=$order['unit']?>" required>
+    					      	    <div class="input-group-append">
+    					              <span class="input-group-text"><?=$order['unit']?></span>
+    					            </div>
+    		          			</div>
+      		        		</div>
+      		        	</div>
+                    <div class="col-1">
+                      <small>&nbsp;</small>
+  	                	<button type="button" disabled class="btn btn-block btn-secondary" id="remove_order_item" data-id="<?=$order['index_order']?>" data-toggle="modal" data-target="#modal-delete_order"><i class="fa fa-tw fa-times"></i></button>
+                    </div>
+                  </div>
+                  <?php endforeach?>
+                  <hr>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-lg col-sm-12">
+                      <div class="form-group">
+                        <label for="note">Catatan</label>
+                        <textarea name="note" id="note" class="form-control"><?=$invoice['note']?></textarea>
+                      </div>
+                    </div>
+                  </div>
+                <!-- /.card-body -->
+                </div>
+                <div class="card-footer">
+                  <div class="float-right">
+                    <button class="btn btn-sm btn-primary" type="submit">Simpan</button>
+                    <button class="btn btn-sm btn-secondary" type="button" onclick="window.close();">Cancel</button>
+                  </div>
                 </div>
               </div>
-              <!-- /.card-header -->
-              <div class="card-body" id="order_item">
-
-                <div class="row" id="order_item">
-
-                  <div class="col-12">
-                    <div class="form-group">
-                      <input type="text" name="order_id" id="order_id" class="form-control" placeholder="order_id" readonly value="<?=$invoice['invoice_order_id']?>">
-                    </div>
-                  </div>
-
-                  <div class="col-10">
-                    <div class="form-group">
-                      <label for="item_name">Cari nama barang...</label>
-                      <input required type="hidden" id="item_id" class="form-control">
-                      <input required type="text" id="item_name" class="form-control" disabled value="<?=set_value('item_name[]')?>" placeholder="Cari barang...">
-                    </div>
-                    <?=form_error('item_name[]', '<small class="text-danger">','</small>')?>
-                    <?=form_error('quantity[]', '<small class="text-danger">','</small>')?>
-                    <?=form_error('unit[]', '<small class="text-danger">','</small>')?>
-                  </div>
-                  <div class="col-2">
-                    <label for="">&nbsp;</label>
-                    <button type="button" class="btn btn-block btn-secondary" disabled id="add_order_item"><i class="fa fa-tw fa-plus"></i></button>
-                  </div>
-
-                </div>
-                <hr>
-                <?php foreach ($orders as $key => $order):?>
-                <!-- order-item -->
-                <div class="row" id="order-item">
-	                <div class="col-3">
-	                  <div class="form-group">
-	                    <small>Kode barang</small>
-	                    <input type="text" name="item_code[]" id="item_code" class="form-control" value="<?=$order['item_code']?>" readonly>
-	                  </div>
-	                </div>
-
-	                <div class="col-5">
-	                  <div class="form-group">
-	                    <small>Nama barang</small>
-	                    <input type="text" name="item_name[]" id="item_name" class="form-control" value="<?=$order['item_name']?>" readonly>
-	                  </div>
-	                </div>
-
-				  	<div class="col-3">
-						<div class="form-group">
-							<div class="row">
-								<div class="col-5">
-									<small>Jumlah stok barang</small>
-							  	</div>
-								<div class="col-7">
-								  	<small>Jumlah yang dipesan</small>
-								</div>
-							</div>
-							<div class="input-group mb-3" id="field-item_attribute">
-								<input type="number" disabled class="form-control" name="current[]" id="current" value="<?=$this->M_items->item_select($order['item_code'])['quantity']?>" required>
-								<input type="number" class="form-control" name="quantity[]" id="quantity" value="<?=abs($order['quantity_order'])?>" min="0" max="<?=$this->M_items->item_select($order['item_code'])['quantity']?>" required>
-								<input type="hidden" class="form-control" name="unit[]" id="unit"  value="<?=$order['unit']?>" required>
-					      	    <div class="input-group-append">
-					              <span class="input-group-text"><?=$order['unit']?></span>
-					            </div>
-		          			</div>
-		        		</div>
-		        	</div>
-	       			<div class="col-1">
-	                    <small>&nbsp;</small>
-	                	<button type="button" disabled class="btn btn-block btn-secondary" id="remove_order_item" data-id="<?=$order['index_order']?>" data-toggle="modal" data-target="#modal-delete_order"><i class="fa fa-tw fa-times"></i></button>
-	                </div>
-                </div>
-                <?php endforeach?>
-                <hr>
-              </div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-lg col-sm-12">
-                    <div class="form-group">
-                      <label for="note">Catatan</label>
-                      <textarea name="note" id="note" class="form-control"><?=$invoice['note']?></textarea>
-                    </div>
-                  </div>
-                </div>
-              <!-- /.card-body -->
-            </div>
-
-            </div>
+            </form>
           <!-- ./end OERDER -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->

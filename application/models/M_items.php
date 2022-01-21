@@ -91,4 +91,9 @@ class M_items extends CI_Model
         $this->db->where('item_code', $id);
         return $this->db->update('tbl_item');
     }
+    public function item_update_multiple($data)
+    {
+        return $this->db->update_batch('tbl_item', $data, 'item_code');
+    }
+    //
 }

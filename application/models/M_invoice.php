@@ -212,6 +212,12 @@ class M_invoice extends CI_Model {
 		return $this->db->update($this->_table, array($data['variabel'] => $value[$data['variabel']] ));
 	}
 
+	public function warehouse_invoice_update($data)
+	{
+		$this->db->where('invoice_id', $data['invoice_id']);
+		$this->db->update($this->_table, $data);
+	}
+
 	public function invoice_select_by_referece($data)
 	{
 		$this->db->where('invoice_reverence', $data);

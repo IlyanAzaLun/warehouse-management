@@ -53,20 +53,20 @@
                             value="<?=set_value('category')?>" required>
                             <option value="" selected="selected">Pilih kategori barang</option>
                             <option value="ACC" data-id="ACC" <?=set_select('category', 'ACC' )?>>ACC</option>
-                            <option value="ATOMIZER" data-id="ATOMIZER" <?=set_select('category', 'ATOMIZER' )?>
+                            <option value="ATO" data-id="ATOMIZER" <?=set_select('category', 'ATOMIZER' )?>
                               >ATOMIZER</option>
-                            <option value="BATTERY" data-id="BATTERY" <?=set_select('category', 'BATTERY' )?>>BATTERY
+                            <option value="BAT" data-id="BATTERY" <?=set_select('category', 'BATTERY' )?>>BATTERY
                             </option>
-                            <option value="CATTRIDGE & COIL" data-id="CATTRIDGE & COIL"
+                            <option value="CAT" data-id="CATTRIDGE & COIL"
                               <?=set_select('category', 'CATTRIDGE & COIL' )?>>CATTRIDGE & COIL</option>
-                            <option value="COTTON" data-id="COTTON" <?=set_select('category', 'COTTON' )?>>COTTON
+                            <option value="COT" data-id="COTTON" <?=set_select('category', 'COTTON' )?>>COTTON
                             </option>
-                            <option value="DEVICE" data-id="DEVICE" <?=set_select('category', 'DEVICE' )?>>DEVICE
+                            <option value="DEV" data-id="DEVICE" <?=set_select('category', 'DEVICE' )?>>DEVICE
                             </option>
-                            <option value="LIQUID" data-id="LIQUID" <?=set_select('category', 'LIQUID' )?>>LIQUID
+                            <option value="LIQ" data-id="LIQUID" <?=set_select('category', 'LIQUID' )?>>LIQUID
                             </option>
-                            <option value="PODS" data-id="PODS" <?=set_select('category', 'PODS' )?>>PODS</option>
-                            <option value="WIRE" data-id="WIRE" <?=set_select('category', 'WIRE' )?>>WIRE</option>
+                            <option value="POD" data-id="PODS" <?=set_select('category', 'PODS' )?>>PODS</option>
+                            <option value="WIR" data-id="WIRE" <?=set_select('category', 'WIRE' )?>>WIRE</option>
                           </select>
                         </div>
                       </div>
