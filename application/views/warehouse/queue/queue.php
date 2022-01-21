@@ -170,7 +170,7 @@
                         <div class="btn-group d-flex justify-content-center" data-id="<?= $invoice['invoice_order_id'] ?>" data-id-invoice="<?= $invoice['invoice_id'] ?>">
                           <!-- // -->
                           <!-- <a onclick="return false;" href="<?= base_url('warehouse/info') ?>?id=<?= $invoice['invoice_id'] ?>" target="_blank" class="btn btn-sm btn-default" id="info"><i class="fa fa-tw fa-expand-alt"></i></a> -->
-                          <!-- <a onclick="return false;" href="<?= base_url('warehouse/update') ?>?id=<?= $invoice['invoice_id'] ?>" target="_blank" class="btn btn-sm btn-default" id="update"><i class="fa fa-tw fa-pencil-alt"></i></a> -->
+                          <a href="<?= base_url('warehouse/update') ?>?id=<?= $invoice['invoice_id'] ?>" target="_blank" class="btn btn-sm btn-default" id="update"><i class="fa fa-tw fa-pencil-alt"></i></a>
                           <!-- // -->
                           <button class="btn btn-sm btn-default" id="detail-order" data-toggle="modal" data-target="#modal-detail"><i class="fa fa-tw fa-search-plus"></i></button>
                           <?php if (boolval((int) $invoice['status_active']) AND !boolval((int) $invoice['status_item'])): ?>

@@ -8,21 +8,22 @@ class M_order extends CI_Model {
         public function order_select($data = false)
         {
         	if ($data) {
-				$this->db->where('order.order_id', $data);
+			$this->db->where('order.order_id', $data);
 	        	$this->db->select(
-	        		' order.order_id
-					, customer.user_fullname
-					, customer.owner_name
-					, customer.user_address
-					, customer.village
-					, customer.sub-district
-					, customer.district
-					, customer.province
-					, customer.zip
-					, customer.user_contact_phone
-					, customer.type_id
-					, order.quantity as quantity_order
-                    , order.unit
+	        		' order.index_order
+	        		, order.order_id
+				, customer.user_fullname
+				, customer.owner_name
+				, customer.user_address
+				, customer.village
+				, customer.sub-district
+				, customer.district
+				, customer.province
+				, customer.zip
+				, customer.user_contact_phone
+				, customer.type_id
+				, order.quantity as quantity_order
+            			, order.unit
 	        		, item.item_code
 	        		, item.item_name
 	        		, item.item_category
@@ -30,12 +31,11 @@ class M_order extends CI_Model {
 	        		, item.ML
 	        		, item.VG
 	        		, item.PG
-					, item.falvour');
+				, item.falvour');
 	        	$this->db->join('tbl_item item', 'order.item_id = item.item_code', 'left');
 	        	$this->db->join('tbl_user_information customer', 'order.user_id = customer.user_id', 'left');
 	        	return $this->db->get($this->_table.' order')->result_array();
         	}else{
-
 	        	$this->db->select(
 	        		'order.order_id
 	        		,order.date

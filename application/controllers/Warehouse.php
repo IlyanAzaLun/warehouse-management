@@ -202,6 +202,46 @@ class Warehouse extends CI_Controller
 
     }
 
+    public function edit()
+    {
+
+        $this->data['plugins'] = ['css' => [
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-buttons/css/buttons.bootstrap4.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-select/css/select.bootstrap4.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/css/autoFill.bootstrap4.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/select2/css/select2.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/jquery-ui/jquery-ui.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/jquery-ui/jquery-ui.structure.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/jquery-ui/jquery-ui.theme.min.css'),
+            ],
+            'js' => [
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables/jquery.dataTables.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/js/dataTables.responsive.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/js/responsive.bootstrap4.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-buttons/js/dataTables.buttons.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-buttons/js/buttons.bootstrap4.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-select/js/dataTables.select.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-select/js/select.bootstrap4.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/js/dataTables.autoFill.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/js/autoFill.bootstrap4.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/select2/js/select2.full.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/jquery-ui/jquery-ui.min.js'),
+            ],
+            'module' => [
+                base_url('assets/pages/warehouse/edit-queue.js')
+            ],
+        ];
+        $this->data['title'] = 'Update Order';
+        $this->data['invoice'] = $this->M_invoice->invoice_select($this->input->get('id'), false);
+        $this->data['orders'] = $this->M_order->order_select($this->data['invoice']['invoice_order_id']);
+        $this->load->view('warehouse/queue/update-queue', $this->data);
+    }
+
     private function _check_quantity($id, $quantity)
     {
         foreach ($id as $key => $value) {
