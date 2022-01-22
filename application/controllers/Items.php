@@ -238,7 +238,7 @@ class Items extends CI_Controller
         $this->db->where('item_category', $this->input->post('data'));
         $this->db->order_by('item_code', 'DESC');
         $result = $this->db->get('tbl_item')->row_array();
-        $splite = explode('-', $result['item_code']);
+        $splite = @explode('-', $result['item_code']);
         echo json_encode(
             (int)$splite[sizeof($splite)-1]
         );
