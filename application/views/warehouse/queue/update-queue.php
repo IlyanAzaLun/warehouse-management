@@ -99,7 +99,7 @@
                       <div class="form-group">
                         <label for="item_name">Cari nama barang...</label>
                         <input required type="hidden" id="item_id" class="form-control">
-                        <input required type="text" id="item_name" class="form-control" disabled placeholder="Cari barang...">
+                        <input required type="text" id="item_name" class="form-control" placeholder="Cari barang...">
                       </div>
                       <?=form_error('item_name[]', '<small class="text-danger">','</small>')?>
                       <?=form_error('quantity[]', '<small class="text-danger">','</small>')?>
@@ -107,7 +107,7 @@
                     </div>
                     <div class="col-2">
                       <label for="">&nbsp;</label>
-                      <button type="button" class="btn btn-block btn-secondary" disabled id="add_order_item"><i class="fa fa-tw fa-plus"></i></button>
+                      <button type="button" class="btn btn-block btn-primary" id="add_order_item"><i class="fa fa-tw fa-plus"></i></button>
                     </div>
 
                   </div>
@@ -141,9 +141,8 @@
           								</div>
           							</div>
           							<div class="input-group mb-3" id="field-item_attribute">
-          								<input type="number" readonly class="form-control" name="current[]" id="current" value="<?php
-                          echo((int)$this->M_items->item_select($order['item_code'])['quantity']+abs($order['quantity_order']));?>" required>
-          								<input type="number" class="form-control" name="quantity[]" id="quantity" value="<?=abs($order['quantity_order'])?>" min="0" max="<?=$this->M_items->item_select($order['item_code'])['quantity']?>" required>
+          								<input type="number" readonly class="form-control" name="current[]" id="current" value="<?=((int)$this->M_items->item_select($order['item_code'])['quantity']+abs($order['quantity_order']));?>" required>
+          								<input type="number" class="form-control" name="quantity[]" id="quantity" value="<?=abs($order['quantity_order'])?>" min="0" max="<?=((int)$this->M_items->item_select($order['item_code'])['quantity']+abs($order['quantity_order']));?>" required>
           								<input type="hidden" class="form-control" name="unit[]" id="unit"  value="<?=$order['unit']?>" required>
     					      	    <div class="input-group-append">
     					              <span class="input-group-text"><?=$order['unit']?></span>
@@ -185,6 +184,33 @@
     <!-- /.content -->
       <!-- /.content -->
     </div>
+
+<div class="modal fade" id="modal-delete_order">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Delete item</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="post" action="<?=base_url('warehouse/order-item-remove')?>">
+        <div class="modal-body">
+          <p>Are you sure to <b class="text-danger">remove</b> from order ?</p>
+          <input type="text" name="index_order" id="index-order" readonly>
+          <input type="text" name="order_id" id="order-id" readonly>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-danger">Yes do it&hellip;</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal delete -->
     <!-- /.content-wrapper -->
     <!-- Modals -->
     <?php $this->load->view('components/footer')?>

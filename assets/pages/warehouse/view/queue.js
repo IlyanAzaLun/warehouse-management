@@ -79,7 +79,7 @@ const queue = () => {
 				minLength: 0,
 				source: function (request, response) {
 					$.ajax({
-						url: location.href + "/warehouse/item",
+						url: location.base + "warehouse/item",
 						method: "POST",
 						dataType: "json",
 						data: {

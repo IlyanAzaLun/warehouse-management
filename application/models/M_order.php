@@ -119,7 +119,25 @@ class M_order extends CI_Model {
         }
         public function order_update_multiple($data)
         {
-        	$this->db->update_batch($this->_table, $data,'index_order');
+        	foreach ($data as $key => $value) {
+        		$randomUuid = Uuid::uuid4();
+
+        		if ($value['index_order']) {
+        			$data_positif[] = $value;
+        		}else{
+        			$data_negatif[$key] = $value;
+        			$data_negatif[$key]['index_order'] = $randomUuid->toString(); 
+        		}
+        	}
+        	if (@$data_negatif) {
+			if($this->db->update_batch($this->_table, $data_positif, 'index_order') && $this->db->insert_batch($this->_table, $data_negatif)){
+				return true;
+			}
+        	}else{
+        		$this->db->update_batch($this->_table, $data_positif, 'index_order');
+			return true;
+        	}
+		return false;
         }
         public function order_delete($data)
         {

@@ -38,9 +38,10 @@ $route['warehouse/status'] 							  = 'Warehouse/update_status';
 $route['warehouse/update']                            = 'Warehouse/edit';
 $route['warehouse/cancel'] 							  = 'Warehouse/cancel';
 $route['warehouse/status-return'] 					  = 'Warehouse/update_status_return';
+$route['warehouse/item'] 				              = 'Warehouse/list_item'; // dont change this
+$route['warehouse/order-item-remove']                 = 'Warehouse/order_item_remove';
 $route['(:any)/(:any)/warehouse/notification']		  = 'Warehouse/notification';
 $route['(:any)/(:any)/warehouse/notification-change'] =	'Warehouse/notification_change';
-$route['(:any)/(:any)/warehouse/item'] 				  = 'Warehouse/list_item'; // dont change this
 
 //Shipping
 $route['shipping/info'] 							  = 'Shipping/info';

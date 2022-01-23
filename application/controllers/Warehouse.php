@@ -248,9 +248,11 @@ class Warehouse extends CI_Controller
             foreach ($this->input->post('item_code', true) as $key => $value) {
                 $this->_check_quantity($this->input->post('item_code'),$this->input->post('quantity'));
                 $this->total_item += (int) $this->input->post('quantity', true)[$key];
-
+                $index_order = @$this->input->post('index_order', true)[$key];
                 $order[$key] = array(
-                    'index_order'        => $this->input->post('index_order', true)[$key],
+                    'index_order'        => ($index_order)?$index_order:false,
+                    'item_id'            => $this->input->post('item_code',true)[$key],
+                    'order_id'           => $this->input->post('order_id', true),
                     'quantity'           => -(int) $this->input->post('quantity', true)[$key],
                     'unit'               => $this->input->post('unit',true)[$key],
                     'updated_by'         => $this->data['user']['user_fullname'],
@@ -268,6 +270,12 @@ class Warehouse extends CI_Controller
                     'item_code'          => $this->input->post('item_code',true)[$key],
                     'quantity'           => (int) $this->input->post('current',true)[$key]-(int) $this->input->post('quantity', true)[$key]
                 );
+                $quantity[$key] = array(
+                    'item_code'          => $this->input->post('item_code', true)[$key],
+                    'quantity'           => $this->input->post('quantity', true)[$key],
+                    'current'            => $this->input->post('current', true)[$key],
+                    'total_'             => $this->input->post('current', true)[$key]-$this->input->post('quantity', true)[$key], 
+                );
             }
             $invoice = [
                 'invoice_id'             => $this->input->get('id'),
@@ -276,6 +284,10 @@ class Warehouse extends CI_Controller
                     'Jumlah item: ('.$this->total_item.'), '.'Di input, dan diubah oleh bagian gudang :'.$this->data['user']['user_fullname']
             ];
             try {
+                // echo "<pre>";
+                // print_r ($this->M_order->order_update_multiple($order));
+                // echo "</pre>";
+                // die();
                 $this->M_items->item_update_multiple($item);
                 $this->M_order->order_update_multiple($order);
                 $this->M_history->history_insert_multiple($history);
@@ -398,17 +410,17 @@ class Warehouse extends CI_Controller
     public function cancel()
     {
         $this->data['invoice'] = $this->M_invoice->invoice_select($this->input->post('invoice_id'));
-        $this->data['order'] = $this->M_order->order_select($this->data['invoice']['invoice_order_id']);
+        $this->data['order']   = $this->M_order->order_select($this->data['invoice']['invoice_order_id']);
         foreach ($this->data['order'] as $key => $value) {
             $this->db->select('item_code, quantity');
             $this->db->where('item_code', $value['item_code']);
             //create history item
-            $this->data['history'][$key]                     = $this->db->get('tbl_item')->row_array();
-            $this->data['history'][$key]['status_in_out']    = 'IN ('.abs($this->data['order'][$key]['quantity_order']).')';
-            $this->data['history'][$key]['previous_quantity']= $this->data['history'][$key]['quantity'];
-            $this->data['history'][$key]['update_at']        = date('Y-m-d H:i:s',time());
-            $this->data['item'][$key]['item_code']           = $this->data['order'][$key]['item_code'];
-            $this->data['item'][$key]['quantity']            = abs($this->data['order'][$key]['quantity_order']);
+            $this->data['history'][$key]                      = $this->db->get('tbl_item')->row_array();
+            $this->data['history'][$key]['status_in_out']     = 'IN ('.abs($this->data['order'][$key]['quantity_order']).')';
+            $this->data['history'][$key]['previous_quantity'] = $this->data['history'][$key]['quantity'];
+            $this->data['history'][$key]['updated_at']        = date('Y-m-d H:i:s',time());
+            $this->data['item'][$key]['item_code']            = $this->data['order'][$key]['item_code'];
+            $this->data['item'][$key]['quantity']             = abs($this->data['order'][$key]['quantity_order']);
             unset($this->data['history'][$key]['quantity']);
         }
         $this->M_stock->history_item_insert_multiple($this->data);        
@@ -468,6 +480,15 @@ class Warehouse extends CI_Controller
 
         Flasher::setFlash('info','success','Success',' data berhasil diubah!');
         redirect('warehouse/queue');
+    }
+    public function order_item_remove()
+    {
+        // code...
+        $this->db->where('index_order', $this->input->post('index_order', true));
+        $this->db->where('order_id', $this->input->post('order_id', true));
+        echo "<pre>";
+        print_r ($this->db->get('tbl_order')->row_array());
+        echo "</pre>";
     }
     public function notification()
     {

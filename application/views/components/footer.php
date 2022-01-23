@@ -49,6 +49,7 @@ if (isset($plugins['js'])) {
       }
   }
 ?>
+<script>location.base = '<?=base_url()?>'</script>
 <!-- datatabels -->
 <script src="<?=base_url()?>assets/AdminLTE-3.0.5/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="<?=base_url()?>assets/AdminLTE-3.0.5/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
