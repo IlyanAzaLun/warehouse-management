@@ -141,7 +141,8 @@ class M_order extends CI_Model {
         }
         public function order_delete($data)
         {
-                $this->db->where('order_code', $data['order_code']);
+                $this->db->where('index_order', $data['index_order']);
+                $this->db->where('order_id', $data['order_id']);
                 return $this->db->delete($this->_table);
         }
 }

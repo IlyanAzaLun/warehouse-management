@@ -35,7 +35,7 @@ class Shipping extends CI_Controller
 
     public function index()
     {
-        $this->data['title']    = 'Daftar kesalahan julah barang pada pesanan';
+        $this->data['title']    = 'Daftar barang terkirim';
         $this->data['invoices'] = $this->M_invoice->invoice_history_select(false,'INV/RET/');
         $this->data['plugins']  = [
             'css' => [
@@ -49,7 +49,7 @@ class Shipping extends CI_Controller
                 base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/js/dataTables.responsive.min.js'),
                 base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/js/responsive.bootstrap4.min.js'),
             ],
-            'module' => [base_url('assets/pages/shipping/index.js')],
+            'module' => [base_url('assets/pages/shipping/index-shipping.js')],
         ];
         $this->load->view('shipping/index', $this->data);
     }
@@ -295,5 +295,96 @@ class Shipping extends CI_Controller
         $this->db->where('status_notification', 1);
         $this->db->like('invoice_id', '/INV/WHS/' . date('my'), 'before');
         echo json_encode($this->db->get('tbl_invoice')->result_array());
+    }
+
+    // SERVER SIDE
+    public function serverside_datatables_data_shipping()
+    {
+
+        $response = array();
+
+        $postData = $this->input->post();
+
+        ## Read value
+        $draw            = $postData['draw'];
+        $start           = $postData['start'];
+        $rowperpage      = $postData['length']; // Rows display per page
+        $columnIndex     = $postData['order'][0]['column']; // Column index
+        $columnName      = $postData['columns'][$columnIndex]['data']; // Column name
+        $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
+        $searchValue     = $postData['search']['value']; // Search value
+
+        ## Search 
+        $searchQuery = "";
+        if($searchValue != ''){
+            $searchQuery = " (
+               invoice_id like '%".$searchValue."%' 
+            or invoice_reverence like '%".$searchValue."%' 
+            or user_fullname like '%".$searchValue."%'
+            or user_address like '%".$searchValue."%'
+            or sub-district like '%".$searchValue."%'
+            or district like '%".$searchValue."%'
+            or village like '%".$searchValue."%'
+            or note like '%".$searchValue."%'
+            ) ";
+        }
+
+        ## Total number of records without filtering
+        $this->db->select('count(*) as allcount');
+        $this->db->join('tbl_user_information user_info', 'invoice.to_customer_destination = user_info.user_id', 'left');
+        $this->db->like('invoice.invoice_id', 'INV/WHS/', 'both');
+        $this->db->like('invoice.date', date('Y-m-d'), 'after');
+        $this->db->where('invoice.status_validation', 1);
+        $this->db->where('invoice.status_active =', 1);
+
+        $records = $this->db->get('tbl_invoice invoice')->result();
+        $totalRecords = $records[0]->allcount;
+
+        ## Total number of record with filtering
+        $this->db->select('count(*) as allcount');
+        $this->db->join('tbl_user_information user_info', 'invoice.to_customer_destination = user_info.user_id', 'left');
+        $this->db->like('invoice.invoice_id', 'INV/WHS/', 'both');
+        $this->db->like('invoice.date', date('Y-m-d'), 'after');
+        $this->db->where('invoice.status_validation', 1);
+        $this->db->where('invoice.status_active =', 1);
+
+        if($searchQuery != ''){
+            $this->db->like('invoice.invoice_id', $searchValue, 'both'); 
+            $this->db->or_like('invoice.invoice_reverence ', $searchValue, 'both');
+            $this->db->or_like('invoice.note ', $searchValue, 'both');
+        }
+        $records = $this->db->get('tbl_invoice invoice')->result();
+        $totalRecordwithFilter = $records[0]->allcount;
+
+        ## Fetch records
+        $this->db->select('*');
+        $this->db->join('tbl_user_information user_info', 'invoice.to_customer_destination = user_info.user_id', 'left');
+        $this->db->like('invoice.invoice_id', 'INV/WHS/', 'both');
+        $this->db->like('invoice.date', date('Y-m-d'), 'after');
+        $this->db->where('invoice.status_validation', 1);
+        $this->db->where('invoice.status_active =', 1);
+
+        if($searchQuery != ''){
+            $this->db->like('invoice.invoice_id', $searchValue, 'both'); 
+            $this->db->or_like('invoice.invoice_reverence ', $searchValue, 'both');
+            $this->db->or_like('user_info.user_fullname ', $searchValue, 'both');
+            $this->db->or_like('user_info.user_address ', $searchValue, 'both');
+            $this->db->or_like('user_info.sub-district ', $searchValue, 'both');
+            $this->db->or_like('user_info.district ', $searchValue, 'both');
+            $this->db->or_like('user_info.village ', $searchValue, 'both');
+            $this->db->or_like('invoice.note ', $searchValue, 'both');
+        }
+        $this->db->order_by($columnName, $columnSortOrder);
+        $this->db->limit($rowperpage, $start);
+        $records = $this->db->get('tbl_invoice invoice')->result();
+
+        ## Response
+        $response = array(
+            "draw"                 => intval($draw),
+            "iTotalRecords"        => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordwithFilter,
+            "aaData"               => $records
+        );
+        $this->output->set_content_type('application/json')->set_output(json_encode( $response ));
     }
 }

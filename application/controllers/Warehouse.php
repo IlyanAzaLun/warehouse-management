@@ -486,9 +486,38 @@ class Warehouse extends CI_Controller
         // code...
         $this->db->where('index_order', $this->input->post('index_order', true));
         $this->db->where('order_id', $this->input->post('order_id', true));
-        echo "<pre>";
-        print_r ($this->db->get('tbl_order')->row_array());
-        echo "</pre>";
+        $data['order'] = $this->db->get('tbl_order')->row_array();
+        
+        $this->db->where('item_code', $data['order']['item_id']);
+        $data['item'] = $this->db->get('tbl_item')->row_array();
+        $data['item']['quantity'] = $data['item']['quantity']+abs($data['order']['quantity']);
+        $data['item']['update_by'] = $this->data['user']['user_fullname'];
+        $data['history'] = array(
+            0 => array(
+                'item_code' => $data['order']['item_id'],
+                'previous_selling_price' => 0,
+                'previous_capital_price' => 0,
+                'previous_quantity' => $data['item']['quantity']+$data['order']['quantity'],
+                'status_in_out' => 'IN ('.abs($data['order']['quantity']).')',
+                'created_by' => $this->data['user']['user_fullname'],
+                'created_at' => date('Y-m-d H:i:s',time()),
+                'created_by' => $this->data['user']['user_fullname'],
+                'updated_at' => date('Y-m-d H:i:s',time()),
+            ),
+        );
+
+
+        try {
+            $this->M_items->item_update($data['item']);
+            $this->M_history->history_insert_multiple($data['history']);
+            $this->M_order->order_delete($data['order']);
+            
+            Flasher::setFlash('info','success','Success',' data berhasil di tambahkan');
+            redirect($_SERVER['HTTP_REFERER']);
+        } catch (Exception $e) {
+            Flasher::setFlash('info','error','Failed ',$e);
+            redirect('warehouse/queue');
+        }
     }
     public function notification()
     {

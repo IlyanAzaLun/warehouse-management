@@ -152,7 +152,7 @@
       		        	</div>
                     <div class="col-1">
                       <small>&nbsp;</small>
-  	                	<button type="button" disabled class="btn btn-block btn-secondary" id="remove_order_item" data-id="<?=$order['index_order']?>" data-toggle="modal" data-target="#modal-delete_order"><i class="fa fa-tw fa-times"></i></button>
+  	                	<button type="button" class="btn btn-block btn-danger" id="remove_order_item" data-id="<?=$order['index_order']?>" data-toggle="modal" data-target="#modal-delete_order"><i class="fa fa-tw fa-times"></i></button>
                     </div>
                   </div>
                   <?php endforeach?>
