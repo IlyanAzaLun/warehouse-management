@@ -231,6 +231,23 @@ class Shipping extends CI_Controller
         }
     }
 
+    public function detail()
+    {
+        $id_invoice = $this->input->get('id');
+        if ($id_invoice) {
+            $this->data['title'] = 'Detail order';
+
+            $this->data['invoice_return'] = $this->M_invoice->invoice_select_by_reference($id_invoice);
+            if ($this->data['invoice_return']) {
+                $this->data['order_return']  = $this->M_order->order_select($this->data['invoice_return']['invoice_order_id']);
+            }
+            $this->data['invoice'] = $this->M_invoice->invoice_select($id_invoice);
+            $this->data['items']   = $this->M_order->order_select($this->data['invoice']['invoice_order_id']);
+            $this->load->view('shipping/detail', $this->data);
+        }
+
+    }
+
     public function update_status()
     {
         $this->form_validation->set_rules('invoice_id','Code invoice','required|trim');
@@ -256,6 +273,16 @@ class Shipping extends CI_Controller
             Flasher::setFlash('info','success','Success',' Berhasil ubah data!');
             redirect('shipping/queue');
         }
+    }
+
+    public function validation_cancel()
+    {
+        $this->db->where('invoice_id', $this->input->post('invoice_id', true));
+        $this->db->set('status_validation', 0);
+        $this->db->update('tbl_invoice');
+    
+        Flasher::setFlash('info','success','Success',' Berhasil ubah data!');
+        redirect('shipping/queue');
     }
 
     public function notification_change()

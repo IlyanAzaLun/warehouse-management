@@ -166,14 +166,9 @@
           render: function (data, type, row) {
               return `
               <div class="btn-group d-flex justify-content-center" data-id="${data}">
-                <a onclick="return false" href="<?=base_url('items/update')?>?id=${data}" target="_blank"
-                  class="btn btn-sm btn-default" id="update" data-target="#modal-update"><i
-                    class="fa fa-tw fa-pencil-alt"></i></a>
-                <a onclick="return false" href="<?=base_url('items/history')?>?id=${data}" target="_blank"
+                <a href="<?=base_url('shipping/detail')?>?id=${data}" target="_blank"
                   class="btn btn-sm btn-default" id="detail" data-target="#modal-detail"><i
                     class="fa fa-tw fa-search-plus"></i></a>
-                <button class="btn btn-sm btn-default" id="delete" data-toggle="modal"
-                  data-target="#modal-delete" onclick="$('#modal-delete input#item_code').val($(this).parent().data('id'));"><i class="fa fa-tw fa-trash-alt"></i></button>
               </div>
               `;
               }},
