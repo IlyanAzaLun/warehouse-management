@@ -55,14 +55,14 @@ class Stock extends CI_Controller {
                 // base_url('assets/AdminLTE-3.0.5/plugins/datatables-select/js/select.bootstrap4.min.js'),
                 // base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/js/dataTables.autoFill.min.js'),
                 // base_url('assets/AdminLTE-3.0.5/plugins/jszip/jszip.min.js'),
-                // base_url('assets/AdminLTE-3.0.5/plugins/datatables-buttons/js/buttons.html5.min.js'),
+          // base_url('assets/AdminLTE-3.0.5/plugins/datatables-buttons/js/buttons.html5.min.js'),
                 // base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/js/autoFill.bootstrap4.min.js'),
                 base_url('assets/AdminLTE-3.0.5/plugins/select2/js/select2.full.min.js'),
                 base_url('assets/AdminLTE-3.0.5/plugins/inputmask/min/jquery.inputmask.bundle.min.js'),
             ],
 			'module' => [
 				base_url('assets/pages/stock/index.js'),
-			],
+	  		],
 		);
 		$this->data['title'] = 'Manajemen persediaan barang';
 		// $this->data['items'] = $this->M_items->item_select();
@@ -228,6 +228,7 @@ class Stock extends CI_Controller {
 
         ## Total number of records without filtering
         $this->db->select('count(*) as allcount');
+        $this->db->where('is_active', 1);
         $records = $this->db->get('tbl_item')->result();
         $totalRecords = $records[0]->allcount;
 
@@ -236,6 +237,7 @@ class Stock extends CI_Controller {
         if($searchQuery != '')
             $this->db->like('item_name', $searchValue, 'both'); $this->db->or_like('item_code', $searchValue, 'both');
             // $this->db->where($searchQuery);
+        $this->db->where('is_active', 1);
         $records = $this->db->get('tbl_item')->result();
         $totalRecordwithFilter = $records[0]->allcount;
 

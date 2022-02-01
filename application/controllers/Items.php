@@ -225,7 +225,7 @@ class Items extends CI_Controller
             'module' => [base_url('assets/pages/items/index.js')],
         ];
         $this->db->where('item_code', $this->input->get('id'));
-        $this->db->order_by('updated_at', 'DESC');
+        // $this->db->order_by('updated_at', 'DESC');
         $this->db->order_by('created_at', 'DESC');
         $this->data['history'] = $this->db->get('tbl_item_history')->result_array();
         $this->data['title']= 'Informasi histori barang';
