@@ -25,6 +25,7 @@ class M_items extends CI_Model
     {
         $this->db->limit($limit);
         $this->db->where('item_code', $data);
+        $this->db->where('is_active', 1);
         return $this->db->get('tbl_item')->row_array();
     }
 
@@ -32,6 +33,7 @@ class M_items extends CI_Model
     {
         $this->db->limit($limit);
         $this->db->like('item_name',$data,'both');
+        $this->db->where('is_active', 1);
         return $this->db->get('tbl_item')->result_array();        
     }
 
@@ -76,8 +78,9 @@ class M_items extends CI_Model
     }
     public function item_delete($data)
     {
+        $this->db->set('is_active',0);
         $this->db->where('item_code', $data['item_code']);
-        return $this->db->delete($this->_table);
+        return $this->db->update($this->_table);
     }
 
     //update quantity item

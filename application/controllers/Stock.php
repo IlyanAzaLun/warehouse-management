@@ -204,4 +204,71 @@ class Stock extends CI_Controller {
             return false;
         }
     }
+    public function serverside_datatables_data_stock()
+    {
+
+        $response = array();
+
+        $postData = $this->input->post();
+
+        ## Read value
+        $draw            = $postData['draw'];
+        $start           = $postData['start'];
+        $rowperpage      = $postData['length']; // Rows display per page
+        $columnIndex     = $postData['order'][0]['column']; // Column index
+        $columnName      = $postData['columns'][$columnIndex]['data']; // Column name
+        $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
+        $searchValue     = $postData['search']['value']; // Search value
+
+        ## Search 
+        $searchQuery = "";
+        if($searchValue != ''){
+            $searchQuery = " (item_name like '%".$searchValue."%' or item_code like '%".$searchValue."%' ) ";
+        }
+
+        ## Total number of records without filtering
+        $this->db->select('count(*) as allcount');
+        $records = $this->db->get('tbl_item')->result();
+        $totalRecords = $records[0]->allcount;
+
+        ## Total number of record with filtering
+        $this->db->select('count(*) as allcount');
+        if($searchQuery != '')
+            $this->db->like('item_name', $searchValue, 'both'); $this->db->or_like('item_code', $searchValue, 'both');
+            // $this->db->where($searchQuery);
+        $records = $this->db->get('tbl_item')->result();
+        $totalRecordwithFilter = $records[0]->allcount;
+
+        ## Fetch records
+        $this->db->select('*');
+        if($searchQuery != '')
+            $this->db->like('item_name', $searchValue, 'both'); $this->db->or_like('item_code', $searchValue, 'both');
+            // $this->db->where($searchQuery);
+        $this->db->order_by($columnName, $columnSortOrder);
+        $this->db->where('is_active', 1);
+        $this->db->limit($rowperpage, $start);
+        $records = $this->db->get('tbl_item')->result();
+
+        $data = array();
+
+        foreach($records as $record ){
+
+            $data[] = array( 
+                "item_code"     =>$record->item_code,
+                "item_name"     =>$record->item_name,
+                "item_quantity" =>$record->quantity,
+                "item_unit"     =>$record->unit,
+            ); 
+        }
+
+        ## Response
+        $response = array(
+            "draw"                 => intval($draw),
+            "iTotalRecords"        => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordwithFilter,
+            "aaData"               => $data
+        );
+        $this->output->set_content_type('application/json')->set_output(json_encode( $response ));
+
+    }
 }

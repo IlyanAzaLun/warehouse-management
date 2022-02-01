@@ -74,7 +74,7 @@
       autoWidth: false,
       lengthMenu: [[10, 25, 50, 100, 200, <?=$this->db->count_all('tbl_item')?>], [10, 25, 50, 100, 200, "All"]],
       ajax: {
-          "url": "<?php echo base_url('items/serverside_datatables_data_items') ?>",
+          "url": "<?php echo base_url('stock/serverside_datatables_data_stock') ?>",
           "type": "POST",
           "data": {
             "<?php echo $this->security->get_csrf_token_name(); ?>" : $('meta[name=csrf_token_hash]').attr('content')
