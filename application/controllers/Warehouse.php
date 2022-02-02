@@ -451,8 +451,8 @@ class Warehouse extends CI_Controller
             $this->db->set('previous_selling_price',$history[$key]['selling_price']);
             $this->db->set('previous_quantity', $history[$key]['quantity']);
             $this->db->set('status_in_out', ((int)$data_order[$key]['quantity_order']<0)?
-                'OUT'. ' (' . abs($data_order[$key]['quantity_order']) . ') '.$this->input->post('invoice_reverence').' RETURN':
-                'IN' . ' (' . abs($data_order[$key]['quantity_order']) . ') '.$this->input->post('invoice_reverence').' RETURN');
+                'OUT'. ' (' . abs($data_order[$key]['quantity_order']) . ') '.$this->input->post('invoice_reverence').' -> '.$data_invoice['invoice_id'].' RETURN':
+                'IN' . ' (' . abs($data_order[$key]['quantity_order']) . ') '.$this->input->post('invoice_reverence').' -> '.$data_invoice['invoice_id'].' RETURN');
             $this->db->set('updated_at', date('Y-m-d H:i:s',time()));
             $this->db->set('updated_by', $this->data['user']['user_fullname']);
             $this->db->set('created_by', $this->data['user']['user_fullname']);
