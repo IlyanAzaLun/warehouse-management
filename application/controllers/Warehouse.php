@@ -160,7 +160,7 @@ class Warehouse extends CI_Controller
             $this->request['order']['item_quantity'][$key]      = -(int) $this->input->post('quantity', true)[$key];
             $this->request['order']['item_unit'][$key]          = $this->input->post('unit',true)[$key];
             $this->request['order']['rebate_price'][$key]       = $this->input->post('rebate_price', true)[$key];
-            $this->request['order']['status_in_out'][$key]      = 'OUT ('.(int) $this->input->post('quantity', true)[$key].')';
+            $this->request['order']['status_in_out'][$key]      = 'OUT ('.(int) $this->input->post('quantity', true)[$key].') '.$invoice_id;
             $this->request['order']['created_by'][$key]         = $this->data['user']['user_fullname'];
             $this->request['order']['user_id'][$key]            = $this->input->post('user_id', true);
             $this->_check_quantity($this->input->post('item_code'),$this->input->post('quantity'));
@@ -259,9 +259,9 @@ class Warehouse extends CI_Controller
                     'updated_at'         => date('Y-m-d H:i:s',time()),
                 );
                 $history[$key] = array(
-                    'previous_quantity'  => (int) $this->input->post('current',true)[$key]-(int) $this->input->post('quantity', true)[$key],
+                    'previous_quantity'  => (int) $this->input->post('current',true)[$key],
                     'item_code'          => $this->input->post('item_code',true)[$key],
-                    'status_in_out'      => 'UPDATE OUT ('.(int) $this->input->post('quantity', true)[$key].')',
+                    'status_in_out'      => 'OUT ('.(int) $this->input->post('quantity', true)[$key].') '.$this->input->get('id').' UPDATE',
                     'created_by'         => $this->data['user']['user_fullname'],
                     'updated_by'         => $this->data['user']['user_fullname'],
                     'updated_at'         => date('Y-m-d H:i:s',time()),
@@ -416,7 +416,7 @@ class Warehouse extends CI_Controller
             $this->db->where('item_code', $value['item_code']);
             //create history item
             $this->data['history'][$key]                      = $this->db->get('tbl_item')->row_array();
-            $this->data['history'][$key]['status_in_out']     = 'IN ('.abs($this->data['order'][$key]['quantity_order']).')';
+            $this->data['history'][$key]['status_in_out']     = 'IN ('.abs($this->data['order'][$key]['quantity_order']).') '.$this->input->post('invoice_id', true).' CANCEL';
             $this->data['history'][$key]['previous_quantity'] = $this->data['history'][$key]['quantity'];
             $this->data['history'][$key]['updated_at']        = date('Y-m-d H:i:s',time());
             $this->data['item'][$key]['item_code']            = $this->data['order'][$key]['item_code'];
@@ -451,8 +451,8 @@ class Warehouse extends CI_Controller
             $this->db->set('previous_selling_price',$history[$key]['selling_price']);
             $this->db->set('previous_quantity', $history[$key]['quantity']);
             $this->db->set('status_in_out', ((int)$data_order[$key]['quantity_order']<0)?
-                'OUT'. ' (' . abs($data_order[$key]['quantity_order']) . ')':
-                'IN' . ' (' . abs($data_order[$key]['quantity_order']) . ')');
+                'OUT'. ' (' . abs($data_order[$key]['quantity_order']) . ') '.$this->input->post('invoice_reverence').' RETURN':
+                'IN' . ' (' . abs($data_order[$key]['quantity_order']) . ') '.$this->input->post('invoice_reverence').' RETURN');
             $this->db->set('updated_at', date('Y-m-d H:i:s',time()));
             $this->db->set('updated_by', $this->data['user']['user_fullname']);
             $this->db->set('created_by', $this->data['user']['user_fullname']);
@@ -490,6 +490,7 @@ class Warehouse extends CI_Controller
         
         $this->db->where('item_code', $data['order']['item_id']);
         $data['item'] = $this->db->get('tbl_item')->row_array();
+
         $data['item']['quantity'] = $data['item']['quantity']+abs($data['order']['quantity']);
         $data['item']['update_by'] = $this->data['user']['user_fullname'];
         $data['history'] = array(

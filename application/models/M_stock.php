@@ -47,8 +47,8 @@ class M_stock extends CI_Model {
                     'previous_quantity' => $this->db->get('tbl_item')->row_array()['quantity'],
                     'status_in_out' => 'UPDATE ('.$value['K'].')',
                     'created_by' => $this->data['user']['user_fullname'],
-                    'update_by' => $this->data['user']['user_fullname'],
-                    'update_at' => date('Y-m-d H:i:s',time()),
+                    'updated_by' => $this->data['user']['user_fullname'],
+                    'updated_at' => date('Y-m-d H:i:s',time()),
                 ];
                 $request[] = [
                     'item_code' => $value['A'],
