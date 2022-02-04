@@ -1,71 +1,86 @@
 <?php $this->load->view('components/header'); ?>
 
-<body class="hold-transition sidebar-mini layout-fixed sidebar-collapse layout-navbar-fixed layout-footer-fixed pace-primary">
-  <!-- Site wrapper -->
-  <div class="wrapper">
-    <!-- Navbar -->
-    <?php $this->load->view('components/navbar'); ?>
-    <!-- /.navbar -->
+<body
+class="hold-transition sidebar-mini layout-fixed sidebar-collapse layout-navbar-fixed layout-footer-fixed pace-primary">
+<!-- Site wrapper -->
+<div class="wrapper">
+<!-- Navbar -->
+<?php $this->load->view('components/navbar'); ?>
+<!-- /.navbar -->
 
-    <!-- Main Sidebar Container -->
-    <?php $this->load->view('components/sidebar'); ?>
-    <!-- /.Main Sidebar Container -->
+<!-- Main Sidebar Container -->
+<?php $this->load->view('components/sidebar'); ?>
+<!-- /.Main Sidebar Container -->
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <!-- container-fluid -->
-        <?php $this->load->view('components/breadcrumb'); ?>
-        <!-- /.container-fluid -->
-      </section>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+    <section class="content-header">
+    <!-- container-fluid -->
+    <?php $this->load->view('components/breadcrumb'); ?>
+    <!-- /.container-fluid -->
+    </section>
 
-      <!-- Main content -->
-      <section class="content">
+    <!-- Main content -->
+    <section class="content">
+    <div class="container-fluid">
 
-        <div class="container-fluid">
-          <!-- Info boxes -->
-          <div class="row">
-            <div class="col-12">
-              <!-- /.col -->          
-              <div class="card">
-                <div class="card-header bg-success">
-                  <h3 class="card-title">Daftar riwayat pemesanan keluar</h3>
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-                  </div>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                  <table id="tbl_invoice" class="table table-sm table-bordered table-striped table-hover">
-                    <thead>
-                      <tr>
-                        <th width="10%">Kode pemesanan</th>
-                        <th width="10%">Tanggal</th>
-                        <th width="20%">Tujuan</th>
-                        <th width="40%">Keterangan</th>
-                        <th width="10%">Status validasi barang</th>
-                        <th>Opsi</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                  </table>
-                </div>
-                <!-- /.card-body -->
-              </div>
-              <!-- /.col -->
-            </div>
-          </div>
-          <!-- /.row -->
+<!-- insert -->
+<div class="row">
+  <div class="col-12">
+    <!-- /.col -->
+    <div class="card">
+      <div class="card-header bg-primary">
+        <h3 class="card-title">History perubahan data barang <b><?=$item['item_name']?></b></h3>
+        <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+              class="fas fa-minus"></i></button>
+          <button type="button" class="btn btn-tool" data-card-widget="remove"><i
+              class="fas fa-times"></i></button>
         </div>
-      </section>
-      <!-- /.content -->
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body">
+        <div>
+          Jumlah saat ini: <b><?=$item['quantity']?> (<?=$item['unit']?>)</b>
+        </div>
+      	<table id="tbl_items" class="table table-sm table-bordered table-striped table-hover">
+      		<thead>
+      			<tr>
+      				<th>Jumlah sebelumnya</th>
+      				<th>Jumlah masuk/keluar</th>
+      				<th>Diubah</th>
+              <th>Oleh</th>
+      			</tr>
+      		</thead>
+      		<tbody>
+            <?php if (@$history[0]): ?>
+            
+            <?php foreach($history as $key => $value):?>
+            <tr>
+              <td><?= $value['previous_quantity']?></td>
+              <td><?= $value['status_in_out']?></td>
+              <td><?= date("d/F/Y H:i:s", strtotime($value['created_at']));?></td>
+              <td><?= $value['created_by'];?></td>
+            </tr>
+            <?php endforeach ?>
+
+            <?php else: ?>
+              <tr><td colspan="3" class="text-center"><b>Data Kosong</b></td></tr>
+            <?php endif ?>
+      			
+      		</tbody>
+      	</table>
+      </div>
     </div>
-    <!-- /.content-wrapper -->
-    <!-- Modals -->
-    <?php $this->load->view('components/footer'); ?>
+  </div>
+</div>
+    </section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<!-- cards -->
+<?php $this->load->view('components/footer'); ?>
     <script>
     $('table#tbl_invoice').dataTable({
       'dom': `<'row'<'col-6 col-lg col-xl'<'row'<'col-6float-left'f><'col-6 float-left'B>>><'col-6 col-lg col-xl'<'float-right'l>>>

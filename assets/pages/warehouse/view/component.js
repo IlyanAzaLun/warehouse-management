@@ -75,7 +75,7 @@ class Component {
 					<div class="input-group mb-3" id="field-item_attribute">
 						<input type="hidden" name="item_capital_price[]" id="item_capital_price" class="form-control" value="${result.capital_price}" placeholder="${result.capital_price}" required>
 						<input type="hidden" name="item_selling_price[]" id="item_selling_price" class="form-control" value="${result.selling_price}" placeholder="${result.selling_price}" required>
-						<input type="number" disabled class="form-control" name="current[]" id="current" value="${parseInt(result.quantity)}" required>
+						<input type="number" readonly class="form-control" name="current[]" id="current" value="${parseInt(result.quantity)}" required>
 						<input type="number" class="form-control" name="quantity[]" id="quantity" value="0" min="1" max="${parseInt(result.quantity)}" required>
 						<input type="hidden" class="form-control" name="unit[]" id="unit"  value="${result.unit}" required>
 						<input type="hidden" name="item_total_price[]" id="item_total_price" class="form-control" value="" placeholder="" readonly required>
@@ -114,7 +114,7 @@ class Component {
 				$(this).val(`${ui.item.item_name} ${(ui.item.MG)?`(MG: ${ui.item.MG})`:''}`);
 				$(this).parents('div#order-item.row').find('#item_code').remove();
 				$(this).parents('div#order-item.row').find('#field-item_code').append(`
-	              <input type="text" name="item_code[]" id="item_code" class="form-control" value="${ui.item.item_code}" readonly>
+	        <input type="text" name="item_code[]" id="item_code" class="form-control" value="${ui.item.item_code}" readonly>
 				`);
 
 				$(this).parents('div#order-item.row').find('#quantity').remove();
@@ -125,7 +125,7 @@ class Component {
 				// $(this).parents('div#order-item.row').find('#item_code').val(ui.item.item_code);
 				$(this).parents('div#order-item.row').find('#current').remove();
 				$(this).parents('div#order-item.row').find('#field-item_attribute').prepend(`
-				  <input type="number" disabled class="form-control" name="current[]" id="current" value="${parseInt(ui.item.quantity)}" required>
+				  <input type="number" readonly class="form-control" name="current[]" id="current" value="${parseInt(ui.item.quantity)}" required>
 				`);
 
 				// $(this).parents('div#order-item.row').find('#current').val(ui.item.quantity);

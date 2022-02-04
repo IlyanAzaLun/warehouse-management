@@ -34,11 +34,10 @@ class Warehouse extends CI_Controller
         $this->data['user'] = $this->M_users->user_select(
             $this->session->userdata('email')
         );
-    }
+    } 
     public function index()
     {
         $this->data['title']    = 'Buat antrian pesanan barang';
-        $this->data['invoices'] = $this->M_invoice->invoice_history_select(false,'INV/WHS/');
         $this->data['plugins']  = [
             'css' => [
                 base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'),
@@ -51,15 +50,9 @@ class Warehouse extends CI_Controller
                 base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/js/responsive.bootstrap4.min.js'),
                 base_url('assets/AdminLTE-3.0.5/plugins/datatables-buttons/js/dataTables.buttons.min.js'),
             ],
-            'module' => [base_url('assets/pages/warehouse/index.js')],
         ];
-        $this->form_validation->set_rules('user_id','Customer','required|trim');
-        $this->form_validation->set_rules('item_name[]','Barang','required|trim');
-        if ($this->form_validation->run() == false) {
-            $this->load->view('warehouse/index', $this->data);
-        } else {
-            $this->add_invoice();
-        }
+        $this->load->view('warehouse/index', $this->data);
+
     }
     public function info()
     {
@@ -160,12 +153,12 @@ class Warehouse extends CI_Controller
             $this->request['order']['item_quantity'][$key]      = -(int) $this->input->post('quantity', true)[$key];
             $this->request['order']['item_unit'][$key]          = $this->input->post('unit',true)[$key];
             $this->request['order']['rebate_price'][$key]       = $this->input->post('rebate_price', true)[$key];
-            $this->request['order']['status_in_out'][$key]      = 'OUT ('.(int) $this->input->post('quantity', true)[$key].') '.$invoice_id;
             $this->request['order']['created_by'][$key]         = $this->data['user']['user_fullname'];
             $this->request['order']['user_id'][$key]            = $this->input->post('user_id', true);
             $this->_check_quantity($this->input->post('item_code'),$this->input->post('quantity'));
             $this->total_item += (int) $this->input->post('quantity', true)[$key];
-
+            $this->request['order']['status_in_out'][$key]      = 'OUT ('.(int) $this->input->post('quantity', true)[$key].'), '.$invoice_id.
+            ', Sisa: '.((int)$this->input->post('current', true)[$key]-(int)$this->input->post('quantity', true)[$key]).' '.$this->input->post('unit',true)[$key];
         }
 
         $this->invoice = [
@@ -203,7 +196,7 @@ class Warehouse extends CI_Controller
 
     }
 
-    public function edit()
+    public function edit() // OK
     {
         $this->data['plugins'] = ['css' => [
                 base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'),
@@ -246,7 +239,12 @@ class Warehouse extends CI_Controller
         }else{
             $this->total_item = 0;
             foreach ($this->input->post('item_code', true) as $key => $value) {
-                $this->_check_quantity($this->input->post('item_code'),$this->input->post('quantity'));
+
+                $tmp[$key] = array(
+                    'item_code'          => $this->input->post('item_code',true)[$key],
+                    'quantity'           => (int) $this->input->post('current',true)[$key]
+                );
+
                 $this->total_item += (int) $this->input->post('quantity', true)[$key];
                 $index_order = @$this->input->post('index_order', true)[$key];
                 $order[$key] = array(
@@ -261,7 +259,7 @@ class Warehouse extends CI_Controller
                 $history[$key] = array(
                     'previous_quantity'  => (int) $this->input->post('current',true)[$key],
                     'item_code'          => $this->input->post('item_code',true)[$key],
-                    'status_in_out'      => 'OUT ('.(int) $this->input->post('quantity', true)[$key].') '.$this->input->get('id').' UPDATE',
+                    'status_in_out'      => 'OUT ('.(int) $this->input->post('quantity', true)[$key].') '.$this->input->get('id').' UPDATE, Sisa: '.abs((int) $this->input->post('current',true)[$key]-(int) $this->input->post('quantity', true)[$key]).' '.$this->input->post('unit',true)[$key],
                     'created_by'         => $this->data['user']['user_fullname'],
                     'updated_by'         => $this->data['user']['user_fullname'],
                     'updated_at'         => date('Y-m-d H:i:s',time()),
@@ -277,6 +275,7 @@ class Warehouse extends CI_Controller
                     'total_'             => $this->input->post('current', true)[$key]-$this->input->post('quantity', true)[$key], 
                 );
             }
+
             $invoice = [
                 'invoice_id'             => $this->input->get('id'),
                 'note'                   => $this->input->post('note', true) ? 
@@ -284,10 +283,13 @@ class Warehouse extends CI_Controller
                     'Jumlah item: ('.$this->total_item.'), '.'Di input, dan diubah oleh bagian gudang :'.$this->data['user']['user_fullname']
             ];
             try {
-                // echo "<pre>";
-                // print_r ($this->M_order->order_update_multiple($order));
-                // echo "</pre>";
-                // die();
+                $this->M_items->item_update_multiple($tmp);
+            } catch (Exception $e) {
+                Flasher::setFlash('info','error','Failed ',$e);
+                redirect('warehouse/update?id='.$this->data['invoice']['invoice_id']);
+            }
+            $this->_check_quantity($this->input->post('item_code'),$this->input->post('quantity'));
+            try {
                 $this->M_items->item_update_multiple($item);
                 $this->M_order->order_update_multiple($order);
                 $this->M_history->history_insert_multiple($history);
@@ -297,7 +299,7 @@ class Warehouse extends CI_Controller
                 redirect('warehouse/queue');
             } catch (Exception $e) {
                 Flasher::setFlash('info','error','Failed ',$e);
-                redirect('warehouse/queue');
+                redirect('warehouse/update?id='.$this->data['invoice']['invoice_id']);
             }
         }
     }
@@ -317,8 +319,8 @@ class Warehouse extends CI_Controller
         foreach ($result as $key => $value) {
             $item = $this->M_items->item_select($value['item_code']);
             if ((int) $item['quantity'] - (int) $value['item_quantity'] < 0) {
-                Flasher::setFlash('info','error','Failed',' <b> data gagal ditambahkan</b> ' . validation_errors());
-                redirect('warehouse/queue');
+                Flasher::setFlash('info','error','Failed',' <b> data gagal ditambahkan</b> ');
+                redirect('warehouse/update?id='.$this->input->get('id'));
                 return false;
                 die();
             } else {
@@ -407,7 +409,7 @@ class Warehouse extends CI_Controller
             return $limit + $this->data[$invoice_status];
         }
     }
-    public function cancel()
+    public function cancel() // OK
     {
         $this->data['invoice'] = $this->M_invoice->invoice_select($this->input->post('invoice_id'));
         $this->data['order']   = $this->M_order->order_select($this->data['invoice']['invoice_order_id']);
@@ -416,7 +418,7 @@ class Warehouse extends CI_Controller
             $this->db->where('item_code', $value['item_code']);
             //create history item
             $this->data['history'][$key]                      = $this->db->get('tbl_item')->row_array();
-            $this->data['history'][$key]['status_in_out']     = 'IN ('.abs($this->data['order'][$key]['quantity_order']).') '.$this->input->post('invoice_id', true).' CANCEL';
+            $this->data['history'][$key]['status_in_out']     = 'IN ('.abs($this->data['order'][$key]['quantity_order']).') '.$this->input->post('invoice_id', true).', CANCEL, Sisa: '.(abs($this->data['order'][$key]['quantity_order'])+(int)$this->data['history'][$key]['quantity']);
             $this->data['history'][$key]['previous_quantity'] = $this->data['history'][$key]['quantity'];
             $this->data['history'][$key]['updated_at']        = date('Y-m-d H:i:s',time());
             $this->data['item'][$key]['item_code']            = $this->data['order'][$key]['item_code'];
@@ -435,7 +437,7 @@ class Warehouse extends CI_Controller
         redirect('warehouse/queue');
 
     }
-    public function update_status_return()
+    public function update_status_return()// OK
     {
         $data_invoice = $this->M_invoice->invoice_select_by_referece($this->input->post('invoice_reverence'));
         $data_order = $this->M_order->order_select($data_invoice['order_id']);
@@ -451,8 +453,11 @@ class Warehouse extends CI_Controller
             $this->db->set('previous_selling_price',$history[$key]['selling_price']);
             $this->db->set('previous_quantity', $history[$key]['quantity']);
             $this->db->set('status_in_out', ((int)$data_order[$key]['quantity_order']<0)?
-                'OUT'. ' (' . abs($data_order[$key]['quantity_order']) . ') '.$this->input->post('invoice_reverence').' -> '.$data_invoice['invoice_id'].' RETURN':
-                'IN' . ' (' . abs($data_order[$key]['quantity_order']) . ') '.$this->input->post('invoice_reverence').' -> '.$data_invoice['invoice_id'].' RETURN');
+                'OUT'. ' (' . abs($data_order[$key]['quantity_order']) . ') '.$this->input->post('invoice_reverence').' -> '.$data_invoice['invoice_id'].' RETURN, Sisa: '.
+                ((int)$history[$key]['quantity'] + $data_order[$key]['quantity_order']):
+                'IN' . ' (' . abs($data_order[$key]['quantity_order']) . ') '.$this->input->post('invoice_reverence').' -> '.$data_invoice['invoice_id'].' RETURN, Sisa: '.
+                ((int)$history[$key]['quantity'] + $data_order[$key]['quantity_order'])
+            );
             $this->db->set('updated_at', date('Y-m-d H:i:s',time()));
             $this->db->set('updated_by', $this->data['user']['user_fullname']);
             $this->db->set('created_by', $this->data['user']['user_fullname']);
@@ -481,12 +486,13 @@ class Warehouse extends CI_Controller
         Flasher::setFlash('info','success','Success',' data berhasil diubah!');
         redirect('warehouse/queue');
     }
-    public function order_item_remove()
+    public function order_item_remove()// OK
     {
         // code...
         $this->db->where('index_order', $this->input->post('index_order', true));
         $this->db->where('order_id', $this->input->post('order_id', true));
         $data['order'] = $this->db->get('tbl_order')->row_array();
+        $data['invoice'] = $this->db->get_where('tbl_invoice', array('order_id' => $this->input->post('order_id', true)))->row_array();
         
         $this->db->where('item_code', $data['order']['item_id']);
         $data['item'] = $this->db->get('tbl_item')->row_array();
@@ -499,14 +505,14 @@ class Warehouse extends CI_Controller
                 'previous_selling_price' => 0,
                 'previous_capital_price' => 0,
                 'previous_quantity' => $data['item']['quantity']+$data['order']['quantity'],
-                'status_in_out' => 'IN ('.abs($data['order']['quantity']).')',
                 'created_by' => $this->data['user']['user_fullname'],
                 'created_at' => date('Y-m-d H:i:s',time()),
                 'created_by' => $this->data['user']['user_fullname'],
                 'updated_at' => date('Y-m-d H:i:s',time()),
+                'status_in_out' => 'IN ('.abs($data['order']['quantity']).'), '.$data['invoice']['invoice_id'].', Sisa: '.
+                                    ((int)$data['item']['quantity']).' '.$data['order']['unit'],
             ),
         );
-
 
         try {
             $this->M_items->item_update($data['item']);
@@ -525,5 +531,97 @@ class Warehouse extends CI_Controller
         $this->db->where('status_notification', 1);
         $this->db->like('invoice_id', '/INV/RET/' . date('my'), 'before');
         echo json_encode($this->db->get('tbl_invoice')->result_array());
+    }
+
+    public function serverside_datatables_data_warehouse()
+    {
+
+
+        $response = array();
+
+        $postData = $this->input->post();
+
+        ## Read value
+        $draw            = $postData['draw'];
+        $start           = $postData['start'];
+        $rowperpage      = $postData['length']; // Rows display per page
+        $columnIndex     = $postData['order'][0]['column']; // Column index
+        $columnName      = $postData['columns'][$columnIndex]['data']; // Column name
+        $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
+        $searchValue     = $postData['search']['value']; // Search value
+
+        ## Search 
+        $searchQuery = "";
+        if($searchValue != ''){
+            $searchQuery = " (item_name like '%".$searchValue."%' or item_code like '%".$searchValue."%' ) ";
+        }
+
+        ## Total number of records without filtering
+        $this->db->select('count(*) as allcount');
+        $this->db->like('invoice.invoice_id', 'INV/WHS/', 'both');
+        $records = $this->db->get('tbl_invoice invoice')->result();
+        $totalRecords = $records[0]->allcount;
+
+        ## Total number of record with filtering
+        $this->db->select('count(*) as allcount');
+        if($searchQuery != ''){
+            $this->db->like('invoice.invoice_id', $searchValue, 'both');
+            $this->db->or_like('invoice.to_customer_destination', $searchValue, 'both');
+            $this->db->or_like('invoice.note', $searchValue, 'both');
+            $this->db->or_like('user_info.user_fullname', $searchValue, 'both');
+            $this->db->or_like('user_info.user_address', $searchValue, 'both');
+            $this->db->or_like('user_info.village', $searchValue, 'both');
+            $this->db->or_like('user_info.sub-district', $searchValue, 'both');
+            $this->db->or_like('user_info.district', $searchValue, 'both');
+        }
+        $this->db->join('tbl_user_information user_info', 'invoice.to_customer_destination = user_info.user_id', 'left');
+        $this->db->like('invoice.invoice_id', 'INV/WHS/', 'both');
+        // $this->db->like('invoice.date', date('Y-m-d'), 'after'); // filter with date current
+        $this->db->order_by('invoice.date', 'DESC');
+
+        $records = $this->db->get('tbl_invoice invoice')->result();
+        $totalRecordwithFilter = $records[0]->allcount;
+
+        ## Fetch records
+        $this->db->select('*, invoice.note as note_invoice, invoice.order_id as invoice_order_id');
+        if($searchQuery != ''){
+            $this->db->like('invoice.invoice_id', $searchValue, 'both');
+            $this->db->or_like('invoice.to_customer_destination', $searchValue, 'both');
+            $this->db->or_like('invoice.note', $searchValue, 'both');
+            $this->db->or_like('user_info.user_fullname', $searchValue, 'both');
+            $this->db->or_like('user_info.user_address', $searchValue, 'both');
+            $this->db->or_like('user_info.village', $searchValue, 'both');
+            $this->db->or_like('user_info.sub-district', $searchValue, 'both');
+            $this->db->or_like('user_info.district', $searchValue, 'both');
+        }
+
+        $this->db->join('tbl_user_information user_info', 'invoice.to_customer_destination = user_info.user_id', 'left');
+        $this->db->like('invoice.invoice_id', 'INV/WHS/', 'both');
+        // $this->db->like('invoice.date', date('Y-m-d'), 'after'); // filter with date current
+        $this->db->order_by('invoice.date', 'DESC');
+        $this->db->order_by($columnName, $columnSortOrder);
+        $this->db->limit($rowperpage, $start);
+        $records = $this->db->get('tbl_invoice invoice')->result();
+
+        $data = array();
+
+        foreach($records as $record ){
+
+            $data[] = array( 
+                "invoice_id"    =>$record->invoice_id,
+                "note_invoice"  =>$record->note,
+                "user_fullname" =>$record->user_fullname,
+                "user_address"  =>$record->user_address,
+            ); 
+        }
+
+        ## Response
+        $response = array(
+            "draw"                 => intval($draw),
+            "iTotalRecords"        => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordwithFilter,
+            "aaData"               => $records
+        );
+        $this->output->set_content_type('application/json')->set_output(json_encode( $response ));
     }
 }

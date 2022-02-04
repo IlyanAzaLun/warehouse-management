@@ -205,6 +205,7 @@ class M_invoice extends CI_Model {
 	public function invoice_select_by_referece($data)
 	{
 		$this->db->where('invoice_reverence', $data);
+		$this->db->where('status_active', 1);
 		return $this->db->get('tbl_invoice')->row_array();
 	}
 }

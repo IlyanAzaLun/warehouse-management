@@ -98,8 +98,8 @@
                     <div class="col-10">
                       <div class="form-group">
                         <label for="item_name">Cari nama barang...</label>
-                        <input required type="hidden" id="item_id" class="form-control">
-                        <input required type="text" id="item_name" class="form-control" placeholder="Cari barang...">
+                        <input type="hidden" id="item_id" class="form-control">
+                        <input type="text" id="item_name" class="form-control" placeholder="Cari barang...">
                       </div>
                       <?=form_error('item_name[]', '<small class="text-danger">','</small>')?>
                       <?=form_error('quantity[]', '<small class="text-danger">','</small>')?>

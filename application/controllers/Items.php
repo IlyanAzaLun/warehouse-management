@@ -211,23 +211,20 @@ class Items extends CI_Controller
     {
         $this->data['plugins'] = [
             'css' => [
-                base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'),
-                base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-buttons/css/buttons.bootstrap4.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/datatables-select/css/select.bootstrap4.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/select2/css/select2.min.css'),
+                base_url('assets/AdminLTE-3.0.5/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css'),
             ],
             'js' => [
-                base_url('assets/AdminLTE-3.0.5/plugins/datatables/jquery.dataTables.min.js'),
-                base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js'),
-                base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/js/dataTables.responsive.min.js'),
-                base_url('assets/AdminLTE-3.0.5/plugins/datatables-responsive/js/responsive.bootstrap4.min.js'),
                 base_url('assets/AdminLTE-3.0.5/plugins/select2/js/select2.full.min.js'),
                 base_url('assets/AdminLTE-3.0.5/plugins/inputmask/min/jquery.inputmask.bundle.min.js'),
             ],
-            'module' => [base_url('assets/pages/items/index.js')],
         ];
         $this->db->where('item_code', $this->input->get('id'));
-        // $this->db->order_by('updated_at', 'DESC');
         $this->db->order_by('created_at', 'DESC');
         $this->data['history'] = $this->db->get('tbl_item_history')->result_array();
+        $this->data['item'] = $this->db->get_where('tbl_item', array('item_code' => $this->input->get('id')))->row_array();
         $this->data['title']= 'Informasi histori barang';
         $this->load->view ('items/history', $this->data);
     }
@@ -452,7 +449,87 @@ class Items extends CI_Controller
                 "item_code"     =>$record->item_code,
                 "item_name"     =>$record->item_name,
                 "item_quantity" =>$record->quantity,
-                "item_unit"     =>$record->unit,
+                "created_by"     =>$record->unit,
+            ); 
+        }
+
+        ## Response
+        $response = array(
+            "draw"                 => intval($draw),
+            "iTotalRecords"        => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordwithFilter,
+            "aaData"               => $data
+        );
+        $this->output->set_content_type('application/json')->set_output(json_encode( $response ));
+
+    }
+
+
+    public function serverside_datatables_data_items_history()
+    {
+        $response = array();
+
+        $postData = $this->input->post();
+
+        ## Read value
+        $draw            = $postData['draw'];
+        $start           = $postData['start'];
+        $rowperpage      = $postData['length']; // Rows display per page
+        $columnIndex     = $postData['order'][0]['column']; // Column index
+        $columnName      = $postData['columns'][$columnIndex]['data']; // Column name
+        $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
+        $searchValue     = $postData['search']['value']; // Search value
+
+        ## Search 
+        $searchQuery = "";
+        if($searchValue != ''){
+            $searchQuery = " (item_name like '%".$searchValue."%' or item_code like '%".$searchValue."%' ) ";
+        }
+
+        ## Total number of records without filtering
+        $this->db->select('count(*) as allcount');
+        $this->db->where('item_code', $this->input->post('id'));
+        $this->db->order_by('created_at', 'DESC');
+        $records = $this->db->get('tbl_item_history')->result();
+        $totalRecords = $records[0]->allcount;
+
+        ## Total number of record with filtering
+        $this->db->select('count(*) as allcount');
+        if($searchQuery != ''){
+            $this->db->like('history_id', $searchValue, 'both');
+            $this->db->or_like('status_in_out', $searchValue, 'both');
+            $this->db->or_like('created_at', $searchValue, 'both');
+            $this->db->or_like('created_by', $searchValue, 'both');
+        }
+        $this->db->where('item_code', $this->input->post('id'));
+        $this->db->order_by('created_at', 'DESC');
+        $records = $this->db->get('tbl_item_history')->result();
+        $totalRecordwithFilter = $records[0]->allcount;
+
+        ## Fetch records
+        $this->db->select('*');
+        if($searchQuery != ''){
+            $this->db->like('history_id', $searchValue, 'both');
+            $this->db->or_like('status_in_out', $searchValue, 'both');
+            $this->db->or_like('created_at', $searchValue, 'both');
+            $this->db->or_like('created_by', $searchValue, 'both');
+        }
+        $this->db->where('item_code', $this->input->post('id'));
+        $this->db->order_by('created_at', 'DESC');
+        $this->db->order_by($columnName, $columnSortOrder);
+        $this->db->limit($rowperpage, $start);
+        $records = $this->db->get('tbl_item_history')->result();
+
+        $data = array();
+
+        foreach($records as $record ){
+
+            $data[] = array( 
+                "history_id"        =>$record->history_id,
+                "previous_quantity" =>$record->previous_quantity,
+                "status_in_out"     =>$record->status_in_out,
+                "created_at"        =>$record->created_at,
+                "created_by"        =>$record->created_by,
             ); 
         }
 
