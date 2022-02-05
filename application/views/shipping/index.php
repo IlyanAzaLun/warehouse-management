@@ -80,7 +80,7 @@
                       <th scope="row" width="5px"><?=++$key?></th>
                       <td>
                         <div class="btn-group d-flex justify-content-center" data-id="<?=$invoice['invoice_order_id']?>" data-id-invoice="<?=$invoice['invoice_id']?>">
-                          <a href="<?=base_url('shipping/info?id=').$invoice['invoice_reverence']?>" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-tw fa-search-plus"></i></a>
+                          <a href="<?=base_url('shipping/info?id=').$invoice['invoice_reverence']?>" class="btn btn-sm btn-default"><i class="fa fa-tw fa-search-plus"></i></a>
                         </div>
                       </td>
                       <td>
@@ -166,8 +166,7 @@
           render: function (data, type, row) {
               return `
               <div class="btn-group d-flex justify-content-center" data-id="${data}">
-                <a href="<?=base_url('shipping/detail')?>?id=${data}" target="_blank"
-                  class="btn btn-sm btn-default" id="detail" data-target="#modal-detail"><i
+                <a href="<?=base_url('shipping/detail')?>?id=${data}" class="btn btn-sm btn-default" id="detail" data-target="#modal-detail"><i
                     class="fa fa-tw fa-search-plus"></i></a>
               </div>
               `;

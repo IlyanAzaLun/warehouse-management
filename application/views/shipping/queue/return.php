@@ -26,7 +26,7 @@
         <div class="container-fluid">
 
           <!-- insert -->
-          <form action="<?=base_url('shipping/queue')?>" method="post" id="insert">
+          <form action="<?=base_url('shipping/return?id='.$this->input->get('id'))?>" method="post" id="insert">
             <div class="row">
 
               

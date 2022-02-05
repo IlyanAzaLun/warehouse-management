@@ -490,7 +490,9 @@ class Items extends CI_Controller
         ## Total number of records without filtering
         $this->db->select('count(*) as allcount');
         $this->db->where('item_code', $this->input->post('id'));
+        
         $this->db->order_by('created_at', 'DESC');
+        $this->db->order_by('history_id', 'DESC');
         $records = $this->db->get('tbl_item_history')->result();
         $totalRecords = $records[0]->allcount;
 
@@ -504,6 +506,7 @@ class Items extends CI_Controller
         }
         $this->db->where('item_code', $this->input->post('id'));
         $this->db->order_by('created_at', 'DESC');
+        $this->db->order_by('history_id', 'DESC');
         $records = $this->db->get('tbl_item_history')->result();
         $totalRecordwithFilter = $records[0]->allcount;
 
@@ -517,6 +520,7 @@ class Items extends CI_Controller
         }
         $this->db->where('item_code', $this->input->post('id'));
         $this->db->order_by('created_at', 'DESC');
+        $this->db->order_by('history_id', 'DESC');
         $this->db->order_by($columnName, $columnSortOrder);
         $this->db->limit($rowperpage, $start);
         $records = $this->db->get('tbl_item_history')->result();

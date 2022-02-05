@@ -103,13 +103,13 @@
                 <table class="table table-striped table-bordered table-hover table-sm">
 	                <thead>
 	                	<tr>
-							<th>#</th>
+											<th>#</th>
 	                		<th>Item code</th>
 	                		<th>Item name</th>
 	                		<th>Jumlah pemesanan barang	</th>
-							<?php if (@$order_return): ?>
-							<th colspan="2">Permintaan dari shipping</th>
-							<?php endif ?>
+											<?php if (@$order_return): ?>
+											<th colspan="2">Permintaan dari shipping</th>
+											<?php endif ?>
 	                	</tr>
 	                </thead>
 	                <tbody>
@@ -119,10 +119,10 @@
 		                	<td><?=$item['item_code']?></td>
 		                	<td><?=$item['item_name']?></td>
 		                	<td><?=abs($item['quantity_order'])?></td>
-							<?php if (@$order_return): ?>
-							<td><?= abs($order_return[$key]['quantity_order']) ?></td>
-							<td><?= ($order_return[$key]['quantity_order']>0)?'Lebih':'Kurang' ?></td>
-							<?php endif ?>
+											<?php if (@$order_return): ?>
+											<td><?= abs($order_return[$key]['quantity_order']) ?></td>
+											<td><?= ($order_return[$key]['quantity_order']>0)?'Lebih':'Kurang' ?></td>
+											<?php endif ?>
 		                </tr>
 		                <?php endforeach?>
 	                </tbody>
@@ -136,24 +136,24 @@
             </div>
 
 			<?php if (@$order_return[0]): ?>
-	        <div class="card" id="order_item">
-	          <div class="card-header bg-primary">
-	            <h3 class="card-title">Informasi barang</h3>
-	            <div class="card-tools">
-	              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-	              <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-	            </div>
-	          </div>
+      <div class="card" id="order_item">
+        <div class="card-header bg-primary">
+          <h3 class="card-title">Informasi barang</h3>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
 			  <hr>
 			  <div class="card-body">
-			  <div class="row">
+				  <div class="row">
 
-			    <div class="col-6 offset-6">
-			      <div class="mb-2 float-right">
-			        <p><?=@$invoice_return['note']?></p>
-			      </div>
-			    </div>
-			  </div>
+				    <div class="col-6 offset-6">
+				      <div class="mb-2 float-right">
+				        <p><?=@$invoice_return['note']?></p>
+				      </div>
+				    </div>
+				  </div>
 			    <table id="tbl_invoice" class="table table-sm table-bordered table-striped table-hover">
 			      <thead>
 			        <tr>
@@ -175,7 +175,7 @@
 			      <?php endforeach; ?>
 			      </tbody>
 			    </table>
-			  <p><?=@$invoice_return['note']?></p>
+			  	<p><?=@$invoice_return['note']?></p>
 			  </div>
 			  <!-- /.card-body -->
 			<?php endif ?>

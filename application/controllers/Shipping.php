@@ -227,6 +227,10 @@ class Shipping extends CI_Controller
         if ($this->form_validation->run() == false) {
             $this->load->view('shipping/queue/return', $this->data);
         } else {
+            $this->db->set('status_item', 3);
+            $this->db->set('status_notification', 0);
+            $this->db->where('invoice_id',$this->input->post('invoice_reverence_id', true));
+            $this->db->update('tbl_invoice', $this->request);
             $this->add_invoice();
         }
     }
@@ -245,7 +249,6 @@ class Shipping extends CI_Controller
             $this->data['items']   = $this->M_order->order_select($this->data['invoice']['invoice_order_id']);
             $this->load->view('shipping/detail', $this->data);
         }
-
     }
 
     public function update_status()
@@ -259,9 +262,10 @@ class Shipping extends CI_Controller
             if ($this->input->post('invoice_status') == 'status_validation') {
                 //status item 1
                 $this->request['status_validation'] = $this->_status_check(1);
+                $this->db->set('status_item', 3);
                 $this->db->where('invoice_id',$this->input->post('invoice_id', true));
                 $this->db->update('tbl_invoice', $this->request);
-            } else {
+            } elseif($this->input->post('invoice_status') == 'status_item') {
                 //status validation 3
                 $this->request['status_item'] = $this->_status_check(3);
                 $this->db->where('invoice_id',$this->input->post('invoice_id', true));
@@ -279,10 +283,8 @@ class Shipping extends CI_Controller
     {
         $this->db->where('invoice_id', $this->input->post('invoice_id', true));
         $this->db->set('status_validation', 0);
-        $this->db->update('tbl_invoice');
-    
         Flasher::setFlash('info','success','Success',' Berhasil ubah data!');
-        redirect('shipping/queue');
+        redirect('shipping');
     }
 
     public function notification_change()
