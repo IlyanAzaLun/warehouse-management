@@ -145,6 +145,8 @@ class Warehouse extends CI_Controller
 
         $this->tmp = [];
         $this->total_item = 0;
+
+        $this->_check_quantity($this->input->post('item_code'),$this->input->post('quantity'));
         foreach ($this->input->post('item_code', true) as $key => $value) {
             $this->request['order']['order_id'][$key]           = $order_id;
             $this->request['order']['item_code'][$key]          = $this->input->post('item_code',true)[$key];
@@ -155,12 +157,10 @@ class Warehouse extends CI_Controller
             $this->request['order']['rebate_price'][$key]       = $this->input->post('rebate_price', true)[$key];
             $this->request['order']['created_by'][$key]         = $this->data['user']['user_fullname'];
             $this->request['order']['user_id'][$key]            = $this->input->post('user_id', true);
-            $this->_check_quantity($this->input->post('item_code'),$this->input->post('quantity'));
             $this->total_item += (int) $this->input->post('quantity', true)[$key];
             $this->request['order']['status_in_out'][$key]      = 'OUT ('.(int) $this->input->post('quantity', true)[$key].'), '.$invoice_id.
             ', Sisa: '.((int)$this->input->post('current', true)[$key]-(int)$this->input->post('quantity', true)[$key]).' '.$this->input->post('unit',true)[$key];
         }
-
         $this->invoice = [
             'invoice_id'              => $invoice_id,
             'to_customer_destination' => $this->input->post('user_id', true),
@@ -184,9 +184,7 @@ class Warehouse extends CI_Controller
         ];
         try {
             $this->M_invoice->invoice_insert($this->invoice);
-            $this->M_order->order_insert_history_update_item($this->request['order']); 
-            // insert to tbl_order, insert to tbl_history, and update item
-            
+            $this->M_order->order_insert_history_update_item($this->request['order']);             
             Flasher::setFlash('info','success','Success',' data berhasil di tambahkan');
             redirect('warehouse/queue');
         } catch (Exception $e) {
@@ -320,7 +318,7 @@ class Warehouse extends CI_Controller
             $item = $this->M_items->item_select($value['item_code']);
             if ((int) $item['quantity'] - (int) $value['item_quantity'] < 0) {
                 Flasher::setFlash('info','error','Failed',' <b> data gagal ditambahkan</b> ');
-                redirect('warehouse/update?id='.$this->input->get('id'));
+                redirect('stocks');
                 return false;
                 die();
             } else {
