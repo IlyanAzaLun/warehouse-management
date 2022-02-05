@@ -191,3 +191,6 @@
     <!-- /.content-wrapper -->
     <!-- Modals -->
     <?php $this->load->view('components/footer')?>
+    <style>
+      
+    </style>

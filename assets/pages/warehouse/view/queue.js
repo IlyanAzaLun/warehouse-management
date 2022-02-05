@@ -147,7 +147,7 @@ const queue = () => {
 			id_invoice = $(this).parent().data('id_invoice');
 			data_order.search_order($(this).parent().data('id'), $(this).parent().data('id-invoice'));
 		});
-
+		data_order.dataTabels();
 	}
 	//call the function curent.
 	detail_order();

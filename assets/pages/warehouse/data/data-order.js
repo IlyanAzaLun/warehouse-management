@@ -1,7 +1,6 @@
 class DataOrder {
 	constructor() {
 		this.BASEURL = location.href+'/';
-		this.dataTabels();
 	}
 
 	dataTabels(){
