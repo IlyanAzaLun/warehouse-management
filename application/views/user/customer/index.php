@@ -54,7 +54,7 @@
                       <div class="col-sm-3">
                         <!-- text input -->
                         <div class="form-group">
-                          <label>Nama pemeilik</label>
+                          <label>Nama pemilik</label>
                           <input type="text" class="form-control" name="owner_name" id="owner_name"  value="<?=set_value('owner_name')?>" required>
                         </div>
                       </div>
@@ -98,7 +98,7 @@
                       <div class="col-sm-3">
                         <!-- text input -->
                         <div class="form-group">
-                          <label>Provnsi</label>
+                          <label>Provinsi</label>
                           <input type="text" class="form-control" name="province" id="province"  value="<?=set_value('province')?>" required>
                           <?=form_error('province', '<small class="text-danger">','</small>')?>
                         </div>

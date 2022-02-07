@@ -104,7 +104,6 @@
                           </a>
                           <p><?=$invoice['user_address']?>,<?=$invoice['village']?><br><?=$invoice['sub-district']?>,<?=$invoice['district']?>,<?=$invoice['province']?>,<?=$invoice['zip']?></p>
                           <a href="https://wa.me/<?=$invoice['user_contact_phone']?>" target="_blank"><?=$invoice['user_contact_phone']?></a>
-
                         </small>
                       </td>
                       <td><small><?=$invoice['note']?></small></td>
