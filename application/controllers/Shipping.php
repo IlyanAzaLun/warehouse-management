@@ -276,8 +276,10 @@ class Shipping extends CI_Controller
 
     public function validation_cancel()
     {
-        $this->db->where('invoice_id', $this->input->post('invoice_id', true));
         $this->db->set('status_validation', 0);
+        $this->db->set('status_item', 0);
+        $this->db->where('invoice_id', $this->input->post('invoice_id', true));
+        $this->db->update('tbl_invoice');
         Flasher::setFlash('info','success','Success',' Berhasil ubah data!');
         redirect('shipping');
     }
