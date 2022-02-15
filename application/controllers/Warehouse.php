@@ -158,8 +158,8 @@ class Warehouse extends CI_Controller
             $this->request['order']['created_by'][$key]         = $this->data['user']['user_fullname'];
             $this->request['order']['user_id'][$key]            = $this->input->post('user_id', true);
             $this->total_item += (int) $this->input->post('quantity', true)[$key];
-            $this->request['order']['status_in_out'][$key]      = 'OUT ('.(int) $this->input->post('quantity', true)[$key].'), '.$invoice_id.
-            ', Sisa: '.((int)$this->input->post('current', true)[$key]-(int)$this->input->post('quantity', true)[$key]).' '.$this->input->post('unit',true)[$key];
+            $this->request['order']['status_in_out'][$key]      = 'OUT ('.(int) $this->input->post('quantity', true)[$key].'), <a href="'.base_url('warehouse/info?id=').$invoice_id.'">'.$invoice_id.
+            '</a>, Sisa: '.((int)$this->input->post('current', true)[$key]-(int)$this->input->post('quantity', true)[$key]).' '.$this->input->post('unit',true)[$key];
         }
         $this->invoice = [
             'invoice_id'              => $invoice_id,
@@ -257,7 +257,7 @@ class Warehouse extends CI_Controller
                 $history[$key] = array(
                     'previous_quantity'  => (int) $this->input->post('current',true)[$key],
                     'item_code'          => $this->input->post('item_code',true)[$key],
-                    'status_in_out'      => 'OUT ('.(int) $this->input->post('quantity', true)[$key].') '.$this->input->get('id').' UPDATE, Sisa: '.abs((int) $this->input->post('current',true)[$key]-(int) $this->input->post('quantity', true)[$key]).' '.$this->input->post('unit',true)[$key],
+                    'status_in_out'      => 'OUT ('.(int) $this->input->post('quantity', true)[$key].') <a href="'.base_url('warehouse/info?id=').$this->input->get('id').'">'.$this->input->get('id').'</a> UPDATE, Sisa: '.abs((int) $this->input->post('current',true)[$key]-(int) $this->input->post('quantity', true)[$key]).' '.$this->input->post('unit',true)[$key],
                     'created_by'         => $this->data['user']['user_fullname'],
                     'updated_by'         => $this->data['user']['user_fullname'],
                     'updated_at'         => date('Y-m-d H:i:s',time()),
@@ -416,7 +416,7 @@ class Warehouse extends CI_Controller
             $this->db->where('item_code', $value['item_code']);
             //create history item
             $this->data['history'][$key]                      = $this->db->get('tbl_item')->row_array();
-            $this->data['history'][$key]['status_in_out']     = 'IN ('.abs($this->data['order'][$key]['quantity_order']).') '.$this->input->post('invoice_id', true).', CANCEL, Sisa: '.(abs($this->data['order'][$key]['quantity_order'])+(int)$this->data['history'][$key]['quantity']);
+            $this->data['history'][$key]['status_in_out']     = 'IN ('.abs($this->data['order'][$key]['quantity_order']).') <a href="'.base_url('warehouse/info?id=').$this->input->post('invoice_id', true).'">'.$this->input->post('invoice_id', true).'</a>, CANCEL, Sisa: '.(abs($this->data['order'][$key]['quantity_order'])+(int)$this->data['history'][$key]['quantity']);
             $this->data['history'][$key]['previous_quantity'] = $this->data['history'][$key]['quantity'];
             $this->data['history'][$key]['updated_at']        = date('Y-m-d H:i:s',time());
             $this->data['item'][$key]['item_code']            = $this->data['order'][$key]['item_code'];
@@ -451,9 +451,9 @@ class Warehouse extends CI_Controller
             $this->db->set('previous_selling_price',$history[$key]['selling_price']);
             $this->db->set('previous_quantity', $history[$key]['quantity']);
             $this->db->set('status_in_out', ((int)$data_order[$key]['quantity_order']<0)?
-                'OUT'. ' (' . abs($data_order[$key]['quantity_order']) . ') '.$this->input->post('invoice_reverence').' -> '.$data_invoice['invoice_id'].' RETURN, Sisa: '.
+                'OUT'. ' (' . abs($data_order[$key]['quantity_order']) . ') <a href="'.base_url('warehouse/info?id=').$this->input->post('invoice_reverence').'">'.$this->input->post('invoice_reverence').'</a> -> <a href="'.base_url('warehouse/info?id=').$data_invoice['invoice_id'].'">'.$data_invoice['invoice_id'].'</a> RETURN, Sisa: '.
                 ((int)$history[$key]['quantity'] + $data_order[$key]['quantity_order']):
-                'IN' . ' (' . abs($data_order[$key]['quantity_order']) . ') '.$this->input->post('invoice_reverence').' -> '.$data_invoice['invoice_id'].' RETURN, Sisa: '.
+                'IN' . ' (' . abs($data_order[$key]['quantity_order']) . ') <a href="'.base_url('warehouse/info?id=').$this->input->post('invoice_reverence').'">'.$this->input->post('invoice_reverence').'</a> -> <a href="'.base_url('warehouse/info?id=').$data_invoice['invoice_id'].'">'.$data_invoice['invoice_id'].'</a> RETURN, Sisa: '.
                 ((int)$history[$key]['quantity'] + $data_order[$key]['quantity_order'])
             );
             $this->db->set('updated_at', date('Y-m-d H:i:s',time()));
@@ -507,7 +507,7 @@ class Warehouse extends CI_Controller
                 'created_at' => date('Y-m-d H:i:s',time()),
                 'created_by' => $this->data['user']['user_fullname'],
                 'updated_at' => date('Y-m-d H:i:s',time()),
-                'status_in_out' => 'IN ('.abs($data['order']['quantity']).'), '.$data['invoice']['invoice_id'].', Sisa: '.
+                'status_in_out' => 'IN ('.abs($data['order']['quantity']).'), <a href="'.base_url('warehouse/info?id=').$data['invoice']['invoice_id'].'">'.$data['invoice']['invoice_id'].'</a>, Sisa: '.
                                     ((int)$data['item']['quantity']).' '.$data['order']['unit'],
             ),
         );
