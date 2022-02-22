@@ -221,9 +221,6 @@ class Items extends CI_Controller
                 base_url('assets/AdminLTE-3.0.5/plugins/inputmask/min/jquery.inputmask.bundle.min.js'),
             ],
         ];
-        $this->db->where('item_code', $this->input->get('id'));
-        $this->db->order_by('created_at', 'DESC');
-        $this->data['history'] = $this->db->get('tbl_item_history')->result_array();
         $this->data['item'] = $this->db->get_where('tbl_item', array('item_code' => $this->input->get('id')))->row_array();
         $this->data['title']= 'Informasi histori barang';
         $this->load->view ('items/history', $this->data);
@@ -413,12 +410,6 @@ class Items extends CI_Controller
         $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
         $searchValue     = $postData['search']['value']; // Search value
 
-        ## Search 
-        $searchQuery = "";
-        if($searchValue != ''){
-            $searchQuery = " (item_name like '%".$searchValue."%' or item_code like '%".$searchValue."%' ) ";
-        }
-
         ## Total number of records without filtering
         $this->db->select('count(*) as allcount');
         $records = $this->db->get('tbl_item')->result();
@@ -426,17 +417,19 @@ class Items extends CI_Controller
 
         ## Total number of record with filtering
         $this->db->select('count(*) as allcount');
-        if($searchQuery != '')
-            $this->db->like('item_name', $searchValue, 'both'); $this->db->or_like('item_code', $searchValue, 'both');
-            // $this->db->where($searchQuery);
+        if($searchValue != ''){
+            $this->db->like('item_name', $searchValue, 'both'); 
+            $this->db->or_like('item_code', $searchValue, 'both');
+        }
         $records = $this->db->get('tbl_item')->result();
         $totalRecordwithFilter = $records[0]->allcount;
 
         ## Fetch records
         $this->db->select('*');
-        if($searchQuery != '')
-            $this->db->like('item_name', $searchValue, 'both'); $this->db->or_like('item_code', $searchValue, 'both');
-            // $this->db->where($searchQuery);
+        if($searchValue != ''){
+            $this->db->like('item_name', $searchValue, 'both'); 
+            $this->db->or_like('item_code', $searchValue, 'both');
+        }
         $this->db->order_by($columnName, $columnSortOrder);
         $this->db->limit($rowperpage, $start);
         $records = $this->db->get('tbl_item')->result();
@@ -480,49 +473,37 @@ class Items extends CI_Controller
         $columnName      = $postData['columns'][$columnIndex]['data']; // Column name
         $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
         $searchValue     = $postData['search']['value']; // Search value
-
-        ## Search 
-        $searchQuery = "";
-        if($searchValue != ''){
-            $searchQuery = " (item_name like '%".$searchValue."%' or item_code like '%".$searchValue."%' ) ";
-        }
+        $id = $postData['id'];
 
         ## Total number of records without filtering
         $this->db->select('count(*) as allcount');
-        $this->db->where('item_code', $this->input->post('id'));
-        
-        $this->db->order_by('created_at', 'DESC');
-        $this->db->order_by('history_id', 'DESC');
+        $this->db->where('item_code', $id);
         $records = $this->db->get('tbl_item_history')->result();
         $totalRecords = $records[0]->allcount;
 
         ## Total number of record with filtering
         $this->db->select('count(*) as allcount');
-        if($searchQuery != ''){
-            $this->db->like('history_id', $searchValue, 'both');
-            $this->db->or_like('status_in_out', $searchValue, 'both');
-            $this->db->or_like('created_at', $searchValue, 'both');
-            $this->db->or_like('created_by', $searchValue, 'both');
+        if($searchValue != ''){
+            // $this->db->like('status_in_out', $searchValue, 'both');
+            $this->db->like('created_at', $searchValue, 'both');
+            // $this->db->like('created_by', $searchValue, 'both');
         }
-        $this->db->where('item_code', $this->input->post('id'));
-        $this->db->order_by('created_at', 'DESC');
-        $this->db->order_by('history_id', 'DESC');
+        $this->db->where('item_code', $id);  
         $records = $this->db->get('tbl_item_history')->result();
         $totalRecordwithFilter = $records[0]->allcount;
 
         ## Fetch records
         $this->db->select('*');
-        if($searchQuery != ''){
-            $this->db->like('history_id', $searchValue, 'both');
-            $this->db->or_like('status_in_out', $searchValue, 'both');
-            $this->db->or_like('created_at', $searchValue, 'both');
-            $this->db->or_like('created_by', $searchValue, 'both');
+        if($searchValue != ''){
+            // $this->db->like('status_in_out', $searchValue, 'both');
+            $this->db->like('created_at', $searchValue, 'both');
+            // $this->db->like('created_by', $searchValue, 'both');
         }
-        $this->db->where('item_code', $this->input->post('id'));
         $this->db->order_by('created_at', 'DESC');
-        $this->db->order_by('history_id', 'DESC');
+        // $this->db->order_by('history_id', 'DESC');
         $this->db->order_by($columnName, $columnSortOrder);
         $this->db->limit($rowperpage, $start);
+        $this->db->where('item_code', $id);  
         $records = $this->db->get('tbl_item_history')->result();
 
         $data = array();

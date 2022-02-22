@@ -75,7 +75,6 @@ class="hold-transition sidebar-mini layout-fixed sidebar-collapse layout-navbar-
       serverSide: true,
       responsive: true,
       autoWidth: false,
-      lengthMenu: [[10, 25, 50, 100, 200, <?=$this->db->count_all('tbl_item')?>], [10, 25, 50, 100, 200, "All"]],
       ajax: {
           "url": "<?php echo base_url('items/serverside_datatables_data_items_history') ?>",
           "type": "POST",
