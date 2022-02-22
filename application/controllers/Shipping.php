@@ -359,7 +359,7 @@ class Shipping extends CI_Controller
         $this->db->select('count(*) as allcount');
         $this->db->join('tbl_user_information user_info', 'invoice.to_customer_destination = user_info.user_id', 'left');
         $this->db->like('invoice.invoice_id', 'INV/WHS/', 'both');
-        $this->db->like('invoice.date', date('Y-m-d'), 'after');
+        $this->db->or_like('invoice.date', date('Y-m-d'), 'after');
         $this->db->where('invoice.status_validation', 1);
         $this->db->where('invoice.status_active =', 1);
 
@@ -370,12 +370,12 @@ class Shipping extends CI_Controller
         $this->db->select('count(*) as allcount');
         $this->db->join('tbl_user_information user_info', 'invoice.to_customer_destination = user_info.user_id', 'left');
         $this->db->like('invoice.invoice_id', 'INV/WHS/', 'both');
-        $this->db->like('invoice.date', date('Y-m-d'), 'after');
+        $this->db->or_like('invoice.date', date('Y-m-d'), 'after');
         $this->db->where('invoice.status_validation', 1);
         $this->db->where('invoice.status_active =', 1);
 
         if($searchQuery != ''){
-            $this->db->like('invoice.invoice_id', $searchValue, 'both'); 
+            $this->db->or_like('invoice.invoice_id', $searchValue, 'both'); 
             $this->db->or_like('invoice.invoice_reverence ', $searchValue, 'both');
             $this->db->or_like('invoice.note ', $searchValue, 'both');
         }
@@ -386,12 +386,12 @@ class Shipping extends CI_Controller
         $this->db->select('*');
         $this->db->join('tbl_user_information user_info', 'invoice.to_customer_destination = user_info.user_id', 'left');
         $this->db->like('invoice.invoice_id', 'INV/WHS/', 'both');
-        $this->db->like('invoice.date', date('Y-m-d'), 'after');
+        $this->db->or_like('invoice.date', date('Y-m-d'), 'after');
         $this->db->where('invoice.status_validation', 1);
         $this->db->where('invoice.status_active =', 1);
 
         if($searchQuery != ''){
-            $this->db->like('invoice.invoice_id', $searchValue, 'both'); 
+            $this->db->or_like('invoice.invoice_id', $searchValue, 'both'); 
             $this->db->or_like('invoice.invoice_reverence ', $searchValue, 'both');
             $this->db->or_like('user_info.user_fullname ', $searchValue, 'both');
             $this->db->or_like('user_info.user_address ', $searchValue, 'both');

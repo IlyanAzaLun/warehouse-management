@@ -562,8 +562,9 @@ class Warehouse extends CI_Controller
 
         ## Total number of record with filtering
         $this->db->select('count(*) as allcount');
+        $this->db->like('invoice.invoice_id', 'INV/WHS/', 'both');
         if($searchQuery != ''){
-            $this->db->like('invoice.invoice_id', $searchValue, 'both');
+            $this->db->or_like('invoice.invoice_id', $searchValue, 'both');
             $this->db->or_like('invoice.to_customer_destination', $searchValue, 'both');
             $this->db->or_like('invoice.note', $searchValue, 'both');
             $this->db->or_like('user_info.user_fullname', $searchValue, 'both');
@@ -573,7 +574,6 @@ class Warehouse extends CI_Controller
             $this->db->or_like('user_info.district', $searchValue, 'both');
         }
         $this->db->join('tbl_user_information user_info', 'invoice.to_customer_destination = user_info.user_id', 'left');
-        $this->db->like('invoice.invoice_id', 'INV/WHS/', 'both');
         // $this->db->like('invoice.date', date('Y-m-d'), 'after'); // filter with date current
         $this->db->order_by('invoice.date', 'DESC');
 
@@ -582,8 +582,9 @@ class Warehouse extends CI_Controller
 
         ## Fetch records
         $this->db->select('*, invoice.note as note_invoice, invoice.order_id as invoice_order_id');
+        $this->db->like('invoice.invoice_id', 'INV/WHS/', 'both');
         if($searchQuery != ''){
-            $this->db->like('invoice.invoice_id', $searchValue, 'both');
+            $this->db->or_like('invoice.invoice_id', $searchValue, 'both');
             $this->db->or_like('invoice.to_customer_destination', $searchValue, 'both');
             $this->db->or_like('invoice.note', $searchValue, 'both');
             $this->db->or_like('user_info.user_fullname', $searchValue, 'both');
@@ -594,7 +595,6 @@ class Warehouse extends CI_Controller
         }
 
         $this->db->join('tbl_user_information user_info', 'invoice.to_customer_destination = user_info.user_id', 'left');
-        $this->db->like('invoice.invoice_id', 'INV/WHS/', 'both');
         // $this->db->like('invoice.date', date('Y-m-d'), 'after'); // filter with date current
         $this->db->order_by('invoice.date', 'DESC');
         $this->db->order_by($columnName, $columnSortOrder);
