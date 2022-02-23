@@ -91,10 +91,10 @@ class Warehouse extends CI_Controller
     {
         $this->data['title']    = 'Buat antrian pesanan barang';
         $this->data['invoices'] = $this->M_invoice->invoice_select(
-            false,'INV/WHS/'
+            false,'/INV/WHS/'
         );
         $this->data['returns']  = $this->M_warehouse->warehouse_select(
-            false,'INV/RET/'
+            false,'/INV/RET/'
         );
         $this->data['plugins'] = ['css' => [
                 base_url('assets/AdminLTE-3.0.5/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'),

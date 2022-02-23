@@ -242,7 +242,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <table id="tbl_invoice" class="table table-sm table-bordered table-striped table-hover">
+                  <table id="tbl_invoice_return" class="table table-sm table-bordered table-striped table-hover">
                     <thead>
                       <tr>
                         <th>#</th>
