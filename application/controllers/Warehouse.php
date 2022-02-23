@@ -90,7 +90,11 @@ class Warehouse extends CI_Controller
     public function queue()
     {
         $this->data['title']    = 'Buat antrian pesanan barang';
-        $this->data['invoices'] = $this->M_invoice->invoice_select(
+        // $this->data['invoices'] = $this->M_invoice->invoice_select(
+        //     false,'/INV/WHS/'
+        // );
+        
+        $this->data['invoices']  = $this->M_warehouse->warehouse_select(
             false,'/INV/WHS/'
         );
         $this->data['returns']  = $this->M_warehouse->warehouse_select(
