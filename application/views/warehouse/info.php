@@ -68,15 +68,15 @@
                     <tbody>
                     <?php foreach ($orders as $key => $order): ?>
                     <tr>
-                      <th scope="row" width="5px"><?= ++$key ?></th>
+                      <th scope="row" width="5px"><?= $key ?></th>
                       <th><?= $order['item_code'] ?></th>
                       <th><?= $order['item_category'] ?></th>
                       <th><?= $order['item_name'] ?> 
                       <?php($order['MG'])?'(MG: '.$order['MG'].')':''?></th>
                       <th><?= abs($order['quantity_order']) ?></th>
                       <?php if (@$order_return): ?>
-                        <th><?= abs($order_return[$key-1]['quantity_order']) ?></th>
-                        <th><?= ($order_return[$key-1]['quantity_order']>0)?'Lebih':'Kurang' ?></th>
+                        <th><?= abs($order_return[$key]['quantity_order']) ?></th>
+                        <th><?= ($order_return[$key]['quantity_order']>0)?'Lebih':'Kurang' ?></th>
                       <?php endif ?>
                     <?php endforeach; ?>
                     </tbody>
@@ -109,12 +109,12 @@
                       <tbody>
                       <?php foreach ($order_return as $key => $order): ?>
                       <tr>
-                        <th scope="row" width="5px"><?= ++$key ?></th>
+                        <th scope="row" width="5px"><?= $key ?></th>
                         <th><?= $order['item_code'] ?></th>
                         <th><?= $order['item_category'] ?></th>
                         <th><?= $order['item_name'] ?> 
                         <?php($order['MG'])?'(MG: '.$order['MG'].')':''?></th>
-                        <th><?= abs($order['quantity_order']+$orders[$key-1]['quantity_order']) ?></th>
+                        <th><?= abs($order['quantity_order']+@$orders[$key]['quantity_order']) ?></th>
                       <?php endforeach; ?>
                       </tbody>
                     </table>
