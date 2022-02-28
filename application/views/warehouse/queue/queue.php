@@ -127,7 +127,6 @@
                   <div class="card-footer" id="save">
                     <div class="float-right">
                       <button type="submit" class="btn btn-primary float-right">Save</button>
-                      <button type="cancel" class="btn btn-default mr-2">Cancel</button>
                     </div>
                   </div>
                 </div>
