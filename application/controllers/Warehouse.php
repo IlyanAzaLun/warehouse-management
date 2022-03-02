@@ -136,16 +136,22 @@ class Warehouse extends CI_Controller
             $this->load->view('warehouse/queue/modals');
         } else {
             $this->add_invoice();
+
+            Flasher::setFlash('info','success','Success',' data berhasil di tambahkan');
+            redirect('warehouse/queue');
         }
     }
 
     protected function add_invoice()
     {
-        $this->db->like('order_id', '/ORD/WHS/' . date('my'), 'before');
-        $order_id = sprintf('%04s/ORD/WHS/',$this->db->get('tbl_order')->num_rows() + 1) . date('my');
-
-        $this->db->like('invoice_id', '/INV/WHS/' . date('my'), 'before');
-        $invoice_id = sprintf('%04s/INV/WHS/',$this->db->get('tbl_invoice')->num_rows() + 1) . date('my');
+        // CHECK AT HERE... // BUAT TERPISAH DI MODEL.. BUKAN DI CONTROLLERNYA SINI.
+        // $this->db->like('order_id', '/ORD/WHS/' . date('my'), 'before');
+        // $order_id = sprintf('%04s/ORD/WHS/',$this->db->get('tbl_order')->num_rows() + 1) . date('my');
+        $order_id = $this->M_order->create_order_id();
+        // $this->db->like('invoice_id', '/INV/WHS/' . date('my'), 'before');
+        // $invoice_id = sprintf('%04s/INV/WHS/',$this->db->get('tbl_invoice')->num_rows() + 1) . date('my');
+        $invoice_id = $this->M_invoice->create_invoice_id();
+        // CHECK AT HERE...
 
         $this->tmp = [];
         $this->total_item = 0;
@@ -189,11 +195,9 @@ class Warehouse extends CI_Controller
         try {
             $this->M_invoice->invoice_insert($this->invoice);
             $this->M_order->order_insert_history_update_item($this->request['order']);             
-            Flasher::setFlash('info','success','Success',' data berhasil di tambahkan');
-            redirect('warehouse/queue');
+            return true;
         } catch (Exception $e) {
-            Flasher::setFlash('info','error','Failed ',$e);
-            redirect('warehouse/queue');
+            return $e;
         }
 
     }
