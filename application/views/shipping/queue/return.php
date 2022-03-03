@@ -162,7 +162,7 @@
                   </div>
                   <div class="card-footer">
                     <div class="float-right">
-                      <button type="button" class="btn btn-secondary" onclick="window.close();">Cancel</button>
+                      <button type="button" class="btn btn-secondary" onclick="window.history.back();">Cancel</button>
                       <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-status-shipping">Kirim</button>
                       <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>

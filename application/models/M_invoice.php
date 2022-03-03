@@ -5,6 +5,13 @@ class M_invoice extends CI_Model {
 
 	private $_table = "tbl_invoice";
 
+	public function create_invoice_id()
+	{
+        $this->db->like('invoice_id', '/INV/WHS/' . date('my'), 'before');
+        return sprintf('%04s/INV/WHS/',$this->db->get('tbl_invoice')->num_rows() + 1) . date('my');
+
+	}
+
 	public function invoice_select($data = false, $like = false)
 	{
 		if ($data) {

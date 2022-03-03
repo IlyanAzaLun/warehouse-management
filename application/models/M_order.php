@@ -5,6 +5,12 @@ class M_order extends CI_Model {
 
         private $_table = "tbl_order";
 
+        public function create_order_id()
+        {
+	        $this->db->like('order_id', '/ORD/WHS/' . date('my'), 'before');
+	        return sprintf('%04s/ORD/WHS/',$this->db->get('tbl_order')->num_rows() + 1) . date('my');
+        }
+
         public function order_select($data = false)
         {
         	if ($data) {

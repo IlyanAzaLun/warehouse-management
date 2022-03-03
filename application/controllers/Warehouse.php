@@ -135,8 +135,8 @@ class Warehouse extends CI_Controller
             $this->load->view('warehouse/queue/queue', $this->data);
             $this->load->view('warehouse/queue/modals');
         } else {
+            $this->_check_quantity($this->input->post('item_code'),$this->input->post('quantity'));
             $this->add_invoice();
-
             Flasher::setFlash('info','success','Success',' data berhasil di tambahkan');
             redirect('warehouse/queue');
         }
@@ -155,8 +155,6 @@ class Warehouse extends CI_Controller
 
         $this->tmp = [];
         $this->total_item = 0;
-
-        $this->_check_quantity($this->input->post('item_code'),$this->input->post('quantity'));
         foreach ($this->input->post('item_code', true) as $key => $value) {
             $this->request['order']['order_id'][$key]           = $order_id;
             $this->request['order']['item_code'][$key]          = $this->input->post('item_code',true)[$key];
