@@ -205,7 +205,14 @@
       },
       columns: [
           {
-              data : "item_code"},
+              data : "item_code",
+              render: function(data, type, row){
+                var html = '';
+                if(row['is_active'] == 0){
+                  html += '<span class="badge badge-danger">Dihapus</span>'
+                }
+                return `${data} ${html}`
+            }},
           {
               data : "item_name"},
           {
@@ -215,6 +222,15 @@
           {
           data : "item_code",
           render: function (data, type, row) {
+              if(row['is_active'] == 0){
+              return `
+              <div class="btn-group d-flex justify-content-center" data-id="${data}">
+                <a href="<?=base_url('items/history')?>?id=${data}" target="_blank"
+                  class="btn btn-sm btn-default" id="detail" data-target="#modal-detail"><i
+                    class="fa fa-tw fa-search-plus"></i></a>
+              <div>
+              `
+              }
               return `
               <div class="btn-group d-flex justify-content-center" data-id="${data}">
                 <a href="<?=base_url('items/update')?>?id=${data}" target="_blank"

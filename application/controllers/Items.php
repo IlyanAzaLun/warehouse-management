@@ -444,6 +444,7 @@ class Items extends CI_Controller
                 "item_quantity" =>$record->quantity,
                 "item_unit"     =>$record->unit,
                 "created_by"     =>$record->created_by,
+                "is_active"     =>$record->is_active,
             ); 
         }
 
