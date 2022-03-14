@@ -5,7 +5,6 @@ class Component {
 		const html = `
 		<!-- order-item -->
         <div class="row" id="order-item">
-
           <div class="col-3">
             <div class="form-group">
               <small>Kode barang</small>
