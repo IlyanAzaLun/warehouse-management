@@ -364,6 +364,7 @@ class Warehouse extends CI_Controller
                 $this->_result_list_item($this->data);
             } else {
                 $this->db->limit(5);
+                $this->db->where('is_active', 1);
                 echo json_encode($this->db->get('tbl_item')->result_array());
             }
         }
