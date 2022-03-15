@@ -52,7 +52,7 @@
                         </div>
 
                         <div class="col-sm-12 col-lg-6">
-                          <div class="form-group">
+                          <div class="form-group ui-widget">
                             <label for="fullname">Nama toko</label>
                             <input type="text" name="fullname" id="fullname" class="form-control" value="<?= set_value('fullname') ?>" autocomplete="false" required>
                             <?= form_error('user_id','<small class="text-danger">','</small>') ?>

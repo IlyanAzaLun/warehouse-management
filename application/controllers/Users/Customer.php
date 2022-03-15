@@ -170,4 +170,15 @@ class Customer extends User
             return false;
         }
     }
+
+    public function dataCustomer()
+    {
+        $this->db->where('role_id', '752c0ad8-4925-11ec-8cc8-1be21be013bc');
+        $this->db->like('user_fullname', $this->input->post('data'), 'both');
+        $response  = $this->db->get('tbl_user_information', 5)->result();
+        foreach ($response as $key => $value) {
+            $response[$key]->label = $value->user_fullname;
+        }
+        $this->output->set_content_type('application/json')->set_output(json_encode($response));
+    }
 }
