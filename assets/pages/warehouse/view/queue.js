@@ -41,23 +41,36 @@ const queue = () => {
 	$('input#fullname').focus(function () {
 		data_customer.user_info(function (output) {
 			let fullname = [];
-			$(output).each(function (index, field) {
-				fullname.push(field.user_fullname);
-			})
-			$.ui.autocomplete.prototype._renderItem = function (ul, item) {
-				return $("<li>").attr("data-value", item.value).append(item.label).appendTo(ul);
-			};
 			$('input#fullname').autocomplete({
-				source: fullname
-			});
-			$('input#fullname').on('focusout', function () {
-				data_customer.user_info_search($(this).val(), function (data) {
-					$('input#user_id').val(data.user_id);
-					$('input#contact_number').val((data.user_contact_phone) ? `${data.user_contact_phone} (${data.owner_name})` : ``);
-					$('textarea#address').val((data.user_contact_phone) ? `${data.user_address}, ${data.village}, ${data['sub-district']}, ${data['district']}, ${data.province}, ${data.zip}` : ``);
-				});
-				$('input#item_name').focus();
-			})
+				// source: fullname
+				source: function (request, response) {
+					$.ajax({
+						url: location.base + "users/customer/dataCustomer",
+						method: "POST",
+						dataType: "json",
+						data: {
+							'request': 'GET', 'data': request.term
+						},
+						success: function (data) {
+							response(data);
+						}
+					});
+				},
+				select: function (event, ui) {
+					$(this).val(ui.item.user_fullname); // display the selected text
+					$('input#user_id').val(ui.item.user_id);
+					$('input#contact_number').val((ui.item.user_contact_phone) ? `${ui.item.user_contact_phone} (${ui.item.owner_name})` : ``);
+					$('textarea#address').val((ui.item.user_contact_phone) ? `${ui.item.user_address}, ${ui.item.village}, ${ui.item['sub-district']}, ${ui.item['district']}, ${ui.item.province}, ${ui.item.zip}` : ``);
+					return false;
+				},
+				focus: function (event, ui) {
+					$(this).val(ui.item.user_fullname); // display the selected text
+					return false;
+				}
+			}).data("ui-autocomplete")._renderItem = function(ul, item){
+				return $('<li>').data("item.autocomplete", item)
+				.append(`<div>${item.user_fullname}</div>`).appendTo(ul)
+			}
 		});
 	})
 	$('input#fullname').focus();
