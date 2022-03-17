@@ -182,9 +182,16 @@ class="hold-transition sidebar-mini layout-fixed sidebar-collapse layout-navbar-
             <div class="col-sm">
                 <!-- text input -->
                 <div class="form-group">
-                    <label>Keterangan</label>
-                    <textarea type="text" class="form-control" name="note" id="note"><?=$items['note']?></textarea>
+                    <label>Keterangan Barang</label>
+                    <textarea type="text" class="form-control" name="note" id="note" readonly><?=$items['note']?></textarea>
                     <?=form_error('note', '<small class="text-danger">','</small>')?>
+                </div>
+            </div>
+            <div class="col-sm">
+                <!-- text input -->
+                <div class="form-group">
+                    <label>Keterangan Perubahan Jumlah Barang</label>
+                    <textarea type="text" class="form-control" name="note_" id="note_"></textarea>
                 </div>
             </div>
         </div>

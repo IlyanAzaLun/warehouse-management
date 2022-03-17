@@ -104,8 +104,8 @@ class Stock extends CI_Controller {
 			'previous_capital_price' => htmlspecialchars($this->input->post('previous_capital_price', true)),
 			'previous_selling_price' => htmlspecialchars($this->input->post('previous_selling_price', true)),
 			'status_in_out'          => htmlspecialchars(((int)$this->input->post('add_quantity', true)<0)?
-                'OUT'. ' (' . abs($this->input->post('add_quantity', true)) . ')':
-                'IN' . ' (' . abs($this->input->post('add_quantity', true)) . ')'),
+                'OUT'. ' (' . abs($this->input->post('add_quantity', true)) . ') '.strtoupper($this->input->post('note_', true)):
+                'IN' . ' (' . abs($this->input->post('add_quantity', true)) . ') '.strtoupper($this->input->post('note_', true))),
 			'created_at'             => date('Y-m-d H:i:s',time()),
 			'created_by'             => $this->data['user']['user_fullname'],
 		];
