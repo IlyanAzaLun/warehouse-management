@@ -40,7 +40,7 @@ class="hold-transition sidebar-mini layout-fixed sidebar-collapse layout-navbar-
         </div>
       </div>
       <!-- /.card-header -->
-      <form action="<?= base_url('stocks/restock') ?>" method="post" id="insert">
+      <form action="<?= base_url('stocks/restock?id=').$this->input->get('id') ?>" method="post" id="insert">
         <div class="card-body">
 
         <div class="row">
@@ -191,7 +191,8 @@ class="hold-transition sidebar-mini layout-fixed sidebar-collapse layout-navbar-
                 <!-- text input -->
                 <div class="form-group">
                     <label>Keterangan Perubahan Jumlah Barang</label>
-                    <textarea type="text" class="form-control" name="note_" id="note_"></textarea>
+                    <textarea type="text" class="form-control" name="note_" id="note_" required></textarea>
+                    <?=form_error('note_', '<small class="text-danger">','</small>')?>
                 </div>
             </div>
         </div>

@@ -83,6 +83,7 @@ class Stock extends CI_Controller {
 		);
 		$this->form_validation->set_rules('item_code', 'Code item', 'required|trim');
 		$this->form_validation->set_rules('quantity', 'Quantity', 'required|trim');
+        $this->form_validation->set_rules('note_', 'Keterangan perubahan item', 'required|trim');
 		// $this->form_validation->set_rules('unit', 'Unit item', 'required|trim');
 		// $this->form_validation->set_rules('capital_price', 'Capital price', 'required|trim');
 		// $this->form_validation->set_rules('selling_price', 'Selling price', 'required|trim|greater_than['.$this->input->post('capital_price').']');
