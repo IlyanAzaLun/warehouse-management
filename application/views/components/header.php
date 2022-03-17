@@ -49,4 +49,10 @@
   <link href="<?= base_url(
       'assets/Font/Source Sans Pro.css'
   ) ?>" rel="stylesheet">
+  <style>
+  .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: #007bff;
+    color: white;
+  }
+  </style>
 </head>

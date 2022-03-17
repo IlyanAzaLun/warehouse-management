@@ -282,6 +282,7 @@ class Warehouse extends CI_Controller
 
             $invoice = [
                 'invoice_id'             => $this->input->get('id'),
+                'to_customer_destination'=> $this->input->post('user_id', true),
                 'note'                   => $this->input->post('note', true) ? 
                     'Jumlah item: ('.$this->total_item.'), '.$this->input->post('note', true).' '.$this->data['user']['user_fullname'] : 
                     'Jumlah item: ('.$this->total_item.'), '.'Di input, dan diubah oleh bagian gudang :'.$this->data['user']['user_fullname']

@@ -11,7 +11,40 @@ const component = new Component();
 
 const main = () => {
 	$(document).on('wheel', 'input[type=number]', function(e){$(this).blur()});
-
+	// notification ./ end
+	// customer
+	// auto complete, get all, and find the customer
+	$('input#fullname').autocomplete({
+		// source: fullname
+		source: function (request, response) {
+			$.ajax({
+				url: location.base + "users/customer/dataCustomer",
+				method: "POST",
+				dataType: "json",
+				data: {
+					'request': 'GET', 'data': request.term
+				},
+				success: function (data) {
+					response(data);
+				}
+			});
+		},
+		select: function (event, ui) {
+			$(this).val(ui.item.user_fullname); // display the selected text
+			$('input#user_id').val(ui.item.user_id);
+			$('input#contact_number').val((ui.item.user_contact_phone) ? `${ui.item.user_contact_phone} (${ui.item.owner_name})` : ``);
+			$('textarea#address').val((ui.item.user_contact_phone) ? `${ui.item.user_address}, ${ui.item.village}, ${ui.item['sub-district']}, ${ui.item['district']}, ${ui.item.province}, ${ui.item.zip}` : ``);
+			return false;
+		},
+		focus: function (event, ui) {
+			$(this).val(ui.item.user_fullname); // display the selected text
+			return false;
+		}
+	}).data("ui-autocomplete")._renderItem = function(ul, item){
+		return $('<li>').data("item.autocomplete", item)
+		.append(`<div>${item.user_fullname}</div>`).appendTo(ul)
+	}
+	$('input#fullname').focus();
 	$('input#item_name').focus(function () {
 		data_item.items(false, function (output) {
 			$.ui.autocomplete.prototype._renderItem = function (ul, item) {
