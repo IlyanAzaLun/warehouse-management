@@ -235,20 +235,22 @@ class Stock extends CI_Controller {
 
         ## Total number of record with filtering
         $this->db->select('count(*) as allcount');
-        if($searchQuery != '')
-            $this->db->like('item_name', $searchValue, 'both'); $this->db->or_like('item_code', $searchValue, 'both');
-            // $this->db->where($searchQuery);
         $this->db->where('is_active', 1);
+        if($searchQuery != ''){
+            $this->db->like('item_name', $searchValue, 'both'); 
+            $this->db->or_like('item_code', $searchValue, 'both');
+        }
         $records = $this->db->get('tbl_item')->result();
         $totalRecordwithFilter = $records[0]->allcount;
 
         ## Fetch records
         $this->db->select('*');
-        if($searchQuery != '')
-            $this->db->like('item_name', $searchValue, 'both'); $this->db->or_like('item_code', $searchValue, 'both');
-            // $this->db->where($searchQuery);
-        $this->db->order_by($columnName, $columnSortOrder);
         $this->db->where('is_active', 1);
+        if($searchQuery != ''){
+            $this->db->like('item_name', $searchValue, 'both'); 
+            $this->db->or_like('item_code', $searchValue, 'both');
+        }
+        $this->db->order_by($columnName, $columnSortOrder);
         $this->db->limit($rowperpage, $start);
         $records = $this->db->get('tbl_item')->result();
 

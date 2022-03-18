@@ -222,7 +222,7 @@ class Items extends CI_Controller
             ],
         ];
         $this->data['item'] = $this->db->get_where('tbl_item', array('item_code' => $this->input->get('id')))->row_array();
-        $this->data['title']= 'Informasi histori barang';
+        $this->data['title']= 'Informasi histori barang '.$this->data['item']['item_name'];
         $this->load->view ('items/history', $this->data);
     }
 
