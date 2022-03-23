@@ -91,7 +91,7 @@ class Items extends CI_Controller
             $this->data = [
                 'item_category' => htmlspecialchars($this->input->post('subcategory', true) ? $this->input->post('subcategory', true ): $this->input->post('category', true)),
                 'item_code'     => htmlspecialchars($this->input->post('item_code', true)),
-                'item_name'     => htmlspecialchars($this->input->post('item_name', true)),
+                'item_name'     => html_entity_decode($this->input->post('item_name', true)),
                 'unit'          => htmlspecialchars($this->input->post('unit', true)),
                 'quantity'      => 0,
                 'MG'            => htmlspecialchars($this->input->post('MG', true) ? $this->input->post('MG', true): ''),
@@ -104,7 +104,7 @@ class Items extends CI_Controller
                 'brand_2'       => htmlspecialchars($this->input->post('brand_2', true) ? $this->input->post('brand_2', true): ''),
                 'capital_price' => htmlspecialchars($this->input->post('capital_price', true)),
                 'selling_price' => htmlspecialchars($this->input->post('selling_price', true)),
-                'note'          => htmlspecialchars($this->input->post('note', true)),
+                'note'          => html_entity_decode($this->input->post('note', true)),
                 'created_by'    => $this->data['user']['user_fullname'],
             ];
             $this->M_items->item_insert($this->data);
@@ -184,7 +184,7 @@ class Items extends CI_Controller
         } else {
             $this->data = [
                 'item_code'     => htmlspecialchars($this->input->post('item_code', true)),
-                'item_name'     => htmlspecialchars($this->input->post('item_name', true)),
+                'item_name'     => html_entity_decode($this->input->post('item_name', true)),
                 // 'quantity'   => htmlspecialchars($this->input->post('quantity', true)),
                 'unit'          => htmlspecialchars($this->input->post('unit', true)),
                 'MG'            => htmlspecialchars($this->input->post('MG', true)? $this->input->post('MG', true): ''),
@@ -197,7 +197,7 @@ class Items extends CI_Controller
                 'brand_2'       => htmlspecialchars($this->input->post('brand_2', true)? $this->input->post('brand_2', true): ''),
                 'capital_price' => htmlspecialchars($this->input->post('capital_price', true)),
                 'selling_price' => htmlspecialchars($this->input->post('selling_price', true)),
-                'note'          => htmlspecialchars($this->input->post('note', true)),
+                'note'          => html_entity_decode($this->input->post('note', true)),
                 'update_at'     => date('Y-m-d H:i:s',time()),
                 'update_by'     => $this->data['user']['user_fullname'],
 
