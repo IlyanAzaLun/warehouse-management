@@ -156,6 +156,7 @@ class Warehouse extends CI_Controller
         $this->tmp = [];
         $this->total_item = 0;
         foreach ($this->input->post('item_code', true) as $key => $value) {
+            $this->request['order']['invoice_code'][$key]       = $invoice_id;
             $this->request['order']['order_id'][$key]           = $order_id;
             $this->request['order']['item_code'][$key]          = $this->input->post('item_code',true)[$key];
             $this->request['order']['item_capital_price'][$key] = $this->input->post('item_capital_price', true)[$key];
@@ -261,6 +262,7 @@ class Warehouse extends CI_Controller
                     'updated_at'         => date('Y-m-d H:i:s',time()),
                 );
                 $history[$key] = array(
+                    'invoice_code'       => $this->input->get('id'),
                     'previous_quantity'  => (int) $this->input->post('current',true)[$key],
                     'item_code'          => $this->input->post('item_code',true)[$key],
                     'status_in_out'      => 'OUT ('.(int) $this->input->post('quantity', true)[$key].') <a href="'.base_url('warehouse/info?id=').$this->input->get('id').'">'.$this->input->get('id').'</a> UPDATE, Sisa: '.abs((int) $this->input->post('current',true)[$key]-(int) $this->input->post('quantity', true)[$key]).' '.$this->input->post('unit',true)[$key],
@@ -507,6 +509,7 @@ class Warehouse extends CI_Controller
         $data['item']['update_by'] = $this->data['user']['user_fullname'];
         $data['history'] = array(
             0 => array(
+                'invoice_code' => $data['invoice']['invoice_id'],
                 'item_code' => $data['order']['item_id'],
                 'previous_selling_price' => 0,
                 'previous_capital_price' => 0,
@@ -519,7 +522,6 @@ class Warehouse extends CI_Controller
                                     ((int)$data['item']['quantity']).' '.$data['order']['unit'],
             ),
         );
-
         try {
             $this->M_items->item_update($data['item']);
             $this->M_history->history_insert_multiple($data['history']);

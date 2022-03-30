@@ -41,6 +41,7 @@
                     <thead>
                       <tr>
                         <th>Kode barang</th>
+                        <th>Kode barang Ipos</th>
                         <th>Nama barang</th>
                         <th>Jumlah</th>
                         <th>Opsi</th>
@@ -83,6 +84,8 @@
       columns: [
           {
               data : "item_code"},
+          {
+              data : "item_code_ipos"},
           {
               data : "item_name"},
           {

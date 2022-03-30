@@ -13,7 +13,7 @@ const main = () => {
   <div class="form-group">
     <label>Jumlah sekarang</label>
     <select class="form-control select2" style="width: 100%;" name="subcategory" id="subcategory" required>
-      <option disabled value="" selected="selected">Select category item</option>
+      <option readonly value="" selected="selected">Select category item</option>
       <option value="LIQUID FREEBASE CREAMY" data-id="FREEBASE-CREAMY" >LIQUID FREEBASE CREAMY</option>
       <option value="LIQUID FREEBASE FRUITY" data-id="FREEBASE-FRUITY" >LIQUID FREEBASE FRUITY</option>
       <option value="LIQUID SALT CREAMY" data-id="SALT-CREAMY" >LIQUID SALT CREAMY</option>

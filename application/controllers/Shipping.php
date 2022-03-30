@@ -215,6 +215,8 @@ class Shipping extends CI_Controller
                 base_url('assets/AdminLTE-3.0.5/plugins/datatables-autofill/js/autoFill.bootstrap4.min.js'),
                 base_url('assets/AdminLTE-3.0.5/plugins/select2/js/select2.full.min.js'),
                 base_url('assets/AdminLTE-3.0.5/plugins/jquery-ui/jquery-ui.min.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/html2canvas/html2canvas.js'),
+                base_url('assets/AdminLTE-3.0.5/plugins/pdfmake/pdfmake.min.js'),
             ],
             'module' => [base_url('assets/pages/shipping/return.js')],
         ];

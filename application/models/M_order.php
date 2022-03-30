@@ -8,7 +8,8 @@ class M_order extends CI_Model {
         public function create_order_id()
         {
 	        $this->db->like('order_id', '/ORD/WHS/' . date('my'), 'before');
-	        return sprintf('%04s/ORD/WHS/',$this->db->get('tbl_order')->num_rows() + 1) . date('my');
+	        // $this->db->group_by('order_id'); // MALAM 01 APRIL
+	        return sprintf('%09s/ORD/WHS/',$this->db->get('tbl_order')->num_rows() + 1) . date('my');
         }
 
         public function order_select($data = false)
@@ -87,6 +88,7 @@ class M_order extends CI_Model {
         	foreach ($data['order_id'] as $key => $value) {
         		$uuid = Uuid::uuid4();
     			$this->db->set('index_order', $uuid);
+    			$this->db->set('invoice_code', $data['invoice_code'][$key]);
         		$this->db->set('order_id', $data['order_id'][$key]);
         		$this->db->set('item_id', $data['item_code'][$key]);
         		$this->db->set('capital_price', $data['item_capital_price'][$key]);
@@ -104,6 +106,7 @@ class M_order extends CI_Model {
         		$this->db->where('item_code', $data['item_code'][$key]);
         		array_push($history,$this->db->get('tbl_item')->row_array()); // tmp
 				$this->db->set('item_code' , $history[$key]['item_code']);
+				$this->db->set('invoice_code' , $data['invoice_code'][$key]);
 				$this->db->set('previous_capital_price' , $history[$key]['capital_price']);
 				$this->db->set('previous_selling_price' , $history[$key]['selling_price']);
 				$this->db->set('previous_quantity' , $history[$key]['quantity']);

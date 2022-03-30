@@ -1,5 +1,4 @@
 <?php $this->load->view('components/header')?>
-
 <body class="hold-transition sidebar-mini layout-fixed sidebar-collapse pace-primary">
   <!-- Site wrapper -->
   <div class="wrapper">
@@ -27,7 +26,7 @@
 
           <!-- insert -->
           <form action="<?=base_url('shipping/return?id='.$this->input->get('id'))?>" method="post" id="insert">
-            <div class="row">
+            <div class="row" id="selection-to-print">
 
               
               <div class="col-sm-12 col-lg-12">
@@ -109,8 +108,8 @@
                         <thead>
                           <tr>
                             <th scope="col" rowspan="2" class="align-middle">No</th>
-                            <th scope="col" rowspan="2" class="align-middle text-center">Nama barang</th>
-                            <th scope="col" class="text-center align-middle" colspan="2">Jumlah barang</th>
+                            <th scope="col" rowspan="2" width="10%" class="align-middle text-center">Nama barang</th>
+                            <th scope="col" width="20%" class="text-center align-middle" colspan="2">Jumlah barang</th>
                           </tr>
                           <tr class="text-center align-middle">
                             <th>Saat ini</th>
@@ -205,4 +204,4 @@
   </div>
   <!-- /.modal-dialog -->
 </div>
-    <?php $this->load->view('components/footer')?>
+<?php $this->load->view('components/footer')?>

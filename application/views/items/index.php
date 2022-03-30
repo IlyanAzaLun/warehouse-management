@@ -88,7 +88,18 @@
                         </div>
                       </div>
 
-                      <div class="col-sm-3">
+                      <div class="col-sm-2">
+                        <!-- text input -->
+                        <div class="form-group">
+                          <label>Kode barang ipos</label>
+                          <div class="input-group">
+                            <input type="text" class="form-control" name="item_code_ipos" id="item_code_ipos"
+                              value="<?=set_value('item_code_ipos')?>" required>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-5">
                         <!-- text input -->
                         <div class="form-group">
                           <label>Nama barang</label>
@@ -102,7 +113,7 @@
                         <div class="form-group">
                           <label>Harga pokok</label>
                           <input type="text" class="form-control" name="capital_price" id="capital_price"
-                            value="<?=set_value('capital_price')?>" required>
+                            value=0 required>
                           <?=form_error('capital_price', '<small class="text-danger">','</small>')?>
                         </div>
                       </div>
@@ -111,7 +122,7 @@
                         <div class="form-group">
                           <label>Harga jual</label>
                           <input type="text" class="form-control" name="selling_price" id="selling_price"
-                            value="<?=set_value('selling_price')?>" required>
+                            value=0 required>
                           <?=form_error('selling_price', '<small class="text-danger">','</small>')?>
                         </div>
                       </div>

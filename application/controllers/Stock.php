@@ -82,7 +82,7 @@ class Stock extends CI_Controller {
 			],
 		);
 		$this->form_validation->set_rules('item_code', 'Code item', 'required|trim');
-		$this->form_validation->set_rules('quantity', 'Quantity', 'required|trim');
+		$this->form_validation->set_rules('add_quantity', 'Quantity', 'required|trim');
         $this->form_validation->set_rules('note_', 'Keterangan perubahan item', 'required|trim');
 		// $this->form_validation->set_rules('unit', 'Unit item', 'required|trim');
 		// $this->form_validation->set_rules('capital_price', 'Capital price', 'required|trim');
@@ -239,6 +239,7 @@ class Stock extends CI_Controller {
         if($searchQuery != ''){
             $this->db->like('item_name', $searchValue, 'both'); 
             $this->db->or_like('item_code', $searchValue, 'both');
+            $this->db->or_like('item_code_ipos', $searchValue, 'both');
         }
         $records = $this->db->get('tbl_item')->result();
         $totalRecordwithFilter = $records[0]->allcount;
@@ -249,6 +250,7 @@ class Stock extends CI_Controller {
         if($searchQuery != ''){
             $this->db->like('item_name', $searchValue, 'both'); 
             $this->db->or_like('item_code', $searchValue, 'both');
+            $this->db->or_like('item_code_ipos', $searchValue, 'both');
         }
         $this->db->order_by($columnName, $columnSortOrder);
         $this->db->limit($rowperpage, $start);
@@ -260,6 +262,7 @@ class Stock extends CI_Controller {
 
             $data[] = array( 
                 "item_code"     =>$record->item_code,
+                "item_code_ipos"     =>$record->item_code_ipos,
                 "item_name"     =>$record->item_name,
                 "item_quantity" =>$record->quantity,
                 "item_unit"     =>$record->unit,

@@ -91,6 +91,7 @@ class Items extends CI_Controller
             $this->data = [
                 'item_category' => htmlspecialchars($this->input->post('subcategory', true) ? $this->input->post('subcategory', true ): $this->input->post('category', true)),
                 'item_code'     => htmlspecialchars($this->input->post('item_code', true)),
+                'item_code_ipos'     => htmlspecialchars($this->input->post('item_code_ipos', true)),
                 'item_name'     => html_entity_decode($this->input->post('item_name', true)),
                 'unit'          => htmlspecialchars($this->input->post('unit', true)),
                 'quantity'      => 0,
@@ -184,6 +185,7 @@ class Items extends CI_Controller
         } else {
             $this->data = [
                 'item_code'     => htmlspecialchars($this->input->post('item_code', true)),
+                'item_code_ipos'     => htmlspecialchars($this->input->post('item_code_ipos', true)),
                 'item_name'     => html_entity_decode($this->input->post('item_name', true)),
                 // 'quantity'   => htmlspecialchars($this->input->post('quantity', true)),
                 'unit'          => htmlspecialchars($this->input->post('unit', true)),

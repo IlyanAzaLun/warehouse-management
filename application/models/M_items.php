@@ -13,6 +13,7 @@ class M_items extends CI_Model
         } else {
             $this->db->select(
                 'item_code
+                ,item_code_ipos
                 ,item_name
                 ,item_category
                 ,quantity

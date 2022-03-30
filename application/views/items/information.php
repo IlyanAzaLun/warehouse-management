@@ -45,20 +45,32 @@ class="hold-transition sidebar-mini layout-fixed sidebar-collapse layout-navbar-
 
       <div class="row">
 
-        <div class="col-sm-6">
+        <div class="col-sm-4">
             <div class="form-group">
                 <label>Kategori barang</label>
                 <input type="text" class="form-control" name="category" id="category"  value="<?= $items['item_category']?>" required readonly>
             </div>
         </div>
 
-        <div class="col-sm-6">
+        <div class="col-sm-4">
             <!-- text input -->
             <div class="form-group">
                 <label>Kode barang</label>
                 <input type="text" class="form-control" name="item_code" id="item_code"  value="<?= $items['item_code']?>" required readonly>
             </div>
         </div>
+
+        <div class="col-sm-4">
+            <!-- text input -->
+            <div class="form-group">
+              <label>Kode barang ipos</label>
+              <div class="input-group">
+                <input type="text" class="form-control" name="item_code_ipos" id="item_code_ipos"
+                  value="<?= $items['item_code_ipos']?>" required>
+              </div>
+            </div>
+        </div>
+
 
         <div class="col-sm-6">
             <!-- text input -->

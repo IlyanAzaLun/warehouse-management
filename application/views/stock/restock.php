@@ -145,11 +145,11 @@ class="hold-transition sidebar-mini layout-fixed sidebar-collapse layout-navbar-
                 <div class="form-group">
                     <label>Tambah jumlah</label>
                     <div class="input-group mb-3">
-                        <input type="number" class="form-control" name="add_quantity" id="add_quantity"  value="0">
+                        <input type="number" class="form-control" name="add_quantity" id="add_quantity" value=0>
                         <div class="input-group-append">
                             <select class="input-group-text" name="unit" id="unit" required>
-                                <option value="pcs">PCS</option>
-                                <option value="pac">PAC</option>
+                                <option value="pcs"<?=(strtoupper($items['unit'])=="PCS")?' selected':''?>>PCS</option>
+                                <option value="pac"<?=(strtoupper($items['unit'])=="PAC"||strtoupper($items['unit'])=="PAX")?' selected':''?>>PAC</option>
                             </select>
                         </div>
                     </div>
