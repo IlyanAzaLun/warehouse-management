@@ -8,7 +8,7 @@ class M_order extends CI_Model {
         public function create_order_id()
         {
 	        $this->db->like('order_id', '/ORD/WHS/' . date('my'), 'before');
-	        // $this->db->group_by('order_id'); // MALAM 01 APRIL
+	        $this->db->group_by('order_id'); // MALAM 01 APRIL
 	        return sprintf('%09s/ORD/WHS/',$this->db->get('tbl_order')->num_rows() + 1) . date('my');
         }
 
