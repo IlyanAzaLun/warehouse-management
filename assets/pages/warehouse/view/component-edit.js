@@ -48,12 +48,24 @@ class Component {
 	}
 
 	field(result){
+		let number = $('.number').length+1;
 		const html = `
         <div class="row" id="order-item">
           <div class="col-3">
-            <div class="form-group" id="field-item_code">
-              <small>Kode barang</small>
-              <input type="text" name="item_code[]" id="item_code" class="form-control" value="${result.item_code}" readonly>
+          	<div class="row">
+          		<div class="col-2">
+                <div class="form-group number">
+				          <small>No.</small>
+				          <input type="text" class="form-control" disabled="" readonly="" value="${number}">
+				        </div>
+          		</div>
+          		<div class="col-10">
+          			<div class="form-group" id="field-item_code">
+		              <small>Kode barang</small>
+		              <input type="text" name="item_code[]" id="item_code" class="form-control" value="${result.item_code}" readonly>
+		            </div>
+	            
+          		</div>
             </div>
           </div>
           <div class="col-5">

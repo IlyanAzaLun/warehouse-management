@@ -116,11 +116,21 @@
                       <!-- order-item -->
                       <div class="row" id="order-item">
       	                <div class="col-3">
-      	                  <div class="form-group">
-      	                    <small>Kode barang</small>
-                            <input type="hidden" name="index_order[]" value="<?=$order['index_order']?>">
-      	                    <input type="text" name="item_code[]" id="item_code" class="form-control" value="<?=$order['item_code']?>" readonly>
-      	                  </div>
+                          <div class="row">
+                            <div class="col-2">
+                              <div class="form-group number">
+                                <small>No.</small>
+                                <input type="text" class="form-control" disabled="" readonly="" value="<?=$key+1?>">
+                              </div>
+                            </div>
+                            <div class="col-10">
+                              <div class="form-group">
+                                <small>Kode barang</small>
+                                <input type="hidden" name="index_order[]" value="<?=$order['index_order']?>">
+                                <input type="text" name="item_code[]" id="item_code" class="form-control" value="<?=$order['item_code']?>" readonly>
+                              </div>
+                            </div>
+                          </div>
       	                </div>
 
       	                <div class="col-5">
