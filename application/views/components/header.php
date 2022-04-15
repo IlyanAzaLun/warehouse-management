@@ -50,6 +50,12 @@
       'assets/Font/Source Sans Pro.css'
   ) ?>" rel="stylesheet">
   <style>
+  *:focus{
+    box-shadow: 0 0 0 2px #007bff;
+    background-color: #dc3545;
+    opacity: 0.8;
+    color: white;
+  }
   .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
     background-color: #007bff;
     color: white;
